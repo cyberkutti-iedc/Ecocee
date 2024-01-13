@@ -17,7 +17,9 @@ label {
   margin-bottom: 10px;
 }
 
-input {
+input,
+select,
+textarea {
   width: 100%;
   padding: 8px;
   margin-top: 5px;
