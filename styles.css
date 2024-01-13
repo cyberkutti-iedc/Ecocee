@@ -3,13 +3,22 @@ body {
   font-family: 'Roboto', sans-serif;
 }
 
-.registration-form {
-  max-width: 400px;
+.container {
+  max-width: 800px;
   margin: 50px auto;
+}
+
+.registration-form {
   padding: 20px;
   border: 1px solid #ccc;
   border-radius: 5px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+select {
+  display: block;
+  margin-top: 10px;
+  padding: 0 16px;
 }
 
 label {
@@ -17,8 +26,6 @@ label {
   margin-bottom: 10px;
 }
 
-input,
-select,
 textarea {
   width: 100%;
   padding: 8px;
@@ -38,4 +45,12 @@ button {
 
 button:hover {
   background-color: #45a049;
+}
+
+.collapsible-header {
+  font-weight: bold;
+}
+
+.collapsible-body {
+  padding: 20px;
 }
