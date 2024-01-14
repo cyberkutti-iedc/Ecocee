@@ -4,6 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Ecocee Learning Hub Registration</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fluentui/react/dist/fabric.css">
   <style>
     body {
       display: flex;
@@ -11,36 +12,15 @@
       align-items: center;
       height: 100vh;
       margin: 0;
-      background-color: #f0f0f0;
-      font-family: Arial, sans-serif;
+      background-color: #f4f4f4;
     }
 
     .registration-container {
-      max-width: 400px;
-      width: 90%;
+      width: 400px;
       padding: 20px;
       box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
       border-radius: 8px;
       background-color: #fff;
-      overflow: hidden;
-    }
-
-    .card-container {
-      display: flex;
-      transition: transform 0.5s ease-in-out;
-    }
-
-    .card {
-      flex: 0 0 100%;
-      transition: opacity 0.5s ease-in-out;
-    }
-
-    .card:not(.active) {
-      opacity: 0;
-    }
-
-    h2 {
-      margin-top: 0;
     }
 
     .form-control {
@@ -51,6 +31,7 @@
       display: block;
       margin-bottom: 8px;
       color: #333;
+      font-weight: bold;
     }
 
     input,
@@ -67,117 +48,73 @@
     }
 
     button {
-      background-color: #4caf50;
+      background-color: #0078d4;
       color: #fff;
       cursor: pointer;
       transition: background-color 0.3s ease;
     }
 
     button:hover {
-      background-color: #45a049;
+      background-color: #005a9e;
     }
   </style>
 </head>
 <body>
   <div class="registration-container">
-    <h2>Ecocee Learning Hub Registration</h2>
+    <h2 style="color: #333;">Ecocee Learning Hub Registration</h2>
 
-    <div class="card-container" id="cardContainer">
-      <!-- Step 1: Name -->
-      <div class="card active" id="step1">
-        <form class="form-control">
-          <label for="name">Name</label>
-          <input type="text" id="name" required>
-          <button onclick="nextStep()">Next</button>
-        </form>
-      </div>
+    <div class="form-control">
+      <label for="name">Name</label>
+      <input type="text" id="name" placeholder="Enter your name" required>
+    </div>
 
-      <!-- Step 2: Email -->
-      <div class="card" id="step2">
-        <form class="form-control">
-          <label for="email">Email ID</label>
-          <input type="email" id="email" required>
-          <button onclick="nextStep()">Next</button>
-        </form>
-      </div>
+    <div class="form-control">
+      <label for="email">Email ID</label>
+      <input type="email" id="email" placeholder="Enter your email" required>
+    </div>
 
-      <!-- Step 3: Phone Number -->
-      <div class="card" id="step3">
-        <form class="form-control">
-          <label for="phone">Phone Number</label>
-          <input type="tel" id="phone" required>
-          <button onclick="nextStep()">Next</button>
-        </form>
-      </div>
+    <div class="form-control">
+      <label for="phone">Phone Number</label>
+      <input type="tel" id="phone" placeholder="Enter your phone number" required>
+    </div>
 
-      <!-- Step 4: Institution -->
-      <div class="card" id="step4">
-        <form class="form-control">
-          <label for="institution">School/College/Others</label>
-          <input type="text" id="institution" required>
-          <button onclick="nextStep()">Next</button>
-        </form>
-      </div>
+    <div class="form-control">
+      <label for="institution">School/College/Others</label>
+      <input type="text" id="institution" placeholder="Enter your school/college" required>
+    </div>
 
-      <!-- Step 5: Stream -->
-      <div class="card" id="step5">
-        <form class="form-control">
-          <label for="stream">Which Stream</label>
-          <input type="text" id="stream" required>
-          <button onclick="nextStep()">Next</button>
-        </form>
-      </div>
+    <div class="form-control">
+      <label for="stream">Which Stream</label>
+      <input type="text" id="stream" placeholder="Enter your stream" required>
+    </div>
 
-      <!-- Step 6: School/College Name -->
-      <div class="card" id="step6">
-        <form class="form-control">
-          <label for="school">School/College Name</label>
-          <input type="text" id="school" required>
-          <button onclick="nextStep()">Next</button>
-        </form>
-      </div>
+    <div class="form-control">
+      <label for="school">School/College Name</label>
+      <input type="text" id="school" placeholder="Enter your school/college name" required>
+    </div>
 
-      <!-- Step 7: Course -->
-      <div class="card" id="step7">
-        <form class="form-control">
-          <label for="course">Which Course (Python)</label>
-          <select id="course" required>
-            <option value="python">Python</option>
-          </select>
-          <button onclick="nextStep()">Next</button>
-        </form>
-      </div>
+    <div class="form-control">
+      <label for="course">Which Course (Python)</label>
+      <select id="course" required>
+        <option value="python">Python</option>
+      </select>
+    </div>
 
-      <!-- Step 8: How did you hear about us -->
-      <div class="card" id="step8">
-        <form class="form-control">
-          <label for="source">How did you hear about us?</label>
-          <input type="text" id="source" required>
-          <button onclick="nextStep()">Next</button>
-        </form>
-      </div>
+    <div class="form-control">
+      <label for="source">How did you hear about us?</label>
+      <input type="text" id="source" placeholder="Enter your source" required>
+    </div>
 
-      <!-- Step 9: Terms and Conditions -->
-      <div class="card" id="step9">
-        <form class="form-control">
-          <label>
-            <input type="checkbox" required>
-            I agree to the terms and conditions
-          </label>
-          <button type="submit">Submit</button>
-        </form>
-      </div>
+    <div class="form-control">
+      <label>
+        <input type="checkbox" required>
+        I agree to the terms and conditions
+      </label>
+    </div>
+
+    <div class="form-control">
+      <button type="submit">Submit</button>
     </div>
   </div>
-
-  <script>
-    let currentStep = 0;
-    const cardContainer = document.getElementById('cardContainer');
-
-    function nextStep() {
-      currentStep++;
-      cardContainer.style.transform = `translateX(-${currentStep * 100}%)`;
-    }
-  </script>
 </body>
 </html>
