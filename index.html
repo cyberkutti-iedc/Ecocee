@@ -25,13 +25,18 @@
       overflow: hidden;
     }
 
+    .card-container {
+      display: flex;
+      transition: transform 0.5s ease-in-out;
+    }
+
     .card {
-      display: none;
+      flex: 0 0 100%;
       transition: opacity 0.5s ease-in-out;
     }
 
-    .card.active {
-      display: block;
+    .card:not(.active) {
+      opacity: 0;
     }
 
     h2 {
@@ -77,102 +82,102 @@
   <div class="registration-container">
     <h2>Ecocee Learning Hub Registration</h2>
 
-    <!-- Step 1: Name -->
-    <div class="card active" id="step1">
-      <form class="form-control">
-        <label for="name">Name</label>
-        <input type="text" id="name" required>
-        <button onclick="nextStep('step2')">Next</button>
-      </form>
+    <div class="card-container" id="cardContainer">
+      <!-- Step 1: Name -->
+      <div class="card active" id="step1">
+        <form class="form-control">
+          <label for="name">Name</label>
+          <input type="text" id="name" required>
+          <button onclick="nextStep()">Next</button>
+        </form>
+      </div>
+
+      <!-- Step 2: Email -->
+      <div class="card" id="step2">
+        <form class="form-control">
+          <label for="email">Email ID</label>
+          <input type="email" id="email" required>
+          <button onclick="nextStep()">Next</button>
+        </form>
+      </div>
+
+      <!-- Step 3: Phone Number -->
+      <div class="card" id="step3">
+        <form class="form-control">
+          <label for="phone">Phone Number</label>
+          <input type="tel" id="phone" required>
+          <button onclick="nextStep()">Next</button>
+        </form>
+      </div>
+
+      <!-- Step 4: Institution -->
+      <div class="card" id="step4">
+        <form class="form-control">
+          <label for="institution">School/College/Others</label>
+          <input type="text" id="institution" required>
+          <button onclick="nextStep()">Next</button>
+        </form>
+      </div>
+
+      <!-- Step 5: Stream -->
+      <div class="card" id="step5">
+        <form class="form-control">
+          <label for="stream">Which Stream</label>
+          <input type="text" id="stream" required>
+          <button onclick="nextStep()">Next</button>
+        </form>
+      </div>
+
+      <!-- Step 6: School/College Name -->
+      <div class="card" id="step6">
+        <form class="form-control">
+          <label for="school">School/College Name</label>
+          <input type="text" id="school" required>
+          <button onclick="nextStep()">Next</button>
+        </form>
+      </div>
+
+      <!-- Step 7: Course -->
+      <div class="card" id="step7">
+        <form class="form-control">
+          <label for="course">Which Course (Python)</label>
+          <select id="course" required>
+            <option value="python">Python</option>
+          </select>
+          <button onclick="nextStep()">Next</button>
+        </form>
+      </div>
+
+      <!-- Step 8: How did you hear about us -->
+      <div class="card" id="step8">
+        <form class="form-control">
+          <label for="source">How did you hear about us?</label>
+          <input type="text" id="source" required>
+          <button onclick="nextStep()">Next</button>
+        </form>
+      </div>
+
+      <!-- Step 9: Terms and Conditions -->
+      <div class="card" id="step9">
+        <form class="form-control">
+          <label>
+            <input type="checkbox" required>
+            I agree to the terms and conditions
+          </label>
+          <button type="submit">Submit</button>
+        </form>
+      </div>
     </div>
-
-    <!-- Step 2: Email -->
-    <div class="card" id="step2">
-      <form class="form-control">
-        <label for="email">Email ID</label>
-        <input type="email" id="email" required>
-        <button onclick="nextStep('step3')">Next</button>
-      </form>
-    </div>
-
-    <!-- Step 3: Phone Number -->
-    <div class="card" id="step3">
-      <form class="form-control">
-        <label for="phone">Phone Number</label>
-        <input type="tel" id="phone" required>
-        <button onclick="nextStep('step4')">Next</button>
-      </form>
-    </div>
-
-    <!-- Step 4: Institution -->
-    <div class="card" id="step4">
-      <form class="form-control">
-        <label for="institution">School/College/Others</label>
-        <input type="text" id="institution" required>
-        <button onclick="nextStep('step5')">Next</button>
-      </form>
-    </div>
-
-    <!-- Step 5: Stream -->
-    <div class="card" id="step5">
-      <form class="form-control">
-        <label for="stream">Which Stream</label>
-        <input type="text" id="stream" required>
-        <button onclick="nextStep('step6')">Next</button>
-      </form>
-    </div>
-
-    <!-- Step 6: School/College Name -->
-    <div class="card" id="step6">
-      <form class="form-control">
-        <label for="school">School/College Name</label>
-        <input type="text" id="school" required>
-        <button onclick="nextStep('step7')">Next</button>
-      </form>
-    </div>
-
-    <!-- Step 7: Course -->
-    <div class="card" id="step7">
-      <form class="form-control">
-        <label for="course">Which Course (Python)</label>
-        <select id="course" required>
-          <option value="python">Python</option>
-        </select>
-        <button onclick="nextStep('step8')">Next</button>
-      </form>
-    </div>
-
-    <!-- Step 8: How did you hear about us -->
-    <div class="card" id="step8">
-      <form class="form-control">
-        <label for="source">How did you hear about us?</label>
-        <input type="text" id="source" required>
-        <button onclick="nextStep('step9')">Next</button>
-      </form>
-    </div>
-
-    <!-- Step 9: Terms and Conditions -->
-    <div class="card" id="step9">
-      <form class="form-control">
-        <label>
-          <input type="checkbox" required>
-          I agree to the terms and conditions
-        </label>
-        <button type="submit">Submit</button>
-      </form>
-    </div>
-
-    <script>
-      function nextStep(stepId) {
-        const currentStep = document.getElementById(stepId);
-        currentStep.classList.remove('active');
-
-        const nextStep = currentStep.nextElementSibling;
-        if (nextStep) {
-          nextStep.classList.add('active');
-        }
-      }
-    </script>
   </div>
+
+  <script>
+    let currentStep = 0;
+    const cardContainer = document.getElementById('cardContainer');
+
+    function nextStep() {
+      currentStep++;
+      cardContainer.style.transform = `translateX(-${currentStep * 100}%)`;
+    }
+  </script>
 </body>
 </html>
