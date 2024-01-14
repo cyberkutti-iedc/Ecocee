@@ -7,20 +7,19 @@
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fluentui/react/dist/fabric.css">
   <style>
     body {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      height: 100vh;
       margin: 0;
-      background-color: #f4f4f4;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background-color: #f8f8f8;
     }
 
     .registration-container {
-      width: 400px;
+      width: 90%;
+      max-width: 400px;
+      margin: auto;
       padding: 20px;
       box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
       border-radius: 8px;
-      background-color: #fff;
+      background-color: rgba(255, 255, 255, 0.9);
     }
 
     .form-control {
@@ -48,14 +47,21 @@
     }
 
     button {
-      background-color: #0078d4;
+      background-color: #4caf50;
       color: #fff;
       cursor: pointer;
       transition: background-color 0.3s ease;
     }
 
     button:hover {
-      background-color: #005a9e;
+      background-color: #45a049;
+    }
+
+    @media screen and (max-width: 900px) {
+      .registration-container {
+        width: 100%;
+        box-shadow: none;
+      }
     }
   </style>
 </head>
