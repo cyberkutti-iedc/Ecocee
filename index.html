@@ -12,27 +12,34 @@
       height: 100vh;
       margin: 0;
       background-color: #f0f0f0;
+      font-family: Arial, sans-serif;
     }
 
     .registration-container {
-      max-width: 600px;
+      max-width: 400px;
       width: 90%;
       padding: 20px;
       box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
       border-radius: 8px;
-      font-family: Arial, sans-serif;
       background-color: #fff;
       overflow: hidden;
     }
 
-    .registration-form {
-      display: grid;
-      grid-template-columns: 1fr;
-      grid-gap: 16px;
+    .card {
+      display: none;
+      transition: opacity 0.5s ease-in-out;
+    }
+
+    .card.active {
+      display: block;
+    }
+
+    h2 {
+      margin-top: 0;
     }
 
     .form-control {
-      position: relative;
+      margin-bottom: 16px;
     }
 
     label {
@@ -64,99 +71,108 @@
     button:hover {
       background-color: #45a049;
     }
-
-    .terms-and-conditions {
-      font-size: 12px;
-      color: #555;
-      margin-top: 12px;
-    }
-
-    /* Mobile-friendly styles */
-    @media (min-width: 601px) {
-      .registration-form {
-        grid-template-columns: 1fr 1fr;
-        column-gap: 16px;
-      }
-    }
-
-    /* Fun animation */
-    @keyframes slideIn {
-      from {
-        opacity: 0;
-        transform: translateY(-20px);
-      }
-      to {
-        opacity: 1;
-        transform: translateY(0);
-      }
-    }
-
-    .registration-container {
-      animation: slideIn 0.5s ease;
-    }
   </style>
 </head>
 <body>
   <div class="registration-container">
     <h2>Ecocee Learning Hub Registration</h2>
-    <form id="registrationForm" class="registration-form">
-      <div class="form-control">
+
+    <!-- Step 1: Name -->
+    <div class="card active" id="step1">
+      <form class="form-control">
         <label for="name">Name</label>
         <input type="text" id="name" required>
-      </div>
+        <button onclick="nextStep('step2')">Next</button>
+      </form>
+    </div>
 
-      <div class="form-control">
+    <!-- Step 2: Email -->
+    <div class="card" id="step2">
+      <form class="form-control">
         <label for="email">Email ID</label>
         <input type="email" id="email" required>
-      </div>
+        <button onclick="nextStep('step3')">Next</button>
+      </form>
+    </div>
 
-      <div class="form-control">
+    <!-- Step 3: Phone Number -->
+    <div class="card" id="step3">
+      <form class="form-control">
         <label for="phone">Phone Number</label>
         <input type="tel" id="phone" required>
-      </div>
+        <button onclick="nextStep('step4')">Next</button>
+      </form>
+    </div>
 
-      <div class="form-control">
+    <!-- Step 4: Institution -->
+    <div class="card" id="step4">
+      <form class="form-control">
         <label for="institution">School/College/Others</label>
         <input type="text" id="institution" required>
-      </div>
+        <button onclick="nextStep('step5')">Next</button>
+      </form>
+    </div>
 
-      <div class="form-control">
-        <label for="stream">Stream</label>
+    <!-- Step 5: Stream -->
+    <div class="card" id="step5">
+      <form class="form-control">
+        <label for="stream">Which Stream</label>
         <input type="text" id="stream" required>
-      </div>
+        <button onclick="nextStep('step6')">Next</button>
+      </form>
+    </div>
 
-      <div class="form-control">
+    <!-- Step 6: School/College Name -->
+    <div class="card" id="step6">
+      <form class="form-control">
         <label for="school">School/College Name</label>
         <input type="text" id="school" required>
-      </div>
+        <button onclick="nextStep('step7')">Next</button>
+      </form>
+    </div>
 
-      <div class="form-control">
-        <label for="course">Course (Python)</label>
+    <!-- Step 7: Course -->
+    <div class="card" id="step7">
+      <form class="form-control">
+        <label for="course">Which Course (Python)</label>
         <select id="course" required>
           <option value="python">Python</option>
         </select>
-      </div>
+        <button onclick="nextStep('step8')">Next</button>
+      </form>
+    </div>
 
-      <div class="form-control">
+    <!-- Step 8: How did you hear about us -->
+    <div class="card" id="step8">
+      <form class="form-control">
         <label for="source">How did you hear about us?</label>
         <input type="text" id="source" required>
-      </div>
+        <button onclick="nextStep('step9')">Next</button>
+      </form>
+    </div>
 
-      <div class="form-control">
+    <!-- Step 9: Terms and Conditions -->
+    <div class="card" id="step9">
+      <form class="form-control">
         <label>
           <input type="checkbox" required>
           I agree to the terms and conditions
         </label>
-      </div>
-
-      <div class="form-control">
         <button type="submit">Submit</button>
-      </div>
-    </form>
+      </form>
+    </div>
 
-    <p class="terms-and-conditions">
-      By submitting this form, you agree to our <a href="#">Terms and Conditions</a>.
-    </p>
+    <script>
+      function nextStep(stepId) {
+        const currentStep = document.getElementById(stepId);
+        currentStep.classList.remove('active');
+
+        const nextStep = currentStep.nextElementSibling;
+        if (nextStep) {
+          nextStep.classList.add('active');
+        }
+      }
+    </script>
   </div>
 </body>
 </html>
