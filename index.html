@@ -3,18 +3,97 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap" />
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css" />
-  
-  <link rel="stylesheet" href="styles.css">
-  <title>EcoCee Learning Hub Registration</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@mui/material@5.0.0-alpha.15/dist/umd/material.min.css" integrity="sha384-SY0/SPyX6ZQN+ILxZ8U0nGqk8n94p6CqoPd6go1b9jMZ7hM0qzbUxmTlXp0sr8Bb" crossorigin="anonymous">
+  <title>Ecocee Learning Hub Registration</title>
+  <style>
+    body {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+    }
+
+    .registration-form {
+      width: 400px;
+      padding: 20px;
+      box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+      border-radius: 8px;
+    }
+
+    .form-control {
+      margin-bottom: 16px;
+    }
+  </style>
 </head>
 <body>
-  <div class="container">
-    <div id="registration-form"></div>
+  <div class="registration-form">
+    <h2>Ecocee Learning Hub Registration</h2>
+    <form id="registrationForm">
+      <div class="form-control">
+        <label for="name">Name</label>
+        <input type="text" id="name" required>
+      </div>
+
+      <div class="form-control">
+        <label for="email">Email ID</label>
+        <input type="email" id="email" required>
+      </div>
+
+      <div class="form-control">
+        <label for="phone">Phone Number</label>
+        <input type="tel" id="phone" required>
+      </div>
+
+      <div class="form-control">
+        <label for="institution">School/College/Others</label>
+        <input type="text" id="institution" required>
+      </div>
+
+      <div class="form-control">
+        <label for="stream">Stream</label>
+        <input type="text" id="stream" required>
+      </div>
+
+      <div class="form-control">
+        <label for="school">School/College Name</label>
+        <input type="text" id="school" required>
+      </div>
+
+      <div class="form-control">
+        <label for="course">Course (Python)</label>
+        <select id="course" required>
+          <option value="python">Python</option>
+        </select>
+      </div>
+
+      <div class="form-control">
+        <label for="source">How did you hear about us?</label>
+        <input type="text" id="source" required>
+      </div>
+
+      <div class="form-control">
+        <label>
+          <input type="checkbox" required>
+          I agree to the terms and conditions
+        </label>
+      </div>
+
+      <div class="form-control">
+        <button type="submit">Submit</button>
+      </div>
+    </form>
   </div>
-  <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
-  <script src="app.js"></script>
+
+  <script src="https://cdn.jsdelivr.net/npm/react@17.0.2/umd/react.production.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/react-dom@17.0.2/umd/react-dom.production.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@mui/material@5.0.0-alpha.15/dist/umd/material.min.js"></script>
+  <script>
+    const form = document.getElementById('registrationForm');
+    form.addEventListener('submit', function (event) {
+      event.preventDefault();
+      // Add your form submission logic here
+    });
+  </script>
 </body>
 </html>
