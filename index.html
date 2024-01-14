@@ -3,9 +3,6 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@mui/system@5.0.0-alpha.15/dist/system.css" integrity="sha384-oNuj+MdH+8k6PbbsfL8Kpx6OO5SzgRS65s+FkKdEfI2qFExexlA25Yo2orCz6Bwi" crossorigin="anonymous">
-
   <title>Ecocee Learning Hub Registration</title>
   <style>
     body {
@@ -14,17 +11,49 @@
       align-items: center;
       height: 100vh;
       margin: 0;
+      background-color: #f0f0f0;
     }
 
     .registration-form {
+      background-color: #fff;
       width: 400px;
       padding: 20px;
       box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
       border-radius: 8px;
+      font-family: Arial, sans-serif;
     }
 
     .form-control {
       margin-bottom: 16px;
+    }
+
+    label {
+      display: block;
+      margin-bottom: 8px;
+      color: #333;
+    }
+
+    input,
+    select,
+    button {
+      width: 100%;
+      padding: 10px;
+      box-sizing: border-box;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      margin-top: 6px;
+      margin-bottom: 12px;
+      font-size: 14px;
+    }
+
+    button {
+      background-color: #4caf50;
+      color: #fff;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background-color: #45a049;
     }
   </style>
 </head>
@@ -86,16 +115,5 @@
       </div>
     </form>
   </div>
-
-  <script src="https://cdn.jsdelivr.net/npm/react@17.0.2/umd/react.production.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/react-dom@17.0.2/umd/react-dom.production.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/@mui/material@5.0.0-alpha.15/dist/umd/material.min.js"></script>
-  <script>
-    const form = document.getElementById('registrationForm');
-    form.addEventListener('submit', function (event) {
-      event.preventDefault();
-      // Add your form submission logic here
-    });
-  </script>
 </body>
 </html>
