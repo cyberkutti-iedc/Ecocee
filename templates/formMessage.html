@@ -1,0 +1,44 @@
+{%  load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Thank You!</title>
+    <link rel="stylesheet" href="{% static 'css/formMessage.css' %}">
+</head>
+<body>
+    <div class="thank-you-container">
+        <h1>Thank You!</h1>
+        <p>Your form has been submitted successfully.</p>
+        <div class="loading-bar">
+            <div class="progress" id="progress"></div>
+        </div>
+        <p id="redirect-message">Redirecting to WhatsApp Group...</p>
+        <a href="https://wa.me/9446715884" id="whatsapp-link">Click here if not redirected</a>
+    </div>
+
+    <script >
+        // Simulate loading progress and redirect after 10 seconds
+let progress = 0;
+const progressBar = document.getElementById('progress');
+const redirectMessage = document.getElementById('redirect-message');
+const whatsappLink = document.getElementById('whatsapp-link');
+
+const interval = setInterval(() => {
+    progress += 20;
+    progressBar.style.width = `${progress}%`;
+
+    if (progress >= 100) {
+        clearInterval(interval);
+        redirectMessage.style.display = 'block';
+        setTimeout(() => {
+            window.location.href = "https://wa.me/9446715884";
+        }, 1500); // Redirect after 2 seconds
+    }
+}, 1000); // Increase progress every second
+
+    </script>
+
+</body>
+</html>
