@@ -1,8 +1,8 @@
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"; 
-import { Blocks, LineChart, Wallet, Sparkle, IndentDecrease, IndentIncreaseIcon, IndentIcon, MagnetIcon, Group, GroupIcon, Scale3DIcon } from "lucide-react"; // Import the specific icons
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { LineChart, IndentIncreaseIcon, GroupIcon, Scale3DIcon } from "lucide-react"; // Import only used icons
 
 interface BenefitsProps {
-  icon: React.ComponentType<any>; // Allow passing a React component with any props
+  icon: React.ComponentType<React.SVGProps<SVGSVGElement>>; // Specify a more explicit type for the icon prop
   title: string;
   description: string;
 }
@@ -38,7 +38,7 @@ export const BenefitsSection = () => {
           <h2 className="text-lg text-primary mb-2 tracking-wider">Benefits</h2>
 
           <h2 className="text-3xl md:text-4xl font-bold mb-4">
-            Unlock Your Business's True Potential
+            Unlock Your Business&apos;s True Potential
           </h2>
           <p className="text-xl text-muted-foreground mb-8 text-justify">
             Partnering with us unlocks the true potential of your business. Our tailored solutions enhance efficiency, productivity, and customer engagement, providing you with a distinct competitive advantage. With our innovative strategies, you can scale effortlessly, stay ahead in your industry, and achieve your business objectives.
