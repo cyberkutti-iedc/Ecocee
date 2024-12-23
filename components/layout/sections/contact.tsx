@@ -67,9 +67,8 @@ export const ContactSection = () => {
           </div>
           <p className="mb-8 text-muted-foreground lg:w-5/6 text-justify">
   Ecocee is an MSME specializing in innovative embedded and IoT solutions.
-  We design and develop customized hardware systems tailored to our clients' unique needs and ideas.
+  We design and develop customized hardware systems tailored to our clients&apos; unique needs and ideas.
 </p>
-
 
           <div className="flex flex-col gap-4">
             <div>
