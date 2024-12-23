@@ -18,6 +18,8 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="pt-br" suppressHydrationWarning>
+      <meta name="google-site-verification" content="oWkt6WIzNsBUQOAuNbzwS6sNhvbp6JZOP62rmpugNoE" />
+    
       <body className={cn("min-h-screen bg-background", inter.className)}>
         <ThemeProvider
           attribute="class"
