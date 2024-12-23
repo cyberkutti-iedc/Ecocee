@@ -13,31 +13,31 @@ interface FAQProps {
 
 const FAQList: FAQProps[] = [
   {
-    question: "What is Ecocee?",
+    question: "What is Ecocee ?",
     answer: "Ecocee is an MSME company specalizing in innovative embedded and IoT soultions.",
     value: "item-1",
   },
   {
-    question: "What services do you offer?",
+    question: "What services do you offer ?",
     answer:
       "We offer embedded hardware development, IoT solutions,AI integration, custom app development and prototype development",
     value: "item-2",
   },
   {
     question:
-      "What types of embedded systems do you develop?",
+      "What types of embedded systems do you develop ?",
     answer:
       "We develop a wide range of embedded systems, including microcontroller-based systems, embedded Linux systems, and more.",
     value: "item-3",
   },
   {
-    question: "Do you provide custom IoT solutions?",
+    question: "Do you provide custom IoT solutions ?",
     answer: "Yes, we provide custom IoT solutions tailored to our clients' specific needs.",
     value: "item-4",
   },
   {
     question:
-      "How do I contact Ecocee for business inquiries?*",
+      "How do I contact Ecocee for business inquiries ?",
     answer: "You can contact us through our website, email, or WhatsApp.",
     value: "item-5",
   },
