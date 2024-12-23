@@ -53,9 +53,10 @@ export const BenefitsSection = () => {
             >
               <CardHeader>
                 <div className="flex justify-between">
-                  {/* Directly pass the size, color, and className props to the icon */}
+                  {/* Replace size with width and height */}
                   <IconComponent
-                    size={32}
+                    width={32}
+                    height={32}
                     color="hsl(var(--primary))"
                     className="mb-6 text-primary"
                   />
@@ -77,3 +78,4 @@ export const BenefitsSection = () => {
     </section>
   );
 };
+
