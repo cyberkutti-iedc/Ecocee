@@ -41,8 +41,9 @@ export const BenefitsSection = () => {
             Unlock Your Business&apos;s True Potential
           </h2>
           <p className="text-xl text-muted-foreground mb-8 text-justify">
-            Partnering with us unlocks the true potential of your business. Our tailored solutions enhance efficiency, productivity, and customer engagement, providing you with a distinct competitive advantage. With our innovative strategies, you can scale effortlessly, stay ahead in your industry, and achieve your business objectives.
-          </p>
+  Partnering with us unlocks the true potential of your business. Our bespoke solutions improve efficiency, productivity, and customer engagement, giving you a distinct competitive edge. With our innovative strategies, you can scale effortlessly, stay ahead in your industry, and achieve your business objectives.
+</p>
+
         </div>
 
         <div className="grid lg:grid-cols-2 gap-4 w-full">
