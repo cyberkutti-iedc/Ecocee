@@ -11,7 +11,7 @@ const inter = Inter({ subsets: ["latin"] });
 export const metadata: Metadata = {
   title: "Ecocee",
   description: "Innovative solutions for a brighter future.",
-  // You can add more metadata here if needed
+  
 };
 
 export default function RootLayout({
@@ -22,6 +22,7 @@ export default function RootLayout({
   return (
     <html lang="pt-br" suppressHydrationWarning>
       <head>
+        <meta name="apple-mobile-web-app-title" content="ecocee" />
         {/* Google Site Verification Meta Tag */}
         <meta name="google-site-verification" content="oWkt6WIzNsBUQOAuNbzwS6sNhvbp6JZOP62rmpugNoE" />
         
