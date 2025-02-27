@@ -52,11 +52,12 @@ export default function Ideas() {
           </span>
         </h1>
         {mounted && (
-          <p className="text-lg max-w-xl mx-auto text-gray-600 dark:text-gray-300">
-            A creative hub for students to explore, innovate, and bring their ideas to life.  
-            Whether you're into <strong className="text-black dark:text-white">electronics</strong> or  
-            <strong className="text-black dark:text-white"> software</strong>, we've got you covered!
-          </p>
+         <p className="text-lg max-w-xl mx-auto text-gray-600 dark:text-gray-300">
+         A creative hub for students to explore, innovate, and bring their ideas to life.  
+         Whether you&apos;re into <strong className="text-black dark:text-white">electronics</strong> or  
+         <strong className="text-black dark:text-white"> software</strong>, we&apos;ve got you covered!
+       </p>
+       
         )}
       </div>
 
@@ -128,8 +129,9 @@ export default function Ideas() {
             }`}
           >
             <h2 className="text-xl font-bold text-black dark:text-white">
-              Do you want to explore {selectedCategory === "hardware" ? "Hardware Electronics" : "Software"} ideas?
-            </h2>
+  Do you want to explore {selectedCategory === "hardware" ? "Hardware Electronics" : "Software"} ideas?
+</h2>
+
             <p className="text-gray-600 dark:text-gray-400 mt-2">
               Click "Yes" to continue or "No" to stay on this page.
             </p>
