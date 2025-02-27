@@ -8,6 +8,7 @@ const nextConfig: NextConfig = {
       'avatars.githubusercontent.com',
       'i.pravatar.cc', // Add this line to allow images from i.pravatar.cc
       'images.unsplash.com', // Already allowed, assuming you're using Unsplash
+      
     ], // Add the allowed image domains here
   },
   env: {

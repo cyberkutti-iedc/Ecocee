@@ -7,7 +7,7 @@ import { MotionDiv } from "@/components/ui/motion";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { ArrowRight, Cpu, Code, XCircle, CheckCircle } from "lucide-react";
-import Cookies from "js-cookie";
+import Cookies from "js-cookie"; // ✅ Import js-cookie
 
 export default function Ideas() {
   const router = useRouter();
@@ -27,37 +27,36 @@ export default function Ideas() {
 
   const handleConfirmYes = () => {
     if (selectedCategory) {
-      Cookies.set("userConfirmed", "true", { expires: 1 });
-      router.push(`/ideas/${selectedCategory}`);
+      Cookies.set("userConfirmed", "true", { expires: 1 }); // ✅ Set cookie to remember confirmation
+      router.push(`/ideas/${selectedCategory}`); // ✅ Redirect to chosen category
     }
     setShowModal(false);
   };
 
+  // 🚨 Fix: Prevent rendering styles based on `theme` before mounting
+  if (!mounted) {
+    return <div className="min-h-screen flex items-center justify-center">Loading...</div>;
+  }
+
   return (
     <section
       className={`container mx-auto min-h-screen flex flex-col items-center justify-center px-6 py-20 transition-colors ${
-        !mounted
-          ? "opacity-0"
-          : theme === "dark"
-          ? "bg-black text-white"
-          : "bg-[#F9F9F9] text-black"
+        theme === "dark" ? "bg-black text-white" : "bg-[#F9F9F9] text-black"
       }`}
     >
       {/* Header Section */}
       <div className="text-center space-y-6">
         <h1 className="text-3xl md:text-5xl font-extrabold tracking-wide">
-          Welcome to{" "}
+          Welcome to  
           <span className="text-transparent px-2 bg-gradient-to-r from-[#FFD700] to-[#D247BF] bg-clip-text">
             Ecocee Idea Box
           </span>
         </h1>
-        {mounted && (
-          <p className="text-lg max-w-xl mx-auto text-gray-600 dark:text-gray-300">
-            A creative hub for students to explore, innovate, and bring their ideas to life.
-            Whether you&apos;re into <strong className="text-black dark:text-white">electronics</strong> or{" "}
-            <strong className="text-black dark:text-white">software</strong>, we&apos;ve got you covered!
-          </p>
-        )}
+        <p className="text-lg max-w-xl mx-auto text-gray-600 dark:text-gray-300">
+          A creative hub for students to explore, innovate, and bring their ideas to life.  
+          Whether you&apos;re into <strong className="text-black dark:text-white">electronics</strong> or  
+          <strong className="text-black dark:text-white"> software</strong>, we&apos;ve got you covered!
+        </p>
       </div>
 
       {/* Idea Selection Cards */}
@@ -128,12 +127,10 @@ export default function Ideas() {
             }`}
           >
             <h2 className="text-xl font-bold text-black dark:text-white">
-              Do you want to explore{" "}
-              {selectedCategory === "hardware" ? "Hardware Electronics" : "Software"} ideas?
+              Do you want to explore {selectedCategory === "hardware" ? "Hardware Electronics" : "Software"} ideas?
             </h2>
-
             <p className="text-gray-600 dark:text-gray-400 mt-2">
-              Click &quot;Yes&quot; to continue or &quot;No&quot; to stay on this page.
+              Click "Yes" to continue or "No" to stay on this page.
             </p>
             <div className="flex justify-between mt-4">
               <Button
