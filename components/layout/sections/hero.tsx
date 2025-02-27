@@ -1,25 +1,20 @@
-"use client"; 
+"use client";
+
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { ArrowRight } from "lucide-react";
 import { useTheme } from "next-themes";
 import Image from "next/image";
 import Link from "next/link";
-import { useState } from "react";
+import { useRouter } from "next/navigation";
 
 export const HeroSection = () => {
-  const [showModal, setShowModal] = useState(false);
-
-  const handleClick = (e: React.MouseEvent<HTMLButtonElement>) => {
-    e.preventDefault();
-    setShowModal(true);
-  };
-
-  const closeModal = () => {
-    setShowModal(false);
-  };
-
+  const router = useRouter();
   const { theme } = useTheme();
+
+  const handleClick = () => {
+    router.push("/ideas"); // Redirect to Ideas Hub
+  };
 
   return (
     <section className="container w-full">
@@ -54,12 +49,19 @@ export const HeroSection = () => {
               <ArrowRight className="size-5 ml-2 group-hover/arrow:translate-x-1 transition-transform" />
             </Button>
 
+            {/* Animated Idea Hub Button */}
             <Button
               onClick={handleClick}
-              variant="secondary"
-              className="w-5/6 md:w-1/4 font-bold"
+              className="relative w-5/6 md:w-1/4 font-bold text-white px-6 py-3 rounded-lg 
+                         shadow-lg transition-all duration-300 transform hover:scale-105 
+                         bg-gradient-to-r from-green-500 to-blue-500 hover:from-blue-500 hover:to-green-500
+                         before:absolute before:inset-0 before:bg-white/10 before:blur-lg before:opacity-0 
+                         hover:before:opacity-100 before:transition-opacity
+                         after:absolute after:inset-0 after:w-full after:h-full after:bg-gradient-to-r
+                         after:from-transparent after:via-white/30 after:to-transparent after:opacity-0
+                         after:hover:opacity-100 after:transition-opacity after:duration-700"
             >
-              Access Login
+              Idea Hub 🚀
             </Button>
           </div>
         </div>
@@ -81,18 +83,6 @@ export const HeroSection = () => {
           <div className="absolute bottom-0 left-0 w-full h-20 md:h-28 bg-gradient-to-b from-background/0 via-background/50 to-background rounded-lg"></div>
         </div>
       </div>
-
-      {showModal && (
-        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
-          <div className="bg-white rounded-lg shadow-lg p-6 max-w-sm w-full text-center">
-            <h2 className="text-xl font-bold mb-4 dark:text-black">Coming Soon!</h2>
-            <p className="text-muted-foreground mb-6 dark:text-black">
-              Stay tuned for upcoming features! Exciting updates are on the way.
-            </p>
-            <Button onClick={closeModal}>Close</Button>
-          </div>
-        </div>
-      )}
     </section>
   );
 };

@@ -102,7 +102,7 @@ export const FooterSection = () => {
         <Separator className="my-6" />
         <section className="">
           <h3 className="">
-            &copy; 2024 Designed and developed by
+            &copy; 2024-25 Designed and developed by
             <Link
               target="_blank"
               href="https://github.com/cyberkutti-iedc"
