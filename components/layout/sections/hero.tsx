@@ -4,13 +4,13 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { ArrowRight } from "lucide-react";
 import { useTheme } from "next-themes";
-import Image from "next/image";
+//import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 
 export const HeroSection = () => {
   const router = useRouter();
-  const { theme } = useTheme();
+ // const { theme } = useTheme();
 
   const handleClick = () => {
     router.push("/ideas"); // Redirect to Ideas Hub
