@@ -7,7 +7,7 @@ import { MotionDiv } from "@/components/ui/motion";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { ArrowRight, Cpu, Code, XCircle, CheckCircle } from "lucide-react";
-import Cookies from "js-cookie"; // ✅ Import js-cookie
+import Cookies from "js-cookie";
 
 export default function Ideas() {
   const router = useRouter();
@@ -27,8 +27,8 @@ export default function Ideas() {
 
   const handleConfirmYes = () => {
     if (selectedCategory) {
-      Cookies.set("userConfirmed", "true", { expires: 1 }); // ✅ Set cookie to remember confirmation
-      router.push(`/ideas/${selectedCategory}`); // ✅ Redirect to chosen category
+      Cookies.set("userConfirmed", "true", { expires: 1 });
+      router.push(`/ideas/${selectedCategory}`);
     }
     setShowModal(false);
   };
@@ -46,18 +46,17 @@ export default function Ideas() {
       {/* Header Section */}
       <div className="text-center space-y-6">
         <h1 className="text-3xl md:text-5xl font-extrabold tracking-wide">
-          Welcome to  
+          Welcome to{" "}
           <span className="text-transparent px-2 bg-gradient-to-r from-[#FFD700] to-[#D247BF] bg-clip-text">
             Ecocee Idea Box
           </span>
         </h1>
         {mounted && (
-         <p className="text-lg max-w-xl mx-auto text-gray-600 dark:text-gray-300">
-         A creative hub for students to explore, innovate, and bring their ideas to life.  
-         Whether you&apos;re into <strong className="text-black dark:text-white">electronics</strong> or  
-         <strong className="text-black dark:text-white"> software</strong>, we&apos;ve got you covered!
-       </p>
-       
+          <p className="text-lg max-w-xl mx-auto text-gray-600 dark:text-gray-300">
+            A creative hub for students to explore, innovate, and bring their ideas to life.
+            Whether you&apos;re into <strong className="text-black dark:text-white">electronics</strong> or{" "}
+            <strong className="text-black dark:text-white">software</strong>, we&apos;ve got you covered!
+          </p>
         )}
       </div>
 
@@ -128,10 +127,10 @@ export default function Ideas() {
                 : "bg-white bg-opacity-80 backdrop-blur-lg border-gray-200"
             }`}
           >
- <h2 className="text-xl font-bold text-black dark:text-white">
-  Do you want to explore {selectedCategory === "hardware" ? &quot;Hardware Electronics&quot; : &quot;Software&quot;} ideas?
-</h2>
-
+            <h2 className="text-xl font-bold text-black dark:text-white">
+              Do you want to explore{" "}
+              {selectedCategory === "hardware" ? "Hardware Electronics" : "Software"} ideas?
+            </h2>
 
             <p className="text-gray-600 dark:text-gray-400 mt-2">
               Click &quot;Yes&quot; to continue or &quot;No&quot; to stay on this page.
