@@ -128,12 +128,13 @@ export default function Ideas() {
                 : "bg-white bg-opacity-80 backdrop-blur-lg border-gray-200"
             }`}
           >
-            <h2 className="text-xl font-bold text-black dark:text-white">
-  Do you want to explore {selectedCategory === "hardware" ? "Hardware Electronics" : "Software"} ideas?
+ <h2 className="text-xl font-bold text-black dark:text-white">
+  Do you want to explore {selectedCategory === "hardware" ? &quot;Hardware Electronics&quot; : &quot;Software&quot;} ideas?
 </h2>
 
+
             <p className="text-gray-600 dark:text-gray-400 mt-2">
-              Click "Yes" to continue or "No" to stay on this page.
+              Click &quot;Yes&quot; to continue or &quot;No&quot; to stay on this page.
             </p>
             <div className="flex justify-between mt-4">
               <Button
