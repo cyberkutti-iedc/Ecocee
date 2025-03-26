@@ -174,7 +174,7 @@ export const Navbar = () => {
         <Button asChild size="sm" variant="ghost" aria-label="Chat on WhatsApp">
           <Link
             aria-label="Chat on WhatsApp"
-            href="https://wa.me/+918891325138"
+            href="/login"
             target="_blank"
           >
             <Contact2Icon className="size-5"/>

@@ -1,11 +1,11 @@
 "use client";
 
-import { useRouter } from "next/navigation";
+//import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { hardwareIdeas } from "@/data/hardwareList";
 import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { ArrowRight, ChevronLeft, ChevronRight } from "lucide-react";
+import {  ChevronLeft, ChevronRight } from "lucide-react";
 
 const ITEMS_PER_PAGE = 6;
 
@@ -16,7 +16,7 @@ type HardwareIdea = {
 };
 
 export default function HardwareList() {
-  const router = useRouter();
+  //const router = useRouter();
   const [currentPage, setCurrentPage] = useState<number>(1);
   const [expanded, setExpanded] = useState<Record<number, boolean>>({});
 
