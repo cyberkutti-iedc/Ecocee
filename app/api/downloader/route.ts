@@ -1,4 +1,4 @@
-import { NextRequest, NextResponse } from "next/server";
+import {  NextResponse } from "next/server";
 import { Client, Storage } from "appwrite";
 
 // Initialize Appwrite Client
@@ -11,7 +11,7 @@ const storage = new Storage(client);
 const storageBucketId = process.env.NEXT_PUBLIC_APPWRITE_STORAGE_ID as string;
 const fileId = process.env.NEXT_PUBLIC_APPWRITE_HDK_FILE_ID as string; 
 
-export async function GET(req: NextRequest) {
+export async function GET() {
   try {
     // ✅ Generate file download URL
     const fileUrl = storage.getFileDownload(storageBucketId, fileId);

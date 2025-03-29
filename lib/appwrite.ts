@@ -117,13 +117,15 @@ export async function getCurrentUser(): Promise<User | null> {
 
 
 // Login
+// ...existing code...
+
 export async function login(
   email: string, 
   password: string
 ): Promise<AuthResponse> {
   try {
     // Check existing session
-    let currentUser = await getCurrentUser().catch(() => null);
+    const currentUser = await getCurrentUser().catch(() => null);
     
     if (currentUser?.email === email) {
       return { success: true, user: currentUser };
@@ -153,6 +155,7 @@ export async function login(
   }
 }
 
+// ...existing code...
 // Logout
 export async function logout(): Promise<{ success: boolean }> {
   try {

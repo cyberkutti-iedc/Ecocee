@@ -3,6 +3,13 @@
 import { redirect } from 'next/navigation';
 import { getCurrentUser, Role } from './appwrite';
 
+interface AuthError extends Error {
+  code?: number;
+  response?: {
+    message: string;
+  };
+}
+
 /**
  * Require authentication to access a page
  * Redirects to login if user is not authenticated
@@ -63,8 +70,15 @@ export function hasRole(user: { role: Role } | null, roles: Role[]): boolean {
 export async function getServerSideUser() {
   try {
     const user = await getCurrentUser();
-    return { user };
-  } catch (error) {
-    return { user: null };
+    return { user, error: null };
+  } catch (error: unknown) {
+    const authError = error as AuthError;
+    return { 
+      user: null, 
+      error: {
+        message: authError.response?.message || 'Authentication failed',
+        code: authError.code || 500
+      }
+    };
   }
 }

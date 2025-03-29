@@ -18,8 +18,9 @@ export default function UsersPage() {
                     </AlertTitle>
                 </div>
                 <p className="mt-2 ml-8 text-amber-600 dark:text-amber-300">
-                    This feature is currently in development. We're working hard to bring you an amazing user management experience soon!
-                </p>
+    This feature is currently in development. We&rsquo;re working hard to bring you an amazing user management experience soon!
+</p>
+
             </Alert>
 
             <div className="bg-white rounded-lg shadow p-6">

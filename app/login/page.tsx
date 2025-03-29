@@ -52,7 +52,7 @@ export default function LoginPage() {
     }
 
     try {
-      const userRole = role === "Other" ? customRole : role;
+      // const userRole = role === "Other" ? customRole : role;
       const result = await login(email, password); // Perform login with email and password
 
       if (result.success && result.user) {
@@ -185,7 +185,7 @@ export default function LoginPage() {
 
           {/* Registration Link */}
           <p className="text-sm text-gray-600 dark:text-gray-400 text-center">
-            Don't have an account?{" "}
+          Don&rsquo;t have an account?{" "}
             <Link
               href="/register"
               className="text-blue-600 dark:text-blue-400 hover:text-blue-800 

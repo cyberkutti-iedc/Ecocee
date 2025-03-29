@@ -1,7 +1,7 @@
 'use client';
 
-import { useState, useEffect } from 'react';
-import { Search, LayoutGrid, List, Server, Activity } from 'lucide-react';
+import { useState} from 'react';
+import { Search, Server, Activity } from 'lucide-react';
 import { motion } from 'framer-motion';
 import ProjectDetailsModal from '@/components/projectModal';
 
@@ -107,11 +107,11 @@ const ProjectCard: React.FC<{
 
 // Main Projects Page Component
 export default function ProjectsPage() {
-    const [viewMode, setViewMode] = useState<'grid' | 'list'>('grid');
+    const [viewMode] = useState<'grid' | 'list'>('grid');
     const [searchQuery, setSearchQuery] = useState('');
     const [projects, setProjects] = useState<Project[]>(mockProjects);
     const [selectedProject, setSelectedProject] = useState<Project | null>(null);
-    const [logs, setLogs] = useState<Log[]>([]);
+    const [, setLogs] = useState<Log[]>([]);
     const [activities, setActivities] = useState<{ [key: string]: number }>({});
 
     // Handle Server Toggle
