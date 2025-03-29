@@ -1783,6 +1783,7 @@ import {
   Moon, Sun, ChevronDown 
 } from "lucide-react";
 import Image from "next/image";
+import { motion } from "framer-motion";
 
 export default function NitiLandingPage() {
   // THEME SELECTION - Uncomment only ONE of the following themes
@@ -1864,7 +1865,7 @@ export default function NitiLandingPage() {
   // Get active theme
   const theme = themeConfig[THEME];
 
-  const [, setSelectedDevice] = useState("niti-core");
+  const [selectedDevice, setSelectedDevice] = useState("niti-v1");
   const [showToast, setShowToast] = useState(false);
   const [activating, setActivating] = useState(false);
   const [toastMessage, setToastMessage] = useState("");
@@ -1897,42 +1898,44 @@ export default function NitiLandingPage() {
   };
   
   const devices = {
-    "niti-core": {
-      name: "Niti Core",
-      description: "Standard development board for professional applications",
-      specs: [
-        "32-bit ARM Cortex-M4 processor",
-        "512KB Flash, 128KB RAM",
-        "24 GPIO pins",
-        "USB-C connector",
-        "JTAG debugging interface"
-      ],
-      image: "/niti-core.png"
-    },
+    "niti-mini": {
+  "name": "Niti Mini",
+  "description": "Ultra-compact board for simple embedded applications",
+  "specs": [
+    "8-bit AVR ATtiny85 processor",
+    "8KB Flash, 512B SRAM, 512B EEPROM",
+    "6 GPIO pins",
+    "Micro USB connector",
+    "Ultra-low power consumption"
+  ],
+  "image": "/niti/attiny85.jpg"
+},
     "niti-v1": {
-      name: "Niti V1",
-      description: "Compact form factor for embedded projects",
-      specs: [
-        "32-bit ARM Cortex-M0+ processor",
-        "256KB Flash, 64KB RAM",
-        "18 GPIO pins",
-        "USB-C connector",
-        "Low power consumption"
-      ],
-      image: "/niti-micro.png"
-    },
-    "niti-pro": {
-      name: "Niti Pro",
-      description: "High-performance for demanding applications",
-      specs: [
-        "32-bit ARM Cortex-M7 processor",
-        "2MB Flash, 512KB RAM",
-        "48 GPIO pins",
-        "USB-C connector",
-        "Hardware acceleration for ML"
-      ],
-      image: "/niti-pro.png"
-    }
+  "name": "Niti V1",
+  "description": "Compact form factor for embedded projects",
+  "specs": [
+    "8-bit AVR ATmega2560 processor",
+    "256KB Flash, 8KB SRAM, 4KB EEPROM",
+    "54 GPIO pins (15 PWM, 16 Analog)",
+    "USB Type-C connector",
+    "Low power consumption"
+  ],
+  "image": "/niti/atmega2560.jpg"
+}
+,
+ "niti-pro": {
+  "name": "Niti Pro",
+  "description": "Compact form factor for embedded projects",
+  "specs": [
+    "32-bit dual-core Xtensa LX6 processor",
+    "4MB Flash, 520KB SRAM",
+    "30 GPIO pins",
+    "Wi-Fi & Bluetooth connectivity",
+    "Low power consumption"
+  ],
+  "image": "/niti/esp.jpg"
+}
+
   };
 
   const testimonials = [
@@ -2326,11 +2329,12 @@ export default function NitiLandingPage() {
               Session: <span className={`font-mono ${theme.textAccent}`}>{sessionId}</span>
             </div>
             <button
-              onClick={activateDevice}
-              className={`${theme.primaryButton} text-white py-2 px-4 rounded-md text-sm transition`}
-            >
-              Activate HDK
-            </button>
+  onClick={() => window.location.href = '/niti/purchase'} 
+  className={`${theme.primaryButton} text-white py-2 px-4 rounded-md text-sm transition`}
+>
+  Purchase License Key
+</button>
+
           </div>
         </div>
         
@@ -2373,7 +2377,7 @@ export default function NitiLandingPage() {
                 Activate Your HDK
               </button>
               <a
-                href="/docs/niti_hal/index.html"
+                href="https://cyberkutti-iedc.github.io/niti-wiki/niti_hal/"
                 className={`${theme.secondaryButton} py-3 px-6 rounded-md text-lg border transition`}
               >
                 Learn More
@@ -2565,52 +2569,90 @@ export default function NitiLandingPage() {
         </div>
       </section>
 
-      {/* Devices Section */}
-      <section id="devices" className={`py-16 ${darkMode ? 'bg-gray-800' : 'bg-white'}`}>
-        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-12">
-            <h2 className={`text-3xl font-light ${darkMode ? 'text-white' : 'text-gray-900'} mb-4`}>Supported Devices</h2>
-            <div className={`w-16 h-1 ${theme.dot} mx-auto`}></div>
-          </div>
-          
-          <div className="grid md:grid-cols-3 gap-8">
-            {Object.entries(devices).map(([id, device]) => (
-              <div key={id} className={`${darkMode ? 'bg-gray-700' : 'bg-gray-50'} rounded-lg overflow-hidden shadow-sm`}>
-                <div className={`h-48 ${darkMode ? 'bg-gray-800' : 'bg-white'} flex items-center justify-center`}>
-                  <div className={`w-32 h-32 ${theme.accentLight} rounded-md flex items-center justify-center`}>
-                    <span className={`${theme.iconLight} font-medium`}>{device.name}</span>
-                  </div>
-                </div>
-                <div className="p-6">
-                  <h3 className={`text-xl font-medium ${darkMode ? 'text-white' : 'text-gray-900'} mb-2`}>{device.name}</h3>
-                  <p className={`${darkMode ? 'text-gray-300' : 'text-gray-600'} mb-4`}>{device.description}</p>
-                  <h4 className={`text-sm font-medium ${darkMode ? 'text-gray-200' : 'text-gray-900'} mb-2`}>Specifications:</h4>
-                  <ul className="space-y-1 mb-4">
-                    {device.specs.map((spec, index) => (
-                      <li key={index} className={`flex items-start ${darkMode ? 'text-gray-300' : 'text-gray-600'} text-sm`}>
-                        <div className="flex-shrink-0 w-4 h-4 mt-1">
-                          <div className={`w-2 h-2 ${theme.dot} rounded-full`}></div>
-                        </div>
-                        {spec}
-                      </li>
-                    ))}
-                  </ul>
-                  <button 
-                    onClick={() => {
-                      setSelectedDevice(id);
-                      activateDevice();
-                    }}
-                    className={`w-full ${theme.primaryButton} text-white py-2 px-4 rounded-md flex items-center justify-center transition`}
-                  >
-                    <Workflow className="w-5 h-5 mr-2" />
-                    Activate Device
-                  </button>
-                </div>
+    {/* Devices Section */}
+<section id="devices" className={`py-16 ${darkMode ? theme.darkBg : "bg-white"}`}>
+  <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div className="text-center mb-12">
+      <h2 className={`text-3xl font-light ${darkMode ? "text-white" : "text-gray-900"} mb-4`}>
+        Supported Devices
+      </h2>
+      <div className={`w-16 h-1 ${theme.dot} mx-auto`}></div>
+    </div>
+
+    <div className="grid md:grid-cols-3 gap-8">
+      {Object.entries(devices).map(([id, device]) => {
+        const isSelected = selectedDevice === id;
+
+        return (
+          <motion.div
+            key={id}
+            className={`relative rounded-lg overflow-hidden shadow-md transition ${
+              darkMode ? "bg-gray-700" : "bg-gray-50"
+            }`}
+            whileHover={{
+              scale: 1.05,
+              boxShadow: "0px 0px 20px rgba(34, 197, 94, 0.4)",
+            }}
+          >
+            {/* Border animation for selection */}
+            {isSelected && (
+              <motion.div
+                className="absolute inset-0 rounded-lg border-4 border-transparent"
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1, borderColor: "rgba(34, 197, 94, 1)" }}
+                transition={{ duration: 0.5, ease: "easeInOut" }}
+              />
+            )}
+
+            {/* Image Section */}
+            <div className={`h-48 flex items-center justify-center ${darkMode ? "bg-gray-800" : "bg-white"}`}>
+              <div className={`w-32 h-32 rounded-md flex items-center justify-center overflow-hidden`}>
+                <Image
+                  src={device.image}  // Make sure the path is correct
+                  alt={device.name}
+                  width={128}
+                  height={128}
+                  className="object-contain"
+                />
               </div>
-            ))}
-          </div>
-        </div>
-      </section>
+            </div>
+
+            {/* Device Info */}
+            <div className="p-6 relative z-10">
+              <h3 className={`text-xl font-medium ${darkMode ? "text-white" : "text-gray-900"} mb-2`}>
+                {device.name}
+              </h3>
+              <p className={`${darkMode ? "text-gray-300" : "text-gray-600"} mb-4`}>{device.description}</p>
+
+              <h4 className={`text-sm font-medium ${darkMode ? "text-gray-200" : "text-gray-900"} mb-2`}>
+                Specifications:
+              </h4>
+              <ul className="space-y-1 mb-4">
+                {device.specs.map((spec, index) => (
+                  <li key={index} className={`flex items-start ${darkMode ? "text-gray-300" : "text-gray-600"} text-sm`}>
+                    <div className="flex-shrink-0 w-4 h-4 mt-1">
+                      <div className={`w-2 h-2 ${theme.dot} rounded-full`}></div>
+                    </div>
+                    {spec}
+                  </li>
+                ))}
+              </ul>
+
+              <button
+                onClick={() => setSelectedDevice(id)}
+                className={`w-full ${theme.primaryButton} text-white py-2 px-4 rounded-md flex items-center justify-center transition`}
+              >
+                <Workflow className="w-5 h-5 mr-2" />
+                Activate Device
+              </button>
+            </div>
+          </motion.div>
+        );
+      })}
+    </div>
+  </div>
+</section>
+
 
       {/* Testimonials Section */}
       <section id="testimonials" className={`py-16 ${darkMode ? 'bg-gray-900' : 'bg-gray-50'}`}>

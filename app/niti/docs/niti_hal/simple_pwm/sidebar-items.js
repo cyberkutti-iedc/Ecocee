@@ -1,1 +1,0 @@
-window.SIDEBAR_ITEMS = {"enum":["Prescaler"],"struct":["Timer0Pwm","Timer1Pwm","Timer2Pwm","Timer3Pwm","Timer4Pwm","Timer5Pwm"],"trait":["IntoPwmPin","PwmPinOps"]};
