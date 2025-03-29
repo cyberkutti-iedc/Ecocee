@@ -6,15 +6,22 @@ const nextConfig: NextConfig = {
   images: {
     domains: [
       'avatars.githubusercontent.com',
-      'i.pravatar.cc', // Add this line to allow images from i.pravatar.cc
-      'images.unsplash.com', // Already allowed, assuming you're using Unsplash
-      
-    ], // Add the allowed image domains here
+      'i.pravatar.cc',
+      'images.unsplash.com',
+    ],
   },
   env: {
-    // Expose the Google verification code as an environment variable
     GOOGLE_SITE_VERIFICATION: process.env.GOOGLE_SITE_VERIFICATION,
   },
+  async rewrites() {
+    return [
+      {
+        source: '/docs/:path*',
+        destination: '/public/docs/:path*', // Ensure static files in public/docs are accessible
+      },
+    ];
+  },
+  trailingSlash: true, // Ensures URLs like `/docs/niti_hal/` work correctly
 };
 
 export default nextConfig;
