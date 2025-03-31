@@ -77,24 +77,16 @@ export async function createAccount(
 }
 
 // Get current user
-// Get current user
 export async function getCurrentUser(): Promise<User | null> {
   try {
-    // Check if the user has an active session
-    const sessions = await account.listSessions();
-    if (sessions.sessions.length === 0) {
-      console.warn("No active session found.");
-      return null;
-    }
-
-    // Get account details
+    // Get account details directly from Appwrite
     const currentAccount = await account.get();
     
     // Fetch user document from database
     const { documents } = await databases.listDocuments(
       process.env.NEXT_PUBLIC_APPWRITE_DATABASE_ID as string,
       process.env.NEXT_PUBLIC_APPWRITE_COLLECTION_ID as string,
-      [Query.equal('email', currentAccount.email)]
+      [Query.equal("email", currentAccount.email)]
     );
 
     if (!documents.length) return null;
@@ -116,44 +108,37 @@ export async function getCurrentUser(): Promise<User | null> {
 }
 
 
-// Login
-// ...existing code...
 
-export async function login(
-  email: string, 
-  password: string
-): Promise<AuthResponse> {
+export async function login(email: string, password: string): Promise<AuthResponse> {
   try {
-    // Check existing session
     const currentUser = await getCurrentUser().catch(() => null);
-    
-    if (currentUser?.email === email) {
+
+    if (currentUser) {
+      console.log("✅ User already logged in, skipping session creation.");
       return { success: true, user: currentUser };
     }
 
-    if (currentUser) {
-      await logout();
+    await account.createEmailPasswordSession(email, password);
+    const user = await getCurrentUser();
+
+    if (!user) {
+      throw new Error("Failed to fetch user data after login");
     }
 
-    // Create new session
-    await account.createEmailPasswordSession(email, password);
-    
-    // Get user data
-    const user = await getCurrentUser();
-    
-    if (!user) {
-      throw new Error('Failed to fetch user data after login');
+    // 🔥 Force reload after login
+    if (typeof window !== "undefined") {
+      window.location.href = "/dashboard";
     }
 
     return { success: true, user };
   } catch (error) {
-    console.error('Login failed:', error);
-    return { 
-      success: false, 
-      error: error as AppwriteException 
-    };
+    console.error("❌ Login failed:", error);
+    return { success: false, error: error as AppwriteException };
   }
 }
+
+
+
 
 // ...existing code...
 // Logout

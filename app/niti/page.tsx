@@ -1780,12 +1780,44 @@ import { useState, useEffect } from "react";
 import { 
   Terminal, Workflow, RefreshCw, Check, Download, Info, Code, 
   Cpu, Shield, Zap, X, Wrench, Folder, Package, FileArchive, 
-  Moon, Sun, ChevronDown 
+  Moon, Sun, ChevronDown, 
+  ArrowRight
 } from "lucide-react";
 import Image from "next/image";
 import { motion } from "framer-motion";
+import Link from "next/link";
 
 export default function NitiLandingPage() {
+
+
+  const tools = [
+    {
+      name: "Prwans Installer",
+      description:
+        "A one-click installer that sets up all essential tools like Git, VS Code, and dependencies required for Niti HDK development.",
+      link: "https://github.com/cyberkutti-iedc/Prawns-Installer",
+    },
+    {
+      name: "Waterman",
+      description:
+        "A Rust-based AVR microcontroller flasher, simplifying embedded programming and firmware deployment.",
+      link: "https://crates.io/crates/waterman",
+    },
+    {
+      name: "MemoryMap",
+      description:
+        "A Rust-based tool that provides detailed insights into a microcontroller's memory layout, including flash and RAM usage.",
+      link: "https://github.com/cyberkutti-iedc/MemoryMap",
+    },
+    {
+      name: "Rust",
+      description:
+        "The primary programming language for Niti HDK, ensuring safe, efficient, and concurrent embedded system development.",
+      link: "https://www.rust-lang.org/",
+    },
+  ];
+  
+
   // THEME SELECTION - Uncomment only ONE of the following themes
   // ==========================================================
   
@@ -1793,6 +1825,9 @@ export default function NitiLandingPage() {
   //const THEME = "orange"; // Orange/Amber Energetic Theme
    const THEME = "emerald"; // Premium Emerald/Teal Luxury Theme
   // const THEME = "purple"; // Royal Purple Elegant Theme
+
+
+
   
   // Theme configuration object
   const themeConfig = {
@@ -1875,6 +1910,8 @@ export default function NitiLandingPage() {
   const [isAgreed, setIsAgreed] = useState(false);
   const [darkMode, setDarkMode] = useState(false);
   const [showDropdown, setShowDropdown] = useState(false);
+ 
+
   
   // Form state
   const [name, setName] = useState("");
@@ -2007,6 +2044,8 @@ export default function NitiLandingPage() {
       setActivating(false);
     }
   };
+
+
   
   const handleDownloadCode = async () => {
     if (!isAgreed) {
@@ -2360,54 +2399,69 @@ export default function NitiLandingPage() {
       </header>
 
       {/* Hero Section */}
-      <section className={`bg-gradient-to-b ${theme.gradient} py-16`}>
-        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center">
-            <h1 className={`text-4xl md:text-5xl font-light ${darkMode ? 'text-white' : 'text-gray-900'} mb-6`}>
+      <section className={`relative bg-gradient-to-b ${theme.gradient} py-20`}>
+  <div className="max-w-6xl mx-auto px-6 sm:px-8 lg:px-12 text-center">
+
+  <h1 className={`text-4xl md:text-5xl font-light ${darkMode ? 'text-white' : 'text-gray-900'} mb-6`}>
               Powerful <span className={theme.textAccent}>Embedded Systems</span> Framework
             </h1>
-            <p className={`text-xl ${darkMode ? 'text-gray-300' : 'text-gray-600'} max-w-2xl mx-auto mb-8`}>
-              niti HDK is a Rust-based framework designed for creating reliable, secure, and efficient embedded systems.
-            </p>
-            <div className="flex flex-col md:flex-row justify-center gap-4">
-              <button
-                onClick={activateDevice}
-                className={`${theme.primaryButton} text-white py-3 px-6 rounded-md text-lg transition`}
-              >
-                Activate Your HDK
-              </button>
-              <a
-                href="https://cyberkutti-iedc.github.io/niti-wiki/niti_hal/"
-                className={`${theme.secondaryButton} py-3 px-6 rounded-md text-lg border transition`}
-              >
-                Learn More
-              </a>
-            </div>
-          </div>
-          </div>
-          
-          {/* Hero Badge */}
-          <div className="mt-16 text-center">
-            <div className={`inline-block ${darkMode ? 'bg-gray-800' : 'bg-white'} shadow-lg rounded-lg px-6 py-4 mx-auto`}>
-              <div className="flex items-center gap-3">
-                <div className={`w-12 h-12 rounded-full flex items-center justify-center ${theme.accentLight}`}>
-                  <Shield className={`w-6 h-6 ${theme.iconAccent}`} />
-                </div>
-                <div className="text-left">
-                
 
+    {/* Subtitle */}
+    <p className={`text-xl ${darkMode ? "text-gray-300" : "text-gray-600"} max-w-2xl mx-auto mb-10`}>
+      niti HDK is a Rust-based framework designed for creating reliable, secure, and efficient embedded systems.
+    </p>
 
-<p className={`font-medium ${darkMode ? 'text-gray-200' : 'text-gray-800'}`}>
-                  Security Verified
-                </p>
-                <p className={`text-xs ${darkMode ? 'text-gray-400' : 'text-gray-500'}`}>
-                  All packages are cryptographically signed
-                </p>
-              </div>
-            </div>
-          </div>
+    {/* Call to Actions */}
+    <motion.div
+      className="flex flex-col md:flex-row justify-center gap-6"
+      initial={{ opacity: 0, y: 10 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ delay: 0.2, duration: 0.6 }}
+    >
+      <button
+        onClick={activateDevice}
+        className={`px-6 py-3 text-lg font-medium rounded-lg shadow-md transition-transform transform hover:scale-105 ${
+          theme.primaryButton
+        } text-white`}
+      >
+        Activate Your HDK
+      </button>
+      <a
+        href="https://cyberkutti-iedc.github.io/niti-wiki/niti_hal/"
+        className={`px-6 py-3 text-lg font-medium rounded-lg border shadow-sm transition-transform transform hover:scale-105 ${
+          theme.secondaryButton
+        }`}
+      >
+        Learn More
+      </a>
+    </motion.div>
+  </div>
+
+  {/* Animated Badge Section */}
+  <div className="mt-16 text-center">
+    <motion.div
+      className={`inline-block px-6 py-5 rounded-lg shadow-xl ${
+        darkMode ? "bg-gray-800 border border-gray-700" : "bg-white border border-gray-200"
+      }`}
+      initial={{ opacity: 0, scale: 0.9 }}
+      animate={{ opacity: 1, scale: 1 }}
+      transition={{ delay: 0.3, duration: 0.5 }}
+    >
+      <div className="flex items-center gap-4">
+        <div className={`w-12 h-12 rounded-full flex items-center justify-center ${theme.accentLight}`}>
+          <Shield className={`w-6 h-6 ${theme.iconAccent}`} />
         </div>
-      </section>
+        <div className="text-left">
+          <p className={`font-medium text-lg ${darkMode ? "text-gray-200" : "text-gray-800"}`}>Security Verified</p>
+          <p className={`text-sm ${darkMode ? "text-gray-400" : "text-gray-500"}`}>
+            All packages are cryptographically signed.
+          </p>
+        </div>
+      </div>
+    </motion.div>
+  </div>
+</section>
+
 
       {/* About Section */}
       <section id="about" className={`py-16 ${darkMode ? 'bg-gray-800' : 'bg-white'}`}>
@@ -2490,6 +2544,71 @@ export default function NitiLandingPage() {
           </div>
         </div>
       </section>
+
+      {/*Tools */}
+
+      <section className={`py-20 px-6 relative ${darkMode ? "bg-gray-900" : "bg-gray-50"}`}>
+      {/* Background Glow */}
+      <div className="absolute inset-0 bg-gradient-to-br from-emerald-400 to-blue-500 opacity-10 blur-3xl"></div>
+
+      <div className="max-w-5xl mx-auto text-center relative z-10">
+        {/* Animated Title */}
+        <motion.h2
+          className={`text-5xl md:text-6xl font-extrabold tracking-tight ${
+            darkMode ? "text-white" : "text-gray-900"
+          }`}
+          initial={{ opacity: 0, y: -20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6, ease: "easeOut" }}
+        >
+          Essential <span className="text-emerald-400">Tools & Resources</span>
+        </motion.h2>
+
+        {/* Subtitle */}
+        <p className={`mt-4 text-lg ${darkMode ? "text-gray-300" : "text-gray-600"}`}>
+          Set up your environment with these key tools.
+        </p>
+
+        {/* Tool List */}
+        <div className="grid md:grid-cols-2 gap-8 mt-10">
+          {tools.map((tool, index) => (
+            <motion.div
+              key={tool.name}
+              className={`relative p-6 rounded-xl shadow-lg overflow-hidden ${
+                darkMode ? "bg-gray-800/60 backdrop-blur-lg" : "bg-white/80 backdrop-blur-lg"
+              } border border-gray-500/20 transition hover:shadow-xl`}
+              initial={{ opacity: 0, y: 30 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5, delay: index * 0.2 }}
+            >
+              {/* Background Overlay */}
+              <div className="absolute inset-0 bg-gradient-to-r from-emerald-400 to-green-600 opacity-10 blur-2xl"></div>
+
+              {/* Tool Name */}
+              <h3 className={`text-lg font-semibold ${darkMode ? "text-white" : "text-gray-900"}`}>
+                {tool.name}
+              </h3>
+
+              {/* Description */}
+              <p className={`mt-2 text-sm ${darkMode ? "text-gray-300" : "text-gray-600"}`}>
+                {tool.description}
+              </p>
+
+              {/* Learn More Link */}
+              <a
+                href={tool.link}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="mt-3 flex items-center text-emerald-500 hover:text-emerald-400 transition group"
+              >
+                Learn More{" "}
+                <ArrowRight className="w-4 h-4 ml-1 transition-transform group-hover:translate-x-1" />
+              </a>
+            </motion.div>
+          ))}
+        </div>
+      </div>
+    </section>
 
       {/* Features Section */}
       <section id="features" className={`py-16 ${darkMode ? 'bg-gray-900' : 'bg-gray-50'}`}>
@@ -2782,21 +2901,50 @@ export default function NitiLandingPage() {
             <div>
               <h3 className="text-lg font-medium text-white mb-4">Company</h3>
               <ul className="space-y-2">
-                <li><a href="#" className={`text-gray-400 hover:${theme.iconLight} text-sm`}>About Ecocee</a></li>
+                {/* <li><a href="/" className={`text-gray-400 hover:${theme.iconLight} text-sm`}>About Ecocee</a></li>
                 <li><a href="#" className={`text-gray-400 hover:${theme.iconLight} text-sm`}>Blog</a></li>
-                <li><a href="#" className={`text-gray-400 hover:${theme.iconLight} text-sm`}>Careers</a></li>
+                <li><a href="/careers" className={`text-gray-400 hover:${theme.iconLight} text-sm`}>Careers</a></li>
                 <li><a href="#" className={`text-gray-400 hover:${theme.iconLight} text-sm`}>Press</a></li>
-                <li><a href="#" className={`text-gray-400 hover:${theme.iconLight} text-sm`}>Contact Us</a></li>
+                <li><a href="#" className={`text-gray-400 hover:${theme.iconLight} text-sm`}>Contact Us</a></li> */}
+
+
+
+<li>
+  <Link href="/" className={`text-gray-400 hover:${theme.iconLight} text-sm`}>
+    About Ecocee
+  </Link>
+</li>
+<li>
+  <a href="#" className={`text-gray-400 hover:${theme.iconLight} text-sm`}>
+    Blog
+  </a>
+</li>
+<li>
+  <Link href="/careers" className={`text-gray-400 hover:${theme.iconLight} text-sm`}>
+    Careers
+  </Link>
+</li>
+<li>
+  <a href="#" className={`text-gray-400 hover:${theme.iconLight} text-sm`}>
+    Press
+  </a>
+</li>
+<li>
+  <a href="#" className={`text-gray-400 hover:${theme.iconLight} text-sm`}>
+    Contact Us
+  </a>
+</li>
+
               </ul>
             </div>
 
             <div>
               <h3 className="text-lg font-medium text-white mb-4">Legal</h3>
               <ul className="space-y-2">
-                <li><a href="#" className={`text-gray-400 hover:${theme.iconLight} text-sm`}>Terms of Service</a></li>
-                <li><a href="#" className={`text-gray-400 hover:${theme.iconLight} text-sm`}>Privacy Policy</a></li>
-                <li><a href="#" className={`text-gray-400 hover:${theme.iconLight} text-sm`}>License Agreement</a></li>
-                <li><a href="#" className={`text-gray-400 hover:${theme.iconLight} text-sm`}>Cookie Policy</a></li>
+                <li><a href="/niti/terms-of-service" className={`text-gray-400 hover:${theme.iconLight} text-sm`}>Terms of Service</a></li>
+                <li><a href="/niti/privacy-policy" className={`text-gray-400 hover:${theme.iconLight} text-sm`}>Privacy Policy</a></li>
+                <li><a href="/niti/license-agreement" className={`text-gray-400 hover:${theme.iconLight} text-sm`}>License Agreement</a></li>
+                <li><a href="/niti/cookie-policy" className={`text-gray-400 hover:${theme.iconLight} text-sm`}>Cookie Policy</a></li>
               </ul>
             </div>
           </div>

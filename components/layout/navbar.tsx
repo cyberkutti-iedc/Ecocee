@@ -43,6 +43,7 @@ const routeList: RouteProps[] = [
   { href: "/#team", label: "Team" },
   { href: "/#contact", label: "Contact" },
   { href: "/#faq", label: "FAQ" },
+  { href: "/careers", label: "Careers" },
 ];
 
 // Feature list for dropdown
