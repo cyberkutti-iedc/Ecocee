@@ -1900,7 +1900,7 @@ export default function NitiLandingPage() {
   // Get active theme
   const theme = themeConfig[THEME];
 
-  const [selectedDevice, setSelectedDevice] = useState("niti-v1");
+  const [selectedDevice] = useState("niti-v1");
   const [showToast, setShowToast] = useState(false);
   const [activating, setActivating] = useState(false);
   const [toastMessage, setToastMessage] = useState("");
@@ -2757,13 +2757,25 @@ export default function NitiLandingPage() {
                 ))}
               </ul>
 
-              <button
-                onClick={() => setSelectedDevice(id)}
-                className={`w-full ${theme.primaryButton} text-white py-2 px-4 rounded-md flex items-center justify-center transition`}
-              >
-                <Workflow className="w-5 h-5 mr-2" />
-                Activate Device
-              </button>
+              {id === "niti-pro" ? (
+  <a
+    href={"https://github.com/cyberkutti-iedc/Prawns-Installer/releases/download/ESP/niti-esp-start.exe"} 
+    className={`w-full ${theme.primaryButton} text-white py-2 px-4 rounded-md flex items-center justify-center transition`}
+  >
+    <Download className="w-5 h-5 mr-2" />
+    Download the Installer
+  </a>
+) : (
+  <button
+    onClick={activateDevice}
+    className={`w-full ${theme.primaryButton} text-white py-2 px-4 rounded-md flex items-center justify-center transition`}
+  >
+    <Workflow className="w-5 h-5 mr-2" />
+    Activate Device
+  </button>
+)}
+
+
             </div>
           </motion.div>
         );
