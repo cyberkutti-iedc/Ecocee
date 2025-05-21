@@ -15,7 +15,19 @@ export default function Home() {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-purple-50 to-white text-gray-900">
+    <>
+     <Head>
+        <title>Kode | Modern Programming Made Simple | Ecocee</title>
+        <meta
+          name="description"
+          content="Kode is a lightweight interpreted language with clean C-like syntax, dynamic typing, and functional capabilities. Explore installation, key features, code examples, documentation, and roadmap."
+        />
+        <meta
+          name="keywords"
+          content="Kode, programming language, embedded systems, Ecocee, interpreted language, IoT coding, C-like syntax, functional programming"
+        />
+      </Head>
+     <div className="min-h-screen bg-gradient-to-b from-purple-50 to-white text-gray-900">
       {/* Header */}
       <header className="sticky top-0 z-50 bg-white/80 backdrop-blur-lg border-b border-purple-100">
         <div className="container mx-auto px-4 py-4 flex justify-between items-center">
@@ -456,5 +468,7 @@ function RoadmapCard({ title, version, items, completed = [] }: { title: string;
         </ul>
       </div>
     </div>
+    </>
+   
   );
 }
