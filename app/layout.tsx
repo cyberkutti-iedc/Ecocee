@@ -9,36 +9,37 @@ import { NavbarWrapper } from "@/components/layout/NavbarWrapper";
 const inter = Inter({ subsets: ["latin"], display: "swap" });
 
 export const metadata: Metadata = {
-  title: "Ecocee | Embedded & IoT Solutions",
-  description: "Ecocee provides cutting-edge embedded systems and IoT development, offering tailored hardware and software solutions for a smarter future.",
+  title: "Ecocee | Embedded Systems, IoT & AI Solutions | Kerala Startup",
+  description: "Ecocee, a Kerala-based MSME startup, offers innovative embedded systems, IoT, AI development, and custom hardware & software solutions. Patentable projects and technical training.",
   keywords: [
     "Ecocee",
-    "IoT solutions",
-    "embedded systems",
-    "hardware design",
-    "custom electronics",
-    "technology consulting",
-    "smart devices"
+    "Embedded systems Kerala",
+    "IoT solutions India",
+    "AI project development",
+    "custom embedded hardware",
+    "technical learning hub",
+    "MSME startup Kerala",
+    "Kodungallur technology startup"
   ],
   openGraph: {
-    title: "Ecocee | Embedded & IoT Solutions",
-    description: "Ecocee specializes in advanced embedded and IoT solutions, delivering bespoke technology for modern challenges.",
+    title: "Ecocee | Embedded Systems, IoT & AI Solutions",
+    description: "Kerala-based startup Ecocee provides embedded systems, IoT, and AI project solutions along with technical training and patentable innovations.",
     url: "https://ecocee.in",
     type: "website",
     images: [
       {
-        url: "https://ecocee.in/og-image.jpg",
+        url: "https://ecocee.in/icon.png",
         width: 1200,
         height: 630,
-        alt: "Ecocee IoT Solutions"
+        alt: "Ecocee Embedded & IoT Solutions"
       }
     ]
   },
   twitter: {
     card: "summary_large_image",
     creator: "@Ecocee",
-    title: "Ecocee | IoT and Embedded Solutions",
-    description: "Discover Ecocee’s custom IoT and embedded system design services."
+    title: "Ecocee | Embedded Systems, IoT & AI Solutions",
+    description: "Discover Ecocee’s Kerala-based embedded systems, IoT, and AI development services with custom solutions and patentable projects."
   },
   metadataBase: new URL("https://ecocee.in"),
   applicationName: "Ecocee",
@@ -47,6 +48,7 @@ export const metadata: Metadata = {
     statusBarStyle: "default"
   }
 };
+
 
 export default function RootLayout({
   children,
