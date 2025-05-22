@@ -1,7 +1,6 @@
 import type { NextConfig } from 'next';
 const withTM = require('next-transpile-modules')(['@devnomic/marquee']);
 
-// Read environment variables from .env.local
 const nextConfig: NextConfig = {
   images: {
     domains: [
@@ -13,15 +12,25 @@ const nextConfig: NextConfig = {
   env: {
     GOOGLE_SITE_VERIFICATION: process.env.GOOGLE_SITE_VERIFICATION,
   },
+  async redirects() {
+    return [
+      {
+        source: '/(.*)',
+        has: [{ type: 'host', value: 'www.eocee.in' }],
+        destination: 'https://eocee.in/:1',
+        permanent: true, // 🔁 Redirect www to non-www (canonical)
+      },
+    ];
+  },
   async rewrites() {
     return [
       {
         source: '/docs/:path*',
-        destination: '/public/docs/:path*', // Ensure static files in public/docs are accessible
+        destination: '/public/docs/:path*', // Good: makes public/docs available
       },
     ];
   },
-  trailingSlash: true, // Ensures URLs like `/docs/niti_hal/` work correctly
+  trailingSlash: true, // ✅ SEO-friendly URLs like /kode/
 };
 
-export default nextConfig;
+export default withTM(nextConfig);
