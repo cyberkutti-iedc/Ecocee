@@ -2118,8 +2118,8 @@ export default function NitiLandingPage() {
   <meta property="og:title" content="Niti HDK - Rust-Based Embedded Framework for AVR" />
   <meta property="og:description" content="Develop embedded systems for ATmega series microcontrollers using Rust with Niti HDK's intuitive tooling and Arduino-like setup." />
   <meta property="og:type" content="website" />
-  <meta property="og:url" content="https://yourdomain.com/niti" />
-  <meta property="og:image" content="https://yourdomain.com/images/niti-preview.png" />
+  <meta property="og:url" content="https://ecocee.in/niti" />
+  <meta property="og:image" content="https://ecocee.in/images/niti-preview.png" />
 
   {/* Twitter Card Meta Tags */}
   <meta name="twitter:card" content="summary_large_image" />
@@ -2127,7 +2127,7 @@ export default function NitiLandingPage() {
   <meta name="twitter:description" content="Develop embedded applications in Rust for ATmega microcontrollers with the Niti HDK." />
   <meta name="twitter:image" content="https://yourdomain.com/images/niti-preview.png" />
   <meta name="twitter:site" content="@your_twitter_handle" />
-  <link rel="canonical" href="https://yourdomain.com/niti" />
+  <link rel="canonical" href="https://ecocee.in/niti" />
 </Head>
 
        <div className={`min-h-screen font-sans ${darkMode ? 'bg-gray-900 text-white' : 'bg-gray-50 text-gray-900'}`}>
