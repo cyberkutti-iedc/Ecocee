@@ -15,7 +15,7 @@ export default function Home() {
   };
 
   return (
-    <>
+    
      <Head>
         <title>Kode | Modern Programming Made Simple | Ecocee</title>
         <meta
@@ -468,7 +468,7 @@ function RoadmapCard({ title, version, items, completed = [] }: { title: string;
         </ul>
       </div>
     </div>
-    </>
+    
    
   );
 }
