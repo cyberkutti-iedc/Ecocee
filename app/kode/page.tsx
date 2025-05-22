@@ -15,8 +15,8 @@ export default function Home() {
   };
 
   return (
-    
-     <Head>
+    <>
+    <Head>
         <title>Kode | Modern Programming Made Simple | Ecocee</title>
         <meta
           name="description"
@@ -27,7 +27,9 @@ export default function Home() {
           content="Kode, programming language, embedded systems, Ecocee, interpreted language, IoT coding, C-like syntax, functional programming"
         />
       </Head>
-     <div className="min-h-screen bg-gradient-to-b from-purple-50 to-white text-gray-900">
+
+
+       <div className="min-h-screen bg-gradient-to-b from-purple-50 to-white text-gray-900">
       {/* Header */}
       <header className="sticky top-0 z-50 bg-white/80 backdrop-blur-lg border-b border-purple-100">
         <div className="container mx-auto px-4 py-4 flex justify-between items-center">
@@ -373,6 +375,10 @@ cargo build --release
         </div>
       </footer>
     </div>
+      
+    </>
+     
+    
   );
 }
 
