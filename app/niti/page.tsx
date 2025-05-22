@@ -1787,6 +1787,8 @@ import {
 import Image from "next/image";
 import { motion } from "framer-motion";
 import Link from "next/link";
+import Head from 'next/head';
+
 
 export default function NitiLandingPage() {
 
@@ -2104,7 +2106,31 @@ export default function NitiLandingPage() {
   };
 
   return (
-    <div className={`min-h-screen font-sans ${darkMode ? 'bg-gray-900 text-white' : 'bg-gray-50 text-gray-900'}`}>
+    <>
+    <Head>
+  <title>Niti HDK - Rust-Based Embedded Framework for AVR</title>
+  <meta name="description" content="Niti HDK is a lightweight embedded development framework for ATmega microcontrollers, built in Rust with an Arduino-like simplicity and modern tooling." />
+  <meta name="keywords" content="Niti HDK, embedded Rust, AVR development, ATmega, Arduino alternative, Rust microcontroller, embedded systems, embedded programming" />
+  <meta name="author" content="Ecocee" />
+  <meta name="robots" content="index, follow" />
+
+  {/* Open Graph Meta Tags for Social Sharing */}
+  <meta property="og:title" content="Niti HDK - Rust-Based Embedded Framework for AVR" />
+  <meta property="og:description" content="Develop embedded systems for ATmega series microcontrollers using Rust with Niti HDK's intuitive tooling and Arduino-like setup." />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://yourdomain.com/niti" />
+  <meta property="og:image" content="https://yourdomain.com/images/niti-preview.png" />
+
+  {/* Twitter Card Meta Tags */}
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Niti HDK - Rust-Based Embedded Framework for AVR" />
+  <meta name="twitter:description" content="Develop embedded applications in Rust for ATmega microcontrollers with the Niti HDK." />
+  <meta name="twitter:image" content="https://yourdomain.com/images/niti-preview.png" />
+  <meta name="twitter:site" content="@your_twitter_handle" />
+  <link rel="canonical" href="https://yourdomain.com/niti" />
+</Head>
+
+       <div className={`min-h-screen font-sans ${darkMode ? 'bg-gray-900 text-white' : 'bg-gray-50 text-gray-900'}`}>
       {/* Toast Notification */}
       {showToast && (
         <div className={`fixed top-4 right-4 ${darkMode ? 'bg-gray-800' : 'bg-white'} shadow-lg rounded-md px-4 py-3 flex items-center z-50 max-w-md transition-all duration-300 ease-in-out`}>
@@ -3024,5 +3050,7 @@ export default function NitiLandingPage() {
         </div>
       </footer>
     </div>
+    </>
+   
   );
 }
