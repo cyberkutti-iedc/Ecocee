@@ -2,6 +2,7 @@
 import { useState } from 'react';
 import Link from 'next/link';
 import { ArrowRight, Check, Terminal, Code, Play, FileCode, Book, Zap, Github, Download, ExternalLink } from 'lucide-react';
+import Head from 'next/head';
 
 export default function Home() {
   const [copied, setCopied] = useState(false);
