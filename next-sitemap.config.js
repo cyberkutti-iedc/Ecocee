@@ -1,36 +1,32 @@
 /** @type {import('next-sitemap').IConfig} */
 const config = {
-  siteUrl: 'https://ecocee.in',
+  siteUrl: 'https://ecocee.in', // No trailing slash
   generateRobotsTxt: true,
   generateIndexSitemap: true,
 
-  // Do NOT exclude everything by default
-  // Instead, filter pages using transform
+  // Include all pages except specific exclusions
+  transform: async (config, path) => {
+    const excludedPaths = ['/admin', '/secret']; // Add your restricted paths here
+    if (excludedPaths.includes(path)) return null;
 
-  // Remove exclude property
+    return {
+      loc: path,
+      changefreq: 'weekly',
+      priority: path === '/' ? 1.0 : 0.8,
+      lastmod: new Date().toISOString(),
+    };
+  },
 
   robotsTxtOptions: {
     policies: [
       {
         userAgent: '*',
-        allow: '/', // Allow whole site or specifically allowed pages
-        // disallow: ['/secret'], // Disallow only what you want hidden
+        allow: '/', // Allow all pages by default
       },
     ],
-  },
-
-  transform: async (config, path) => {
-    const allowedPaths = ['/', '/niti', '/kode'];
-    if (!allowedPaths.includes(path)) {
-      return null; // Exclude all other pages
-    }
-
-    return {
-      loc: path, // URL path
-      changefreq: 'weekly',
-      priority: 1.0,
-      lastmod: new Date().toISOString(),
-    };
+    additionalSitemaps: [
+      'https://ecocee.in/sitemap.xml', // Ensure sitemap is included in robots.txt
+    ],
   },
 };
 
