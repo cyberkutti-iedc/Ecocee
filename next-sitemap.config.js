@@ -3,21 +3,22 @@ const config = {
   siteUrl: 'https://ecocee.in',
   generateRobotsTxt: true,
   generateIndexSitemap: true,
-  exclude: ['/**'], // exclude everything by default
 
-  // Only allow these specific paths:
+  // Do NOT exclude everything by default
+  // Instead, filter pages using transform
+
+  // Remove exclude property
+
   robotsTxtOptions: {
     policies: [
       {
         userAgent: '*',
-        allow: '/',
-        disallow: ['/**'],
+        allow: '/', // Allow whole site or specifically allowed pages
+        // disallow: ['/secret'], // Disallow only what you want hidden
       },
     ],
-    additionalSitemaps: [], // No other sitemaps
   },
 
-  // Manually add only the included pages
   transform: async (config, path) => {
     const allowedPaths = ['/', '/niti', '/kode'];
     if (!allowedPaths.includes(path)) {
@@ -25,7 +26,7 @@ const config = {
     }
 
     return {
-      loc: path, // The URL path
+      loc: path, // URL path
       changefreq: 'weekly',
       priority: 1.0,
       lastmod: new Date().toISOString(),
