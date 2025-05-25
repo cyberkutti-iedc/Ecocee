@@ -4,7 +4,7 @@ const { createWriteStream } = require('fs');
 
 const path = require('path');
 
-const BASE_URL = 'https://eocee.in';
+const BASE_URL = 'https://ecocee.in';
 
 (async () => {
   const sitemap = new SitemapStream({ hostname: BASE_URL });
