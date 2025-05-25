@@ -1,13 +1,25 @@
 "use client";
 
+import { useEffect, useState } from "react";
 import { Navbar } from "@/components/layout/navbar";
 import { usePathname } from "next/navigation";
 
 export function NavbarWrapper() {
   const pathname = usePathname();
+  const [shouldHide, setShouldHide] = useState(false);
 
-  // Hide Navbar if the path starts with "/dashboard"
-  const hideNavbar = pathname.startsWith("/dashboard") || pathname.startsWith("/niti") || pathname.startsWith("/kode/");
+  useEffect(() => {
+    const hostname = typeof window !== "undefined" ? window.location.hostname : "";
+    const subdomain = hostname.split(".")[0];
 
-  return !hideNavbar ? <Navbar /> : null;
+    const hideForSubdomains = ["kode", "niti"];
+    const hideForPaths = ["/dashboard", "/niti", "/kode/"];
+
+    const shouldHideSubdomain = hideForSubdomains.includes(subdomain);
+    const shouldHidePath = hideForPaths.some((prefix) => pathname.startsWith(prefix));
+
+    setShouldHide(shouldHideSubdomain || shouldHidePath);
+  }, [pathname]);
+
+  return !shouldHide ? <Navbar /> : null;
 }
