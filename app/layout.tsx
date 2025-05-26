@@ -5,6 +5,7 @@ import { cn } from "@/lib/utils";
 import { ThemeProvider } from "@/components/layout/theme-provider";
 import { Toaster } from "react-hot-toast";
 import { NavbarWrapper } from "@/components/layout/NavbarWrapper";
+import Head from "next/head";
 
 const inter = Inter({ subsets: ["latin"], display: "swap" });
 
@@ -28,6 +29,7 @@ export const metadata: Metadata = {
       "Kerala-based startup Ecocee provides embedded systems, IoT, and AI project solutions along with technical training and patentable innovations.",
     url: "https://ecocee.in",
     type: "website",
+    siteName: "Ecocee",
     images: [
       {
         url: "https://ecocee.in/icon.png",
@@ -56,7 +58,23 @@ export default function RootLayout({
   children,
 }: Readonly<{ children: React.ReactNode }>) {
   return (
-    <html lang="pt-br" suppressHydrationWarning>
+    <html lang="en" suppressHydrationWarning>
+      <Head>
+        <title>
+          Ecocee | Embedded Systems, IoT & AI Solutions | Kerala Startup
+        </title>
+        <meta name="description" content="Ecocee, a Kerala-based MSME startup, offers innovative embedded systems, IoT, AI development, and custom hardware & software solutions. Patentable projects and technical training." />
+        <meta property="og:site_name" content="Ecocee" />
+        <meta property="og:title" content="Ecocee | Embedded Systems, IoT & AI Solutions" />
+        <meta property="og:description" content="Kerala-based startup Ecocee provides embedded systems, IoT, and AI project solutions along with technical training and patentable innovations." />
+        <meta property="og:url" content="https://ecocee.in" />
+        <meta property="og:type" content="website" />
+        <meta property="og:image" content="https://ecocee.in/icon.png" />
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:title" content="Ecocee | Embedded Systems, IoT & AI Solutions" />
+        <meta name="twitter:description" content="Discover Ecocee’s Kerala-based embedded systems, IoT, and AI development services with custom solutions and patentable projects." />
+        <meta name="twitter:creator" content="@Ecocee" />
+      </Head>
       <body className={cn("min-h-screen bg-background", inter.className)}>
         <ThemeProvider
           attribute="class"
