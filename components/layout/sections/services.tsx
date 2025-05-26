@@ -191,16 +191,15 @@ export const ServicesSection = () => {
             </ul>
 
             <Button
-              variant="gradient"
-              className="mt-8 w-full justify-center bg-gradient-to-r from-[#D247BF] to-primary hover:from-primary hover:to-[#D247BF]"
-              onClick={(e) => {
-                e.stopPropagation();
-                openModal(i);
-              }}
-              aria-label={`Learn more about ${title}`}
-            >
-              Learn More <ArrowRight className="w-4 h-4 ml-2" />
-            </Button>
+  className="mt-8 w-full justify-center bg-gradient-to-r from-[#D247BF] to-primary hover:from-primary hover:to-[#D247BF]"
+  onClick={(e) => {
+    e.stopPropagation();
+    openModal(i);
+  }}
+  aria-label={`Learn more about ${title}`}
+>
+  Learn More <ArrowRight className="w-4 h-4 ml-2" />
+</Button>
           </motion.div>
         ))}
       </motion.div>
@@ -227,13 +226,13 @@ export const ServicesSection = () => {
               exit={{ scale: 0.9, opacity: 0 }}
               onClick={(e) => e.stopPropagation()}
             >
-              <button
-                onClick={closeModal}
-                className="absolute top-4 right-4 text-muted-foreground dark:text-gray-400 hover:text-foreground dark:hover:text-white"
-                aria-label="Close modal"
-              >
-                <X className="w-6 h-6" />
-              </button>
+              <Button
+  className="w-full justify-center bg-gradient-to-r from-[#D247BF] to-primary hover:from-primary hover:to-[#D247BF]"
+  onClick={closeModal}
+  aria-label="Close details modal"
+>
+  Close
+</Button>
 
               <div className="flex items-center space-x-4 mb-6">
                 <div
