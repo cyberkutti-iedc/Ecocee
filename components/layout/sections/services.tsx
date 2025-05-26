@@ -266,13 +266,12 @@ export const ServicesSection = () => {
               </ul>
 
               <Button
-                variant="gradient"
-                className="w-full justify-center bg-gradient-to-r from-[#D247BF] to-primary hover:from-primary hover:to-[#D247BF]"
-                onClick={closeModal}
-                aria-label="Close details modal"
-              >
-                Close
-              </Button>
+  className="w-full justify-center bg-gradient-to-r from-[#D247BF] to-primary hover:from-primary hover:to-[#D247BF]"
+  onClick={closeModal}
+  aria-label="Close details modal"
+>
+  Close
+</Button>
             </motion.div>
           </motion.div>
         )}
