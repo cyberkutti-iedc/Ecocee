@@ -115,7 +115,7 @@ const services: Service[] = [
   },
 ];
 
-export const Services = () => {
+export const ServicesSection = () => {
   const [selectedServiceIndex, setSelectedServiceIndex] = useState<number | null>(
     null
   );
