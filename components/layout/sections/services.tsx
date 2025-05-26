@@ -156,7 +156,8 @@ export function ServicesSection() {
             Our Services
           </h2>
           <p className="text-xl text-gray-600 dark:text-gray-300 max-w-3xl mx-auto">
-            {"Comprehensive technology solutions from embedded systems to AI, delivering innovation that transforms your ideas into reality."}
+            Comprehensive technology solutions from embedded systems to AI,
+            delivering innovation that transforms your ideas into reality.
           </p>
         </motion.div>
 
@@ -257,7 +258,8 @@ export function ServicesSection() {
               Ready to Transform Your Ideas?
             </h3>
             <p className="text-gray-600 dark:text-gray-300 mb-6 text-lg">
-              {"Let's discuss your project requirements and create innovative solutions together."}
+              Let&apos;s discuss your project requirements and create innovative
+              solutions together.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <motion.button
@@ -281,4 +283,4 @@ export function ServicesSection() {
       </div>
     </section>
   );
-}
+                }
