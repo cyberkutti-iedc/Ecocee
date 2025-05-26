@@ -218,7 +218,7 @@ export function ServicesSection() {
               Ready to Transform Your Ideas?
             </h3>
             <p className="text-gray-600 dark:text-gray-300 mb-6 text-lg">
-              Let&apos;s discuss your project requirements and create innovative solutions together.
+              Let us discuss your project requirements and create innovative solutions together.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <motion.button 
