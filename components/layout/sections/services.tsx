@@ -9,8 +9,7 @@ import {
   Wifi,
   Zap,
   Target,
-  ArrowRight,
-  X,
+  ArrowRight
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
