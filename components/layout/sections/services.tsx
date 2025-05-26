@@ -225,13 +225,7 @@ export const ServicesSection = () => {
               exit={{ scale: 0.9, opacity: 0 }}
               onClick={(e) => e.stopPropagation()}
             >
-              <Button
-  className="w-full justify-center bg-gradient-to-r from-[#D247BF] to-primary hover:from-primary hover:to-[#D247BF]"
-  onClick={closeModal}
-  aria-label="Close details modal"
->
-  Close
-</Button>
+              
 
               <div className="flex items-center space-x-4 mb-6">
                 <div
