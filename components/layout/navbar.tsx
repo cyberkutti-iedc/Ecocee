@@ -40,7 +40,7 @@ interface FeatureProps {
 // Route list for navigation
 const routeList: RouteProps[] = [
   { href: "/#services", label: "Services" },
-  { href: "/#team", label: "Team" },
+  { href: "/Team", label: "Team" },
   { href: "/#contact", label: "Contact" },
   { href: "/#faq", label: "FAQ" },
   { href: "/careers", label: "Careers" },
