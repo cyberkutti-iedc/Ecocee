@@ -2,7 +2,7 @@
 
 import React from 'react';
 import { motion } from 'framer-motion';
-import { Linkedin, Twitter, Mail, Code, Cpu, Brain, Smartphone, Settings, Palette, Award, MapPin, Calendar } from 'lucide-react';
+import { Linkedin, Twitter, Mail, MapPin, Calendar, LucideIcon } from 'lucide-react';
 
 
 interface Avatar3DProps {
@@ -22,7 +22,7 @@ interface TeamMember {
   role: string;
   description: string;
   skills: string[];
-  icon?: any; // Making icon optional
+  icon?: LucideIcon;
   avatar: TeamMemberAvatar;
 }
 
@@ -53,17 +53,17 @@ const Avatar3D = ({ color, hairColor, shirtColor }:Avatar3DProps) => (
 );
 
 const TeamPage = () => {
-  const founder = {
-    name: "[Your Name]",
-    role: "Founder & CEO",
-    description: "Visionary leader driving innovation in embedded systems and IoT solutions. Passionate about transforming ideas into reality.",
-    skills: ["Leadership", "Strategy", "IoT", "Embedded Systems"],
-    avatar: {
-      color: "bg-gradient-to-b from-amber-600 to-amber-800",
-      hairColor: "bg-gray-900",
-      shirtColor: "bg-blue-600"
-    }
-  };
+  // const founder = {
+  //   name: "[Your Name]",
+  //   role: "Founder & CEO",
+  //   description: "Visionary leader driving innovation in embedded systems and IoT solutions. Passionate about transforming ideas into reality.",
+  //   skills: ["Leadership", "Strategy", "IoT", "Embedded Systems"],
+  //   avatar: {
+  //     color: "bg-gradient-to-b from-amber-600 to-amber-800",
+  //     hairColor: "bg-gray-900",
+  //     shirtColor: "bg-blue-600"
+  //   }
+  // };
 
   const teamMembers :TeamMember []= [
     // {
@@ -446,7 +446,7 @@ const TeamPage = () => {
                     <Avatar3D {...member.avatar} />
                     
                     <div className="mb-4">
-                      <IconComponent className="w-8 h-8 text-blue-600 mx-auto mb-2" />
+                      {IconComponent && <IconComponent className="w-8 h-8 text-blue-600 mx-auto mb-2" />}
                     </div>
                     
                     <h3 className="text-xl font-bold text-gray-900 mb-2">{member.name}</h3>
@@ -509,9 +509,8 @@ const TeamPage = () => {
           >
             <h2 className="text-3xl font-bold text-gray-900 mb-6">Our Culture</h2>
             <p className="text-lg text-gray-700 leading-relaxed mb-8">
-              At Ecocee, I believe in fostering innovation through dedication, continuous learning, 
-              and a passion for technology. As we grow, we'll build a diverse team that brings together 
-              different perspectives to create solutions that make a real impact.
+            At Ecocee, I believe in fostering innovation through dedication, continuous learning, 
+            and a passion for technology. As we grow, we&apos;ll build a diverse team that brings together 
             </p>
             
             <div className="grid md:grid-cols-3 gap-6">
