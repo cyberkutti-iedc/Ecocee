@@ -3,10 +3,10 @@
 import React, { useState, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { 
-  Code, Cpu, Users, Mail, Calendar, X, MapPin, Clock, ArrowRight, 
-  User, Phone, Globe, MapPin as Location, Building, GraduationCap,
+  Code, Cpu, Users, Mail, X, MapPin, Clock, ArrowRight, 
+  User, Phone, MapPin as Location,GraduationCap,
   Upload, FileText, Linkedin, Github, Briefcase, Shield, Check,
-  AlertCircle, Loader2
+   Loader2
 } from "lucide-react";
 
 interface InternshipPosition {
