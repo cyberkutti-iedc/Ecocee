@@ -21,6 +21,7 @@ interface InternshipPosition {
   skills: string[];
 }
 
+// ...existing code...
 interface FormData {
   fullName: string;
   age: string;
@@ -36,14 +37,15 @@ interface FormData {
   degree: string;
   department: string;
   areaOfInterest: string;
-  instituteId: File | null;
-  approvalLetter: File | null;
-  resume: File | null;
-  linkedinProfile: string;
+  instituteId: string; // changed from File | null
+  approvalLetter: string; // changed from File | null
+  resume: string; // changed from File | null
+   linkedinprofile: string;
   githubProfile: string;
   portfolio: string;
   agreement: boolean;
 }
+// ...existing code...
 
 interface FormErrors {
   [key: string]: string;
@@ -52,6 +54,7 @@ interface FormErrors {
 const CareerPage: React.FC = () => {
   const [selectedJob, setSelectedJob] = useState<InternshipPosition | null>(null);
   const [showApplicationForm, setShowApplicationForm] = useState<boolean>(false);
+  // ...existing code...
   const [formData, setFormData] = useState<FormData>({
     fullName: "",
     age: "",
@@ -67,14 +70,15 @@ const CareerPage: React.FC = () => {
     degree: "",
     department: "",
     areaOfInterest: "",
-    instituteId: null,
-    approvalLetter: null,
-    resume: null,
-    linkedinProfile: "",
+    instituteId: "",
+    approvalLetter: "",
+    resume: "",
+     linkedinprofile: "",
     githubProfile: "",
     portfolio: "",
     agreement: false
   });
+
   const [formErrors, setFormErrors] = useState<FormErrors>({});
   const [isSubmitting, setIsSubmitting] = useState<boolean>(false);
   const [showThankYou, setShowThankYou] = useState<boolean>(false);
@@ -182,7 +186,11 @@ const CareerPage: React.FC = () => {
 
   const validateForm = (): boolean => {
     const errors: FormErrors = {};
-
+if (!formData.resume) {
+    errors.resume = "Resume/CV Google Drive link is required";
+  } else if (!formData.resume.includes('drive.google.com')) {
+    errors.resume = "Please enter a valid Google Drive link for Resume/CV";
+  }
     // Required field validations
     if (!formData.fullName.trim()) errors.fullName = "Full name is required";
     if (!formData.age || parseInt(formData.age) < 16 || parseInt(formData.age) > 100) {
@@ -212,8 +220,8 @@ const CareerPage: React.FC = () => {
     if (!formData.agreement) errors.agreement = "Please accept the terms and conditions";
 
     // LinkedIn profile validation
-    if (formData.linkedinProfile && !formData.linkedinProfile.includes('linkedin.com')) {
-      errors.linkedinProfile = "Please enter a valid LinkedIn profile URL";
+    if (formData. linkedinprofile && !formData. linkedinprofile.includes('linkedin.com')) {
+      errors. linkedinprofile = "Please enter a valid LinkedIn profile URL";
     }
 
     // GitHub profile validation
@@ -266,80 +274,82 @@ const CareerPage: React.FC = () => {
     }
   };
 
-  const resetForm = () => {
-    setFormData({
-      fullName: "",
-      age: "",
-      dob: "",
-      email: "",
-      phone: "",
-      country: "",
-      state: "",
-      district: "",
-      address: "",
-      gender: "",
-      institutionName: "",
-      degree: "",
-      department: "",
-      areaOfInterest: "",
-      instituteId: null,
-      approvalLetter: null,
-      resume: null,
-      linkedinProfile: "",
-      githubProfile: "",
-      portfolio: "",
-      agreement: false
-    });
-    setFormErrors({});
-    
-    // Reset file inputs
-    Object.values(fileInputRefs).forEach(ref => {
-      if (ref.current) {
-        ref.current.value = "";
+  // ...existing code...
+
+const resetForm = () => {
+  setFormData({
+    fullName: "",
+    age: "",
+    dob: "",
+    email: "",
+    phone: "",
+    country: "",
+    state: "",
+    district: "",
+    address: "",
+    gender: "",
+    institutionName: "",
+    degree: "",
+    department: "",
+    areaOfInterest: "",
+    instituteId: "",
+    approvalLetter: "",
+    resume: "",
+     linkedinprofile: "",
+    githubProfile: "",
+    portfolio: "",
+    agreement: false
+  });
+  setFormErrors({});
+
+  // Reset file inputs
+  Object.values(fileInputRefs).forEach(ref => {
+    if (ref.current) {
+      ref.current.value = "";
+    }
+  });
+};
+
+const handleSubmit = async (e: React.FormEvent) => {
+  e.preventDefault();
+
+  if (!validateForm()) return;
+
+  setIsSubmitting(true);
+
+  try {
+    const formDataToSend = new FormData();
+
+    // Convert all fields to FormData format
+    Object.entries(formData).forEach(([key, value]) => {
+      // Handle file fields (assuming you used <input type="file" />)
+      if (value instanceof File) {
+        formDataToSend.append(key, value);
+      } else if (value !== null && value !== undefined) {
+        formDataToSend.append(key, String(value));
       }
     });
-  };
 
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    
-    if (!validateForm()) {
-      return;
+    // Send to Appwrite API or your custom backend API
+    const response = await fetch('/api/applications', {
+      method: 'POST',
+      body: formDataToSend,
+    });
+
+    if (!response.ok) {
+      throw new Error('Failed to submit');
     }
 
-    setIsSubmitting(true);
+    setShowThankYou(true);
+    resetForm();
+  } catch (error) {
+    console.error('Error submitting form:', error);
+    alert('There was an error submitting your application. Please try again.');
+  } finally {
+    setIsSubmitting(false);
+  }
+};
 
-    try {
-      // Simulate API call - Replace with actual API endpoint
-      const formDataToSend = new FormData();
-      
-      // Append all form fields
-      Object.entries(formData).forEach(([key, value]) => {
-        if (value instanceof File) {
-          formDataToSend.append(key, value);
-        } else if (value !== null && value !== undefined) {
-          formDataToSend.append(key, String(value));
-        }
-      });
-
-      // Replace with your actual API endpoint
-      // const response = await fetch(process.env.NEXT_PUBLIC_API_ENDPOINT || '/api/applications', {
-      //   method: 'POST',
-      //   body: formDataToSend,
-      // });
-
-      // Simulate API delay
-      await new Promise(resolve => setTimeout(resolve, 2000));
-
-      setShowThankYou(true);
-      resetForm();
-    } catch (error) {
-      console.error('Error submitting form:', error);
-      alert('There was an error submitting your application. Please try again.');
-    } finally {
-      setIsSubmitting(false);
-    }
-  };
 
   const handleJobClick = (job: InternshipPosition): void => {
     setSelectedJob(job);
@@ -787,79 +797,54 @@ const CareerPage: React.FC = () => {
                   </div>
                 </div>
 
-                {/* Document Uploads */}
-                <div className="border border-gray-200 rounded-2xl p-6">
-                  <h4 className="text-xl font-bold text-gray-900 mb-4 flex items-center">
-                    <Upload className="w-5 h-5 mr-2" />
-                    Document Uploads
-                  </h4>
-                  
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                    <div>
-                      <label className="block text-sm font-medium text-gray-700 mb-2">Institute ID</label>
-                      <div className="relative">
-                        <input
-                          type="file"
-                          ref={fileInputRefs.instituteId}
-                          onChange={(e) => handleFileChange(e, 'instituteId')}
-                          accept=".pdf,.jpg,.jpeg,.png"
-                          className="hidden"
-                        />
-                        <button
-                          type="button"
-                          onClick={() => fileInputRefs.instituteId.current?.click()}
-                          className="w-full px-4 py-3 border border-gray-300 rounded-xl text-left text-gray-500 hover:bg-gray-50 transition-colors flex items-center"
-                        >
-                          <FileText className="w-4 h-4 mr-2" />
-                          {formData.instituteId ? formData.instituteId.name : 'Upload Institute ID'}
-                        </button>
-                      </div>
-                    </div>
+             
+<div className="border border-gray-200 rounded-2xl p-6">
+  <h4 className="text-xl font-bold text-gray-900 mb-4 flex items-center">
+    <Upload className="w-5 h-5 mr-2" />
+    Document Uploads
+  </h4>
+  
+  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+    <div>
+      <label className="block text-sm font-medium text-gray-700 mb-2">Institute ID Google Drive Link</label>
+      <input
+        type="url"
+        name="instituteId"
+        value={formData.instituteId as unknown as string}
+        onChange={handleInputChange}
+        className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all"
+        placeholder="Paste Google Drive link for Institute ID"
+      />
+    </div>
 
-                    <div>
-                      <label className="block text-sm font-medium text-gray-700 mb-2">Institution Approval Letter</label>
-                      <div className="relative">
-                        <input
-                          type="file"
-                          ref={fileInputRefs.approvalLetter}
-                          onChange={(e) => handleFileChange(e, 'approvalLetter')}
-                          accept=".pdf,.jpg,.jpeg,.png"
-                          className="hidden"
-                        />
-                        <button
-                          type="button"
-                          onClick={() => fileInputRefs.approvalLetter.current?.click()}
-                          className="w-full px-4 py-3 border border-gray-300 rounded-xl text-left text-gray-500 hover:bg-gray-50 transition-colors flex items-center"
-                        >
-                          <FileText className="w-4 h-4 mr-2" />
-                          {formData.approvalLetter ? formData.approvalLetter.name : 'Upload Approval Letter'}
-                        </button>
-                      </div>
-                    </div>
+    <div>
+      <label className="block text-sm font-medium text-gray-700 mb-2">Institution Approval Letter Google Drive Link</label>
+      <input
+        type="url"
+        name="approvalLetter"
+        value={formData.approvalLetter as unknown as string}
+        onChange={handleInputChange}
+        className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all"
+        placeholder="Paste Google Drive link for Approval Letter"
+      />
+    </div>
 
-                    <div className="md:col-span-2">
-                      <label className="block text-sm font-medium text-gray-700 mb-2">Resume/CV *</label>
-                      <div className="relative">
-                        <input
-                          type="file"
-                          ref={fileInputRefs.resume}
-                          onChange={(e) => handleFileChange(e, 'resume')}
-                          accept=".pdf,.doc,.docx"
-                          className="hidden"
-                        />
-                        <button
-                          type="button"
-                          onClick={() => fileInputRefs.resume.current?.click()}
-                          className={`w-full px-4 py-3 border rounded-xl text-left hover:bg-gray-50 transition-colors flex items-center ${formErrors.resume ? 'border-red-500' : 'border-gray-300'}`}
-                        >
-                          <FileText className="w-4 h-4 mr-2" />
-                          {formData.resume ? formData.resume.name : 'Upload Resume/CV *'}
-                        </button>
-                        {formErrors.resume && <p className="text-red-500 text-sm mt-1">{formErrors.resume}</p>}
-                      </div>
-                    </div>
-                  </div>
-                </div>
+    <div className="md:col-span-2">
+      <label className="block text-sm font-medium text-gray-700 mb-2">Resume/CV Google Drive Link *</label>
+      <input
+        type="url"
+        name="resume"
+        value={formData.resume as unknown as string}
+        onChange={handleInputChange}
+        className={`w-full px-4 py-3 border rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all ${formErrors.resume ? 'border-red-500' : 'border-gray-300'}`}
+        placeholder="Paste Google Drive link for Resume/CV"
+      />
+      {formErrors.resume && <p className="text-red-500 text-sm mt-1">{formErrors.resume}</p>}
+    </div>
+  </div>
+</div>
+
+              
 
                 {/* Professional Profiles */}
                 <div className="border border-gray-200 rounded-2xl p-6">
@@ -875,13 +860,13 @@ const CareerPage: React.FC = () => {
                         <Linkedin className="w-4 h-4 absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" />
                         <input
                           type="url"
-                          name="linkedinProfile"
-                          value={formData.linkedinProfile}
+                          name=" linkedinprofile"
+                          value={formData. linkedinprofile}
                           onChange={handleInputChange}
-                          className={`w-full pl-10 pr-4 py-3 border rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all ${formErrors.linkedinProfile ? 'border-red-500' : 'border-gray-300'}`}
+                          className={`w-full pl-10 pr-4 py-3 border rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all ${formErrors. linkedinprofile ? 'border-red-500' : 'border-gray-300'}`}
                           placeholder="https://linkedin.com/in/yourprofile"
                         />
-                        {formErrors.linkedinProfile && <p className="text-red-500 text-sm mt-1">{formErrors.linkedinProfile}</p>}
+                        {formErrors. linkedinprofile && <p className="text-red-500 text-sm mt-1">{formErrors. linkedinprofile}</p>}
                       </div>
                     </div>
 
