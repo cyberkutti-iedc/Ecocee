@@ -17,7 +17,6 @@ export const metadata: Metadata = {
     "embedded systems",
     "custom hardware",
     "technology innovation",
-    "smart devices",
     "electronics engineering"
   ],
   openGraph: {
