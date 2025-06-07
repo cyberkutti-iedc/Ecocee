@@ -11,6 +11,7 @@ import {
   Globe,
   Calendar
 } from "lucide-react";
+import InternModal from "@/components/InternModal";
 
 interface InternshipPosition {
   id: number;
@@ -359,12 +360,16 @@ const CareerPage: React.FC = () => {
     if (!formData.agreement) errors.agreement = "Please accept the terms and conditions";
 
     // LinkedIn profile validation
-    if (formData.linkedinProfile && !formData.linkedinProfile.includes('linkedin.com')) {
+    if (!formData.linkedinProfile) {
+      errors.linkedinProfile = "LinkedIn profile URL is required";
+    } else if (!formData.linkedinProfile.includes('linkedin.com')) {
       errors.linkedinProfile = "Please enter a valid LinkedIn profile URL";
     }
 
     // GitHub profile validation
-    if (formData.githubProfile && !formData.githubProfile.includes('github.com')) {
+    if (!formData.githubProfile) {
+      errors.githubProfile = "GitHub profile URL is required";
+    } else if (!formData.githubProfile.includes('github.com')) {
       errors.githubProfile = "Please enter a valid GitHub profile URL";
     }
 
@@ -450,7 +455,7 @@ const CareerPage: React.FC = () => {
       }
   
       console.log('Intern data saved:', result.document);
-      setShowThankYou(true);
+      setShowThankYou(true);  // Show modal or thank you message
       resetForm();
     } catch (error) {
       console.error('Error submitting form:', error);
@@ -459,6 +464,7 @@ const CareerPage: React.FC = () => {
       setIsSubmitting(false);
     }
   };
+  
   
 
   const handleJobClick = (job: InternshipPosition): void => {
@@ -1465,6 +1471,15 @@ const CareerPage: React.FC = () => {
     </button>
   </div>
 </form>
+{/* Thank You Modal */}
+<InternModal
+        show={showThankYou}
+        onClose={() => setShowThankYou(false)}
+        title="Thank You!"
+      >
+        <p>Your application has been submitted successfully.</p>
+        <p>We will get back to you soon.</p>
+      </InternModal>
               </motion.div>
                             </motion.div>
                           )}
