@@ -173,82 +173,82 @@ const CareerPage: React.FC = () => {
         "Good debugging and problem-solving abilities"
       ]
     },
-    // {
-    //   id: 3,
-    //   title: "Full Stack AI Developer Intern",
-    //   department: "Software Development",
-    //   type: "Internship",
-    //   location: "Offline", 
-    //   duration: "15 Days",
-    //   category: "ai",
-    //   icon: <Code className="w-5 h-5" />,
-    //   description: "Build end-to-end AI-powered web applications, integrating machine learning models with modern web technologies to create intelligent user experiences.",
-    //   skills: ["React.js", "Node.js", "Python", "FastAPI", "MongoDB", "Docker", "TensorFlow.js", "WebRTC"],
-    //   responsibilities: [
-    //     "Develop responsive web interfaces for AI applications",
-    //     "Integrate ML models with web backends using REST APIs",
-    //     "Build real-time AI features using WebSocket connections",
-    //     "Implement user authentication and authorization systems",
-    //     "Create data visualization dashboards for AI insights",
-    //     "Optimize application performance and user experience",
-    //     "Deploy applications using containerization and cloud services",
-    //     "Maintain code quality through testing and documentation"
-    //   ],
-    //   learningOutcomes: [
-    //     "Full-stack development skills with modern frameworks",
-    //     "Experience integrating AI/ML models with web applications",
-    //     "Knowledge of API design and microservices architecture",
-    //     "Understanding of cloud deployment and DevOps practices",
-    //     "Skills in database design and management",
-    //     "Experience with real-time application development"
-    //   ],
-    //   requirements: [
-    //     "Proficiency in JavaScript/TypeScript and Python",
-    //     "Experience with React.js or similar frontend frameworks",
-    //     "Basic understanding of machine learning concepts",
-    //     "Familiarity with RESTful API development",
-    //     "Knowledge of database systems (SQL/NoSQL)",
-    //     "Interest in AI-powered web applications"
-    //   ]
-    // },
-    // {
-    //   id: 4,
-    //   title: "IoT Systems Integration Intern",
-    //   department: "IoT Solutions",
-    //   type: "Internship",
-    //   location: "Offline",
-    //   duration: "15 Days", 
-    //   category: "embedded",
-    //   icon: <Cpu className="w-5 h-5" />,
-    //   description: "Design and implement comprehensive IoT solutions, from sensor networks to cloud integration, creating smart systems for various industry applications.",
-    //   skills: ["Python", "MQTT", "LoRaWAN", "AWS IoT", "Grafana", "InfluxDB", "Node-RED", "Zigbee"],
-    //   responsibilities: [
-    //     "Design IoT system architectures for various use cases",
-    //     "Implement sensor data collection and processing pipelines",
-    //     "Develop cloud-based IoT dashboards and analytics",
-    //     "Configure and manage IoT communication protocols",
-    //     "Build automated alerting and notification systems",
-    //     "Integrate IoT systems with existing enterprise applications",
-    //     "Perform system testing and validation",
-    //     "Create comprehensive system documentation"
-    //   ],
-    //   learningOutcomes: [
-    //     "Understanding of IoT system architecture and design patterns",
-    //     "Experience with various IoT communication protocols",
-    //     "Knowledge of cloud IoT platforms and services",
-    //     "Skills in time-series data management and visualization",
-    //     "Understanding of IoT security best practices",
-    //     "Experience with industrial IoT applications"
-    //   ],
-    //   requirements: [
-    //     "Programming experience in Python or similar languages",
-    //     "Basic understanding of networking and protocols",
-    //     "Familiarity with cloud platforms (AWS, Azure, GCP)",
-    //     "Interest in IoT and connected device ecosystems",
-    //     "Knowledge of database systems and data analysis",
-    //     "Good system thinking and integration skills"
-    //   ]
-    // }
+    {
+      id: 3,
+      title: "Full Stack AI Developer Intern",
+      department: "Software Development",
+      type: "Internship",
+      location: "Offline", 
+      duration: "15 Days",
+      category: "ai",
+      icon: <Code className="w-5 h-5" />,
+      description: "Build end-to-end AI-powered web applications, integrating machine learning models with modern web technologies to create intelligent user experiences.",
+      skills: ["React.js", "Node.js", "Python", "FastAPI", "MongoDB", "Docker", "TensorFlow.js", "WebRTC"],
+      responsibilities: [
+        "Develop responsive web interfaces for AI applications",
+        "Integrate ML models with web backends using REST APIs",
+        "Build real-time AI features using WebSocket connections",
+        "Implement user authentication and authorization systems",
+        "Create data visualization dashboards for AI insights",
+        "Optimize application performance and user experience",
+        "Deploy applications using containerization and cloud services",
+        "Maintain code quality through testing and documentation"
+      ],
+      learningOutcomes: [
+        "Full-stack development skills with modern frameworks",
+        "Experience integrating AI/ML models with web applications",
+        "Knowledge of API design and microservices architecture",
+        "Understanding of cloud deployment and DevOps practices",
+        "Skills in database design and management",
+        "Experience with real-time application development"
+      ],
+      requirements: [
+        "Proficiency in JavaScript/TypeScript and Python",
+        "Experience with React.js or similar frontend frameworks",
+        "Basic understanding of machine learning concepts",
+        "Familiarity with RESTful API development",
+        "Knowledge of database systems (SQL/NoSQL)",
+        "Interest in AI-powered web applications"
+      ]
+    },
+    {
+      id: 4,
+      title: "IoT Systems Integration Intern",
+      department: "IoT Solutions",
+      type: "Internship",
+      location: "Offline",
+      duration: "15 Days", 
+      category: "embedded",
+      icon: <Cpu className="w-5 h-5" />,
+      description: "Design and implement comprehensive IoT solutions, from sensor networks to cloud integration, creating smart systems for various industry applications.",
+      skills: ["Python", "MQTT", "LoRaWAN", "AWS IoT", "Grafana", "InfluxDB", "Node-RED", "Zigbee"],
+      responsibilities: [
+        "Design IoT system architectures for various use cases",
+        "Implement sensor data collection and processing pipelines",
+        "Develop cloud-based IoT dashboards and analytics",
+        "Configure and manage IoT communication protocols",
+        "Build automated alerting and notification systems",
+        "Integrate IoT systems with existing enterprise applications",
+        "Perform system testing and validation",
+        "Create comprehensive system documentation"
+      ],
+      learningOutcomes: [
+        "Understanding of IoT system architecture and design patterns",
+        "Experience with various IoT communication protocols",
+        "Knowledge of cloud IoT platforms and services",
+        "Skills in time-series data management and visualization",
+        "Understanding of IoT security best practices",
+        "Experience with industrial IoT applications"
+      ],
+      requirements: [
+        "Programming experience in Python or similar languages",
+        "Basic understanding of networking and protocols",
+        "Familiarity with cloud platforms (AWS, Azure, GCP)",
+        "Interest in IoT and connected device ecosystems",
+        "Knowledge of database systems and data analysis",
+        "Good system thinking and integration skills"
+      ]
+    }
   ];
 
   const degrees = [
