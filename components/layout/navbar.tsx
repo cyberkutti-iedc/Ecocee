@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState } from "react";
-import {  Contact2Icon, Menu} from "lucide-react";
+import { Contact2Icon, Menu } from "lucide-react";
 import Link from "next/link";
 import Image from "next/image";
 
@@ -25,6 +25,14 @@ import {
 import { Button } from "../ui/button";
 import { ToggleTheme } from "./toogle-theme";
 
+// 🧠 Clerk Components
+import {
+  SignedIn,
+  SignedOut,
+  UserButton,
+  SignInButton,
+  SignOutButton,
+} from "@clerk/nextjs";
 
 // Interface for routes and features
 interface RouteProps {
@@ -37,7 +45,6 @@ interface FeatureProps {
   description: string;
 }
 
-// Route list for navigation
 const routeList: RouteProps[] = [
   { href: "/#services", label: "Services" },
   { href: "/Team", label: "Team" },
@@ -46,7 +53,6 @@ const routeList: RouteProps[] = [
   { href: "/careers", label: "Careers" },
 ];
 
-// Feature list for dropdown
 const featureList: FeatureProps[] = [
   {
     title: "Innovative Approach",
@@ -58,8 +64,7 @@ const featureList: FeatureProps[] = [
   },
   {
     title: "Expert Team",
-    description:
-      "Experienced professionals dedicated to your success.",
+    description: "Experienced professionals dedicated to your success.",
   },
 ];
 
@@ -70,7 +75,6 @@ export const Navbar = () => {
     <header className="shadow-inner bg-opacity-15 w-[90%] md:w-[70%] lg:w-[75%] lg:max-w-screen-xl top-5 mx-auto sticky border border-secondary z-40 rounded-2xl flex justify-between items-center p-2 bg-card">
       {/* Logo Section */}
       <Link href="/" className="font-bold text-lg flex items-center">
-        
         Ecocee
       </Link>
 
@@ -115,6 +119,23 @@ export const Navbar = () => {
             <SheetFooter className="flex-col sm:flex-col justify-start items-start">
               <Separator className="mb-2" />
               <ToggleTheme />
+              {/* Mobile Auth Buttons */}
+              <div className="mt-2">
+                <SignedOut>
+                  <SignInButton mode="modal">
+                    <Button size="sm" variant="outline" className="w-full">
+                      Sign In
+                    </Button>
+                  </SignInButton>
+                </SignedOut>
+                <SignedIn>
+                  <SignOutButton>
+                    <Button size="sm" variant="outline" className="w-full mt-2">
+                      Sign Out
+                    </Button>
+                  </SignOutButton>
+                </SignedIn>
+              </div>
             </SheetFooter>
           </SheetContent>
         </Sheet>
@@ -129,14 +150,14 @@ export const Navbar = () => {
               Features
             </NavigationMenuTrigger>
             <NavigationMenuContent>
-              <div className="grid w-[600px] grid-cols-2 gap-5 p-4 ">
-              <Image
-    src="/logo.png" // Assuming your logo is named logo.png
-    alt="My Logo"
-    className="h-full w-full rounded-md object-contain bg-black p-4 rounded-md"
-    width={600}
-    height={600}
-  />
+              <div className="grid w-[600px] grid-cols-2 gap-5 p-4">
+                <Image
+                  src="/logo.png"
+                  alt="My Logo"
+                  className="h-full w-full rounded-md object-contain bg-black p-4 rounded-md"
+                  width={600}
+                  height={600}
+                />
                 <ul className="flex flex-col gap-2">
                   {featureList.map(({ title, description }) => (
                     <li
@@ -169,18 +190,19 @@ export const Navbar = () => {
         </NavigationMenuList>
       </NavigationMenu>
 
-      {/* Additional Actions */}
-      <div className="hidden lg:flex items-center">
+      {/* Additional Actions - Desktop */}
+      <div className="hidden lg:flex items-center gap-2">
         <ToggleTheme />
-        <Button asChild size="sm" variant="ghost" aria-label="Chat on WhatsApp">
-          <Link
-            aria-label="Chat on WhatsApp"
-            href="/login"
-            target="_blank"
-          >
-            <Contact2Icon className="size-5"/>
-          </Link>
-        </Button>
+        <SignedOut>
+          <SignInButton mode="modal">
+            <Button size="sm" variant="outline">
+              Sign In
+            </Button>
+          </SignInButton>
+        </SignedOut>
+        <SignedIn>
+          <UserButton afterSignOutUrl="/" />
+        </SignedIn>
       </div>
     </header>
   );

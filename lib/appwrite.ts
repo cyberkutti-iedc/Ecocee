@@ -5,6 +5,7 @@ import {
   ID,
   Query,
   AppwriteException,
+  OAuthProvider,
 } from 'appwrite';
 
 // ✅ Initialize Appwrite Client
@@ -17,19 +18,20 @@ client
 // ✅ Export Services
 export const account = new Account(client);
 export const databases = new Databases(client);
+export { OAuthProvider }; // ✅ Exported to be used in other files
 
 // ✅ Environment IDs
 export const DB_ID = process.env.NEXT_PUBLIC_APPWRITE_DATABASE_ID as string;
 export const INTERN_COLLECTION_ID = process.env.NEXT_PUBLIC_APPWRITE_INTERN_COLLECTION_ID as string;
 
-// ✅ Role Type
-export type Role = 'ceo' | 'manager' | 'cto' | 'intern';
+// // ✅ Role Type
+// export type Role = 'ceo' | 'manager' | 'cto' | 'intern';
 
 // ✅ User Interface
 export interface User {
   $id: string;
   email: string;
-  role: Role;
+  // role: Role;
   name: string;
   createdAt?: string;
   companyId?: string;
@@ -42,28 +44,33 @@ export interface AuthResponse {
   error?: Error | AppwriteException;
 }
 
-// ✅ Login User
-export async function login(email: string, password: string): Promise<AuthResponse> {
+// ✅ Login with Google OAuth
+export async function loginWithGoogle(): Promise<AuthResponse> {
   try {
-    // Avoid duplicate sessions
-    const currentUser = await getCurrentUser().catch(() => null);
+    // 1. Start OAuth2 session
+    await account.createOAuth2Session(
+      OAuthProvider.Google,
+      `${process.env.NEXT_PUBLIC_APP_URL}`, // Redirect on success
+      `${process.env.NEXT_PUBLIC_APP_URL}/fail` // Redirect on failure
+    );
 
-    if (currentUser) {
-      console.log('✅ User already logged in.');
-      return { success: true, user: currentUser };
+    // 2. This line won't be reached due to redirect — fallback for testing
+    return { success: true };
+  } catch (error) {
+    let errorMessage = 'Unknown error occurred';
+    if (error instanceof AppwriteException) {
+      errorMessage = error.message || `Appwrite Error: ${error.code}`;
+    } else if (error instanceof Error) {
+      errorMessage = error.message;
+    } else if (typeof error === 'string') {
+      errorMessage = error;
     }
 
-    await account.createEmailPasswordSession(email, password);
-    const user = await getCurrentUser();
+    console.error('❌ Google OAuth login failed:', errorMessage);
 
-    if (!user) throw new Error('Failed to fetch user data after login');
-
-    return { success: true, user };
-  } catch (error) {
-    console.error('❌ Login failed:', error);
     return {
       success: false,
-      error: error as AppwriteException,
+      error: new Error(errorMessage),
     };
   }
 }
@@ -97,7 +104,7 @@ export async function getCurrentUser(): Promise<User | null> {
     return {
       $id: currentAccount.$id,
       email: userData.email,
-      role: userData.role,
+      // role: userData.role,
       name: userData.fullName,
       createdAt: userData.$createdAt,
       companyId: userData.companyId,

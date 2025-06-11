@@ -7,6 +7,7 @@ import { FeaturesSection } from "@/components/layout/sections/features";
 import { FooterSection } from "@/components/layout/sections/footer";
 import { HeroSection } from "@/components/layout/sections/hero";
 import { ServicesSection } from "@/components/layout/sections/services";
+import { SignedOut } from "@clerk/nextjs";
 
 export const metadata: Metadata = {
   title: "Ecocee | Custom Embedded & IoT Solutions",
@@ -69,6 +70,7 @@ const jsonLd = {
 export default function Home() {
   return (
     <>
+     
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}

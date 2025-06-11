@@ -6,6 +6,14 @@ import { ThemeProvider } from "@/components/layout/theme-provider";
 import { Toaster } from "react-hot-toast";
 import { NavbarWrapper } from "@/components/layout/NavbarWrapper";
 import Head from "next/head";
+import {
+  ClerkProvider,
+  SignInButton,
+  SignUpButton,
+  SignedIn,
+  SignedOut,
+  UserButton,
+} from '@clerk/nextjs'
 
 const inter = Inter({ subsets: ["latin"], display: "swap" });
 
@@ -58,6 +66,7 @@ export default function RootLayout({
   children,
 }: Readonly<{ children: React.ReactNode }>) {
   return (
+    <ClerkProvider>
     <html lang="en" suppressHydrationWarning>
       <Head>
         <title>
@@ -83,10 +92,14 @@ export default function RootLayout({
           disableTransitionOnChange
         >
           <NavbarWrapper />
+          
           {children}
           <Toaster position="top-right" />
+         
         </ThemeProvider>
+      
       </body>
     </html>
+    </ClerkProvider>
   );
 }
