@@ -1,10 +1,9 @@
 import supabase from "@/lib/supabase";
-import { auth } from "@clerk/nextjs/server";
 import { NextRequest, NextResponse } from "next/server";
-
+import { getAuth } from "@clerk/nextjs/server";
 
 export async function GET(req: NextRequest) {
-  const { sessionClaims } = await auth();
+  const { sessionClaims } = getAuth(req);
 
   // Allow admin, intern, and moderator to view modules
   const status = sessionClaims?.metadata?.status;
@@ -63,7 +62,7 @@ export async function GET(req: NextRequest) {
 }
 
 export async function POST(req: NextRequest) {
-  const { sessionClaims } = await auth();
+  const { sessionClaims } = getAuth(req);
   if (sessionClaims?.metadata?.status !== "admin") {
     return NextResponse.json({ error: "Unauthorized" }, { status: 403 });
   }
@@ -90,7 +89,7 @@ export async function POST(req: NextRequest) {
 }
 
 export async function PUT(req: NextRequest) {
-  const { sessionClaims } = await auth();
+  const { sessionClaims } = getAuth(req);
   const status = sessionClaims?.metadata?.status;
   const userId = sessionClaims?.sub; // Clerk user id
   const body = await req.json();
@@ -151,7 +150,7 @@ export async function PUT(req: NextRequest) {
 }
 
 export async function DELETE(req: NextRequest) {
-  const { sessionClaims } = await auth();
+  const { sessionClaims } = getAuth(req);
   if (sessionClaims?.metadata?.status !== "admin") {
     return NextResponse.json({ error: "Unauthorized" }, { status: 403 });
   }

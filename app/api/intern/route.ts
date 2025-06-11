@@ -1,33 +1,6 @@
-// import { NextRequest, NextResponse } from 'next/server';
-// import { ID } from 'appwrite';
-// import { databases } from '@/lib/appwrite'; // adjust based on your path
-
-// const DB_ID = process.env.NEXT_PUBLIC_APPWRITE_DATABASE_ID!;
-// const COLLECTION_ID = process.env.NEXT_PUBLIC_APPWRITE_INTERN_COLLECTION_ID!;
-
-// export async function POST(request: NextRequest) {
-//   try {
-//     const formData = await request.json();
-
-//     const newDocument = await databases.createDocument(
-//       DB_ID,
-//       COLLECTION_ID,
-//       ID.unique(),
-//       formData
-//     );
-
-//     return NextResponse.json({ success: true, document: newDocument });
-//   } catch (error: any) {
-//     console.error('Error saving intern data:', error);
-//     return NextResponse.json({ success: false, error: error.message }, { status: 500 });
-//   }
-// }
-
-
 // app/api/intern/route.ts
 
 import supabase from '@/lib/supabase';
-import { auth } from '@clerk/nextjs/server';
 import { NextRequest, NextResponse } from 'next/server';
 
 export async function POST(req: Request) {
@@ -37,7 +10,7 @@ export async function POST(req: Request) {
     const { error } = await supabase.from('careers_applications').insert([
       {
         full_name: data.fullName,
-        age: parseInt(data.age),
+        age: isNaN(parseInt(data.age)) ? null : parseInt(data.age),
         dob: data.dob,
         email: data.email,
         phone: data.phone,
@@ -73,5 +46,3 @@ export async function POST(req: Request) {
     return NextResponse.json({ success: false, error: err.message }, { status: 500 });
   }
 }
-
-

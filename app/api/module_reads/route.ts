@@ -1,9 +1,9 @@
 import supabase from "@/lib/supabase";
-import { auth } from "@clerk/nextjs/server";
+import { getAuth } from "@clerk/nextjs/server";
 import { NextRequest, NextResponse } from "next/server";
 
 export async function GET(req: NextRequest) {
-  const { sessionClaims } = await auth();
+  const { sessionClaims } = getAuth(req); // ✅ FIXED
   const userId = sessionClaims?.sub;
 
   // Only allow authenticated users
@@ -19,6 +19,7 @@ export async function GET(req: NextRequest) {
   if (queryUserId) {
     query = query.eq("user_id", queryUserId);
   }
+
   const { data, error } = await query;
 
   if (error) {
@@ -31,10 +32,17 @@ export async function GET(req: NextRequest) {
 export async function DELETE(req: Request) {
   try {
     const { module_id } = await req.json();
-    // Delete all module_reads for this module_id using your DB client
-    // await db.module_reads.deleteMany({ where: { module_id } });
-    return new Response(JSON.stringify({ success: true }), { status: 200 });
-  } catch (e) {
-    return new Response(JSON.stringify({ error: "Failed to delete module_reads" }), { status: 500 });
+    const { error } = await supabase
+      .from("module_reads")
+      .delete()
+      .eq("module_id", module_id);
+
+    if (error) {
+      return NextResponse.json({ error: error.message }, { status: 500 });
+    }
+
+    return NextResponse.json({ success: true });
+  } catch (e: any) {
+    return NextResponse.json({ error: e.message || "Failed to delete module_reads" }, { status: 500 });
   }
 }
