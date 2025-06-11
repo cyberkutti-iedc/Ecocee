@@ -8,6 +8,14 @@ const isPublicRoute = createRouteMatcher([
   '/sign-up(.*)',
   '/sso-callback(.*)',
   '/',
+  '/careers',
+  '/ideas(.*)',
+  '/kode(.*)',
+  '/niti(.*)',
+  '/privacy-policy(.*)',
+  '/terms-and-conditions(.*)',
+  '/Team(.*)',
+
 ]);
 
 // Role-based route matchers

@@ -19,12 +19,15 @@ import {
   MoreVertical,
   Activity,
   TrendingUp,
-  Shield
+  Shield,
+  Calendar
 } from "lucide-react";
 import { UserRoleManager } from "../UserRoleManager";
 import CareersRequestView from "../CareersRequestView";
 import type { SerializedUser } from "@/types/user";
 import type { CareerApplication } from "@/types/careers";
+import ModuleManager from "../ModuleManger";
+import Games from "../Games";
 
 
 
@@ -45,8 +48,10 @@ const colorThemes = [
   { name: "Indigo", primary: "#6366f1", secondary: "#4f46e5", gradient: "from-indigo-500 to-blue-600" },
 ];
 
+type AdminTab = "roles" | "careers" | "modules" | "Calendar" | "Games";
+
 export default function AdminLayout({ users, applications, adminName = "Admin" }: AdminLayoutProps) {
-  const [activeTab, setActiveTab] = useState<"roles" | "careers">("roles");
+  const [activeTab, setActiveTab] = useState<AdminTab>("roles");
   const [darkMode, setDarkMode] = useState(false);
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [currentTheme, setCurrentTheme] = useState(colorThemes[0]);
@@ -133,6 +138,27 @@ const handleThemeChange = (theme: typeof colorThemes[0]) => {
       label: "Career Applications",
       count: applications.length,
       description: "Review and manage applications"
+    },
+    {
+      id: "modules" as const,
+      icon: <FileText className="w-5 h-5" />,
+      label: "Module Manager",
+      count: 0,
+      description: "Manage system modules and features"
+    },
+    {
+      id: "Calendar" as const,
+      icon: <Calendar className="w-5 h-5" />,
+      label: "Calendar",
+      count: 0,
+      description: "View and manage events"
+    },
+    {
+      id: "Games" as const,
+      icon: <Users className="w-5 h-5" />,
+      label: "Games",
+      count: 0,
+      description: "Manage games and activities"
     }
   ];
 
@@ -367,6 +393,9 @@ const handleThemeChange = (theme: typeof colorThemes[0]) => {
             >
               {activeTab === "roles" && <UserRoleManager users={users} />}
               {activeTab === "careers" && <CareersRequestView applications={applications} />}
+              {activeTab === "modules" && <ModuleManager role={"admin"} />} 
+              {activeTab === "Calendar" && <div>Calendar Content</div>}
+              {activeTab === "Games" && <Games/>}
             </motion.div>
           </AnimatePresence>
         </div>
