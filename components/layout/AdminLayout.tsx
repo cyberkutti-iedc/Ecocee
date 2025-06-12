@@ -28,9 +28,7 @@ import type { SerializedUser } from "@/types/user";
 import type { CareerApplication } from "@/types/careers";
 import ModuleManager from "../ModuleManger";
 import Games from "../Games";
-import { useUser } from "@clerk/nextjs"; // Add this import
-
-
+import { useUser } from "@clerk/nextjs"; 
 
 
 interface AdminLayoutProps {
@@ -107,16 +105,7 @@ const handleThemeChange = (theme: typeof colorThemes[0]) => {
     }
   };
 
-  // const handleThemeChange = (theme: typeof colorThemes[0]) => {
-  //   setCurrentTheme(theme);
-  //   // Update CSS custom properties for dynamic theming
-  //   if (typeof window !== "undefined") {
-  //     document.documentElement.style.setProperty('--primary-color', theme.primary);
-  //     document.documentElement.style.setProperty('--secondary-color', theme.secondary);
-  //   }
-  // };
-
-  // Close sidebar when clicking outside on mobile
+   // Close sidebar when clicking outside on mobile
   useEffect(() => {
     const handleResize = () => {
       if (window.innerWidth >= 768) {

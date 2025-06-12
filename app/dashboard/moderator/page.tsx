@@ -1,9 +1,13 @@
-// app/dashboard/moderator/page.tsx
+
 export default async function ModeratorDashboardPage() {
+  // Fetch all users (interns)
+
   return (
-    <main className="p-6">
-      <h1 className="text-3xl font-semibold mb-2">Moderator Dashboard</h1>
-      <p className="text-gray-600">Review intern submissions, manage tasks, and moderate the platform.</p>
-    </main>
+    <div>
+      <h1 className="text-2xl font-bold mb-4">Moderator Dashboard</h1>
+      <div className="mb-6">
+        <h2>not implmented</h2>
+      </div>
+    </div>
   );
 }

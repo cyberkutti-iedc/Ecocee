@@ -7,7 +7,6 @@ import { FeaturesSection } from "@/components/layout/sections/features";
 import { FooterSection } from "@/components/layout/sections/footer";
 import { HeroSection } from "@/components/layout/sections/hero";
 import { ServicesSection } from "@/components/layout/sections/services";
-import { SignedOut } from "@clerk/nextjs";
 
 export const metadata: Metadata = {
   title: "Ecocee | Custom Embedded & IoT Solutions",
@@ -19,7 +18,20 @@ export const metadata: Metadata = {
     "custom hardware",
     "technology innovation",
     "smart devices",
-    "electronics engineering"
+    "electronics engineering",
+    "AI solutions",
+    "machine learning",
+    "industrial automation",
+    "PCB design",
+    "firmware development",
+    "startup Kerala",
+    "IoT company India",
+    "embedded software",
+    "product development",
+    "hardware prototyping",
+    "IoT consulting",
+    "smart home",
+    "smart industry"
   ],
   openGraph: {
     type: "website",
@@ -40,7 +52,25 @@ export const metadata: Metadata = {
     creator: "@sreeraj_vr",
     title: "Ecocee | Innovative IoT and Embedded Solutions",
     description: "Ecocee engineers powerful, customized embedded systems and IoT technology for the future.",
-  }
+  },
+  alternates: {
+    canonical: "https://ecocee.in",
+  },
+  robots: {
+    index: true,
+    follow: true,
+    nocache: false,
+    googleBot: {
+      index: true,
+      follow: true,
+      "max-video-preview": -1,
+      "max-image-preview": "large",
+      "max-snippet": -1,
+    },
+  },
+  authors: [
+    { name: "Sreeraj V Rajesh", url: "https://ecocee.in/team" }
+  ]
 };
 
 // JSON-LD Structured Data for Local Business + Tech Startup
@@ -49,13 +79,13 @@ const jsonLd = {
   "@type": "Organization",
   "name": "Ecocee",
   "url": "https://ecocee.in",
-  "logo": "https://ecocee.in/icon.png",
+  "logo": "https://ecocee.in/icon.jpg",
   "sameAs": [
     // add social profiles if any
   ],
   "contactPoint": {
     "@type": "ContactPoint",
-    "telephone": "+91-XXXXXXXXXX",
+    "telephone": "+91-9446715884",
     "contactType": "Customer Support"
   },
   "address": {
@@ -70,7 +100,21 @@ const jsonLd = {
 export default function Home() {
   return (
     <>
-     
+      {/* SEO meta tags for social, business, and local */}
+      <head>
+        <meta name="author" content="Sreeraj V Rajesh, Ecocee Team" />
+        <meta name="publisher" content="Ecocee" />
+        <meta name="copyright" content="Ecocee" />
+        <meta name="theme-color" content="#0ea5e9" />
+        <meta name="google-site-verification" content="YOUR_GOOGLE_SITE_VERIFICATION_CODE" />
+        <link rel="canonical" href="https://ecocee.in" />
+        <meta property="og:locale" content="en_IN" />
+        <meta property="og:site_name" content="Ecocee" />
+        <meta property="business:contact_data:street_address" content="Kodungallur, Kerala, India" />
+        <meta property="business:contact_data:email" content="info@ecocee.com" />
+        <meta property="business:contact_data:phone_number" content="+91-9446715884" />
+        <meta property="business:contact_data:country_name" content="India" />
+      </head>
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
