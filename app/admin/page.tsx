@@ -29,10 +29,6 @@ export default async function AdminPage() {
       
       <div className="relative z-10 flex flex-col min-h-screen">
         {/* Top Navigation Bar */}
-       
-        
-      
-        
         {/* Main Content */}
         <main className="flex-1 max-w-7xl mx-auto w-full px-4 sm:px-6 lg:px-8 py-8">
           <div className="bg-white/50 dark:bg-slate-900/50 backdrop-blur-xl rounded-2xl border border-white/20 dark:border-slate-700/50 shadow-xl overflow-hidden">

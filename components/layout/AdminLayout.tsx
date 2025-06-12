@@ -28,6 +28,7 @@ import type { SerializedUser } from "@/types/user";
 import type { CareerApplication } from "@/types/careers";
 import ModuleManager from "../ModuleManger";
 import Games from "../Games";
+import { useUser } from "@clerk/nextjs"; // Add this import
 
 
 
@@ -56,6 +57,9 @@ export default function AdminLayout({ users, applications, adminName = "Admin" }
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [currentTheme, setCurrentTheme] = useState(colorThemes[0]);
   const [showSettings, setShowSettings] = useState(false);
+
+  const { user } = useUser(); // Get Clerk user
+  const displayName = user?.fullName || adminName || "Unknown Admin";
 
 
 // Load theme from localStorage on mount
@@ -329,7 +333,7 @@ const handleThemeChange = (theme: typeof colorThemes[0]) => {
             </div>
             <div className="flex-1 min-w-0">
               <p className="text-sm font-semibold text-slate-800 dark:text-white truncate">
-                {adminName}
+                {displayName}
               </p>
               <p className="text-xs text-slate-500 dark:text-slate-400">Administrator</p>
             </div>
