@@ -33,7 +33,7 @@ import {
   Phone,
   MapPin,
 } from "lucide-react";
-import { useUser } from "@clerk/nextjs";
+import { useUser, useAuth } from "@clerk/nextjs";
 import InternTabContent from "../InternTabContent";
 import Games from "../Games";
 
@@ -546,13 +546,21 @@ function AchievementsTab({ startDate }: { startDate: string }) {
   );
 }
 
-export default function InternLayout({ internName = "Intern" }: InternLayoutProps) {
+export default function InternLayout() {
   const [activeTab, setActiveTab] = useState<"dashboard" | "learning" | "calendar" | "messages" | "achievements" | "games">("dashboard");
   const [darkMode, setDarkMode] = useState(false);
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [currentTheme, setCurrentTheme] = useState(colorThemes[0]);
   const [showSettings, setShowSettings] = useState(false);
   const { user, isLoaded } = useUser();
+  const { userId } = useAuth(); // Get the logged-in user's ID
+
+  // Only show the name for the logged-in user
+  const internName =
+    isLoaded && user && userId === user.id
+      ? [user.firstName, user.lastName].filter(Boolean).join(" ")
+      : "Intern";
+
   const [internStartDate, setInternStartDate] = useState<string>("");
 
   // Fetch intern start date from your users table or Clerk metadata
