@@ -3,59 +3,80 @@ import { NextRequest, NextResponse } from "next/server";
 import { getAuth } from "@clerk/nextjs/server";
 
 export async function GET(req: NextRequest) {
-  const { sessionClaims } = getAuth(req);
+  let sessionClaims: any = undefined;
+  try {
+    sessionClaims = getAuth(req).sessionClaims;
+  } catch (err) {
+    return NextResponse.json({ error: "Authentication error" }, { status: 401 });
+  }
+
+  // Defensive: fallback if sessionClaims is undefined
+  if (!sessionClaims || !sessionClaims.metadata || !sessionClaims.metadata.status) {
+    return NextResponse.json({ error: "Unauthorized" }, { status: 403 });
+  }
 
   // Allow admin, intern, and moderator to view modules
   const status = sessionClaims?.metadata?.status;
   const userId = sessionClaims?.sub;
 
   if (status === "admin" || status === "moderator") {
-    const { data: modules, error: modulesError } = await supabase
-      .from("modules")
-      .select("*")
-      .order("created_at", { ascending: false });
+    // Defensive: wrap in try/catch to avoid unhandled errors
+    try {
+      const { data: modules, error: modulesError } = await supabase
+        .from("modules")
+        .select("*")
+        .order("created_at", { ascending: false });
 
-    const { data: reads, error: readsError } = await supabase
-      .from("module_reads")
-      .select("*");
+      const { data: reads, error: readsError } = await supabase
+        .from("module_reads")
+        .select("*");
 
-    // Try to join with a local users table if you have one
-    let users: Record<string, { name: string; email: string }> = {};
-    if (reads && reads.length > 0) {
-      const userIds = Array.from(new Set(reads.map((r: any) => r.user_id))).filter(Boolean);
-      // If you have a users table, fetch user info
-      if (userIds.length > 0) {
-        const { data: userRows } = await supabase
-          .from("users")
-          .select("id,name,email")
-          .in("id", userIds);
-        userRows?.forEach((u: any) => {
-          users[u.id] = { name: u.name || u.email || u.id, email: u.email || "" };
-        });
+      let users: Record<string, { name: string; email: string }> = {};
+      if (reads && reads.length > 0) {
+        const userIds = Array.from(new Set(reads.map((r: any) => r.user_id))).filter(Boolean);
+        if (userIds.length > 0) {
+          const { data: userRows, error: userRowsError } = await supabase
+            .from("users")
+            .select("id,name,email")
+            .in("id", userIds);
+          if (userRowsError) {
+            // Don't fail the whole request if userRows fails, just skip users
+            users = {};
+          } else {
+            userRows?.forEach((u: any) => {
+              users[u.id] = { name: u.name || u.email || u.id, email: u.email || "" };
+            });
+          }
+        }
       }
-    }
 
-    if (modulesError || readsError) {
-      return NextResponse.json({
-        error: modulesError?.message || readsError?.message,
-      }, { status: 500 });
-    }
+      if (modulesError || readsError) {
+        return NextResponse.json({
+          error: modulesError?.message || readsError?.message,
+        }, { status: 500 });
+      }
 
-    return NextResponse.json({ modules, reads, users });
+      return NextResponse.json({ modules, reads, users });
+    } catch (err: any) {
+      return NextResponse.json({ error: err?.message || "Server error" }, { status: 500 });
+    }
   }
 
-  // If intern, return only modules (no read info for others)
   if (status === "intern") {
-    const { data, error } = await supabase
-      .from("modules")
-      .select("*")
-      .order("created_at", { ascending: false });
+    try {
+      const { data, error } = await supabase
+        .from("modules")
+        .select("*")
+        .order("created_at", { ascending: false });
 
-    if (error) {
-      return NextResponse.json({ error: error.message }, { status: 500 });
+      if (error) {
+        return NextResponse.json({ error: error.message }, { status: 500 });
+      }
+
+      return NextResponse.json(data);
+    } catch (err: any) {
+      return NextResponse.json({ error: err?.message || "Server error" }, { status: 500 });
     }
-
-    return NextResponse.json(data);
   }
 
   return NextResponse.json({ error: "Unauthorized" }, { status: 403 });
