@@ -7,6 +7,7 @@ import { FeaturesSection } from "@/components/layout/sections/features";
 import { FooterSection } from "@/components/layout/sections/footer";
 import { HeroSection } from "@/components/layout/sections/hero";
 import { ServicesSection } from "@/components/layout/sections/services";
+import Seo from "@/components/seo/Seo";
 
 export const metadata: Metadata = {
   title: "Ecocee | Custom Embedded & IoT Solutions",
@@ -100,24 +101,36 @@ const jsonLd = {
 export default function Home() {
   return (
     <>
-      {/* SEO meta tags for social, business, and local */}
-      <head>
-        <meta name="author" content="Sreeraj V Rajesh, Ecocee Team" />
-        <meta name="publisher" content="Ecocee" />
-        <meta name="copyright" content="Ecocee" />
-        <meta name="theme-color" content="#0ea5e9" />
-        <meta name="google-site-verification" content="YOUR_GOOGLE_SITE_VERIFICATION_CODE" />
-        <link rel="canonical" href="https://ecocee.in" />
-        <meta property="og:locale" content="en_IN" />
-        <meta property="og:site_name" content="Ecocee" />
-        <meta property="business:contact_data:street_address" content="Kodungallur, Kerala, India" />
-        <meta property="business:contact_data:email" content="info@ecocee.com" />
-        <meta property="business:contact_data:phone_number" content="+91-9446715884" />
-        <meta property="business:contact_data:country_name" content="India" />
-      </head>
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+      <Seo
+        title="Ecocee | Custom Embedded & IoT Solutions"
+        description="Ecocee offers cutting-edge embedded systems and IoT development, delivering customized technology solutions for businesses seeking innovation."
+        keywords={[
+          "Ecocee",
+          "IoT solutions",
+          "embedded systems",
+          "custom hardware",
+          "technology innovation",
+          "smart devices",
+          "electronics engineering",
+          "AI solutions",
+          "machine learning",
+          "industrial automation",
+          "PCB design",
+          "firmware development",
+          "startup Kerala",
+          "IoT company India",
+          "embedded software",
+          "product development",
+          "hardware prototyping",
+          "IoT consulting",
+          "smart home",
+          "smart industry"
+        ]}
+        canonical="https://ecocee.in"
+        image="https://ecocee.in/icon.png"
+        twitterHandle="@sreeraj_vr"
+        siteName="Ecocee"
+        structuredData={jsonLd}
       />
       <main>
         <section aria-label="Hero Section">

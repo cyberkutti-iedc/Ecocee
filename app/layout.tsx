@@ -10,6 +10,7 @@ import {
   ClerkProvider,
 
 } from '@clerk/nextjs'
+import Seo from "@/components/seo/Seo";
 
 const inter = Inter({ subsets: ["latin"], display: "swap" });
 
@@ -105,27 +106,57 @@ export default function RootLayout({
   return (
     <ClerkProvider>
       <html lang="en" suppressHydrationWarning>
-        <head>
-          {/* SEO & Social */}
-          <meta name="author" content="Sreeraj V Rajesh, Ecocee Team" />
-          <meta name="publisher" content="Ecocee" />
-          <meta name="copyright" content="Ecocee" />
-          <meta name="theme-color" content="#0ea5e9" />
-          <meta name="google-site-verification" content="YOUR_GOOGLE_SITE_VERIFICATION_CODE" />
-          <link rel="canonical" href="https://ecocee.in" />
-          <meta property="og:locale" content="en_IN" />
-          <meta property="og:site_name" content="Ecocee" />
-          <meta property="business:contact_data:street_address" content="Kodungallur, Kerala, India" />
-          <meta property="business:contact_data:email" content="admin@ecocee.com" />
-          <meta property="business:contact_data:phone_number" content="+91-9446715884" />
-          <meta property="business:contact_data:country_name" content="India" />
-          {/* Favicon and manifest */}
-          <link rel="icon" href="/favicon.ico" />
-          <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
-          <link rel="manifest" href="/site.webmanifest" />
-          {/* Stylish font for headings */}
-          <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@700;900&display=swap" rel="stylesheet" />
-        </head>
+        {/* SEO component for global layout */}
+        <Seo
+          title="Ecocee | Embedded Systems, IoT & AI Solutions | Kerala Startup"
+          description="Ecocee, a Kerala-based MSME startup, offers innovative embedded systems, IoT, AI development, and custom hardware & software solutions. Patentable projects and technical training."
+          keywords={[
+            "Ecocee",
+            "Embedded systems Kerala",
+            "IoT solutions India",
+            "AI project development",
+            "custom embedded hardware",
+            "technical learning hub",
+            "MSME startup Kerala",
+            "Kodungallur technology startup",
+            "IoT company India",
+            "PCB design",
+            "firmware development",
+            "hardware prototyping",
+            "AI solutions",
+            "machine learning",
+            "startup Kerala",
+            "IoT consulting",
+            "smart home",
+            "smart industry",
+            "electronics engineering",
+            "product development"
+          ]}
+          canonical="https://ecocee.in"
+          image="https://ecocee.in/icon.jpg"
+          twitterHandle="@Ecocee"
+          siteName="Ecocee"
+          structuredData={{
+            "@context": "https://schema.org",
+            "@type": "Organization",
+            "name": "Ecocee",
+            "url": "https://ecocee.in",
+            "logo": "https://ecocee.in/icon.jpg",
+            "contactPoint": {
+              "@type": "ContactPoint",
+              "telephone": "+91-9446715884",
+              "contactType": "Customer Support"
+            },
+            "address": {
+              "@type": "PostalAddress",
+              "addressLocality": "Kodungallur",
+              "addressRegion": "Kerala",
+              "addressCountry": "IN"
+            },
+            "description": "Kerala-based startup Ecocee specializes in embedded systems, IoT, AI, and custom technology solutions for innovative product development."
+          }}
+        />
+        {/* ...existing code... */}
         <body
           className={cn(
             "min-h-screen bg-gradient-to-br from-slate-50 via-blue-50/30 to-indigo-50/50 dark:from-slate-950 dark:via-slate-900 dark:to-slate-800 text-slate-800 dark:text-slate-100 selection:bg-blue-200 dark:selection:bg-blue-800",
@@ -150,10 +181,7 @@ export default function RootLayout({
             </div>
             {children}
             <Toaster position="top-right" />
-            {/* Stylish footer */}
-            <footer className="w-full py-6 mt-12 bg-gradient-to-r from-blue-50 via-white to-indigo-50 dark:from-slate-900 dark:via-slate-800 dark:to-slate-900 border-t border-slate-200 dark:border-slate-700 text-center text-xs text-slate-500 dark:text-slate-400 font-mono tracking-wide">
-              &copy; {new Date().getFullYear()} Ecocee. All rights reserved. | Kerala, India
-            </footer>
+           
           </ThemeProvider>
         </body>
       </html>

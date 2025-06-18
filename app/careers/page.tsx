@@ -13,6 +13,7 @@ import {
 } from "lucide-react";
 import InternModal from "@/components/InternModal";
 import ClosedCareersPage from "./ClosedCareersPage";
+import Seo from "@/components/seo/Seo";
 
 // Toggle for careers availability - set to true to show careers, false to show closed message
 const CAREERS_AVAILABLE = false;
@@ -64,7 +65,25 @@ interface FormErrors {
   [key: string]: string;
 }
 
-
+const jsonLd = {
+  "@context": "https://schema.org",
+  "@type": "Organization",
+  "name": "Ecocee",
+  "url": "https://ecocee.in",
+  "logo": "https://ecocee.in/icon.jpg",
+  "contactPoint": {
+    "@type": "ContactPoint",
+    "telephone": "+91-9446715884",
+    "contactType": "Customer Support"
+  },
+  "address": {
+    "@type": "PostalAddress",
+    "addressLocality": "Kodungallur",
+    "addressRegion": "Kerala",
+    "addressCountry": "IN"
+  },
+  "description": "Kerala-based startup Ecocee specializes in embedded systems, IoT, AI, and custom technology solutions for innovative product development."
+};
 
 const CareerPage: React.FC = () => {
   const [selectedJob, setSelectedJob] = useState<InternshipPosition | null>(null);
@@ -443,253 +462,275 @@ const CareerPage: React.FC = () => {
 
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-100">
-      {/* Hero Section */}
-      <section className="py-20 px-6 relative overflow-hidden">
-        <div className="absolute inset-0 bg-gradient-to-r from-blue-600/5 to-indigo-600/5"></div>
-        <div className="max-w-4xl mx-auto text-center relative">
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8 }}
-          >
-            <h1 className="text-6xl md:text-7xl font-light text-gray-900 mb-8 tracking-tight">
-              Careers at
-              <span className="block font-bold bg-gradient-to-r from-blue-600 to-indigo-600 bg-clip-text text-transparent">
-                Ecocee
-              </span>
-            </h1>
-            <p className="text-xl text-gray-600 mb-12 max-w-2xl mx-auto leading-relaxed">
-              Join our team of innovators working on AI, machine learning, embedded systems, and IoT solutions. 
-              Build technology that makes a difference in the world.
-            </p>
-            <motion.button
-              onClick={scrollToPositions}
-              className="inline-flex items-center px-8 py-4 bg-gradient-to-r from-blue-600 to-indigo-600 text-white font-semibold rounded-2xl hover:from-blue-700 hover:to-indigo-700 transition-all duration-300 shadow-lg hover:shadow-xl transform hover:scale-105"
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
+    <>
+      <Seo
+        title="Careers at Ecocee | AI, Embedded & IoT Internship Opportunities"
+        description="Kickstart your tech career with Ecocee. Apply for AI, ML, Embedded Systems, and IoT internships. Join our innovative team in Kerala and work on real-world projects."
+        keywords={[
+          "Ecocee careers",
+          "AI internship",
+          "ML internship",
+          "embedded systems internship",
+          "IoT internship",
+          "Kerala tech jobs",
+          "technology careers",
+          "student internship",
+          "engineering internship",
+          "Ecocee jobs"
+        ]}
+        canonical="https://ecocee.in/careers"
+        image="https://ecocee.in/icon.jpg"
+        twitterHandle="@Ecocee"
+        siteName="Ecocee"
+        structuredData={jsonLd}
+      />
+      <div className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-100">
+        {/* Hero Section */}
+        <section className="py-20 px-6 relative overflow-hidden">
+          <div className="absolute inset-0 bg-gradient-to-r from-blue-600/5 to-indigo-600/5"></div>
+          <div className="max-w-4xl mx-auto text-center relative">
+            <motion.div
+              initial={{ opacity: 0, y: 30 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8 }}
             >
-              View Open Positions
-              <ChevronDown className="w-5 h-5 ml-2" />
-            </motion.button>
-          </motion.div>
-        </div>
-      </section>
+              <h1 className="text-6xl md:text-7xl font-light text-gray-900 mb-8 tracking-tight">
+                Careers at
+                <span className="block font-bold bg-gradient-to-r from-blue-600 to-indigo-600 bg-clip-text text-transparent">
+                  Ecocee
+                </span>
+              </h1>
+              <p className="text-xl text-gray-600 mb-12 max-w-2xl mx-auto leading-relaxed">
+                Join our team of innovators working on AI, machine learning, embedded systems, and IoT solutions. 
+                Build technology that makes a difference in the world.
+              </p>
+              <motion.button
+                onClick={scrollToPositions}
+                className="inline-flex items-center px-8 py-4 bg-gradient-to-r from-blue-600 to-indigo-600 text-white font-semibold rounded-2xl hover:from-blue-700 hover:to-indigo-700 transition-all duration-300 shadow-lg hover:shadow-xl transform hover:scale-105"
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
+              >
+                View Open Positions
+                <ChevronDown className="w-5 h-5 ml-2" />
+              </motion.button>
+            </motion.div>
+          </div>
+        </section>
 
-      {/* Category Filter */}
-      <section className="py-8 px-6" ref={positionsRef}>
-        <div className="max-w-6xl mx-auto">
-          <div className="flex justify-center mb-8">
-            <div className="bg-white/80 backdrop-blur-sm border border-gray-200 rounded-2xl p-2 flex space-x-2">
-              {[
-                { key: 'all', label: 'All Positions', icon: <Briefcase className="w-4 h-4" /> },
-                { key: 'ai', label: 'AI/ML', icon: <Brain className="w-4 h-4" /> },
-                { key: 'embedded', label: 'Embedded Systems', icon: <Microchip className="w-4 h-4" /> }
-              ].map((category) => (
-                <button
-                  key={category.key}
-                  onClick={() => setSelectedCategory(category.key as any)}
-                  className={`flex items-center px-6 py-3 rounded-xl transition-all ${
-                    selectedCategory === category.key
-                      ? 'bg-gradient-to-r from-blue-600 to-indigo-600 text-white shadow-lg'
-                      : 'text-gray-600 hover:bg-gray-100'
-                  }`}
+        {/* Category Filter */}
+        <section className="py-8 px-6" ref={positionsRef}>
+          <div className="max-w-6xl mx-auto">
+            <div className="flex justify-center mb-8">
+              <div className="bg-white/80 backdrop-blur-sm border border-gray-200 rounded-2xl p-2 flex space-x-2">
+                {[
+                  { key: 'all', label: 'All Positions', icon: <Briefcase className="w-4 h-4" /> },
+                  { key: 'ai', label: 'AI/ML', icon: <Brain className="w-4 h-4" /> },
+                  { key: 'embedded', label: 'Embedded Systems', icon: <Microchip className="w-4 h-4" /> }
+                ].map((category) => (
+                  <button
+                    key={category.key}
+                    onClick={() => setSelectedCategory(category.key as any)}
+                    className={`flex items-center px-6 py-3 rounded-xl transition-all ${
+                      selectedCategory === category.key
+                        ? 'bg-gradient-to-r from-blue-600 to-indigo-600 text-white shadow-lg'
+                        : 'text-gray-600 hover:bg-gray-100'
+                    }`}
+                  >
+                    {category.icon}
+                    <span className="ml-2 font-medium">{category.label}</span>
+                  </button>
+                ))}
+              </div>
+            </div>
+          </div>
+        </section>
+
+        {/* Internship Positions */}
+        <section className="py-16 px-6">
+          <div className="max-w-6xl mx-auto">
+            <motion.div
+              className="text-center mb-16"
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6 }}
+              viewport={{ once: true }}
+            >
+              <h2 className="text-4xl font-bold text-gray-900 mb-4">
+                Open Positions
+              </h2>
+              <p className="text-gray-600 text-xl">
+                Internship opportunities to kickstart your career in cutting-edge technology
+              </p>
+            </motion.div>
+
+            <div className="space-y-6">
+              {filteredPositions.map((job, index) => (
+                <motion.div
+                  key={job.id}
+                  className="group cursor-pointer"
+                  onClick={() => handleJobClick(job)}
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.5, delay: index * 0.1 }}
+                  viewport={{ once: true }}
+                  whileHover={{ y: -4 }}
                 >
-                  {category.icon}
-                  <span className="ml-2 font-medium">{category.label}</span>
-                </button>
+                  <div className="bg-white/80 backdrop-blur-sm border border-gray-200 rounded-2xl p-8 hover:border-blue-300 hover:shadow-2xl transition-all duration-300 hover:bg-white">
+                    <div className="flex items-start justify-between">
+                      <div className="flex-1">
+                        <div className="flex items-center mb-4">
+                          <div className={`p-3 rounded-xl mr-4 ${
+                            job.category === 'ai' 
+                              ? 'bg-gradient-to-r from-purple-100 to-pink-100' 
+                              : 'bg-gradient-to-r from-blue-100 to-indigo-100'
+                          }`}>
+                            {job.icon}
+                          </div>
+                          <div>
+                            <h3 className="text-2xl font-bold text-gray-900 group-hover:text-blue-600 transition-colors">
+                              {job.title}
+                            </h3>
+                            <p className="text-gray-500">
+                              {job.department} • {job.type}
+                            </p>
+                          </div>
+                        </div>
+                        
+                        <p className="text-gray-600 mb-6 leading-relaxed text-lg">
+                          {job.description}
+                        </p>
+                        
+                        <div className="flex flex-wrap gap-6 mb-6 text-gray-500">
+                          <div className="flex items-center">
+                            <MapPin className="w-4 h-4 mr-2" />
+                            <span>{job.location}</span>
+                          </div>
+                          <div className="flex items-center">
+                            <Clock className="w-4 h-4 mr-2" />
+                            <span>{job.duration}</span>
+                          </div>
+                          <div className="flex items-center">
+                            <Award className="w-4 h-4 mr-2" />
+                            <span className="capitalize">{job.category} Track</span>
+                          </div>
+                        </div>
+                        
+                        <div className="flex flex-wrap gap-2">
+                          {job.skills.slice(0, 4).map((skill, skillIndex) => (
+                            <span 
+                              key={skillIndex}
+                              className={`px-4 py-2 text-sm rounded-full font-medium ${
+                                job.category === 'ai'
+                                  ? 'bg-gradient-to-r from-purple-50 to-pink-50 text-purple-700'
+                                  : 'bg-gradient-to-r from-blue-50 to-indigo-50 text-blue-700'
+                              }`}
+                            >
+                              {skill}
+                            </span>
+                          ))}
+                          {job.skills.length > 4 && (
+                            <span className="px-4 py-2 bg-gray-100 text-gray-500 text-sm rounded-full">
+                              +{job.skills.length - 4}
+                            </span>
+                          )}
+                        </div>
+                      </div>
+                      
+                      <div className="ml-6 opacity-0 group-hover:opacity-100 transition-opacity">
+                        <ArrowRight className="w-6 h-6 text-blue-600" />
+                      </div>
+                    </div>
+                  </div>
+                </motion.div>
               ))}
             </div>
           </div>
-        </div>
-      </section>
+        </section>
 
-      {/* Internship Positions */}
-      <section className="py-16 px-6">
-        <div className="max-w-6xl mx-auto">
-          <motion.div
-            className="text-center mb-16"
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6 }}
-            viewport={{ once: true }}
-          >
-            <h2 className="text-4xl font-bold text-gray-900 mb-4">
-              Open Positions
-            </h2>
-            <p className="text-gray-600 text-xl">
-              Internship opportunities to kickstart your career in cutting-edge technology
-            </p>
-          </motion.div>
-
-          <div className="space-y-6">
-            {filteredPositions.map((job, index) => (
-              <motion.div
-                key={job.id}
-                className="group cursor-pointer"
-                onClick={() => handleJobClick(job)}
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.5, delay: index * 0.1 }}
-                viewport={{ once: true }}
-                whileHover={{ y: -4 }}
-              >
-                <div className="bg-white/80 backdrop-blur-sm border border-gray-200 rounded-2xl p-8 hover:border-blue-300 hover:shadow-2xl transition-all duration-300 hover:bg-white">
-                  <div className="flex items-start justify-between">
-                    <div className="flex-1">
-                      <div className="flex items-center mb-4">
-                        <div className={`p-3 rounded-xl mr-4 ${
-                          job.category === 'ai' 
-                            ? 'bg-gradient-to-r from-purple-100 to-pink-100' 
-                            : 'bg-gradient-to-r from-blue-100 to-indigo-100'
-                        }`}>
-                          {job.icon}
-                        </div>
-                        <div>
-                          <h3 className="text-2xl font-bold text-gray-900 group-hover:text-blue-600 transition-colors">
-                            {job.title}
-                          </h3>
-                          <p className="text-gray-500">
-                            {job.department} • {job.type}
-                          </p>
-                        </div>
-                      </div>
-                      
-                      <p className="text-gray-600 mb-6 leading-relaxed text-lg">
-                        {job.description}
-                      </p>
-                      
-                      <div className="flex flex-wrap gap-6 mb-6 text-gray-500">
-                        <div className="flex items-center">
-                          <MapPin className="w-4 h-4 mr-2" />
-                          <span>{job.location}</span>
-                        </div>
-                        <div className="flex items-center">
-                          <Clock className="w-4 h-4 mr-2" />
-                          <span>{job.duration}</span>
-                        </div>
-                        <div className="flex items-center">
-                          <Award className="w-4 h-4 mr-2" />
-                          <span className="capitalize">{job.category} Track</span>
-                        </div>
-                      </div>
-                      
-                      <div className="flex flex-wrap gap-2">
-                        {job.skills.slice(0, 4).map((skill, skillIndex) => (
-                          <span 
-                            key={skillIndex}
-                            className={`px-4 py-2 text-sm rounded-full font-medium ${
-                              job.category === 'ai'
-                                ? 'bg-gradient-to-r from-purple-50 to-pink-50 text-purple-700'
-                                : 'bg-gradient-to-r from-blue-50 to-indigo-50 text-blue-700'
-                            }`}
-                          >
-                            {skill}
-                          </span>
-                        ))}
-                        {job.skills.length > 4 && (
-                          <span className="px-4 py-2 bg-gray-100 text-gray-500 text-sm rounded-full">
-                            +{job.skills.length - 4}
-                          </span>
-                        )}
-                      </div>
-                    </div>
-                    
-                    <div className="ml-6 opacity-0 group-hover:opacity-100 transition-opacity">
-                      <ArrowRight className="w-6 h-6 text-blue-600" />
-                    </div>
-                  </div>
-                </div>
-              </motion.div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* About Section */}
-      <section className="py-20 px-6 bg-white/50 backdrop-blur-sm">
-        <div className="max-w-4xl mx-auto text-center">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6 }}
-            viewport={{ once: true }}
-          >
-            <h2 className="text-4xl font-bold text-gray-900 mb-6">
-              About Ecocee
-            </h2>
-            <p className="text-xl text-gray-600 leading-relaxed mb-8">
-              We are an innovative MSME specializing in AI/ML solutions, embedded systems, and IoT technologies. 
-              Our team is passionate about creating intelligent systems that bridge the physical and digital worlds, 
-              making technology more accessible and impactful for businesses and communities.
-            </p>
-            <div className="flex justify-center">
-              <a 
-                href="mailto:ecoceeteam@gmail.com"
-                className="inline-flex items-center text-blue-600 hover:text-blue-700 transition-colors text-lg font-medium"
-              >
-                <Mail className="w-5 h-5 mr-2" />
-                Get in touch
-              </a>
-            </div>
-          </motion.div>
-        </div>
-      </section>
-
-      {/* Job Details Modal */}
-      <AnimatePresence>
-        {selectedJob && (
-          <motion.div
-            className="fixed inset-0 bg-black/50 backdrop-blur-sm flex items-center justify-center p-4 z-50 overflow-y-auto"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            onClick={closeModal}
-          >
+        {/* About Section */}
+        <section className="py-20 px-6 bg-white/50 backdrop-blur-sm">
+          <div className="max-w-4xl mx-auto text-center">
             <motion.div
-              className="bg-white rounded-3xl p-8 max-w-4xl w-full my-8 shadow-2xl max-h-[90vh] overflow-y-auto"
-              initial={{ scale: 0.95, opacity: 0 }}
-              animate={{ scale: 1, opacity: 1 }}
-              exit={{ scale: 0.95, opacity: 0 }}
-              onClick={(e: React.MouseEvent) => e.stopPropagation()}
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6 }}
+              viewport={{ once: true }}
             >
-              <div className="flex items-center justify-between mb-6">
-                <div className="flex items-center">
-                  <div className={`p-3 rounded-xl mr-4 ${
-                    selectedJob.category === 'ai' 
-                      ? 'bg-gradient-to-r from-purple-100 to-pink-100' 
-                      : 'bg-gradient-to-r from-blue-100 to-indigo-100'
-                  }`}>
-                    {selectedJob.icon}
-                  </div>
-                  <div>
-                    <h3 className="text-2xl font-bold text-gray-900">{selectedJob.title}</h3>
-                    <p className="text-gray-600">{selectedJob.department} • {selectedJob.type}</p>
-                  </div>
-                </div>
-                <button 
-                  onClick={closeModal}
-                  className="p-2 hover:bg-gray-100 rounded-full transition-colors"
-                  type="button"
+              <h2 className="text-4xl font-bold text-gray-900 mb-6">
+                About Ecocee
+              </h2>
+              <p className="text-xl text-gray-600 leading-relaxed mb-8">
+                We are an innovative MSME specializing in AI/ML solutions, embedded systems, and IoT technologies. 
+                Our team is passionate about creating intelligent systems that bridge the physical and digital worlds, 
+                making technology more accessible and impactful for businesses and communities.
+              </p>
+              <div className="flex justify-center">
+                <a 
+                  href="mailto:ecoceeteam@gmail.com"
+                  className="inline-flex items-center text-blue-600 hover:text-blue-700 transition-colors text-lg font-medium"
                 >
-                  <X className="w-6 h-6 text-gray-500" />
-                </button>
+                  <Mail className="w-5 h-5 mr-2" />
+                  Get in touch
+                </a>
               </div>
-              
-              <div className="space-y-8">
-                <div>
-                  <h4 className="text-lg font-semibold text-gray-900 mb-3 flex items-center">
-                    <FileText className="w-5 h-5 mr-2" />
-                    Description
-                  </h4>
-                  <p className="text-gray-600 leading-relaxed">{selectedJob.description}</p>
+            </motion.div>
+          </div>
+        </section>
+
+        {/* Job Details Modal */}
+        <AnimatePresence>
+          {selectedJob && (
+            <motion.div
+              className="fixed inset-0 bg-black/50 backdrop-blur-sm flex items-center justify-center p-4 z-50 overflow-y-auto"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              onClick={closeModal}
+            >
+              <motion.div
+                className="bg-white rounded-3xl p-8 max-w-4xl w-full my-8 shadow-2xl max-h-[90vh] overflow-y-auto"
+                initial={{ scale: 0.95, opacity: 0 }}
+                animate={{ scale: 1, opacity: 1 }}
+                exit={{ scale: 0.95, opacity: 0 }}
+                onClick={(e: React.MouseEvent) => e.stopPropagation()}
+              >
+                <div className="flex items-center justify-between mb-6">
+                  <div className="flex items-center">
+                    <div className={`p-3 rounded-xl mr-4 ${
+                      selectedJob.category === 'ai' 
+                        ? 'bg-gradient-to-r from-purple-100 to-pink-100' 
+                        : 'bg-gradient-to-r from-blue-100 to-indigo-100'
+                    }`}>
+                      {selectedJob.icon}
+                    </div>
+                    <div>
+                      <h3 className="text-2xl font-bold text-gray-900">{selectedJob.title}</h3>
+                      <p className="text-gray-600">{selectedJob.department} • {selectedJob.type}</p>
+                    </div>
+                  </div>
+                  <button 
+                    onClick={closeModal}
+                    className="p-2 hover:bg-gray-100 rounded-full transition-colors"
+                    type="button"
+                  >
+                    <X className="w-6 h-6 text-gray-500" />
+                  </button>
                 </div>
                 
-                <div className="flex flex-wrap gap-6 text-gray-600">
-                  <div className="flex items-center">
-                    <MapPin className="w-4 h-4 mr-2" />
-                    <span>{selectedJob.location}</span>
+                <div className="space-y-8">
+                  <div>
+                    <h4 className="text-lg font-semibold text-gray-900 mb-3 flex items-center">
+                      <FileText className="w-5 h-5 mr-2" />
+                      Description
+                    </h4>
+                    <p className="text-gray-600 leading-relaxed">{selectedJob.description}</p>
                   </div>
+                  
+                  <div className="flex flex-wrap gap-6 text-gray-600">
+                    <div className="flex items-center">
+                      <MapPin className="w-4 h-4 mr-2" />
+                      <span>{selectedJob.location}</span>
+                    </div>
                                     <div className="flex items-center">
                                       <Clock className="w-4 h-4 mr-2" />
                                       <span>{selectedJob.duration}</span>
@@ -1429,8 +1470,8 @@ const CareerPage: React.FC = () => {
                         </AnimatePresence>
                         
                       </div>
+                      </>
                     );
                   };
                   
                   export default CareerPage;
-
