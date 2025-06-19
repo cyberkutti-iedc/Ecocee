@@ -46,24 +46,34 @@ const FAQList: FAQProps[] = [
 export const FAQSection = () => {
   return (
     <section id="faq" className="container md:w-[700px] py-24 sm:py-32">
-      <div className="text-center mb-8">
-        <h2 className="text-lg text-primary text-center mb-2 tracking-wider">
+      <div className="text-center mb-10">
+        <h2 className="text-lg text-blue-700 font-semibold tracking-wider uppercase mb-2">
           FAQS
         </h2>
-
-        <h2 className="text-3xl md:text-4xl text-center font-bold">
+        <h2 className="text-3xl md:text-4xl font-extrabold bg-gradient-to-r from-blue-600 via-purple-600 to-indigo-600 bg-clip-text text-transparent drop-shadow-lg mb-2">
           Common Questions
         </h2>
+        <p className="text-gray-500 dark:text-gray-300 text-base max-w-xl mx-auto">
+          Find answers to the most frequently asked questions about our embedded, IoT, and AI solutions.
+        </p>
       </div>
-
-      <Accordion type="single" collapsible className="AccordionRoot">
+      <Accordion
+        type="single"
+        collapsible
+        className="AccordionRoot rounded-2xl border border-blue-100 dark:border-slate-800 bg-gradient-to-br from-white via-blue-50 to-indigo-50 dark:from-slate-900 dark:via-slate-800 dark:to-slate-900 shadow-xl"
+      >
         {FAQList.map(({ question, answer, value }) => (
-          <AccordionItem key={value} value={value}>
-            <AccordionTrigger className="text-left">
+          <AccordionItem
+            key={value}
+            value={value}
+            className="mb-2 rounded-xl border border-blue-100 dark:border-slate-800 bg-white/80 dark:bg-slate-900/80 shadow hover:shadow-lg transition-all"
+          >
+            <AccordionTrigger className="text-lg font-semibold text-blue-900 dark:text-blue-200 px-6 py-4 hover:bg-blue-50 dark:hover:bg-slate-800 rounded-xl transition-colors text-left">
               {question}
             </AccordionTrigger>
-
-            <AccordionContent>{answer}</AccordionContent>
+            <AccordionContent className="px-6 pb-4 text-gray-700 dark:text-gray-300 text-base">
+              {answer}
+            </AccordionContent>
           </AccordionItem>
         ))}
       </Accordion>

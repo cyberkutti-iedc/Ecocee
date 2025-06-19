@@ -15,6 +15,7 @@ const isPublicRoute = createRouteMatcher([
   '/privacy-policy(.*)',
   '/terms-and-conditions(.*)',
   '/Team(.*)',
+  '/book-order(.*)'
 
 ]);
 

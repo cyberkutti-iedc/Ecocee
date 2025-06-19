@@ -115,13 +115,11 @@ const services: Service[] = [
 ];
 
 export const ServicesSection = () => {
-  const [selectedServiceIndex, setSelectedServiceIndex] = useState<number | null>(
-    null
-  );
+  const [selectedServiceIndex, setSelectedServiceIndex] = useState<number | null>(null);
 
   const openModal = (index: number) => {
     setSelectedServiceIndex(index);
-    document.body.style.overflow = "hidden"; // prevent scroll when modal open
+    document.body.style.overflow = "hidden";
   };
 
   const closeModal = () => {
@@ -130,75 +128,67 @@ export const ServicesSection = () => {
   };
 
   return (
-    <section className="container mx-auto px-6 py-20 max-w-7xl">
+    <section className="container mx-auto px-4 py-20 max-w-6xl">
       <motion.div
-        className="text-center mb-16"
-        initial={{ opacity: 0, y: -30 }}
+        className="text-center mb-14"
+        initial={{ opacity: 0, y: -20 }}
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true }}
-        transition={{ duration: 0.7 }}
+        transition={{ duration: 0.6 }}
       >
-        <h2 className="text-4xl md:text-5xl font-extrabold bg-gradient-to-r from-[#D247BF] to-primary bg-clip-text text-transparent dark:from-pink-400 dark:to-purple-600">
+        <h2 className="text-3xl md:text-4xl font-bold mb-2 bg-gradient-to-r from-violet-600 via-blue-600 to-indigo-600 bg-clip-text text-transparent drop-shadow-lg">
           Our Services
         </h2>
-        <p className="mt-4 max-w-xl mx-auto text-muted-foreground dark:text-gray-300 text-lg">
+        <p className="mt-2 max-w-xl mx-auto text-blue-700 dark:text-blue-200 text-base">
           Comprehensive technology solutions from embedded systems to AI, designed to drive innovation and transform your ideas into reality.
         </p>
       </motion.div>
 
       <motion.div
-        className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10"
+        className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"
         initial="hidden"
         whileInView="visible"
         viewport={{ once: true }}
         variants={{
           hidden: {},
-          visible: { transition: { staggerChildren: 0.12 } },
+          visible: { transition: { staggerChildren: 0.10 } },
         }}
       >
-        {services.map(({ icon: Icon, title, description, features, gradient }, i) => (
+        {services.map(({ icon: Icon, title, description, features }, i) => (
           <motion.div
             key={i}
-            className="relative bg-background dark:bg-gray-900 rounded-xl shadow-md border border-gray-200 dark:border-gray-700 p-8 cursor-pointer hover:shadow-lg transition-shadow flex flex-col"
+            className="relative bg-gradient-to-br from-violet-50 via-blue-50 to-indigo-100 dark:from-slate-900 dark:via-slate-800 dark:to-slate-900 rounded-xl border border-blue-100 dark:border-violet-900 p-6 flex flex-col group hover:shadow-xl transition-all duration-200 cursor-pointer"
             variants={{
-              hidden: { opacity: 0, y: 20, scale: 0.95 },
-              visible: { opacity: 1, y: 0, scale: 1, transition: { duration: 0.5, ease: "easeOut" } },
+              hidden: { opacity: 0, y: 16, scale: 0.98 },
+              visible: { opacity: 1, y: 0, scale: 1, transition: { duration: 0.4, ease: "easeOut" } },
             }}
-            whileHover={{ scale: 1.03, y: -5 }}
+            whileHover={{ y: -2, scale: 1.03 }}
             onClick={() => openModal(i)}
             role="button"
             tabIndex={0}
             onKeyDown={(e) => { if (e.key === "Enter" || e.key === " ") openModal(i); }}
             aria-label={`Learn more about ${title}`}
           >
-            <div
-              className={`inline-flex items-center justify-center w-14 h-14 rounded-xl bg-gradient-to-r ${gradient} mb-6 shadow-lg flex-shrink-0`}
-            >
-              <Icon className="text-white w-7 h-7" />
+            <div className="flex items-center justify-center w-12 h-12 rounded-lg bg-gradient-to-br from-violet-600 via-blue-600 to-indigo-600 mb-4 shadow-lg">
+              <Icon className="text-white w-6 h-6" />
             </div>
-
-            <h3 className="text-2xl font-semibold text-foreground dark:text-white mb-3">{title}</h3>
-            <p className="text-muted-foreground dark:text-gray-300 flex-grow">{description}</p>
-
-            <ul className="mt-6 space-y-2 text-sm text-muted-foreground dark:text-gray-400">
+            <h3 className="text-lg font-semibold text-blue-900 dark:text-blue-200 mb-2">{title}</h3>
+            <p className="text-blue-700 dark:text-blue-300 text-sm mb-4">{description}</p>
+            <ul className="mt-auto space-y-1 text-xs text-blue-500 dark:text-blue-300">
               {features.map((feature, idx) => (
                 <li key={idx} className="flex items-center">
-                  <span className={`inline-block w-2 h-2 rounded-full mr-3 bg-gradient-to-r ${gradient}`} />
+                  <span className="inline-block w-1.5 h-1.5 rounded-full mr-2 bg-gradient-to-br from-violet-400 via-blue-400 to-indigo-400" />
                   {feature}
                 </li>
               ))}
             </ul>
-
             <Button
-  className="mt-8 w-full justify-center bg-gradient-to-r from-[#D247BF] to-primary hover:from-primary hover:to-[#D247BF]"
-  onClick={(e) => {
-    e.stopPropagation();
-    openModal(i);
-  }}
-  aria-label={`Learn more about ${title}`}
->
-  Learn More <ArrowRight className="w-4 h-4 ml-2" />
-</Button>
+              className="mt-6 w-full justify-center bg-gradient-to-r from-violet-600 via-blue-600 to-indigo-600 hover:from-indigo-600 hover:to-violet-600 text-white font-semibold text-sm rounded-lg"
+              onClick={e => { e.stopPropagation(); openModal(i); }}
+              aria-label={`Learn more about ${title}`}
+            >
+              Learn More <ArrowRight className="w-4 h-4 ml-2" />
+            </Button>
           </motion.div>
         ))}
       </motion.div>
@@ -208,7 +198,7 @@ export const ServicesSection = () => {
         {selectedServiceIndex !== null && (
           <motion.div
             key="modal"
-            className="fixed inset-0 bg-black/70 backdrop-blur-sm flex items-center justify-center p-4 z-50"
+            className="fixed inset-0 bg-black/60 backdrop-blur-sm flex items-center justify-center p-4 z-50"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
@@ -219,53 +209,46 @@ export const ServicesSection = () => {
             aria-describedby="modal-description"
           >
             <motion.div
-              className="bg-background dark:bg-gray-900 rounded-lg max-w-3xl w-full p-8 relative shadow-xl"
-              initial={{ scale: 0.9, opacity: 0 }}
+              className="bg-gradient-to-br from-violet-50 via-blue-50 to-indigo-100 dark:from-slate-900 dark:via-slate-800 dark:to-slate-900 rounded-xl max-w-lg w-full p-8 relative shadow-2xl border border-blue-100 dark:border-violet-900"
+              initial={{ scale: 0.96, opacity: 0 }}
               animate={{ scale: 1, opacity: 1 }}
-              exit={{ scale: 0.9, opacity: 0 }}
-              onClick={(e) => e.stopPropagation()}
+              exit={{ scale: 0.96, opacity: 0 }}
+              onClick={e => e.stopPropagation()}
             >
-              
-
-              <div className="flex items-center space-x-4 mb-6">
-                <div
-                  className={`inline-flex items-center justify-center w-14 h-14 rounded-xl bg-gradient-to-r ${services[selectedServiceIndex].gradient} shadow-lg flex-shrink-0`}
-                >
+              <div className="flex items-center space-x-4 mb-4">
+                <div className="flex items-center justify-center w-12 h-12 rounded-lg bg-gradient-to-br from-violet-600 via-blue-600 to-indigo-600 shadow-lg">
                   {React.createElement(services[selectedServiceIndex].icon, {
-                    className: "text-white w-7 h-7",
+                    className: "text-white w-6 h-6",
                   })}
                 </div>
                 <h3
                   id="modal-title"
-                  className="text-3xl font-bold text-foreground dark:text-white"
+                  className="text-xl font-bold text-blue-900 dark:text-blue-200"
                 >
                   {services[selectedServiceIndex].title}
                 </h3>
               </div>
-
               <p
                 id="modal-description"
-                className="text-muted-foreground dark:text-gray-300 mb-6"
+                className="text-blue-700 dark:text-blue-300 mb-5 text-sm"
               >
                 {services[selectedServiceIndex].details}
               </p>
-
-              <h4 className="font-semibold mb-3 text-foreground dark:text-white">
+              <h4 className="font-semibold mb-2 text-blue-900 dark:text-blue-200 text-base">
                 Key Features:
               </h4>
-              <ul className="list-disc list-inside space-y-2 text-muted-foreground dark:text-gray-400 mb-8">
+              <ul className="list-disc list-inside space-y-1 text-blue-500 dark:text-blue-300 mb-6 text-xs">
                 {services[selectedServiceIndex].features.map((feature, i) => (
                   <li key={i}>{feature}</li>
                 ))}
               </ul>
-
               <Button
-  className="w-full justify-center bg-gradient-to-r from-[#D247BF] to-primary hover:from-primary hover:to-[#D247BF]"
-  onClick={closeModal}
-  aria-label="Close details modal"
->
-  Close
-</Button>
+                className="w-full justify-center bg-gradient-to-r from-violet-600 via-blue-600 to-indigo-600 hover:from-indigo-600 hover:to-violet-600 text-white font-semibold text-sm rounded-lg"
+                onClick={closeModal}
+                aria-label="Close details modal"
+              >
+                Close
+              </Button>
             </motion.div>
           </motion.div>
         )}
