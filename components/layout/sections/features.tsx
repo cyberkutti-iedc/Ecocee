@@ -82,7 +82,7 @@ export const FeaturesSection = () => {
               <CardContent className="text-muted-foreground text-base font-medium text-center pb-6">
                 <span className="block">{description}</span>
               </CardContent>
-              <div className="absolute bottom-0 left-0 w-full h-2 bg-gradient-to-r from-blue-500 via-purple-500 to-indigo-500 opacity-40" />
+              {/* <div className="absolute bottom-0 left-0 w-full h-2 bg-gradient-to-r from-blue-500 via-purple-500 to-indigo-500 opacity-40" /> */}
             </Card>
           </div>
         ))}

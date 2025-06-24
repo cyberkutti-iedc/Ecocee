@@ -3,7 +3,8 @@ import React, { useState, useEffect, useRef } from "react";
 // --- Game Selector ---
 const GAME_LIST = [
   { key: "snake", name: "🐍 Snake" },
-  { key: "dino", name: "🦖 Dino Run" }
+  { key: "dino", name: "🦖 Dino Run" },
+  { key: "car", name: "🏎️ Car Race" }
 ];
 
 function GameSelector({ selected, setSelected }: { selected: string; setSelected: (k: string) => void }) {
@@ -348,6 +349,177 @@ function DinoRun() {
   );
 }
 
+// --- Car Racing Game ---
+function CarRacingGame() {
+  const roadWidth = 320;
+  const roadHeight = 400;
+  const carWidth = 40;
+  const carHeight = 60;
+  const laneCount = 3;
+  const laneWidth = roadWidth / laneCount;
+  const [carLane, setCarLane] = useState(1); // 0,1,2
+  const [obstacles, setObstacles] = useState<{ lane: number; y: number }[]>([]);
+  const [score, setScore] = useState(0);
+  const [highScore, setHighScore] = useState<number>(() => Number(localStorage.getItem("carHighScore") || 0));
+  const [gameOver, setGameOver] = useState(false);
+  const moveRef = useRef(carLane);
+  moveRef.current = carLane;
+
+  // Handle keyboard
+  useEffect(() => {
+    const handleKey = (e: KeyboardEvent) => {
+      if (gameOver) return;
+      if (e.key === "ArrowLeft" && moveRef.current > 0) setCarLane(l => l - 1);
+      else if (e.key === "ArrowRight" && moveRef.current < laneCount - 1) setCarLane(l => l + 1);
+    };
+    window.addEventListener("keydown", handleKey);
+    return () => window.removeEventListener("keydown", handleKey);
+  }, [gameOver]);
+
+  // Game loop
+  useEffect(() => {
+    if (gameOver) return;
+    const interval = setInterval(() => {
+      setObstacles(prev => {
+        // Move obstacles down
+        let newObs = prev.map(o => ({ ...o, y: o.y + 8 }));
+        // Remove off-screen
+        newObs = newObs.filter(o => o.y < roadHeight);
+        // Add new obstacle randomly
+        if (Math.random() < 0.08) {
+          newObs.push({ lane: Math.floor(Math.random() * laneCount), y: -carHeight });
+        }
+        return newObs;
+      });
+      setScore(s => s + 1);
+    }, 60);
+    return () => clearInterval(interval);
+  }, [gameOver]);
+
+  // Collision detection
+  useEffect(() => {
+    for (let obs of obstacles) {
+      if (
+        obs.lane === carLane &&
+        obs.y + carHeight > roadHeight - carHeight - 10 &&
+        obs.y < roadHeight - 10
+      ) {
+        setGameOver(true);
+        if (score > highScore) {
+          setHighScore(score);
+          localStorage.setItem("carHighScore", String(score));
+        }
+      }
+    }
+  }, [obstacles, carLane, score, highScore]);
+
+  const reset = () => {
+    setCarLane(1);
+    setObstacles([]);
+    setScore(0);
+    setGameOver(false);
+  };
+
+  // Car SVG
+  function CarSVG({ color = "#22d3ee" }) {
+    return (
+      <svg width={carWidth} height={carHeight} viewBox="0 0 40 60" fill="none">
+        <rect x="8" y="10" width="24" height="40" rx="8" fill={color} />
+        <rect x="12" y="18" width="16" height="18" rx="4" fill="#fff" />
+        <rect x="8" y="50" width="8" height="8" rx="3" fill="#222" />
+        <rect x="24" y="50" width="8" height="8" rx="3" fill="#222" />
+        <rect x="8" y="2" width="8" height="8" rx="3" fill="#222" />
+        <rect x="24" y="2" width="8" height="8" rx="3" fill="#222" />
+      </svg>
+    );
+  }
+
+  return (
+    <div className="mb-8 p-6 rounded-2xl bg-gradient-to-br from-cyan-100 to-blue-100 dark:from-cyan-900 dark:to-blue-900 shadow-2xl border-2 border-cyan-300 dark:border-cyan-900 max-w-xl mx-auto">
+      <div className="flex justify-between items-center mb-2">
+        <h3 className="font-bold text-xl tracking-wide">🏎️ Car Racing</h3>
+        <div>
+          <span className="font-semibold text-cyan-700 dark:text-cyan-200 mr-4">Score: {score}</span>
+          <span className="font-semibold text-blue-700 dark:text-blue-200">High: {highScore}</span>
+        </div>
+      </div>
+      <div className="relative mx-auto" style={{ width: roadWidth, height: roadHeight }}>
+        {/* Road */}
+        <div
+          className="absolute left-0 top-0"
+          style={{
+            width: roadWidth,
+            height: roadHeight,
+            background: "linear-gradient(180deg,#e0f2fe 70%,#bae6fd 100%)",
+            borderRadius: 24,
+            border: "4px solid #06b6d4",
+            boxShadow: "0 8px 32px #06b6d422",
+            overflow: "hidden"
+          }}
+        >
+          {/* Lane lines */}
+          {[1, 2].map(lane => (
+            <div
+              key={lane}
+              className="absolute"
+              style={{
+                left: lane * laneWidth - 2,
+                top: 0,
+                width: 4,
+                height: "100%",
+                background: "repeating-linear-gradient(180deg,#fff 0 16px,transparent 16px 32px)",
+                opacity: 0.5
+              }}
+            />
+          ))}
+          {/* Obstacles */}
+          {obstacles.map((obs, i) => (
+            <div
+              key={i}
+              className="absolute"
+              style={{
+                left: obs.lane * laneWidth + laneWidth / 2 - carWidth / 2,
+                top: obs.y,
+                width: carWidth,
+                height: carHeight,
+                zIndex: 2
+              }}
+            >
+              <CarSVG color="#f87171" />
+            </div>
+          ))}
+          {/* Player Car */}
+          <div
+            className="absolute"
+            style={{
+              left: carLane * laneWidth + laneWidth / 2 - carWidth / 2,
+              top: roadHeight - carHeight - 10,
+              width: carWidth,
+              height: carHeight,
+              zIndex: 3
+            }}
+          >
+            <CarSVG />
+          </div>
+          {/* Game Over Overlay */}
+          {gameOver && (
+            <div className="absolute inset-0 flex flex-col items-center justify-center bg-black bg-opacity-60 rounded-2xl z-10">
+              <div className="text-white text-2xl font-bold mb-2">Game Over</div>
+              <button
+                onClick={reset}
+                className="px-5 py-2 bg-cyan-600 text-white rounded-xl shadow hover:bg-cyan-700"
+              >
+                Restart
+              </button>
+            </div>
+          )}
+        </div>
+      </div>
+      <div className="mt-2 text-xs text-slate-500 text-center">Use ← → arrow keys to move</div>
+    </div>
+  );
+}
+
 export default function Games() {
   const [selected, setSelected] = useState("snake");
   return (
@@ -355,6 +527,7 @@ export default function Games() {
       <GameSelector selected={selected} setSelected={setSelected} />
       {selected === "snake" && <SnakeGame />}
       {selected === "dino" && <DinoRun />}
+      {selected === "car" && <CarRacingGame />}
     </div>
   );
 }

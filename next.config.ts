@@ -9,10 +9,18 @@ const nextConfig: NextConfig = {
     ignoreDuringBuilds: true,
   },
   images: {
-    domains: [
-      'avatars.githubusercontent.com',
-      'i.pravatar.cc',
-      'images.unsplash.com',
+    remotePatterns: [
+      {
+        protocol: 'https',
+        hostname: 'avatars.githubusercontent.com',
+      },
+      {
+        hostname: 'i.pravatar.cc',
+      },
+      {
+        hostname: 'images.unsplash.com',
+      },
+      // Add more patterns as needed
     ],
   },
   env: {

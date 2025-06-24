@@ -141,399 +141,147 @@ const TeamPage = () => {
   ];
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-50 to-blue-50">
+    <div className="min-h-screen bg-gradient-to-br from-green-50 via-white to-green-100 dark:from-gray-900 dark:via-gray-950 dark:to-green-950 overflow-x-hidden transition-colors duration-300">
       {/* Header */}
-      {/* <section className="py-20 px-4">
-        <div className="max-w-6xl mx-auto text-center">
+      <section className="py-16 px-4">
+        <div className="max-w-4xl mx-auto text-center">
           <motion.h1
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8 }}
-            className="text-5xl font-bold text-gray-900 mb-6"
+            transition={{ duration: 0.7 }}
+            className="text-4xl md:text-5xl font-extrabold mb-4 bg-gradient-to-r from-green-700 via-green-500 to-emerald-600 bg-clip-text text-transparent dark:from-green-300 dark:via-green-400 dark:to-emerald-400"
           >
-            Meet Our <span className="text-blue-600">Team</span>
+            Meet Our <span className="text-green-600 dark:text-green-300">Founder</span>
           </motion.h1>
           <motion.p
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.2 }}
-            className="text-xl text-gray-600 max-w-3xl mx-auto leading-relaxed"
+            transition={{ duration: 0.7, delay: 0.15 }}
+            className="text-lg md:text-xl text-gray-700 dark:text-gray-200 max-w-2xl mx-auto"
           >
-            Meet the visionary behind Ecocee, driving innovation in embedded systems and IoT solutions. 
-            Our growing team is expanding to build the future of technology together.
+            Driven by innovation and a passion for technology, our founder leads Ecocee with a vision to transform ideas into reality through embedded and IoT solutions.
           </motion.p>
-        </div>
-      </section> */}
-
-      {/* Founder Section */}
-      {/* <section className="py-16 px-4">
-        <div className="max-w-4xl mx-auto">
-          <motion.div
-            initial={{ opacity: 0, scale: 0.9 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{ duration: 0.8, delay: 0.3 }}
-            className="bg-white rounded-3xl shadow-2xl p-8 mb-16"
-          >
-            <div className="text-center mb-8">
-              <h2 className="text-3xl font-bold text-gray-900 mb-4">Leadership</h2>
-            </div>
-            
-            <div className="flex flex-col md:flex-row items-center md:items-start space-y-6 md:space-y-0 md:space-x-8">
-              <motion.div
-                whileHover={{ scale: 1.05 }}
-                className="flex-shrink-0"
-              >
-                <Avatar3D {...founder.avatar} />
-              </motion.div>
-              
-              <div className="flex-1 text-center md:text-left">
-                <h3 className="text-2xl font-bold text-gray-900 mb-2">{founder.name}</h3>
-                <p className="text-lg text-blue-600 font-semibold mb-4">{founder.role}</p>
-                <p className="text-gray-700 leading-relaxed mb-6">{founder.description}</p>
-                
-                <div className="flex flex-wrap justify-center md:justify-start gap-2 mb-6">
-                  {founder.skills.map((skill) => (
-                    <span
-                      key={skill}
-                      className="px-3 py-1 bg-blue-100 text-blue-700 rounded-full text-sm font-medium"
-                    >
-                      {skill}
-                    </span>
-                  ))}
-                </div>
-                
-                <div className="flex justify-center md:justify-start space-x-3">
-                  <motion.a
-                    whileHover={{ scale: 1.1 }}
-                    whileTap={{ scale: 0.95 }}
-                    href="#"
-                    className="w-10 h-10 bg-blue-600 text-white rounded-full flex items-center justify-center hover:bg-blue-700 transition-colors"
-                  >
-                    <Linkedin className="w-5 h-5" />
-                  </motion.a>
-                  <motion.a
-                    whileHover={{ scale: 1.1 }}
-                    whileTap={{ scale: 0.95 }}
-                    href="#"
-                    className="w-10 h-10 bg-sky-500 text-white rounded-full flex items-center justify-center hover:bg-sky-600 transition-colors"
-                  >
-                    <Twitter className="w-5 h-5" />
-                  </motion.a>
-                  <motion.a
-                    whileHover={{ scale: 1.1 }}
-                    whileTap={{ scale: 0.95 }}
-                    href="#"
-                    className="w-10 h-10 bg-red-500 text-white rounded-full flex items-center justify-center hover:bg-red-600 transition-colors"
-                  >
-                    <Mail className="w-5 h-5" />
-                  </motion.a>
-                </div>
-              </div>
-            </div>
-          </motion.div>
-        </div>
-      </section> */}
-
-      <section className="min-h-screen bg-gradient-to-br from-slate-50 to-blue-50 py-20 px-4">
-      <div className="max-w-6xl mx-auto">
-        {/* Header */}
-        <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8 }}
-          className="text-center mb-16"
-        >
-          <h1 className="text-5xl font-bold text-gray-900 mb-6">
-            Meet the <span className="text-blue-600">Founder</span>
-          </h1>
-          <p className="text-xl text-gray-600 max-w-3xl mx-auto leading-relaxed">
-            Driven by innovation and passion for technology, our founder leads Ecocee 
-            with a vision to transform ideas into reality through cutting-edge embedded and IoT solutions.
-          </p>
-        </motion.div>
-
-        {/* Founder Card */}
-        <motion.div
-          initial={{ opacity: 0, scale: 0.9 }}
-          animate={{ opacity: 1, scale: 1 }}
-          transition={{ duration: 0.8, delay: 0.2 }}
-          className="bg-white rounded-3xl shadow-2xl overflow-hidden max-w-4xl mx-auto"
-        >
-          <div className="flex flex-col lg:flex-row">
-            {/* 3D Avatar Section */}
-            <div className="lg:w-1/2 bg-gradient-to-br from-blue-500 to-purple-600 p-12 flex items-center justify-center">
-              <motion.div
-                initial={{ rotateY: -30 }}
-                animate={{ rotateY: 0 }}
-                transition={{ duration: 1, delay: 0.5 }}
-                className="relative"
-              >
-                {/* 3D Avatar Container */}
-                <div className="w-64 h-64 relative">
-                  {/* Avatar Circle Background */}
-                  <div className="absolute inset-0 bg-white/20 rounded-full animate-pulse"></div>
-                  
-                  {/* 3D Avatar Representation */}
-                  <div className="absolute inset-4 bg-gradient-to-b from-amber-700 to-amber-900 rounded-full shadow-2xl">
-                    {/* Face */}
-                    <div className="absolute top-8 left-1/2 transform -translate-x-1/2 w-32 h-32 bg-gradient-to-b from-amber-600 to-amber-800 rounded-full shadow-lg">
-                      {/* Eyes */}
-                      <div className="absolute top-8 left-6 w-3 h-3 bg-gray-800 rounded-full"></div>
-                      <div className="absolute top-8 right-6 w-3 h-3 bg-gray-800 rounded-full"></div>
-                      {/* Nose */}
-                      <div className="absolute top-12 left-1/2 transform -translate-x-1/2 w-1 h-2 bg-amber-700 rounded-full"></div>
-                      {/* Mouth */}
-                      <div className="absolute top-16 left-1/2 transform -translate-x-1/2 w-4 h-1 bg-gray-700 rounded-full"></div>
-                    </div>
-                    
-                    {/* Hair */}
-                    <div className="absolute top-2 left-1/2 transform -translate-x-1/2 w-36 h-16 bg-gray-900 rounded-t-full"></div>
-                    
-                    {/* Body/Shirt */}
-                    <div className="absolute bottom-0 left-1/2 transform -translate-x-1/2 w-40 h-20 bg-blue-600 rounded-t-3xl"></div>
-                  </div>
-                  
-                  {/* Floating elements */}
-                  <motion.div
-                    animate={{ y: [-5, 5, -5] }}
-                    transition={{ duration: 3, repeat: Infinity }}
-                    className="absolute -top-4 -right-4 w-8 h-8 bg-yellow-400 rounded-full opacity-70"
-                  ></motion.div>
-                  <motion.div
-                    animate={{ y: [5, -5, 5] }}
-                    transition={{ duration: 4, repeat: Infinity }}
-                    className="absolute -bottom-2 -left-2 w-6 h-6 bg-green-400 rounded-full opacity-60"
-                  ></motion.div>
-                </div>
-              </motion.div>
-            </div>
-
-            {/* Content Section */}
-            <div className="lg:w-1/2 p-12">
-  <motion.div
-    initial={{ opacity: 0, x: 30 }}
-    animate={{ opacity: 1, x: 0 }}
-    transition={{ duration: 0.8, delay: 0.4 }}
-  >
-    <h2 className="text-4xl font-bold text-gray-900 mb-3">
-      SREERAJ V RAJESH
-    </h2>
-    <p className="text-xl text-blue-600 font-semibold mb-6">
-      Founder & CEO, Ecocee
-    </p>
-    
-    <div className="space-y-4 mb-8">
-      <div className="flex items-center text-gray-600">
-        <Calendar className="w-5 h-5 mr-3 text-blue-500" />
-        <span>Age: 22</span>
-      </div>
-      <div className="flex items-center text-gray-600">
-        <MapPin className="w-5 h-5 mr-3 text-blue-500" />
-        <span>Thrissur, Kerala, India</span>
-      </div>
-    </div>
-
-    <p className="text-gray-700 leading-relaxed mb-8">
-      Sreeraj V Rajesh is an Electronics and Communication Engineering student and the founder of Ecocee, 
-      a startup focused on embedded systems, IoT, and full-stack development. Currently awaiting final 
-      year results, he is stepping into the professional field as a qualified engineer. His work bridges 
-      academic understanding with hands-on project execution, creating a platform that supports students, 
-      makers, and local innovators across Kerala and beyond.
-    </p>
-
-    <div className="space-y-3 mb-8">
-      <h3 className="text-lg font-semibold text-gray-900">Core Expertise:</h3>
-      <div className="flex flex-wrap gap-2">
-        {['Embedded Systems', 'IoT Solutions', 'AI/ML', 'Full-Stack Development', 'Hardware Integration'].map((skill) => (
-          <span
-            key={skill}
-            className="px-3 py-1 bg-blue-100 text-blue-700 rounded-full text-sm font-medium"
-          >
-            {skill}
-          </span>
-        ))}
-      </div>
-    </div>
-
-    {/* Social Links */}
-    <div className="flex space-x-4">
-      <motion.a
-        whileHover={{ scale: 1.1 }}
-        whileTap={{ scale: 0.95 }}
-        href="https://www.linkedin.com/in/sreerajvrajesh"
-        target="_blank"
-        rel="noopener noreferrer"
-        className="w-12 h-12 bg-blue-600 text-white rounded-full flex items-center justify-center hover:bg-blue-700 transition-colors"
-      >
-        <Linkedin className="w-6 h-6" />
-      </motion.a>
-      <motion.a
-        whileHover={{ scale: 1.1 }}
-        whileTap={{ scale: 0.95 }}
-        href="https://twitter.com/" // Replace with actual Twitter if available
-        className="w-12 h-12 bg-sky-500 text-white rounded-full flex items-center justify-center hover:bg-sky-600 transition-colors"
-      >
-        <Twitter className="w-6 h-6" />
-      </motion.a>
-      <motion.a
-        whileHover={{ scale: 1.1 }}
-        whileTap={{ scale: 0.95 }}
-        href="mailto:cyberkutti@gmail.com" // Replace with actual email
-        className="w-12 h-12 bg-red-500 text-white rounded-full flex items-center justify-center hover:bg-red-600 transition-colors"
-      >
-        <Mail className="w-6 h-6" />
-      </motion.a>
-    </div>
-  </motion.div>
-</div>
-
-          </div>
-        </motion.div>
-
-        {/* Vision & Mission */}
-        <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 0.6 }}
-          className="mt-20 grid md:grid-cols-2 gap-8"
-        >
-          <div className="bg-white p-8 rounded-2xl shadow-lg">
-            <h3 className="text-2xl font-bold text-gray-900 mb-4">Vision</h3>
-            <p className="text-gray-700 leading-relaxed">
-              To empower businesses with innovative embedded and IoT solutions that transform 
-              ideas into reality, driving technological advancement and sustainable growth across industries.
-            </p>
-          </div>
-          <div className="bg-white p-8 rounded-2xl shadow-lg">
-            <h3 className="text-2xl font-bold text-gray-900 mb-4">Mission</h3>
-            <p className="text-gray-700 leading-relaxed">
-              Creating customized, cutting-edge technology solutions that exceed expectations, 
-              foster innovation, and build lasting partnerships with clients worldwide.
-            </p>
-          </div>
-        </motion.div>
-      </div>
-    </section>
-
-      {/* Team Members Grid */}
-      <section className="py-16 px-4">
-        <div className="max-w-6xl mx-auto">
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.4 }}
-            className="text-center mb-12"
-          >
-            {/* <h2 className="text-3xl font-bold text-gray-900 mb-4">Our Expert Team</h2> */}
-            {/* <p className="text-lg text-gray-600">
-              Meet the talented individuals who make innovation possible
-            </p> */}
-          </motion.div>
-
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {teamMembers.map((member, index) => {
-              const IconComponent = member.icon;
-              return (
-                <motion.div
-                  key={member.name}
-                  initial={{ opacity: 0, y: 30 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.8, delay: 0.1 * index }}
-                  whileHover={{ y: -5 }}
-                  className="bg-white rounded-2xl shadow-lg p-6 hover:shadow-xl transition-all duration-300"
-                >
-                  <div className="text-center">
-                    <Avatar3D {...member.avatar} />
-                    
-                    <div className="mb-4">
-                      {IconComponent && <IconComponent className="w-8 h-8 text-blue-600 mx-auto mb-2" />}
-                    </div>
-                    
-                    <h3 className="text-xl font-bold text-gray-900 mb-2">{member.name}</h3>
-                    <p className="text-blue-600 font-semibold mb-4">{member.role}</p>
-                    <p className="text-gray-700 text-sm leading-relaxed mb-6">{member.description}</p>
-                    
-                    <div className="flex flex-wrap justify-center gap-2 mb-6">
-                      {member.skills.map((skill) => (
-                        <span
-                          key={skill}
-                          className="px-2 py-1 bg-gray-100 text-gray-700 rounded-lg text-xs font-medium"
-                        >
-                          {skill}
-                        </span>
-                      ))}
-                    </div>
-                    
-                    <div className="flex justify-center space-x-2">
-                      <motion.a
-                        whileHover={{ scale: 1.1 }}
-                        whileTap={{ scale: 0.95 }}
-                        href="#"
-                        className="w-8 h-8 bg-blue-600 text-white rounded-full flex items-center justify-center hover:bg-blue-700 transition-colors"
-                      >
-                        <Linkedin className="w-4 h-4" />
-                      </motion.a>
-                      <motion.a
-                        whileHover={{ scale: 1.1 }}
-                        whileTap={{ scale: 0.95 }}
-                        href="#"
-                        className="w-8 h-8 bg-sky-500 text-white rounded-full flex items-center justify-center hover:bg-sky-600 transition-colors"
-                      >
-                        <Twitter className="w-4 h-4" />
-                      </motion.a>
-                      <motion.a
-                        whileHover={{ scale: 1.1 }}
-                        whileTap={{ scale: 0.95 }}
-                        href="#"
-                        className="w-8 h-8 bg-red-500 text-white rounded-full flex items-center justify-center hover:bg-red-600 transition-colors"
-                      >
-                        <Mail className="w-4 h-4" />
-                      </motion.a>
-                    </div>
-                  </div>
-                </motion.div>
-              );
-            })}
-          </div>
         </div>
       </section>
 
+      {/* Founder Card */}
+      <motion.section
+        initial={{ opacity: 0, scale: 0.97 }}
+        animate={{ opacity: 1, scale: 1 }}
+        transition={{ duration: 0.7, delay: 0.2 }}
+        className="max-w-2xl mx-auto bg-white dark:bg-gray-900 rounded-2xl shadow-md flex flex-col items-center mb-16 border border-green-100 dark:border-green-900 transition-colors duration-300"
+      >
+        {/* Founder Image */}
+        <div className="w-36 h-36 rounded-full overflow-hidden mt-8 border-4 border-green-200 dark:border-green-800 shadow-sm">
+          <img
+            src="https://media.licdn.com/dms/image/v2/D4E03AQF7C1E116LYCw/profile-displayphoto-shrink_200_200/profile-displayphoto-shrink_200_200/0/1731557854937?e=1756339200&v=beta&t=SAjAfVXumX64w80EYCxKAmOsABL-jnwI3jLnuH0rF2U"
+            alt="Sreeraj V Rajesh"
+            className="w-full h-full object-cover object-center"
+          />
+        </div>
+        {/* Founder Content */}
+        <div className="w-full px-8 py-8 flex flex-col items-center">
+          <h2 className="text-2xl font-bold text-gray-900 dark:text-gray-100 mb-1">SREERAJ V RAJESH</h2>
+          <p className="text-green-700 dark:text-green-300 font-medium mb-4">Founder & CEO, Ecocee</p>
+          <div className="flex gap-4 text-gray-500 dark:text-gray-400 text-sm mb-4">
+            <span className="flex items-center gap-1"><Calendar className="w-4 h-4 text-green-500 dark:text-green-300" />22</span>
+            <span className="flex items-center gap-1"><MapPin className="w-4 h-4 text-green-500 dark:text-green-300" />Thrissur, Kerala</span>
+          </div>
+          <p className="text-gray-700 dark:text-gray-200 text-center mb-6 text-base leading-relaxed">
+            Sreeraj V Rajesh is an Electronics and Communication Engineering student and the founder of Ecocee, a startup focused on embedded systems, IoT, and full-stack development. His work bridges academic understanding with hands-on project execution, supporting students, makers, and innovators across Kerala and beyond.
+          </p>
+          <div className="flex flex-wrap gap-2 mb-6 justify-center">
+            {['Embedded Systems', 'IoT', 'AI/ML', 'Full-Stack', 'Hardware'].map((skill) => (
+              <span
+                key={skill}
+                className="px-3 py-1 bg-green-100 dark:bg-green-900 text-green-700 dark:text-green-300 rounded-full text-xs font-medium"
+              >
+                {skill}
+              </span>
+            ))}
+          </div>
+          <div className="flex space-x-3">
+            <a
+              href="https://www.linkedin.com/in/sreerajvrajesh"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="w-9 h-9 bg-green-600 dark:bg-green-800 text-white rounded-full flex items-center justify-center hover:bg-green-700 dark:hover:bg-green-700 transition-colors"
+            >
+              <Linkedin className="w-4 h-4" />
+            </a>
+            <a
+              href="https://twitter.com/"
+              className="w-9 h-9 bg-emerald-500 dark:bg-emerald-700 text-white rounded-full flex items-center justify-center hover:bg-emerald-600 dark:hover:bg-emerald-800 transition-colors"
+            >
+              <Twitter className="w-4 h-4" />
+            </a>
+            <a
+              href="mailto:cyberkutti@gmail.com"
+              className="w-9 h-9 bg-lime-500 dark:bg-lime-700 text-white rounded-full flex items-center justify-center hover:bg-lime-600 dark:hover:bg-lime-800 transition-colors"
+            >
+              <Mail className="w-4 h-4" />
+            </a>
+          </div>
+        </div>
+      </motion.section>
+
+      {/* Vision & Mission */}
+      <motion.div
+        initial={{ opacity: 0, y: 30 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.7, delay: 0.3 }}
+        className="mt-16 grid md:grid-cols-2 gap-8 max-w-4xl mx-auto"
+      >
+        <div className="bg-white dark:bg-gray-900 p-8 rounded-xl shadow border border-green-100 dark:border-green-900 flex flex-col items-center transition-colors duration-300">
+          <span className="w-10 h-10 mb-3 flex items-center justify-center rounded-full bg-green-100 dark:bg-green-900 text-green-600 dark:text-green-300 text-2xl">🌱</span>
+          <h3 className="text-xl font-bold text-green-700 dark:text-green-300 mb-2">Vision</h3>
+          <p className="text-gray-700 dark:text-gray-200 text-center text-base">
+            To empower businesses with innovative embedded and IoT solutions that transform ideas into reality, driving technological advancement and sustainable growth.
+          </p>
+        </div>
+        <div className="bg-white dark:bg-gray-900 p-8 rounded-xl shadow border border-green-100 dark:border-green-900 flex flex-col items-center transition-colors duration-300">
+          <span className="w-10 h-10 mb-3 flex items-center justify-center rounded-full bg-green-100 dark:bg-green-900 text-green-600 dark:text-green-300 text-2xl">🎯</span>
+          <h3 className="text-xl font-bold text-green-700 dark:text-green-300 mb-2">Mission</h3>
+          <p className="text-gray-700 dark:text-gray-200 text-center text-base">
+            Creating customized, cutting-edge technology solutions that exceed expectations, foster innovation, and build lasting partnerships with clients worldwide.
+          </p>
+        </div>
+      </motion.div>
+
       {/* Company Culture */}
-      <section className="py-16 px-4">
-        <div className="max-w-4xl mx-auto">
+      <section className="py-14 px-4">
+        <div className="max-w-3xl mx-auto">
           <motion.div
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.6 }}
-            className="bg-white rounded-2xl shadow-lg p-8 text-center"
+            transition={{ duration: 0.7, delay: 0.4 }}
+            className="bg-white dark:bg-gray-900 rounded-xl shadow p-8 text-center border border-green-100 dark:border-green-900 transition-colors duration-300"
           >
-            <h2 className="text-3xl font-bold text-gray-900 mb-6">Our Culture</h2>
-            <p className="text-lg text-gray-700 leading-relaxed mb-8">
-            At Ecocee, I believe in fostering innovation through dedication, continuous learning, 
-            and a passion for technology. As we grow, we&apos;ll build a diverse team that brings together 
+            <h2 className="text-2xl font-bold text-green-700 dark:text-green-300 mb-4">Our Culture</h2>
+            <p className="text-base text-gray-700 dark:text-gray-200 leading-relaxed mb-7">
+              At Ecocee, we believe in innovation, continuous learning, and a passion for technology. Our culture is built on simplicity, growth, and collaboration.
             </p>
-            
-            <div className="grid md:grid-cols-3 gap-6">
-              <div className="p-4">
-                <div className="w-12 h-12 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-4">
-                  <span className="text-2xl">🚀</span>
+            <div className="flex flex-col md:flex-row justify-center gap-6">
+              <div className="flex-1">
+                <div className="w-10 h-10 bg-green-100 dark:bg-green-900 rounded-full flex items-center justify-center mx-auto mb-2">
+                  <span className="text-xl">🚀</span>
                 </div>
-                <h3 className="font-semibold text-gray-900 mb-2">Innovation</h3>
-                <p className="text-sm text-gray-600">Pushing boundaries and exploring new possibilities</p>
+                <h3 className="font-semibold text-gray-900 dark:text-green-200 mb-1">Innovation</h3>
+                <p className="text-xs text-gray-600 dark:text-gray-400">Pushing boundaries and exploring new possibilities</p>
               </div>
-              <div className="p-4">
-                <div className="w-12 h-12 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4">
-                  <span className="text-2xl">🤝</span>
+              <div className="flex-1">
+                <div className="w-10 h-10 bg-green-100 dark:bg-green-900 rounded-full flex items-center justify-center mx-auto mb-2">
+                  <span className="text-xl">🤝</span>
                 </div>
-                <h3 className="font-semibold text-gray-900 mb-2">Collaboration</h3>
-                <p className="text-sm text-gray-600">Building partnerships to achieve extraordinary results</p>
+                <h3 className="font-semibold text-gray-900 dark:text-green-200 mb-1">Collaboration</h3>
+                <p className="text-xs text-gray-600 dark:text-gray-400">Building partnerships to achieve extraordinary results</p>
               </div>
-              <div className="p-4">
-                <div className="w-12 h-12 bg-purple-100 rounded-full flex items-center justify-center mx-auto mb-4">
-                  <span className="text-2xl">📚</span>
+              <div className="flex-1">
+                <div className="w-10 h-10 bg-green-100 dark:bg-green-900 rounded-full flex items-center justify-center mx-auto mb-2">
+                  <span className="text-xl">📚</span>
                 </div>
-                <h3 className="font-semibold text-gray-900 mb-2">Growth</h3>
-                <p className="text-sm text-gray-600">Continuous learning and professional development</p>
+                <h3 className="font-semibold text-gray-900 dark:text-green-200 mb-1">Growth</h3>
+                <p className="text-xs text-gray-600 dark:text-gray-400">Continuous learning and professional development</p>
               </div>
             </div>
           </motion.div>
@@ -542,5 +290,7 @@ const TeamPage = () => {
     </div>
   );
 };
+
+
 
 export default TeamPage;

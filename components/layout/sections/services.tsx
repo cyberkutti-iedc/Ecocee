@@ -128,24 +128,27 @@ export const ServicesSection = () => {
   };
 
   return (
-    <section className="container mx-auto px-4 py-20 max-w-6xl">
+    <section className="relative container mx-auto px-4 py-32 max-w-7xl">
+      {/* Decorative background blobs */}
+      <div className="absolute -top-32 -left-32 w-[500px] h-[500px] bg-gradient-to-br from-violet-400/40 via-fuchsia-300/40 to-indigo-300/40 rounded-full blur-3xl -z-10" />
+      <div className="absolute -bottom-32 -right-32 w-[500px] h-[500px] bg-gradient-to-tr from-indigo-300/40 via-fuchsia-300/40 to-violet-400/40 rounded-full blur-3xl -z-10" />
       <motion.div
-        className="text-center mb-14"
+        className="text-center mb-24"
         initial={{ opacity: 0, y: -20 }}
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true }}
         transition={{ duration: 0.6 }}
       >
-        <h2 className="text-3xl md:text-4xl font-bold mb-2 bg-gradient-to-r from-violet-600 via-blue-600 to-indigo-600 bg-clip-text text-transparent drop-shadow-lg">
+        <h2 className="text-5xl md:text-7xl font-extrabold mb-6 bg-gradient-to-r from-violet-600 via-fuchsia-500 to-indigo-500 bg-clip-text text-transparent drop-shadow-2xl tracking-tight">
           Our Services
         </h2>
-        <p className="mt-2 max-w-xl mx-auto text-blue-700 dark:text-blue-200 text-base">
-          Comprehensive technology solutions from embedded systems to AI, designed to drive innovation and transform your ideas into reality.
+        <p className="mt-4 max-w-2xl mx-auto text-violet-700 dark:text-violet-200 text-2xl font-medium">
+          From embedded systems to AI, our solutions are crafted to spark innovation and elevate your business.
         </p>
       </motion.div>
 
       <motion.div
-        className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"
+        className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-14"
         initial="hidden"
         whileInView="visible"
         viewport={{ once: true }}
@@ -154,41 +157,58 @@ export const ServicesSection = () => {
           visible: { transition: { staggerChildren: 0.10 } },
         }}
       >
-        {services.map(({ icon: Icon, title, description, features }, i) => (
+        {services.map(({ icon: Icon, title, description, features, gradient }, i) => (
           <motion.div
             key={i}
-            className="relative bg-gradient-to-br from-violet-50 via-blue-50 to-indigo-100 dark:from-slate-900 dark:via-slate-800 dark:to-slate-900 rounded-xl border border-blue-100 dark:border-violet-900 p-6 flex flex-col group hover:shadow-xl transition-all duration-200 cursor-pointer"
+            className={`
+              group relative rounded-[2.5rem] border-0 shadow-2xl hover:shadow-[0_8px_64px_rgba(140,80,255,0.18)]
+              transition-all duration-300 overflow-visible scale-100 hover:scale-105 cursor-pointer
+              bg-white/95 dark:bg-slate-900/90
+              flex flex-col min-h-[420px] max-h-[520px]
+            `}
             variants={{
-              hidden: { opacity: 0, y: 16, scale: 0.98 },
-              visible: { opacity: 1, y: 0, scale: 1, transition: { duration: 0.4, ease: "easeOut" } },
+              hidden: { opacity: 0, y: 32, scale: 0.97 },
+              visible: { opacity: 1, y: 0, scale: 1, transition: { duration: 0.5, ease: "easeOut" } },
             }}
-            whileHover={{ y: -2, scale: 1.03 }}
+            whileHover={{ y: -12, scale: 1.07 }}
             onClick={() => openModal(i)}
             role="button"
             tabIndex={0}
             onKeyDown={(e) => { if (e.key === "Enter" || e.key === " ") openModal(i); }}
             aria-label={`Learn more about ${title}`}
           >
-            <div className="flex items-center justify-center w-12 h-12 rounded-lg bg-gradient-to-br from-violet-600 via-blue-600 to-indigo-600 mb-4 shadow-lg">
-              <Icon className="text-white w-6 h-6" />
+            {/* Card gradient border and floating blobs */}
+            <div className={`absolute inset-0 z-0 pointer-events-none rounded-[2.5rem] border-4 border-transparent group-hover:border-violet-400 transition-all duration-300`} style={{ boxShadow: "0 0 0 4px rgba(140,80,255,0.10)" }} />
+            <div className="absolute -top-10 -right-10 w-36 h-36 bg-violet-400/20 rounded-full blur-2xl z-0" />
+            <div className="absolute -bottom-10 -left-10 w-32 h-32 bg-fuchsia-400/20 rounded-full blur-2xl z-0" />
+            {/* Card icon with floating effect */}
+            <div className={`flex items-center justify-center w-20 h-20 rounded-3xl bg-gradient-to-br from-violet-600 via-fuchsia-500 to-indigo-500 shadow-2xl mb-6 mt-10 ml-10 group-hover:-translate-y-2 transition-transform duration-300`}>
+              <Icon className="text-white w-10 h-10 drop-shadow-lg" />
             </div>
-            <h3 className="text-lg font-semibold text-blue-900 dark:text-blue-200 mb-2">{title}</h3>
-            <p className="text-blue-700 dark:text-blue-300 text-sm mb-4">{description}</p>
-            <ul className="mt-auto space-y-1 text-xs text-blue-500 dark:text-blue-300">
-              {features.map((feature, idx) => (
-                <li key={idx} className="flex items-center">
-                  <span className="inline-block w-1.5 h-1.5 rounded-full mr-2 bg-gradient-to-br from-violet-400 via-blue-400 to-indigo-400" />
-                  {feature}
-                </li>
-              ))}
-            </ul>
-            <Button
-              className="mt-6 w-full justify-center bg-gradient-to-r from-violet-600 via-blue-600 to-indigo-600 hover:from-indigo-600 hover:to-violet-600 text-white font-semibold text-sm rounded-lg"
-              onClick={e => { e.stopPropagation(); openModal(i); }}
-              aria-label={`Learn more about ${title}`}
-            >
-              Learn More <ArrowRight className="w-4 h-4 ml-2" />
-            </Button>
+            <div className="px-12 pb-12 pt-2 flex flex-col h-full z-10 relative">
+              <h3 className="text-2xl font-extrabold text-violet-900 dark:text-violet-100 mb-3 drop-shadow-sm tracking-tight group-hover:text-violet-600 dark:group-hover:text-violet-300 transition-colors duration-200">
+                {title}
+              </h3>
+              <p className="text-violet-800 dark:text-violet-200 text-lg mb-6 font-medium">{description}</p>
+              <div className="flex flex-wrap gap-2 mb-6">
+                {features.map((feature, idx) => (
+                  <span
+                    key={idx}
+                    className="inline-flex items-center px-3 py-1 rounded-full bg-gradient-to-r from-violet-100 via-fuchsia-100 to-indigo-100 dark:from-violet-900 dark:via-fuchsia-900 dark:to-indigo-900 text-violet-700 dark:text-violet-200 text-xs font-semibold shadow-sm"
+                  >
+                    <span className="inline-block w-2 h-2 rounded-full mr-2 bg-gradient-to-br from-violet-400 via-fuchsia-400 to-indigo-400" />
+                    {feature}
+                  </span>
+                ))}
+              </div>
+              <Button
+                className="mt-auto w-full justify-center bg-gradient-to-r from-violet-600 via-fuchsia-500 to-indigo-500 hover:from-indigo-500 hover:to-violet-600 text-white font-bold text-lg rounded-2xl shadow-xl border-2 border-violet-200 transition-all duration-200 py-3 group-hover:scale-105"
+                onClick={e => { e.stopPropagation(); openModal(i); }}
+                aria-label={`Learn more about ${title}`}
+              >
+                Learn More <ArrowRight className="w-6 h-6 ml-2" />
+              </Button>
+            </div>
           </motion.div>
         ))}
       </motion.div>
@@ -198,7 +218,7 @@ export const ServicesSection = () => {
         {selectedServiceIndex !== null && (
           <motion.div
             key="modal"
-            className="fixed inset-0 bg-black/60 backdrop-blur-sm flex items-center justify-center p-4 z-50"
+            className="fixed inset-0 bg-black/70 backdrop-blur-[2px] flex items-center justify-center p-4 z-50"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
@@ -209,41 +229,41 @@ export const ServicesSection = () => {
             aria-describedby="modal-description"
           >
             <motion.div
-              className="bg-gradient-to-br from-violet-50 via-blue-50 to-indigo-100 dark:from-slate-900 dark:via-slate-800 dark:to-slate-900 rounded-xl max-w-lg w-full p-8 relative shadow-2xl border border-blue-100 dark:border-violet-900"
+              className="bg-gradient-to-br from-violet-50 via-fuchsia-50 to-indigo-50 dark:from-slate-900 dark:via-slate-800 dark:to-slate-900 rounded-[2rem] max-w-lg w-full p-12 relative shadow-2xl border-0"
               initial={{ scale: 0.96, opacity: 0 }}
               animate={{ scale: 1, opacity: 1 }}
               exit={{ scale: 0.96, opacity: 0 }}
               onClick={e => e.stopPropagation()}
             >
-              <div className="flex items-center space-x-4 mb-4">
-                <div className="flex items-center justify-center w-12 h-12 rounded-lg bg-gradient-to-br from-violet-600 via-blue-600 to-indigo-600 shadow-lg">
+              <div className="flex items-center space-x-5 mb-6">
+                <div className="flex items-center justify-center w-16 h-16 rounded-2xl bg-gradient-to-br from-violet-600 via-fuchsia-500 to-indigo-500 shadow-xl">
                   {React.createElement(services[selectedServiceIndex].icon, {
-                    className: "text-white w-6 h-6",
+                    className: "text-white w-8 h-8",
                   })}
                 </div>
                 <h3
                   id="modal-title"
-                  className="text-xl font-bold text-blue-900 dark:text-blue-200"
+                  className="text-3xl font-extrabold text-violet-900 dark:text-violet-100 tracking-tight"
                 >
                   {services[selectedServiceIndex].title}
                 </h3>
               </div>
               <p
                 id="modal-description"
-                className="text-blue-700 dark:text-blue-300 mb-5 text-sm"
+                className="text-violet-800 dark:text-violet-200 mb-6 text-lg"
               >
                 {services[selectedServiceIndex].details}
               </p>
-              <h4 className="font-semibold mb-2 text-blue-900 dark:text-blue-200 text-base">
+              <h4 className="font-semibold mb-3 text-violet-900 dark:text-violet-100 text-lg">
                 Key Features:
               </h4>
-              <ul className="list-disc list-inside space-y-1 text-blue-500 dark:text-blue-300 mb-6 text-xs">
+              <ul className="list-disc list-inside space-y-2 text-violet-700 dark:text-violet-200 mb-8 text-base">
                 {services[selectedServiceIndex].features.map((feature, i) => (
                   <li key={i}>{feature}</li>
                 ))}
               </ul>
               <Button
-                className="w-full justify-center bg-gradient-to-r from-violet-600 via-blue-600 to-indigo-600 hover:from-indigo-600 hover:to-violet-600 text-white font-semibold text-sm rounded-lg"
+                className="w-full justify-center bg-gradient-to-r from-violet-600 via-fuchsia-500 to-indigo-500 hover:from-indigo-500 hover:to-violet-600 text-white font-bold text-lg rounded-2xl shadow-xl border-2 border-violet-200 transition-all duration-200 py-3"
                 onClick={closeModal}
                 aria-label="Close details modal"
               >

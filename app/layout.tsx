@@ -159,12 +159,14 @@ export default function RootLayout({
         {/* ...existing code... */}
         <body
           className={cn(
-            "min-h-screen bg-gradient-to-br from-slate-50 via-blue-50/30 to-indigo-50/50 dark:from-slate-950 dark:via-slate-900 dark:to-slate-800 text-slate-800 dark:text-slate-100 selection:bg-blue-200 dark:selection:bg-blue-800",
+            "min-h-screen w-full max-w-full overflow-x-clip bg-gradient-to-br from-slate-50 via-blue-50/30 to-indigo-50/50 dark:from-slate-950 dark:via-slate-900 dark:to-slate-800 text-slate-800 dark:text-slate-100 selection:bg-blue-200 dark:selection:bg-blue-800",
             inter.className
           )}
           style={{
             fontFamily: "Inter, Montserrat, sans-serif",
             backgroundAttachment: "fixed",
+            overflowX: "clip",
+            width: "100%",
           }}
         >
           <ThemeProvider
@@ -175,16 +177,19 @@ export default function RootLayout({
           >
             <NavbarWrapper />
             {/* Stylish animated background */}
-            <div className="fixed inset-0 -z-10 pointer-events-none">
+            <div className="fixed inset-0 -z-10 pointer-events-none w-full h-full overflow-x-clip overscroll-none">
               <div className="absolute -top-40 -right-40 w-96 h-96 bg-gradient-to-br from-blue-400/20 to-purple-600/20 rounded-full blur-3xl animate-pulse"></div>
               <div className="absolute -bottom-40 -left-40 w-96 h-96 bg-gradient-to-tr from-indigo-400/20 to-cyan-600/20 rounded-full blur-3xl animate-pulse delay-1000"></div>
             </div>
+            {/* Prevent scroll bounce on top/bottom */}
+            <div className="fixed top-0 left-0 w-full h-1 bg-transparent pointer-events-none z-50" style={{ overscrollBehavior: "none" }} />
+            <div className="fixed bottom-0 left-0 w-full h-1 bg-transparent pointer-events-none z-50" style={{ overscrollBehavior: "none" }} />
             {children}
             <Toaster position="top-right" />
-           
           </ThemeProvider>
         </body>
       </html>
     </ClerkProvider>
   );
 }
+
