@@ -30,6 +30,8 @@ import ModuleManager from "../ModuleManger";
 import Games from "../Games";
 import { useUser } from "@clerk/nextjs"; 
 
+import InternshipCertificatesAdmin from "../admin/InternshipCertificatesAdmin";
+
 
 interface AdminLayoutProps {
   users: SerializedUser[];
@@ -47,7 +49,15 @@ const colorThemes = [
   { name: "Indigo", primary: "#6366f1", secondary: "#4f46e5", gradient: "from-indigo-500 to-blue-600" },
 ];
 
-type AdminTab = "roles" | "careers" | "modules" | "Calendar" | "Games";
+type AdminTab = "roles" | "careers" | "modules" | "Calendar" | "Games" | "certificates";
+
+type InternshipCertificate = {
+  id: number;
+  full_name: string;
+  batch: string;
+  issued_on: string;
+  unique_number: string;
+};
 
 export default function AdminLayout({ users, applications, adminName = "Admin" }: AdminLayoutProps) {
   const [activeTab, setActiveTab] = useState<AdminTab>("roles");
@@ -55,6 +65,19 @@ export default function AdminLayout({ users, applications, adminName = "Admin" }
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [currentTheme, setCurrentTheme] = useState(colorThemes[0]);
   const [showSettings, setShowSettings] = useState(false);
+
+  // Internship Certificates state
+  const [certificates, setCertificates] = useState<InternshipCertificate[]>([]);
+  const [certificatesLoading, setCertificatesLoading] = useState(false);
+  const [certError, setCertError] = useState<string | null>(null);
+  const [showCertForm, setShowCertForm] = useState(false);
+  const [editCert, setEditCert] = useState<InternshipCertificate | null>(null);
+  const [formCert, setFormCert] = useState<Omit<InternshipCertificate, "id">>({
+    full_name: "",
+    batch: "",
+    issued_on: "",
+    unique_number: "",
+  });
 
   const { user } = useUser(); // Get Clerk user
   const displayName = user?.fullName || adminName || "Unknown Admin";
@@ -117,6 +140,86 @@ const handleThemeChange = (theme: typeof colorThemes[0]) => {
     return () => window.removeEventListener('resize', handleResize);
   }, []);
 
+  // Fetch certificates when tab is active
+  useEffect(() => {
+    if (activeTab === "certificates") {
+      fetchCertificates();
+    }
+    // eslint-disable-next-line
+  }, [activeTab]);
+
+  async function fetchCertificates() {
+    setCertificatesLoading(true);
+    setCertError(null);
+    try {
+      const res = await fetch("/api/internship-certificate", { method: "GET" });
+      const data = await res.json();
+      setCertificates(data.certificates || []);
+    } catch (e: any) {
+      setCertError(e.message || "Failed to fetch certificates");
+    }
+    setCertificatesLoading(false);
+  }
+
+  async function handleCertDelete(id: number) {
+    if (!window.confirm("Delete this certificate?")) return;
+    try {
+      await fetch(`/api/internship-certificate?id=${id}`, { method: "DELETE" });
+      fetchCertificates();
+    } catch (e: any) {
+      setCertError(e.message || "Delete failed");
+    }
+  }
+
+  function handleCertEdit(cert: InternshipCertificate) {
+    setEditCert(cert);
+    setFormCert({
+      full_name: cert.full_name,
+      batch: cert.batch,
+      issued_on: cert.issued_on,
+      unique_number: cert.unique_number,
+    });
+    setShowCertForm(true);
+  }
+
+  function handleCertAdd() {
+    setEditCert(null);
+    setFormCert({
+      full_name: "",
+      batch: "",
+      issued_on: "",
+      unique_number: "",
+    });
+    setShowCertForm(true);
+  }
+
+  async function handleCertFormSubmit(e: React.FormEvent) {
+    e.preventDefault();
+    setCertError(null);
+    try {
+      if (editCert) {
+        // Update
+        await fetch(`/api/internship-certificate?id=${editCert.id}`, {
+          method: "PUT",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(formCert),
+        });
+      } else {
+        // Insert
+        await fetch("/api/internship-certificate", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(formCert),
+        });
+      }
+      setShowCertForm(false);
+      setEditCert(null);
+      fetchCertificates();
+    } catch (e: any) {
+      setCertError(e.message || "Save failed");
+    }
+  }
+
   const tabItems = [
     {
       id: "roles" as const,
@@ -152,6 +255,13 @@ const handleThemeChange = (theme: typeof colorThemes[0]) => {
       label: "Games",
       count: 0,
       description: "Manage games and activities"
+    },
+    {
+      id: "certificates" as const,
+      icon: <FileText className="w-5 h-5" />,
+      label: "Internship Certificates",
+      count: 0,
+      description: "Manage internship certificate records"
     }
   ];
 
@@ -389,6 +499,7 @@ const handleThemeChange = (theme: typeof colorThemes[0]) => {
               {activeTab === "modules" && <ModuleManager role={"admin"} />} 
               {activeTab === "Calendar" && <div>Calendar Content</div>}
               {activeTab === "Games" && <Games/>}
+              {activeTab === "certificates" && <InternshipCertificatesAdmin />}
             </motion.div>
           </AnimatePresence>
         </div>

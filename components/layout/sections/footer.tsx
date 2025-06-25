@@ -99,6 +99,9 @@ export const FooterSection = () => {
             <Link href="#" className="opacity-60 hover:opacity-100">
               Feedback
             </Link>
+             <Link href="/internship-certificate" className="opacity-60 hover:opacity-100">
+    Internship Certificate Validate
+  </Link>
           </div>
 
           {/* Socials */}
