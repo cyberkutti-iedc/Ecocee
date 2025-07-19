@@ -10,7 +10,7 @@
     "postbuild": "next-sitemap"
   },
   "dependencies": {
-    "@clerk/nextjs": "^6.23.0",
+    "@clerk/nextjs": "^6.25.4",
     "@devnomic/marquee": "^1.0.2",
     "@hookform/resolvers": "^3.9.1",
     "@radix-ui/react-accordion": "^1.2.2",

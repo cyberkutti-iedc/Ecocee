@@ -14,7 +14,7 @@ export const HeroSection = () => {
   };
 
   const handleBookOrder = () => {
-    router.push("/book-order");
+    router.push("/bookings");
   };
 
   // English only content
