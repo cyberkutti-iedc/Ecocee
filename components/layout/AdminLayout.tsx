@@ -31,6 +31,7 @@ import Games from "../Games";
 import { useUser } from "@clerk/nextjs"; 
 import AdminRevenueDashboard from "../admin/AdminRevenueDashboard";
 import InternshipCertificatesAdmin from "../admin/InternshipCertificatesAdmin";
+import BookingsAdminView from "../BookingsAdminView";
 
 
 interface AdminLayoutProps {
@@ -49,7 +50,7 @@ const colorThemes = [
   { name: "Indigo", primary: "#6366f1", secondary: "#4f46e5", gradient: "from-indigo-500 to-blue-600" },
 ];
 
-type AdminTab = "roles" | "careers" | "modules" | "Calendar" | "Games" | "certificates" | "revenue";
+type AdminTab = "roles" | "careers" | "modules" | "Calendar" | "Games" | "certificates" | "revenue" | "bookings";
 
 type InternshipCertificate = {
   id: number;
@@ -269,7 +270,15 @@ const handleThemeChange = (theme: typeof colorThemes[0]) => {
       label: "Revenue Dashboard",
       count: 0,
       description: "View and manage revenue data"
-    }
+    },
+    {
+  id: "bookings" as const,
+  icon: <FileText className="w-5 h-5" />,
+  label: "Bookings",
+  count: 0,
+  description: "View and manage service bookings"
+},
+
   ];
 
   return (
@@ -508,6 +517,7 @@ const handleThemeChange = (theme: typeof colorThemes[0]) => {
               {activeTab === "Games" && <Games/>}
               {activeTab === "certificates" && <InternshipCertificatesAdmin />}
               {activeTab === "revenue" && <AdminRevenueDashboard />}
+              {activeTab === "bookings" && <BookingsAdminView />}
             </motion.div>
           </AnimatePresence>
         </div>
