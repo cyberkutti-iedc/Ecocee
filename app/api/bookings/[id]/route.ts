@@ -7,18 +7,20 @@ const supabase = createClient(
   process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!  // Use service role key if this needs to be admin-level
 );
 
-export async function DELETE(req: NextRequest, { params }: { params: { id: string } }) {
-  const id = params.id;
+export async function DELETE(req: NextRequest, context: { params: { id: string } }) {
+  const id = context.params.id;
+
   const { error } = await supabase.from('bookings').delete().eq('id', id);
 
   if (error) {
     return NextResponse.json({ error: error.message }, { status: 500 });
   }
+
   return NextResponse.json({ success: true });
 }
 
-export async function PATCH(req: NextRequest, { params }: { params: { id: string } }) {
-  const id = params.id;
+export async function PATCH(req: NextRequest, context: { params: { id: string } }) {
+  const id = context.params.id;
   const { status } = await req.json();
 
   const { error } = await supabase
@@ -29,5 +31,6 @@ export async function PATCH(req: NextRequest, { params }: { params: { id: string
   if (error) {
     return NextResponse.json({ error: error.message }, { status: 500 });
   }
+
   return NextResponse.json({ success: true });
 }
