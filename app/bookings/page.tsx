@@ -1,5 +1,6 @@
 "use client";
 import { useState, useEffect } from "react";
+import { useUser, SignInButton, UserButton } from "@clerk/nextjs";
 import { motion, AnimatePresence } from "framer-motion";
 import { 
   CheckCircle, 
@@ -126,6 +127,7 @@ interface FormData {
 }
 
 export default function BookingForm() {
+  const { isSignedIn, user, isLoaded } = useUser();
   const [darkMode, setDarkMode] = useState(false);
   const [form, setForm] = useState<FormData>({
     name: "",
@@ -158,6 +160,17 @@ export default function BookingForm() {
       document.documentElement.classList.remove('dark');
     }
   }, []);
+
+  // Auto-fill form with user data when signed in
+  useEffect(() => {
+    if (isSignedIn && user && isLoaded) {
+      setForm(prev => ({
+        ...prev,
+        name: user.fullName || `${user.firstName || ''} ${user.lastName || ''}`.trim() || '',
+        email: user.primaryEmailAddress?.emailAddress || '',
+      }));
+    }
+  }, [isSignedIn, user, isLoaded]);
 
   const toggleDarkMode = () => {
     const newMode = !darkMode;
@@ -208,6 +221,12 @@ export default function BookingForm() {
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target;
+    
+    // Prevent email changes when user is signed in
+    if (name === 'email' && isSignedIn) {
+      return;
+    }
+    
     setForm(prev => ({ ...prev, [name]: value }));
     
     // Clear errors
@@ -317,6 +336,47 @@ export default function BookingForm() {
   const currentStep = steps[step];
   const currentFieldError = fieldErrors[currentStep.name];
 
+  // Show sign-in prompt if user is not authenticated
+  if (!isLoaded) {
+    return (
+      <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-blue-50 via-blue-100 to-indigo-100 dark:from-gray-900 dark:via-gray-800 dark:to-black py-16 px-4 transition-colors duration-300">
+        <div className="bg-white/95 dark:bg-gray-800/95 backdrop-blur-sm rounded-3xl shadow-2xl max-w-md w-full border border-blue-100 dark:border-gray-700 p-8 text-center">
+          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-700 mx-auto mb-4"></div>
+          <p className="text-gray-600 dark:text-gray-300">Loading...</p>
+        </div>
+      </div>
+    );
+  }
+
+  if (!isSignedIn) {
+    return (
+      <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-blue-50 via-blue-100 to-indigo-100 dark:from-gray-900 dark:via-gray-800 dark:to-black py-16 px-4 transition-colors duration-300">
+        <motion.div
+          initial={{ opacity: 0, y: 40 }}
+          animate={{ opacity: 1, y: 0 }}
+          className="bg-white/95 dark:bg-gray-800/95 backdrop-blur-sm rounded-3xl shadow-2xl max-w-md w-full border border-blue-100 dark:border-gray-700 p-8 text-center"
+        >
+          <div className="mb-6">
+            <div className="bg-blue-100 dark:bg-blue-900/30 rounded-full p-4 mx-auto mb-4 w-fit">
+              <User className="w-12 h-12 text-blue-600 dark:text-blue-400" />
+            </div>
+            <h2 className="text-2xl font-bold text-gray-800 dark:text-gray-200 mb-2">
+              Sign In Required
+            </h2>
+            <p className="text-gray-600 dark:text-gray-300 mb-6">
+              Please sign in to book your consultation. We'll use your account information to pre-fill the form.
+            </p>
+          </div>
+          <SignInButton mode="modal">
+            <button className="w-full px-6 py-3 bg-blue-700 dark:bg-blue-600 text-white font-bold rounded-xl shadow-lg hover:bg-blue-800 dark:hover:bg-blue-500 transition-all transform hover:scale-105">
+              Sign In to Continue
+            </button>
+          </SignInButton>
+        </motion.div>
+      </div>
+    );
+  }
+
   return (
     <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-blue-50 via-blue-100 to-indigo-100 dark:from-gray-900 dark:via-gray-800 dark:to-black py-16 px-4 transition-colors duration-300">
       <motion.div
@@ -325,8 +385,24 @@ export default function BookingForm() {
         className="bg-white/95 dark:bg-gray-800/95 backdrop-blur-sm rounded-3xl shadow-2xl max-w-2xl w-full border border-blue-100 dark:border-gray-700 overflow-hidden transition-colors duration-300"
       >
         <div className="p-8">
-          {/* Theme Toggle Button */}
+          {/* Theme Toggle and User Profile */}
+          <div className="flex justify-between items-center mb-4">
+            <div className="flex items-center gap-3">
+              <UserButton 
+                appearance={{
+                  elements: {
+                    avatarBox: "w-8 h-8",
+                    userButtonPopoverCard: darkMode ? "dark" : "light"
+                  }
+                }}
+              />
+              <div className="text-sm text-gray-600 dark:text-gray-300">
+                <p className="font-medium">{user?.fullName || 'User'}</p>
+                <p className="text-xs opacity-75">{user?.primaryEmailAddress?.emailAddress}</p>
+              </div>
+            </div>
           
+          </div>
 
           {/* Header */}
           <div className="text-center mb-8">
@@ -450,13 +526,24 @@ export default function BookingForm() {
                         value={form[currentStep.name as keyof FormData]}
                         onChange={handleChange}
                         required={currentStep.required}
+                        readOnly={currentStep.name === 'email' && isSignedIn}
                         className={`w-full px-4 py-3 rounded-xl border-2 transition-all text-gray-700 dark:text-gray-200 bg-white dark:bg-gray-700 ${
+                          currentStep.name === 'email' && isSignedIn
+                            ? 'bg-gray-50 dark:bg-gray-800 cursor-not-allowed opacity-75'
+                            : ''
+                        } ${
                           currentFieldError 
                             ? 'border-red-300 dark:border-red-600 focus:border-red-500 dark:focus:border-red-400 focus:ring-2 focus:ring-red-100 dark:focus:ring-red-900/30' 
                             : 'border-gray-200 dark:border-gray-600 focus:border-blue-500 dark:focus:border-blue-400 focus:ring-2 focus:ring-blue-100 dark:focus:ring-blue-900/30'
                         }`}
-                        placeholder={currentStep.placeholder}
+                        placeholder={currentStep.name === 'email' && isSignedIn ? 'Email from your account' : currentStep.placeholder}
                       />
+                      {currentStep.name === 'email' && isSignedIn && (
+                        <p className="text-sm text-blue-600 dark:text-blue-400 flex items-center gap-1">
+                          <CheckCircle className="w-4 h-4" />
+                          Email verified from your account
+                        </p>
+                      )}
                       {currentFieldError && (
                         <p className="text-red-600 dark:text-red-400 text-sm flex items-center gap-1">
                           <AlertCircle className="w-4 h-4" />

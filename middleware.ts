@@ -15,13 +15,13 @@ const isPublicRoute = createRouteMatcher([
   '/privacy-policy(.*)',
   '/terms-and-conditions(.*)',
   '/Team(.*)',
-  '/bookings(.*)',
+ 
   '/internship-certificate(.*)',
 ]);
 
 // API routes accessible without auth
 const isPublicApiRoute = createRouteMatcher([
-  '/api/bookings(.*)',
+
   '/api/internship(.*)',
   '/api/careers(.*)',
 ]);
