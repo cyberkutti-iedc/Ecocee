@@ -289,7 +289,9 @@ const resetForm = () => {
   const currentFieldError = fieldErrors[currentStep.name];
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-blue-50 via-blue-100 to-indigo-100 py-16 px-4">
+    // <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-blue-50 via-blue-100 to-indigo-100 py-16 px-4">
+    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-blue-50 via-blue-100 to-indigo-100 dark:from-gray-900 dark:via-gray-800 dark:to-black py-16 px-4">
+
       <motion.div
         initial={{ opacity: 0, y: 40 }}
         animate={{ opacity: 1, y: 0 }}
@@ -298,10 +300,11 @@ const resetForm = () => {
         <div className="p-8">
           {/* Header */}
           <div className="text-center mb-8">
-            <h1 className="text-3xl font-bold text-blue-800 mb-2">
+        
+              <h1 className="text-3xl font-bold text-blue-800 dark:text-blue-300 mb-2">
               Book Your Order / Consultation
             </h1>
-            <p className="text-gray-600 text-lg">
+           <p className="text-gray-600 dark:text-gray-300 text-lg">
               Let's get started! Please answer a few quick questions.
             </p>
           </div>
