@@ -1,6 +1,6 @@
 "use client";
 import { useState, useEffect } from "react";
-import { useUser, SignInButton, UserButton } from "@clerk/nextjs";
+import { useUser, SignInButton, UserButton, useAuth } from "@clerk/nextjs";
 import { motion, AnimatePresence } from "framer-motion";
 import { 
   CheckCircle, 
@@ -146,7 +146,7 @@ export default function BookingForm() {
   const [showPopup, setShowPopup] = useState(false);
   const [step, setStep] = useState(0);
   const [fieldErrors, setFieldErrors] = useState<Record<string, string>>({});
-
+  const { getToken } = useAuth();  // get the auth token
   // Initialize theme from localStorage or system preference
   useEffect(() => {
     const savedTheme = localStorage.getItem('theme');
@@ -172,18 +172,7 @@ export default function BookingForm() {
     }
   }, [isSignedIn, user, isLoaded]);
 
-  const toggleDarkMode = () => {
-    const newMode = !darkMode;
-    setDarkMode(newMode);
-    
-    if (newMode) {
-      document.documentElement.classList.add('dark');
-      localStorage.setItem('theme', 'dark');
-    } else {
-      document.documentElement.classList.remove('dark');
-      localStorage.setItem('theme', 'light');
-    }
-  };
+ 
 
   const validateField = (name: string, value: string): string => {
     switch (name) {
@@ -278,53 +267,56 @@ export default function BookingForm() {
     }
   };
 
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
+ const handleSubmit = async (e: React.FormEvent) => {
+  e.preventDefault();
 
-    if (!validateCurrentStep()) {
-      return;
-    }
+  if (!validateCurrentStep()) return;
 
-    setSubmitting(true);
-    setError("");
+  setSubmitting(true);
+  setError("");
 
-    try {
-      const res = await fetch('/api/bookings', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(form),
+  try {
+    const token = await getToken(); // 👈 Get Clerk auth token
+
+    const res = await fetch('/api/bookings', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${token}`, // 👈 Send token
+      },
+      body: JSON.stringify(form),
+    });
+
+    const data = await res.json();
+
+    if (data.success) {
+      setSuccess(true);
+      setShowPopup(true);
+
+      setForm({
+        name: "",
+        email: "",
+        phone: "",
+        service: "",
+        description: "",
+        area: "",
+        userType: "",
+        how: "",
       });
 
-      const data = await res.json();
-
-      if (data.success) {
-        setSuccess(true);
-        setShowPopup(true);
-        // Reset form
-        setForm({
-          name: "",
-          email: "",
-          phone: "",
-          service: "",
-          description: "",
-          area: "",
-          userType: "",
-          how: "",
-        });
-        setStep(0);
-        setFieldErrors({});
-      } else {
-        setError(data.message || 'Something went wrong. Please try again.');
-      }
-    } catch (err) {
-      console.error('Submit error:', err);
-      setError('Network error. Please check your connection and try again.');
-    } finally {
-      setSubmitting(false);
+      setStep(0);
+      setFieldErrors({});
+    } else {
+      setError(data.message || 'Something went wrong. Please try again.');
     }
-  };
+  } catch (err) {
+    console.error('Submit error:', err);
+    setError('Network error. Please check your connection and try again.');
+  } finally {
+    setSubmitting(false);
+  }
+};
+
 
   const resetForm = () => {
     setSuccess(false);

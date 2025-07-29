@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { createClient } from '@supabase/supabase-js';
-import { getAuth, clerkClient } from '@clerk/nextjs/server'
-import {  useUser } from '@clerk/nextjs';
+import { getAuth } from '@clerk/nextjs/server';
+import { clerkClient } from '@clerk/clerk-sdk-node';
 
 const supabase = createClient(
   process.env.NEXT_PUBLIC_SUPABASE_URL!,
@@ -10,25 +10,30 @@ const supabase = createClient(
 
 export async function POST(req: NextRequest) {
   try {
-    // ✅ 1. Get user ID from Clerk
+    // ✅ Clerk Authentication
     const { userId } = getAuth(req);
 
     if (!userId) {
       return NextResponse.json({ success: false, message: 'Unauthorized' }, { status: 401 });
     }
 
-    // ✅ 2. Fetch user email
-  
-    const { user } = useUser()
-    
-const userEmail = user?.emailAddresses?.[0]?.emailAddress; 
-    // ✅ 3. Get booking data from body
-    const data = await req.json();
-    const {
-      name, phone, service, description, area, userType, how
-    } = data;
+    // ✅ Fetch user email from Clerk
+    const user = await clerkClient.users.getUser(userId);
+    const userEmail = user.emailAddresses?.[0]?.emailAddress ?? 'unknown@user.com';
 
-    // ✅ 4. Insert into Supabase
+    // ✅ Parse request body
+    const body = await req.json();
+    const {
+      name,
+      phone,
+      service,
+      description,
+      area,
+      userType,
+      how
+    } = body;
+
+    // ✅ Insert into Supabase
     const { error } = await supabase.from('bookings').insert({
       name,
       email: userEmail,
@@ -47,9 +52,8 @@ const userEmail = user?.emailAddresses?.[0]?.emailAddress;
     }
 
     return NextResponse.json({ success: true });
-
-  } catch (err) {
-    console.error('API Error:', err);
+  } catch (err: any) {
+    console.error('Booking API error:', err);
     return NextResponse.json({ success: false, message: 'Internal Server Error' }, { status: 500 });
   }
 }
