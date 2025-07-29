@@ -1,54 +1,55 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { createClient } from '@supabase/supabase-js';
+import { getAuth, clerkClient } from '@clerk/nextjs/server'
+import {  useUser } from '@clerk/nextjs';
 
-
-// Create a fresh Supabase client (not relying on shared headers)
 const supabase = createClient(
   process.env.NEXT_PUBLIC_SUPABASE_URL!,
-  process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!  // Use service role key if this needs to be admin-level
+  process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
 );
 
-export async function POST(request: NextRequest) {
+export async function POST(req: NextRequest) {
   try {
-    const data = await request.json();
+    // ✅ 1. Get user ID from Clerk
+    const { userId } = getAuth(req);
+
+    if (!userId) {
+      return NextResponse.json({ success: false, message: 'Unauthorized' }, { status: 401 });
+    }
+
+    // ✅ 2. Fetch user email
+  
+    const { user } = useUser()
+    
+const userEmail = user?.emailAddresses?.[0]?.emailAddress; 
+    // ✅ 3. Get booking data from body
+    const data = await req.json();
     const {
-      name,
-      email,
-      phone,
-      service,
-      description,
-      area,
-      userType,
-      how
+      name, phone, service, description, area, userType, how
     } = data;
 
+    // ✅ 4. Insert into Supabase
     const { error } = await supabase.from('bookings').insert({
       name,
-      email,
+      email: userEmail,
       phone,
       service,
       description,
       area,
       user_type: userType,
       how_did_you_know: how,
-      status: 'pending',  // Optional default value
+      clerk_user_id: userId,
+      status: 'pending',
     });
 
     if (error) {
-      console.error('Supabase Insert Error:', error);
-      return NextResponse.json(
-        { success: false, message: error.message },
-        { status: 500 }
-      );
+      return NextResponse.json({ success: false, message: error.message }, { status: 500 });
     }
 
     return NextResponse.json({ success: true });
 
   } catch (err) {
-    console.error('Unhandled API Error:', err);
-    return NextResponse.json(
-      { success: false, message: 'Internal server error.' },
-      { status: 500 }
-    );
+    console.error('API Error:', err);
+    return NextResponse.json({ success: false, message: 'Internal Server Error' }, { status: 500 });
   }
 }
