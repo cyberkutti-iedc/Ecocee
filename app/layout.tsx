@@ -96,12 +96,6 @@ export const metadata: Metadata = {
     statusBarStyle: "default",
   },
   metadataBase: new URL("https://ecocee.in"),
-  viewport: {
-    width: "device-width",
-    initialScale: 1,
-    maximumScale: 1,
-    viewportFit: "cover"
-  }
 };
 
 export default function RootLayout({
@@ -111,11 +105,12 @@ export default function RootLayout({
     <ClerkProvider>
       <html lang="en" suppressHydrationWarning>
         <head>
-          <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" />
+          <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes, viewport-fit=cover" />
           <meta name="format-detection" content="telephone=no" />
           <meta name="mobile-web-app-capable" content="yes" />
           <meta name="apple-mobile-web-app-capable" content="yes" />
           <meta name="apple-mobile-web-app-status-bar-style" content="default" />
+          <meta name="theme-color" content="#3B82F6" />
         </head>
         <Seo
           title="Ecocee | Embedded Systems, IoT & AI Solutions | Kerala Startup"
@@ -168,15 +163,16 @@ export default function RootLayout({
         />
         <body
           className={cn(
-            "min-h-screen w-full bg-gradient-to-br from-slate-50 via-blue-50/30 to-indigo-50/50 dark:from-slate-950 dark:via-slate-900 dark:to-slate-800 text-slate-800 dark:text-slate-100 selection:bg-blue-200 dark:selection:bg-blue-800 antialiased",
+            "min-h-screen max-w-full bg-gradient-to-br from-slate-50 via-blue-50/30 to-indigo-50/50 dark:from-slate-950 dark:via-slate-900 dark:to-slate-800 text-slate-800 dark:text-slate-100 selection:bg-blue-200 dark:selection:bg-blue-800 antialiased",
             inter.className
           )}
           style={{
             fontFamily: "Inter, Montserrat, sans-serif",
             overflowX: "hidden",
-            width: "100vw",
-            maxWidth: "100vw",
-            position: "relative"
+            width: "100%",
+            maxWidth: "100%",
+            minWidth: "0",
+            boxSizing: "border-box"
           }}
         >
           <ThemeProvider
@@ -185,17 +181,17 @@ export default function RootLayout({
             enableSystem
             disableTransitionOnChange
           >
-            <div className="relative w-full min-h-screen flex flex-col">
+            <div className="relative w-full min-h-screen flex flex-col" style={{ maxWidth: "100%", overflowX: "hidden" }}>
               <NavbarWrapper />
               
               {/* Animated background - mobile optimized */}
-              <div className="fixed inset-0 -z-10 pointer-events-none overflow-hidden">
-                <div className="absolute -top-20 -right-20 sm:-top-40 sm:-right-40 w-48 h-48 sm:w-96 sm:h-96 bg-gradient-to-br from-blue-400/20 to-purple-600/20 rounded-full blur-2xl sm:blur-3xl animate-pulse"></div>
-                <div className="absolute -bottom-20 -left-20 sm:-bottom-40 sm:-left-40 w-48 h-48 sm:w-96 sm:h-96 bg-gradient-to-tr from-indigo-400/20 to-cyan-600/20 rounded-full blur-2xl sm:blur-3xl animate-pulse delay-1000"></div>
+              <div className="fixed inset-0 -z-10 pointer-events-none" style={{ width: "100%", height: "100%", overflow: "hidden" }}>
+                <div className="absolute -top-10 -right-10 sm:-top-20 sm:-right-20 w-32 h-32 sm:w-48 sm:h-48 bg-gradient-to-br from-blue-400/15 to-purple-600/15 rounded-full blur-xl sm:blur-2xl animate-pulse"></div>
+                <div className="absolute -bottom-10 -left-10 sm:-bottom-20 sm:-left-20 w-32 h-32 sm:w-48 sm:h-48 bg-gradient-to-tr from-indigo-400/15 to-cyan-600/15 rounded-full blur-xl sm:blur-2xl animate-pulse delay-1000"></div>
               </div>
               
               {/* Main content area */}
-              <main className="flex-1 w-full max-w-full overflow-x-hidden">
+              <main className="flex-1 w-full overflow-x-hidden" style={{ maxWidth: "100%", minWidth: "0" }}>
                 {children}
               </main>
               
@@ -204,7 +200,8 @@ export default function RootLayout({
                 toastOptions={{
                   style: {
                     fontSize: '14px',
-                    maxWidth: '90vw',
+                    maxWidth: '85vw',
+                    wordBreak: 'break-word',
                   },
                 }}
               />
