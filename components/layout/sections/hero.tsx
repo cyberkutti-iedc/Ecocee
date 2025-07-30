@@ -133,17 +133,18 @@ export const HeroSection = () => {
       </div>
 
       {/* Mobile CTA Bottom Bar */}
-      <div className="fixed bottom-0 left-0 right-0 z-50 lg:hidden bg-white/95 dark:bg-gray-900/95 border-t border-gray-200 dark:border-gray-800 px-4 py-3 flex items-center justify-between shadow-xl backdrop-blur-md">
-        <span className="text-blue-700 dark:text-green-400 font-semibold text-sm sm:text-base truncate mr-3">
-          {t.cta}
-        </span>
-        <Button
-          className="bg-gradient-to-r from-blue-700 to-green-400 dark:from-green-700 dark:to-blue-700 text-white font-bold px-4 py-2 rounded-xl shadow-lg hover:from-green-400 hover:to-blue-700 dark:hover:from-blue-700 dark:hover:to-green-700 transition-all duration-300 text-sm whitespace-nowrap"
-          onClick={handleClick}
-        >
-          {t.ideas}
-        </Button>
-      </div>
+      <div className="fixed bottom-0 left-0 right-0 z-30 lg:hidden bg-white/95 dark:bg-gray-900/95 border-t border-gray-200 dark:border-gray-800 px-4 sm:px-6 py-3 sm:py-4 flex items-center justify-between shadow-xl backdrop-blur-md gap-x-3 max-w-full touch-safe">
+  <span className="text-blue-700 dark:text-green-400 font-semibold text-sm sm:text-base truncate min-w-0">
+    {t.cta}
+  </span>
+  <Button
+    className="bg-gradient-to-r from-blue-700 to-green-400 dark:from-green-700 dark:to-blue-700 text-white font-bold px-4 py-2 rounded-xl shadow-lg hover:from-green-400 hover:to-blue-700 dark:hover:from-blue-700 dark:hover:to-green-700 transition-all duration-300 text-sm whitespace-nowrap"
+    onClick={handleBookOrder}
+  >
+    {t.bookOrder}
+  </Button>
+</div>
+
 
       {/* Decorative Background Elements - Mobile Optimized */}
       <div className="absolute inset-0 -z-10 pointer-events-none overflow-hidden">
