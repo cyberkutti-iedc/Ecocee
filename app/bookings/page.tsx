@@ -456,7 +456,7 @@ export default function BookingForm() {
               >
                 {/* Form Field */}
                 <div className="space-y-4">
-                  <label className="block text-lg font-semibold text-gray-800 dark:text-gray-200 flex items-center transition-colors duration-300">
+                  <label className="block text-lg font-semibold text-gray-800 dark:text-gray-200 items-center transition-colors duration-300">
                     {currentStep.icon}
                     {currentStep.label}
                     {currentStep.required && <span className="text-red-500 dark:text-red-400 ml-1">*</span>}

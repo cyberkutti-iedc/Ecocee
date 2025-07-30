@@ -5,10 +5,8 @@ import { cn } from "@/lib/utils";
 import { ThemeProvider } from "@/components/layout/theme-provider";
 import { Toaster } from "react-hot-toast";
 import { NavbarWrapper } from "@/components/layout/NavbarWrapper";
-
 import {
   ClerkProvider,
-
 } from '@clerk/nextjs'
 import Seo from "@/components/seo/Seo";
 
@@ -67,7 +65,7 @@ export const metadata: Metadata = {
     creator: "@Ecocee",
     title: "Ecocee | Embedded Systems, IoT & AI Solutions",
     description:
-      "Discover Ecocee’s Kerala-based embedded systems, IoT, and AI development services with custom solutions and patentable projects.",
+      "Discover Ecocee's Kerala-based embedded systems, IoT, and AI development services with custom solutions and patentable projects.",
     site: "@Ecocee",
     images: [
       "https://ecocee.in/icon.jpg",
@@ -98,6 +96,12 @@ export const metadata: Metadata = {
     statusBarStyle: "default",
   },
   metadataBase: new URL("https://ecocee.in"),
+  viewport: {
+    width: "device-width",
+    initialScale: 1,
+    maximumScale: 1,
+    viewportFit: "cover"
+  }
 };
 
 export default function RootLayout({
@@ -106,7 +110,13 @@ export default function RootLayout({
   return (
     <ClerkProvider>
       <html lang="en" suppressHydrationWarning>
-        {/* SEO component for global layout */}
+        <head>
+          <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" />
+          <meta name="format-detection" content="telephone=no" />
+          <meta name="mobile-web-app-capable" content="yes" />
+          <meta name="apple-mobile-web-app-capable" content="yes" />
+          <meta name="apple-mobile-web-app-status-bar-style" content="default" />
+        </head>
         <Seo
           title="Ecocee | Embedded Systems, IoT & AI Solutions | Kerala Startup"
           description="Ecocee, a Kerala-based MSME startup, offers innovative embedded systems, IoT, AI development, and custom hardware & software solutions. Patentable projects and technical training."
@@ -156,17 +166,17 @@ export default function RootLayout({
             "description": "Kerala-based startup Ecocee specializes in embedded systems, IoT, AI, and custom technology solutions for innovative product development."
           }}
         />
-        {/* ...existing code... */}
         <body
           className={cn(
-            "min-h-screen w-full max-w-full overflow-x-clip bg-gradient-to-br from-slate-50 via-blue-50/30 to-indigo-50/50 dark:from-slate-950 dark:via-slate-900 dark:to-slate-800 text-slate-800 dark:text-slate-100 selection:bg-blue-200 dark:selection:bg-blue-800",
+            "min-h-screen w-full bg-gradient-to-br from-slate-50 via-blue-50/30 to-indigo-50/50 dark:from-slate-950 dark:via-slate-900 dark:to-slate-800 text-slate-800 dark:text-slate-100 selection:bg-blue-200 dark:selection:bg-blue-800 antialiased",
             inter.className
           )}
           style={{
             fontFamily: "Inter, Montserrat, sans-serif",
-            backgroundAttachment: "fixed",
-            overflowX: "clip",
-            width: "100%",
+            overflowX: "hidden",
+            width: "100vw",
+            maxWidth: "100vw",
+            position: "relative"
           }}
         >
           <ThemeProvider
@@ -175,21 +185,33 @@ export default function RootLayout({
             enableSystem
             disableTransitionOnChange
           >
-            <NavbarWrapper />
-            {/* Stylish animated background */}
-            <div className="fixed inset-0 -z-10 pointer-events-none w-full h-full overflow-x-clip overscroll-none">
-              <div className="absolute -top-40 -right-40 w-96 h-96 bg-gradient-to-br from-blue-400/20 to-purple-600/20 rounded-full blur-3xl animate-pulse"></div>
-              <div className="absolute -bottom-40 -left-40 w-96 h-96 bg-gradient-to-tr from-indigo-400/20 to-cyan-600/20 rounded-full blur-3xl animate-pulse delay-1000"></div>
+            <div className="relative w-full min-h-screen flex flex-col">
+              <NavbarWrapper />
+              
+              {/* Animated background - mobile optimized */}
+              <div className="fixed inset-0 -z-10 pointer-events-none overflow-hidden">
+                <div className="absolute -top-20 -right-20 sm:-top-40 sm:-right-40 w-48 h-48 sm:w-96 sm:h-96 bg-gradient-to-br from-blue-400/20 to-purple-600/20 rounded-full blur-2xl sm:blur-3xl animate-pulse"></div>
+                <div className="absolute -bottom-20 -left-20 sm:-bottom-40 sm:-left-40 w-48 h-48 sm:w-96 sm:h-96 bg-gradient-to-tr from-indigo-400/20 to-cyan-600/20 rounded-full blur-2xl sm:blur-3xl animate-pulse delay-1000"></div>
+              </div>
+              
+              {/* Main content area */}
+              <main className="flex-1 w-full max-w-full overflow-x-hidden">
+                {children}
+              </main>
+              
+              <Toaster 
+                position="top-right" 
+                toastOptions={{
+                  style: {
+                    fontSize: '14px',
+                    maxWidth: '90vw',
+                  },
+                }}
+              />
             </div>
-            {/* Prevent scroll bounce on top/bottom */}
-            <div className="fixed top-0 left-0 w-full h-1 bg-transparent pointer-events-none z-50" style={{ overscrollBehavior: "none" }} />
-            <div className="fixed bottom-0 left-0 w-full h-1 bg-transparent pointer-events-none z-50" style={{ overscrollBehavior: "none" }} />
-            {children}
-            <Toaster position="top-right" />
           </ThemeProvider>
         </body>
       </html>
     </ClerkProvider>
   );
 }
-
