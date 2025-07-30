@@ -133,7 +133,7 @@ export const HeroSection = () => {
       </div>
 
       {/* Mobile CTA Bottom Bar */}
-      <div className="fixed bottom-0 left-0 right-0 z-30 lg:hidden bg-white/95 dark:bg-gray-900/95 border-t border-gray-200 dark:border-gray-800 px-4 sm:px-6 py-3 sm:py-4 flex items-center justify-between shadow-xl backdrop-blur-md gap-x-3 max-w-full touch-safe">
+      {/* <div className="fixed bottom-0 left-0 right-0 z-30 lg:hidden bg-white/95 dark:bg-gray-900/95 border-t border-gray-200 dark:border-gray-800 px-4 sm:px-6 py-3 sm:py-4 flex items-center justify-between shadow-xl backdrop-blur-md gap-x-3 max-w-full touch-safe">
   <span className="text-blue-700 dark:text-green-400 font-semibold text-sm sm:text-base truncate min-w-0">
     {t.cta}
   </span>
@@ -143,7 +143,7 @@ export const HeroSection = () => {
   >
     {t.bookOrder}
   </Button>
-</div>
+</div> */}
 
 
       {/* Decorative Background Elements - Mobile Optimized */}
