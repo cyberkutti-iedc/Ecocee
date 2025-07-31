@@ -66,19 +66,7 @@ const LoginPage = () => {
     return () => clearInterval(interval);
   }, [features.length]); 
 
-  // Toggle dark mode and save preference
-  const toggleDarkMode = () => {
-    const newMode = !darkMode;
-    setDarkMode(newMode);
-    
-    if (newMode) {
-      document.documentElement.classList.add('dark');
-      localStorage.setItem('theme', 'dark');
-    } else {
-      document.documentElement.classList.remove('dark');
-      localStorage.setItem('theme', 'light');
-    }
-  };
+  
 
   // Framer Motion variants for staggered animations
   const containerVariants = {
