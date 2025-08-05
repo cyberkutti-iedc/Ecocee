@@ -10,30 +10,18 @@ const supabase = createClient(
 
 export async function POST(req: NextRequest) {
   try {
-    // ✅ Clerk Authentication
     const { userId } = getAuth(req);
 
     if (!userId) {
       return NextResponse.json({ success: false, message: 'Unauthorized' }, { status: 401 });
     }
 
-    // ✅ Fetch user email from Clerk
     const user = await clerkClient.users.getUser(userId);
     const userEmail = user.emailAddresses?.[0]?.emailAddress ?? 'unknown@user.com';
 
-    // ✅ Parse request body
     const body = await req.json();
-    const {
-      name,
-      phone,
-      service,
-      description,
-      area,
-      userType,
-      how
-    } = body;
+    const { name, phone, service, description, area, userType, how } = body;
 
-    // ✅ Insert into Supabase
     const { error } = await supabase.from('bookings').insert({
       name,
       email: userEmail,

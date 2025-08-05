@@ -23,7 +23,7 @@ export const HeroSection = () => {
     headline2: "Let's Build It Together",
     desc: "Ecocee offers expert consulting, product development, and custom solutions in Embedded Systems, IoT, and AI. Whether you need a prototype, a full product, or technical guidance—our team is ready to help you turn your vision into reality.",
     bookOrder: "Book Your First Order",
-    ideas: "Share Your Idea",
+    ideas: "Get a new Idea",
     why: "Why Choose Ecocee?",
     whyList: [
       "End-to-end embedded & IoT product development",
@@ -132,21 +132,7 @@ export const HeroSection = () => {
         </div>
       </div>
 
-      {/* Mobile CTA Bottom Bar */}
-      {/* <div className="fixed bottom-0 left-0 right-0 z-30 lg:hidden bg-white/95 dark:bg-gray-900/95 border-t border-gray-200 dark:border-gray-800 px-4 sm:px-6 py-3 sm:py-4 flex items-center justify-between shadow-xl backdrop-blur-md gap-x-3 max-w-full touch-safe">
-  <span className="text-blue-700 dark:text-green-400 font-semibold text-sm sm:text-base truncate min-w-0">
-    {t.cta}
-  </span>
-  <Button
-    className="bg-gradient-to-r from-blue-700 to-green-400 dark:from-green-700 dark:to-blue-700 text-white font-bold px-4 py-2 rounded-xl shadow-lg hover:from-green-400 hover:to-blue-700 dark:hover:from-blue-700 dark:hover:to-green-700 transition-all duration-300 text-sm whitespace-nowrap"
-    onClick={handleBookOrder}
-  >
-    {t.bookOrder}
-  </Button>
-</div> */}
-
-
-      {/* Decorative Background Elements - Mobile Optimized */}
+    
       <div className="absolute inset-0 -z-10 pointer-events-none overflow-hidden">
         <div className="absolute top-0 left-0 w-full h-full bg-gradient-to-br from-blue-50/50 via-white/30 to-green-50/50 dark:from-gray-900/30 dark:via-gray-950/30 dark:to-black/30" />
         <div className="absolute top-[-60px] left-[-60px] sm:top-[-100px] sm:left-[-100px] w-48 h-48 sm:w-72 sm:h-72 bg-blue-300/20 dark:bg-green-900/20 rounded-full blur-2xl sm:blur-3xl" />

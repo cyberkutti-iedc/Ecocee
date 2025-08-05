@@ -2,57 +2,73 @@ import { getAuth } from '@clerk/nextjs/server';
 import { createClient } from '@supabase/supabase-js';
 import { NextRequest, NextResponse } from 'next/server';
 
-// Create Supabase client (use service role key if admin-level access needed)
 const supabase = createClient(
   process.env.NEXT_PUBLIC_SUPABASE_URL!,
   process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
 );
 
-// UUID validator
 function isValidUUID(id: string): boolean {
   return /^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i.test(id);
 }
 
-// GET /api/bookings or /api/bookings?id=UUID
-export async function GET(req: NextRequest) {
+// ✅ GET a single booking
+export async function GET(req: NextRequest, { params }: { params: { id: string } }) {
   try {
-    // Clerk authentication
     const { sessionClaims } = getAuth(req);
-
-    if (!sessionClaims) {
-      return NextResponse.json({ error: 'Not authenticated' }, { status: 401 });
-    }
-
-    // Role-based access check
-    const userStatus = sessionClaims?.metadata?.status;
-    if (userStatus !== 'admin') {
+    if (!sessionClaims || sessionClaims?.metadata?.status !== 'admin') {
       return NextResponse.json({ error: 'Unauthorized' }, { status: 403 });
     }
 
-    // Optional ?id=UUID support
-    const url = new URL(req.url);
-    const id = url.searchParams.get('id');
+    const { id } = params;
+    if (!isValidUUID(id)) return NextResponse.json({ error: 'Invalid UUID format' }, { status: 400 });
 
-    let query = supabase.from('bookings').select('*').order('created_at', { ascending: false });
-
-    if (id) {
-      if (!isValidUUID(id)) {
-        return NextResponse.json({ error: 'Invalid UUID format' }, { status: 400 });
-      }
-      query = supabase.from('bookings').select('*').eq('id', id);
-    }
-
-    const { data, error } = await query;
-
-    if (error) {
-      return NextResponse.json({ error: error.message }, { status: 500 });
-    }
+    const { data, error } = await supabase.from('bookings').select('*').eq('id', id).single();
+    if (error) return NextResponse.json({ error: error.message }, { status: 500 });
 
     return NextResponse.json(data);
   } catch (err: any) {
-    return NextResponse.json(
-      { error: 'Server error', details: err?.message || String(err) },
-      { status: 500 }
-    );
+    return NextResponse.json({ error: 'Server error', details: err?.message }, { status: 500 });
+  }
+}
+
+// ✅ PATCH to update booking
+export async function PATCH(req: NextRequest, { params }: { params: { id: string } }) {
+  try {
+    const { sessionClaims } = getAuth(req);
+    if (!sessionClaims || sessionClaims?.metadata?.status !== 'admin') {
+      return NextResponse.json({ error: 'Unauthorized' }, { status: 403 });
+    }
+
+    const { id } = params;
+    if (!isValidUUID(id)) return NextResponse.json({ error: 'Invalid UUID format' }, { status: 400 });
+
+    const body = await req.json(); // expects { status?: 'approved' | 'rejected' | 'pending', ...other fields if needed }
+
+    const { error } = await supabase.from('bookings').update(body).eq('id', id);
+    if (error) return NextResponse.json({ error: error.message }, { status: 500 });
+
+    return NextResponse.json({ success: true, message: 'Booking updated' });
+  } catch (err: any) {
+    return NextResponse.json({ error: 'Server error', details: err?.message }, { status: 500 });
+  }
+}
+
+// ✅ DELETE a booking
+export async function DELETE(req: NextRequest, { params }: { params: { id: string } }) {
+  try {
+    const { sessionClaims } = getAuth(req);
+    if (!sessionClaims || sessionClaims?.metadata?.status !== 'admin') {
+      return NextResponse.json({ error: 'Unauthorized' }, { status: 403 });
+    }
+
+    const { id } = params;
+    if (!isValidUUID(id)) return NextResponse.json({ error: 'Invalid UUID format' }, { status: 400 });
+
+    const { error } = await supabase.from('bookings').delete().eq('id', id);
+    if (error) return NextResponse.json({ error: error.message }, { status: 500 });
+
+    return NextResponse.json({ success: true, message: 'Booking deleted' });
+  } catch (err: any) {
+    return NextResponse.json({ error: 'Server error', details: err?.message }, { status: 500 });
   }
 }
