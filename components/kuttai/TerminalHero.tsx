@@ -25,7 +25,7 @@ export default function TerminalHero({ onJoinWaitlist, terminalLines }: Terminal
             <div className="flex items-center gap-3">
               <Terminal className="w-4 h-4 text-green-400" />
               <span className="text-green-400 text-sm">kuttai@system:~$</span>
-              <div className="text-xs text-gray-400">- Terminal v2.1.0</div>
+              <div className="text-xs text-gray-400">- Terminal v1.0.1</div>
             </div>
             <div className="flex items-center gap-2">
               <button className="w-3 h-3 bg-green-500 rounded-full hover:bg-green-400 transition-colors"></button>
@@ -156,7 +156,7 @@ export default function TerminalHero({ onJoinWaitlist, terminalLines }: Terminal
             {/* Status Information */}
             <div className="grid md:grid-cols-3 gap-4 max-w-3xl mx-auto">
               <div className="bg-gray-900/80 border border-green-500/30 rounded-lg p-4 text-center backdrop-blur-sm">
-                <div className="text-green-400 font-mono text-lg font-bold">1,247</div>
+                <div className="text-green-400 font-mono text-lg font-bold">60</div>
                 <div className="text-gray-400 text-sm">Beta Applicants</div>
               </div>
               <div className="bg-gray-900/80 border border-green-500/30 rounded-lg p-4 text-center backdrop-blur-sm">

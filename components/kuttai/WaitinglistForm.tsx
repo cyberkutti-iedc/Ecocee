@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
-import { X, Terminal, CheckCircle, XCircle, Loader } from 'lucide-react'
+import { X, Terminal, CheckCircle, XCircle, Loader, Heart } from 'lucide-react'
 
 interface WaitlistFormProps {
   onClose: () => void
@@ -26,6 +26,7 @@ export default function WaitlistForm({ onClose, submitStatus, setSubmitStatus }:
   const [terminalOutput, setTerminalOutput] = useState<string[]>([])
   const [currentStep, setCurrentStep] = useState(0)
   const [isMobile, setIsMobile] = useState(false)
+  const [showSuccessPopup, setShowSuccessPopup] = useState(false)
 
   useEffect(() => {
     // Check if mobile on initial render and window resize
@@ -57,6 +58,18 @@ export default function WaitlistForm({ onClose, submitStatus, setSubmitStatus }:
 
     return () => clearInterval(interval)
   }, [])
+
+  useEffect(() => {
+    if (submitStatus === 'success') {
+      setShowSuccessPopup(true)
+      const timer = setTimeout(() => {
+        setShowSuccessPopup(false)
+        onClose()
+      }, 5000) // Show popup for 5 seconds
+      
+      return () => clearTimeout(timer)
+    }
+  }, [submitStatus, onClose])
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
@@ -99,11 +112,7 @@ export default function WaitlistForm({ onClose, submitStatus, setSubmitStatus }:
       }
 
       setSubmitStatus('success')
-      setTerminalOutput(prev => [...prev, 'SUCCESS: Registration complete!', 'Welcome to KuttAI Beta Program.', 'You will receive updates via email.', ''])
-      
-      setTimeout(() => {
-        onClose()
-      }, 3000)
+      setTerminalOutput(prev => [...prev, 'SUCCESS: Registration complete!', 'Welcome to KuttAI Beta Program.', 'We will notify you when the beta version is online.', 'Love from EcoCee Team 💚', ''])
     } catch (error: any) {
       console.error('Error:', error)
       setSubmitStatus('error')
@@ -121,11 +130,35 @@ export default function WaitlistForm({ onClose, submitStatus, setSubmitStatus }:
 
   return (
     <AnimatePresence>
+      {/* Success Popup */}
+      {showSuccessPopup && (
+        <motion.div
+          initial={{ opacity: 0, scale: 0.8 }}
+          animate={{ opacity: 1, scale: 1 }}
+          exit={{ opacity: 0, scale: 0.8 }}
+          className="fixed inset-0 flex items-center justify-center z-50 p-4"
+        >
+          <div className="bg-gray-900 border-2 border-green-500 rounded-lg p-6 max-w-md w-full shadow-2xl">
+            <div className="flex flex-col items-center text-center">
+              <CheckCircle className="w-16 h-16 text-green-500 mb-4" />
+              <h3 className="text-xl font-bold text-green-400 mb-2">Registration Successful!</h3>
+              <p className="text-gray-300 mb-4">
+                You've been added to our beta waitlist. We'll notify you when KuttAI is ready!
+              </p>
+              <div className="flex items-center text-green-300 mt-2">
+                <span className="mr-1">Love from EcoCee</span>
+                <Heart className="w-5 h-5 fill-green-300" />
+              </div>
+            </div>
+          </div>
+        </motion.div>
+      )}
+      
       <motion.div
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         exit={{ opacity: 0 }}
-        className="fixed inset-0 bg-black/90 backdrop-blur-sm flex items-center justify-center p-2 sm:p-4 z-50 font-mono"
+        className="fixed inset-0 bg-black/90 backdrop-blur-sm flex items-center justify-center p-2 sm:p-4 z-40 font-mono"
         onClick={onClose}
       >
         <motion.div
