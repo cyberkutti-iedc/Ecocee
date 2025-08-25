@@ -25,6 +25,16 @@ export default function WaitlistForm({ onClose, submitStatus, setSubmitStatus }:
 
   const [terminalOutput, setTerminalOutput] = useState<string[]>([])
   const [currentStep, setCurrentStep] = useState(0)
+  const [isMobile, setIsMobile] = useState(false)
+
+  useEffect(() => {
+    // Check if mobile on initial render and window resize
+    const checkMobile = () => setIsMobile(window.innerWidth < 768)
+    checkMobile()
+    
+    window.addEventListener('resize', checkMobile)
+    return () => window.removeEventListener('resize', checkMobile)
+  }, [])
 
   useEffect(() => {
     // Simulate terminal initialization
@@ -115,7 +125,7 @@ export default function WaitlistForm({ onClose, submitStatus, setSubmitStatus }:
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         exit={{ opacity: 0 }}
-        className="fixed inset-0 bg-black/90 backdrop-blur-sm flex items-center justify-center p-4 z-50 font-mono"
+        className="fixed inset-0 bg-black/90 backdrop-blur-sm flex items-center justify-center p-2 sm:p-4 z-50 font-mono"
         onClick={onClose}
       >
         <motion.div
@@ -129,17 +139,24 @@ export default function WaitlistForm({ onClose, submitStatus, setSubmitStatus }:
           <div className="bg-gray-800 px-4 py-3 flex items-center justify-between border-b border-green-500/30">
             <div className="flex items-center gap-2">
               <Terminal className="w-4 h-4 text-green-400" />
-              <span className="text-green-400 text-sm">kuttai-registration@terminal:~$</span>
+              <span className="text-green-400 text-sm truncate">kuttai-registration@terminal:~$</span>
             </div>
             <button
               onClick={onClose}
-              className="w-3 h-3 bg-red-500 rounded-full hover:bg-red-400 transition-colors"
-            ></button>
+              className="w-6 h-6 flex items-center justify-center text-gray-300 hover:text-white transition-colors md:w-3 md:h-3 md:bg-red-500 md:rounded-full md:hover:bg-red-400"
+              aria-label="Close"
+            >
+              <X className="w-4 h-4 md:hidden" />
+            </button>
           </div>
 
-          <div className="flex h-96">
-            {/* Terminal Output Side */}
-            <div className="w-1/2 bg-black p-4 overflow-y-auto border-r border-green-500/30">
+          <div className={`flex ${isMobile ? 'flex-col h-[calc(90vh-112px)]' : 'h-96'}`}>
+            {/* Terminal Output Side - Hidden on mobile unless in success/error state */}
+            <div className={`bg-black p-4 overflow-y-auto border-green-500/30
+              ${isMobile ? 
+                (submitStatus === 'success' || submitStatus === 'error' ? 'w-full h-2/5 border-b' : 'hidden') 
+                : 'w-1/2 border-r'}`}
+            >
               <div className="space-y-1 text-sm">
                 {terminalOutput.map((line, index) => (
                   <motion.div
@@ -165,16 +182,16 @@ export default function WaitlistForm({ onClose, submitStatus, setSubmitStatus }:
             </div>
 
             {/* Form Side */}
-            <div className="w-1/2 bg-gray-900 p-6 overflow-y-auto">
-              <h2 className="text-xl font-bold text-green-400 mb-6 flex items-center gap-2">
-                <Terminal className="w-5 h-5" />
+            <div className={`bg-gray-900 overflow-y-auto ${isMobile ? 'w-full h-3/5 p-4' : 'w-1/2 p-6'}`}>
+              <h2 className="text-lg md:text-xl font-bold text-green-400 mb-4 md:mb-6 flex items-center gap-2">
+                <Terminal className="w-4 h-4 md:w-5 md:h-5" />
                 ./register --beta-access
               </h2>
 
-              <form onSubmit={handleSubmit} className="space-y-4 text-sm">
+              <form onSubmit={handleSubmit} className="space-y-3 md:space-y-4 text-sm">
                 {/* Name */}
                 <div>
-                  <label className="block text-green-400 mb-1">
+                  <label className="block text-green-400 mb-1 text-xs md:text-sm">
                     --name &lt;string&gt; *
                   </label>
                   <input
@@ -183,14 +200,14 @@ export default function WaitlistForm({ onClose, submitStatus, setSubmitStatus }:
                     required
                     value={formData.name}
                     onChange={handleInputChange}
-                    className="w-full px-3 py-2 bg-black border border-green-500/30 rounded text-green-400 placeholder-gray-500 focus:border-green-500 focus:outline-none font-mono"
+                    className="w-full px-3 py-2 bg-black border border-green-500/30 rounded text-green-400 placeholder-gray-500 focus:border-green-500 focus:outline-none font-mono text-xs md:text-sm"
                     placeholder="Enter your full name"
                   />
                 </div>
 
                 {/* Email */}
                 <div>
-                  <label className="block text-green-400 mb-1">
+                  <label className="block text-green-400 mb-1 text-xs md:text-sm">
                     --email &lt;string&gt; *
                   </label>
                   <input
@@ -199,14 +216,14 @@ export default function WaitlistForm({ onClose, submitStatus, setSubmitStatus }:
                     required
                     value={formData.email}
                     onChange={handleInputChange}
-                    className="w-full px-3 py-2 bg-black border border-green-500/30 rounded text-green-400 placeholder-gray-500 focus:border-green-500 focus:outline-none font-mono"
+                    className="w-full px-3 py-2 bg-black border border-green-500/30 rounded text-green-400 placeholder-gray-500 focus:border-green-500 focus:outline-none font-mono text-xs md:text-sm"
                     placeholder="user@domain.com"
                   />
                 </div>
 
                 {/* Phone */}
                 <div>
-                  <label className="block text-green-400 mb-1">
+                  <label className="block text-green-400 mb-1 text-xs md:text-sm">
                     --phone &lt;optional&gt;
                   </label>
                   <input
@@ -214,14 +231,14 @@ export default function WaitlistForm({ onClose, submitStatus, setSubmitStatus }:
                     name="phone"
                     value={formData.phone}
                     onChange={handleInputChange}
-                    className="w-full px-3 py-2 bg-black border border-green-500/30 rounded text-green-400 placeholder-gray-500 focus:border-green-500 focus:outline-none font-mono"
+                    className="w-full px-3 py-2 bg-black border border-green-500/30 rounded text-green-400 placeholder-gray-500 focus:border-green-500 focus:outline-none font-mono text-xs md:text-sm"
                     placeholder="+91 9876543210"
                   />
                 </div>
 
                 {/* Category */}
                 <div>
-                  <label className="block text-green-400 mb-1">
+                  <label className="block text-green-400 mb-1 text-xs md:text-sm">
                     --category &lt;enum&gt; *
                   </label>
                   <select
@@ -229,7 +246,7 @@ export default function WaitlistForm({ onClose, submitStatus, setSubmitStatus }:
                     required
                     value={formData.category}
                     onChange={handleInputChange}
-                    className="w-full px-3 py-2 bg-black border border-green-500/30 rounded text-green-400 focus:border-green-500 focus:outline-none font-mono"
+                    className="w-full px-3 py-2 bg-black border border-green-500/30 rounded text-green-400 focus:border-green-500 focus:outline-none font-mono text-xs md:text-sm"
                   >
                     <option value="">Select type</option>
                     <option value="student">student</option>
@@ -243,7 +260,7 @@ export default function WaitlistForm({ onClose, submitStatus, setSubmitStatus }:
                 {(formData.category === 'student' || formData.category === 'teacher') && (
                   <>
                     <div>
-                      <label className="block text-green-400 mb-1">
+                      <label className="block text-green-400 mb-1 text-xs md:text-sm">
                         --institute &lt;string&gt; *
                       </label>
                       <input
@@ -252,14 +269,14 @@ export default function WaitlistForm({ onClose, submitStatus, setSubmitStatus }:
                         required
                         value={formData.institute}
                         onChange={handleInputChange}
-                        className="w-full px-3 py-2 bg-black border border-green-500/30 rounded text-green-400 placeholder-gray-500 focus:border-green-500 focus:outline-none font-mono"
+                        className="w-full px-3 py-2 bg-black border border-green-500/30 rounded text-green-400 placeholder-gray-500 focus:border-green-500 focus:outline-none font-mono text-xs md:text-sm"
                         placeholder="College/University name"
                       />
                     </div>
 
                     {formData.category === 'student' && (
                       <div>
-                        <label className="block text-green-400 mb-1">
+                        <label className="block text-green-400 mb-1 text-xs md:text-sm">
                           --year &lt;enum&gt; *
                         </label>
                         <select
@@ -267,7 +284,7 @@ export default function WaitlistForm({ onClose, submitStatus, setSubmitStatus }:
                           required
                           value={formData.class_year}
                           onChange={handleInputChange}
-                          className="w-full px-3 py-2 bg-black border border-green-500/30 rounded text-green-400 focus:border-green-500 focus:outline-none font-mono"
+                          className="w-full px-3 py-2 bg-black border border-green-500/30 rounded text-green-400 focus:border-green-500 focus:outline-none font-mono text-xs md:text-sm"
                         >
                           <option value="">Select year</option>
                           <option value="1st Year">1st_year</option>
@@ -282,9 +299,9 @@ export default function WaitlistForm({ onClose, submitStatus, setSubmitStatus }:
                 )}
 
                 {/* Location */}
-                <div className="grid grid-cols-2 gap-3">
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
                   <div>
-                    <label className="block text-green-400 mb-1">
+                    <label className="block text-green-400 mb-1 text-xs md:text-sm">
                       --country *
                     </label>
                     <select
@@ -292,7 +309,7 @@ export default function WaitlistForm({ onClose, submitStatus, setSubmitStatus }:
                       required
                       value={formData.country}
                       onChange={handleInputChange}
-                      className="w-full px-3 py-2 bg-black border border-green-500/30 rounded text-green-400 focus:border-green-500 focus:outline-none font-mono"
+                      className="w-full px-3 py-2 bg-black border border-green-500/30 rounded text-green-400 focus:border-green-500 focus:outline-none font-mono text-xs md:text-sm"
                     >
                       <option value="India">India</option>
                       <option value="Other">Other</option>
@@ -301,7 +318,7 @@ export default function WaitlistForm({ onClose, submitStatus, setSubmitStatus }:
 
                   {formData.country === 'India' && (
                     <div>
-                      <label className="block text-green-400 mb-1">
+                      <label className="block text-green-400 mb-1 text-xs md:text-sm">
                         --state *
                       </label>
                       <input
@@ -310,7 +327,7 @@ export default function WaitlistForm({ onClose, submitStatus, setSubmitStatus }:
                         required
                         value={formData.state}
                         onChange={handleInputChange}
-                        className="w-full px-3 py-2 bg-black border border-green-500/30 rounded text-green-400 placeholder-gray-500 focus:border-green-500 focus:outline-none font-mono"
+                        className="w-full px-3 py-2 bg-black border border-green-500/30 rounded text-green-400 placeholder-gray-500 focus:border-green-500 focus:outline-none font-mono text-xs md:text-sm"
                         placeholder="Kerala"
                       />
                     </div>
@@ -318,13 +335,13 @@ export default function WaitlistForm({ onClose, submitStatus, setSubmitStatus }:
                 </div>
 
                 {/* Agreement */}
-                <div className="flex items-start gap-2">
+                <div className="flex items-start gap-2 pt-2">
                   <input
                     type="checkbox"
                     name="agreed"
                     checked={formData.agreed}
                     onChange={handleInputChange}
-                    className="mt-1 w-4 h-4 accent-green-500"
+                    className="mt-1 w-4 h-4 accent-green-500 flex-shrink-0"
                   />
                   <label className="text-gray-300 text-xs">
                     --accept-terms: I agree to receive beta updates and communications.
@@ -332,11 +349,11 @@ export default function WaitlistForm({ onClose, submitStatus, setSubmitStatus }:
                 </div>
 
                 {/* Submit Button */}
-                <div className="pt-4">
+                <div className="pt-3 md:pt-4">
                   <button
                     type="submit"
                     disabled={submitStatus === 'loading' || formData.country === 'Other'}
-                    className="w-full bg-green-500 hover:bg-green-400 disabled:bg-gray-600 text-black disabled:text-gray-400 py-3 rounded font-bold transition-all duration-300 font-mono flex items-center justify-center gap-2"
+                    className="w-full bg-green-500 hover:bg-green-400 disabled:bg-gray-600 text-black disabled:text-gray-400 py-2 md:py-3 rounded font-bold transition-all duration-300 font-mono flex items-center justify-center gap-2 text-sm md:text-base"
                   >
                     {submitStatus === 'loading' ? (
                       <>
@@ -354,7 +371,7 @@ export default function WaitlistForm({ onClose, submitStatus, setSubmitStatus }:
 
           {/* Terminal status bar */}
           <div className="bg-gray-800 px-4 py-2 border-t border-green-500/30 text-xs text-green-400 flex justify-between">
-            <span>Connected to KuttAI Registration System</span>
+            <span className="truncate">Connected to KuttAI Registration System</span>
             <span>{submitStatus === 'loading' ? 'Processing...' : 'Ready'}</span>
           </div>
         </motion.div>
