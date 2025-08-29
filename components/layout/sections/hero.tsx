@@ -197,34 +197,33 @@ export const HeroSection = () => {
   return (
     <section className="relative w-full max-w-full overflow-hidden">
       {/* New Product Banner */}
-     
-
-     <div className="w-full bg-gradient-to-r from-purple-600 via-blue-600 to-indigo-700 dark:from-purple-800 dark:via-blue-800 dark:to-indigo-900 text-white py-3 px-4 flex flex-col sm:flex-row items-center justify-center gap-3 sm:gap-6 relative overflow-hidden mt-10">
+    
+    <div className="w-full bg-gradient-to-r from-violet-700 via-purple-600 to-violet-800 dark:from-violet-900 dark:via-purple-900 dark:to-violet-950 text-white py-3 px-4 flex flex-col sm:flex-row items-center justify-center gap-3 sm:gap-6 relative overflow-hidden mt-10">
   {/* Animated background elements */}
-  <div className="absolute inset-0 opacity-20">
-    <div className="absolute top-0 left-0 w-20 h-20 bg-white rounded-full filter blur-xl animate-pulse"></div>
+  <div className="absolute inset-0 opacity-15">
+    <div className="absolute top-0 left-0 w-20 h-20 bg-violet-300 rounded-full filter blur-xl animate-pulse"></div>
     <div className="absolute bottom-0 right-0 w-24 h-24 bg-purple-300 rounded-full filter blur-xl animate-pulse delay-1000"></div>
   </div>
   
   <div className="flex items-center gap-2 z-10">
-    <div className="flex items-center gap-2 bg-white/10 backdrop-blur-sm rounded-full px-3 py-1">
-      <Sparkles className="w-4 h-4 sm:w-5 sm:h-5 animate-pulse" />
-      <span className="font-bold text-sm sm:text-base">{t.newProduct}</span>
+    <div className="flex items-center gap-2 bg-white/15 backdrop-blur-sm rounded-full px-3 py-1 border border-violet-300/30">
+      <Sparkles className="w-4 h-4 sm:w-5 sm:h-5 text-violet-200 animate-pulse" />
+      <span className="font-bold text-sm sm:text-base text-white">{t.newProduct}</span>
     </div>
   </div>
   
   <div className="flex items-center gap-3 z-10 flex-wrap justify-center">
-    <span className="font-semibold text-sm sm:text-base bg-black/10 backdrop-blur-sm rounded-lg px-3 py-1">
+    <span className="font-semibold text-sm sm:text-base bg-white/10 backdrop-blur-sm rounded-lg px-3 py-1 border border-violet-200/20 text-white">
       {t.kuttaiTitle}
     </span>
     <div className="flex gap-2">
-      <Badge variant="secondary" className="text-xs bg-emerald-400 text-gray-900 border-0">
+      <Badge variant="secondary" className="text-xs bg-violet-500/90 text-white border-0 font-bold px-2">
         OFFLINE
       </Badge>
-      <Badge variant="secondary" className="text-xs bg-amber-400 text-gray-900 border-0">
+      <Badge variant="secondary" className="text-xs bg-violet-600/90 text-white border-0 font-bold px-2">
         OPEN SOURCE
       </Badge>
-      <Badge variant="secondary" className="text-xs bg-rose-400 text-gray-900 border-0">
+      <Badge variant="secondary" className="text-xs bg-violet-700/90 text-white border-0 font-bold px-2">
         FREE
       </Badge>
     </div>
@@ -232,10 +231,10 @@ export const HeroSection = () => {
   
   <Button 
     onClick={handleKuttaiClick}
-    className="text-xs sm:text-sm py-2 h-9 bg-white text-purple-700 hover:bg-gray-50 font-bold flex items-center gap-2 shadow-lg hover:shadow-xl transition-all z-10"
+    className="text-xs sm:text-sm py-2 h-9 bg-white text-violet-700 hover:bg-violet-50 font-bold flex items-center gap-2 shadow-lg hover:shadow-xl transition-all z-10 border-0"
   >
     <Download className="w-4 h-4" />
-    {t.kuttaiCta}
+    Download Now
   </Button>
 </div>
 
