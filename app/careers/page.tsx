@@ -13,7 +13,7 @@ import { leadPositions, type LeadPosition } from "@/data/careers";
 import { type FormData, type FormErrors } from "@/components/careers/types";
 
 // Toggle for careers availability - set to true to show careers, false to show closed message
-const CAREERS_AVAILABLE = true;
+const CAREERS_AVAILABLE = false;
 
 const jsonLd = {
 	"@context": "https://schema.org",
