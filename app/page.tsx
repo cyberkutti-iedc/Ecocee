@@ -316,6 +316,10 @@ export default function Home() {
           <CommunitySection />
         </section>
 
+       
+          <FAQSection />
+       
+
         <section 
           aria-label="Contact Ecocee" 
           itemScope 
@@ -325,14 +329,7 @@ export default function Home() {
           <ContactSection />
         </section>
 
-        <section 
-          aria-label="Frequently Asked Questions" 
-          itemScope 
-          itemProp="mainEntity" 
-          itemType="https://schema.org/FAQPage"
-        >
-          <FAQSection />
-        </section>
+        
       </main>
 
       <FooterSection />
