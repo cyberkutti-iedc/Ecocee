@@ -1,0 +1,52 @@
+{
+  "name": "Ecocee | Embedded Systems & IoT Solutions",
+  "short_name": "Ecocee",
+  "description": "Kerala-based IoT & embedded systems company specializing in custom hardware, firmware development, industrial automation, and AI solutions.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#3B82F6",
+  "orientation": "portrait-primary",
+  "icons": [
+    {
+      "src": "./logo.webp",
+      "sizes": "72x72",
+      "type": "image/png"
+    },
+    {
+      "src": "./logo.webp",
+      "sizes": "96x96",
+      "type": "image/png"
+    },
+    {
+      "src": "./logo.webp",
+      "sizes": "128x128",
+      "type": "image/png"
+    },
+    {
+      "src": "./logo.webp",
+      "sizes": "144x144",
+      "type": "image/png"
+    },
+    {
+      "src": "./logo.webp",
+      "sizes": "152x152",
+      "type": "image/png"
+    },
+    {
+      "src": "./logo.webp",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "./logo.webp",
+      "sizes": "384x384",
+      "type": "image/png"
+    },
+    {
+      "src": "./logo.webp",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}

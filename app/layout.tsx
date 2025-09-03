@@ -14,6 +14,7 @@ export const metadata: Metadata = {
   title: "Ecocee | Embedded Systems, IoT & AI Solutions | Kerala Startup",
   description:
     "Ecocee, a Kerala-based MSME startup, offers innovative embedded systems, IoT, AI development, and custom hardware & software solutions. Patentable projects and technical training.",
+     manifest: '/site.webmanifest',
   keywords: [
     // Kerala statewide & city-specific
     "Software development company in Kerala",
