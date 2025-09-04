@@ -1,7 +1,8 @@
 'use client';
 
-import React, { useState, useEffect } from 'react';
-import { Download, Sparkles, X, Github, Star, Users, Zap, Shield, Code, Globe } from 'lucide-react';
+import React, { useState} from 'react';
+import { Download, Sparkles, X, Github, Star, Zap, Shield, Code, Globe } from 'lucide-react';
+import { useRouter } from "next/navigation";
 
 interface KuttaiHeaderProps {
   t: {
@@ -11,6 +12,8 @@ interface KuttaiHeaderProps {
 }
 
 export default function KuttaiHeader({ t }: KuttaiHeaderProps) {
+
+    const router = useRouter();
   const [showPopup, setShowPopup] = useState(false);
   const [isVisible, setIsVisible] = useState(true);
 
@@ -133,7 +136,7 @@ export default function KuttaiHeader({ t }: KuttaiHeaderProps) {
                   </div>
                   <div>
                     <h3 className="text-2xl font-bold text-white">{t.kuttaiTitle}</h3>
-                    <p className="text-violet-100">Your Personal AI Assistant</p>
+                    <p className="text-violet-100"> Your Intelligent Study Companion</p>
                   </div>
                 </div>
                 
@@ -192,17 +195,17 @@ export default function KuttaiHeader({ t }: KuttaiHeaderProps) {
                   
                   <div className="grid grid-cols-2 gap-4 mb-6">
                     <div className="text-center p-4 bg-violet-50 rounded-2xl">
-                      <div className="text-2xl font-bold text-violet-600">10K+</div>
+                      <div className="text-2xl font-bold text-violet-600">150</div>
                       <div className="text-sm text-violet-500">Downloads</div>
                     </div>
-                    <div className="text-center p-4 bg-green-50 rounded-2xl">
+                    {/* <div className="text-center p-4 bg-green-50 rounded-2xl">
                       <div className="text-2xl font-bold text-green-600">4.9★</div>
                       <div className="text-sm text-green-500">Rating</div>
-                    </div>
-                    <div className="text-center p-4 bg-orange-50 rounded-2xl">
+                    </div> */}
+                    {/* <div className="text-center p-4 bg-orange-50 rounded-2xl">
                       <div className="text-2xl font-bold text-orange-600">500+</div>
                       <div className="text-sm text-orange-500">Contributors</div>
-                    </div>
+                    </div> */}
                     <div className="text-center p-4 bg-blue-50 rounded-2xl">
                       <div className="text-2xl font-bold text-blue-600">24/7</div>
                       <div className="text-sm text-blue-500">Available</div>
@@ -210,20 +213,25 @@ export default function KuttaiHeader({ t }: KuttaiHeaderProps) {
                   </div>
 
                   <div className="space-y-3">
-                    <button className="w-full bg-gradient-to-r from-violet-600 to-purple-600 text-white font-bold py-4 px-6 rounded-2xl hover:from-violet-700 hover:to-purple-700 transition-all duration-300 transform hover:scale-105 flex items-center justify-center gap-2 shadow-lg">
-                      <Download className="w-5 h-5" />
-                      Download for Windows
-                    </button>
+                  <button
+        onClick={() => router.push("/kuttai")}
+        className="w-full bg-gradient-to-r from-violet-600 to-purple-600 text-white font-bold py-4 px-6 rounded-2xl hover:from-violet-700 hover:to-purple-700 transition-all duration-300 transform hover:scale-105 flex items-center justify-center gap-2 shadow-lg"
+      >
+        <Download className="w-5 h-5" />
+        Download Now
+      </button>
                     
                     <div className="flex gap-3">
-                      <button className="flex-1 bg-gray-100 hover:bg-gray-200 text-gray-700 font-semibold py-3 px-4 rounded-xl transition-colors flex items-center justify-center gap-2">
+                      <button 
+                       onClick={() => router.push("https://github.com/cyberkutti-iedc/kuttai")}
+                      className="flex-1 bg-gray-100 hover:bg-gray-200 text-gray-700 font-semibold py-3 px-4 rounded-xl transition-colors flex items-center justify-center gap-2">
                         <Github className="w-4 h-4" />
                         GitHub
                       </button>
-                      <button className="flex-1 bg-gray-100 hover:bg-gray-200 text-gray-700 font-semibold py-3 px-4 rounded-xl transition-colors flex items-center justify-center gap-2">
+                      {/* <button className="flex-1 bg-gray-100 hover:bg-gray-200 text-gray-700 font-semibold py-3 px-4 rounded-xl transition-colors flex items-center justify-center gap-2">
                         <Globe className="w-4 h-4" />
                         Docs
-                      </button>
+                      </button> */}
                     </div>
                   </div>
                 </div>
