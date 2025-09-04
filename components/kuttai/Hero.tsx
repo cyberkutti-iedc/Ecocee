@@ -102,9 +102,8 @@
 //   )
 // }
 'use client';
-
 import { useState, useEffect } from 'react';
-import { Terminal, ChevronDown, Github, Download, Cpu } from 'lucide-react';
+import { Terminal, ChevronDown, Github, Download, ExternalLink } from 'lucide-react';
 
 export default function HeroSection() {
   const [currentText, setCurrentText] = useState('');
@@ -130,10 +129,10 @@ export default function HeroSection() {
     return () => clearTimeout(resetTimeout);
   }, [currentIndex, fullText]);
 
-  const scrollToFeatures = () => {
-    const featuresSection = document.getElementById('features');
-    if (featuresSection) {
-      featuresSection.scrollIntoView({ behavior: 'smooth' });
+  const scrollToInstallation = () => {
+    const installSection = document.getElementById('installation');
+    if (installSection) {
+      installSection.scrollIntoView({ behavior: 'smooth' });
     }
   };
 
@@ -149,8 +148,12 @@ export default function HeroSection() {
           </h1>
         </div>
         
-        <p className="text-xl md:text-2xl mb-8 text-green-200 max-w-3xl mx-auto">
-          The free, open-source CLI AI chatbot that works offline with customizable models.
+        <p className="text-xl md:text-2xl mb-4 text-green-200 max-w-3xl mx-auto">
+          The completely offline CLI AI chatbot that runs on your device
+        </p>
+        
+        <p className="text-lg mb-8 text-gray-300 max-w-2xl mx-auto">
+          No internet required • 100% Private • Free & Open Source
         </p>
         
         <div className="bg-black border border-green-700 rounded-lg p-6 mb-10 max-w-2xl mx-auto">
@@ -165,33 +168,57 @@ export default function HeroSection() {
           <div className="font-mono text-green-300">
             <span className="text-white">$ </span>
             {currentText}
-            <span className="animate-pulse">▊</span>
+            <span className="animate-pulse">█</span>
           </div>
         </div>
         
-        <div className="flex flex-col sm:flex-row justify-center gap-4 mb-16">
+        {/* Main CTA Buttons */}
+        <div className="flex flex-col sm:flex-row justify-center gap-4 mb-12">
+          <button 
+            onClick={scrollToInstallation}
+            className="flex items-center justify-center px-8 py-4 bg-green-600 hover:bg-green-700 text-white rounded-lg transition-all duration-300 transform hover:scale-105 text-lg font-semibold"
+          >
+            <Download className="mr-3 h-6 w-6" />
+            Get Started Now
+          </button>
+          
           <a 
             href="https://github.com/cyberkutti-iedc/kuttai" 
             target="_blank" 
             rel="noopener noreferrer"
-            className="flex items-center justify-center px-6 py-3 bg-green-600 hover:bg-green-700 text-white rounded-lg transition-all duration-300 transform hover:scale-105"
+            className="flex items-center justify-center px-8 py-4 bg-transparent border-2 border-green-600 hover:bg-green-800 text-white rounded-lg transition-all duration-300 transform hover:scale-105"
           >
-            <Github className="mr-2 h-5 w-5" />
-            GitHub
+            <Github className="mr-3 h-6 w-6" />
+            View on GitHub
           </a>
-          <button className="flex items-center justify-center px-6 py-3 bg-transparent border border-green-600 hover:bg-green-800 text-white rounded-lg transition-all duration-300 transform hover:scale-105">
-            <Download className="mr-2 h-5 w-5" />
-            Download
-          </button>
-          <button className="flex items-center justify-center px-6 py-3 bg-transparent border border-green-600 hover:bg-green-800 text-white rounded-lg transition-all duration-300 transform hover:scale-105">
-            <Cpu className="mr-2 h-5 w-5" />
-            Models
-          </button>
+        </div>
+
+        {/* Quick Stats */}
+        <div className="grid grid-cols-3 gap-8 max-w-md mx-auto mb-16 text-center">
+          <div>
+            <div className="text-2xl font-bold text-green-400">100%</div>
+            <div className="text-gray-400 text-sm">Offline</div>
+          </div>
+          <div>
+            <div className="text-2xl font-bold text-green-400">0$</div>
+            <div className="text-gray-400 text-sm">Cost</div>
+          </div>
+          <div>
+            <div className="text-2xl font-bold text-green-400">Open</div>
+            <div className="text-gray-400 text-sm">Source</div>
+          </div>
+        </div>
+
+        <div className="text-gray-400 text-sm">
+          Developed by <span className="text-green-500">EcoCee</span> • Available at{' '}
+          <a href="https://ecocee.in/kuttai" className="text-green-400 hover:text-green-300">
+            ecocee.in/kuttai
+          </a>
         </div>
       </div>
       
       <button 
-        onClick={scrollToFeatures}
+        onClick={scrollToInstallation}
         className="absolute bottom-10 animate-bounce"
       >
         <ChevronDown className="h-10 w-10 text-green-500" />
