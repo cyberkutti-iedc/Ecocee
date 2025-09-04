@@ -315,10 +315,8 @@ export default function Home() {
         >
           <CommunitySection />
         </section>
-
        
           <FAQSection />
-       
 
         <section 
           aria-label="Contact Ecocee" 
