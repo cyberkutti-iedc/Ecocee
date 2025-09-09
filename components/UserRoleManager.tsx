@@ -11,10 +11,10 @@ interface UserRoleManagerProps {
 }
 
 const ROLE_LABELS: Record<string, string> = {
-  admin: "Admin",
-  moderator: "Moderator",
-  intern: "Intern",
-  user: "User",
+  admin: "admin",
+  moderator: "moderator",
+  intern: "intern",
+  user: "user",
 };
 
 const ROLE_COLORS: Record<string, string> = {
@@ -43,7 +43,7 @@ export function UserRoleManager({ users }: UserRoleManagerProps) {
   const [loadingUserId, setLoadingUserId] = useState<string | null>(null);
   const [selectedRole, setSelectedRole] = useState<Record<string, string>>({});
   const [page, setPage] = useState(1);
-  const USERS_PER_PAGE = 10;
+  const USERS_PER_PAGE = 50;
   const totalPages = Math.ceil(users.length / USERS_PER_PAGE);
   const paginatedUsers = users.slice((page - 1) * USERS_PER_PAGE, page * USERS_PER_PAGE);
 
