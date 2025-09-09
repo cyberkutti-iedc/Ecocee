@@ -35,7 +35,7 @@ import {
 } from "lucide-react";
 import { useUser, useAuth } from "@clerk/nextjs";
 import InternTabContent from "../InternTabContent";
-import Games from "../Games";
+
 
 const colorThemes = [
   { name: "Ocean", primary: "#0ea5e9", secondary: "#0284c7", gradient: "from-sky-400 via-blue-500 to-blue-600", light: "bg-sky-50", dark: "bg-sky-900" },
@@ -547,7 +547,7 @@ function AchievementsTab({ startDate }: { startDate: string }) {
 }
 
 export default function InternLayout() {
-  const [activeTab, setActiveTab] = useState<"dashboard" | "learning" | "calendar" | "messages" | "achievements" | "games">("dashboard");
+  const [activeTab, setActiveTab] = useState<"dashboard" | "learning" | "calendar" | "messages" | "achievements">("dashboard");
   const [darkMode, setDarkMode] = useState(false);
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [currentTheme, setCurrentTheme] = useState(colorThemes[0]);
@@ -654,12 +654,7 @@ export default function InternLayout() {
       label: "Achievements",
       description: "Your milestones"
     },
-    {
-      id: "games" as const,
-      icon: <Zap className="w-5 h-5" />,
-      label: "Games",
-      description: "Fun learning games"
-    }
+   
   ];
 
   return (
@@ -859,9 +854,7 @@ export default function InternLayout() {
                 <AchievementsTab startDate={internStartDate} />
               )}
               {/* ...existing content for each tab... */}
-              {activeTab === "games" && (
-                <Games/>
-              )}   
+             
               <InternTabContent tab={activeTab} />
             </motion.div>
           </AnimatePresence>

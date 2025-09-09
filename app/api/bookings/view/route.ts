@@ -24,12 +24,12 @@ export async function GET(req: NextRequest) {
     const url = new URL(req.url);
     const id = url.searchParams.get('id');
 
-    let query = supabase.from('bookings').select('*').order('created_at', { ascending: false });
+    let query = supabase.from('bookings').select(`id, name, email, phone, service, description, area, user_type, how_did_you_know, status, created_at, updated_at, clerk_user_id`).order('created_at', { ascending: false });
     if (id) {
       if (!isValidUUID(id)) {
         return NextResponse.json({ error: 'Invalid UUID format' }, { status: 400 });
       }
-      query = supabase.from('bookings').select('*').eq('id', id);
+      query = supabase.from('bookings').select(`id, name, email, phone, service, description, area, user_type, how_did_you_know, status, created_at, updated_at, clerk_user_id`).eq('id', id);
     }
 
     const { data, error } = await query;

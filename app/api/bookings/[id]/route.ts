@@ -43,11 +43,29 @@ export async function PATCH(req: NextRequest) {
     return NextResponse.json({ error: 'Unauthorized' }, { status: 403 });
   }
 
-  const body = await req.json();
-  const { error } = await supabase.from('bookings').update(body).eq('id', id);
-  if (error) return NextResponse.json({ error: error.message }, { status: 500 });
+  let body;
+  try {
+    body = await req.json();
+  } catch {
+    return NextResponse.json({ error: 'Invalid JSON body' }, { status: 400 });
+  }
 
-  return NextResponse.json({ success: true, message: 'Booking updated' });
+  if (!body || typeof body.status !== 'string') {
+    return NextResponse.json({ error: 'Missing or invalid status field' }, { status: 400 });
+  }
+console.log('PATCH body:', body);
+  // Check if booking exists before updating
+  const { data: booking, error: fetchError } = await supabase.from('bookings').select('id').eq('id', id).single();
+  if (fetchError || !booking) {
+    return NextResponse.json({ error: 'Booking not found' }, { status: 404 });
+  }
+console.log('PATCH body:', body);
+  // Update status
+  const { error } = await supabase.from('bookings').update({ status: body.status }).eq('id', id);
+  if (error) return NextResponse.json({ error: error.message }, { status: 500 });
+console.log('PATCH body:', body);
+  return NextResponse.json({ success: true, message: 'Booking status updated', id, status: body.status });
+
 }
 
 // ✅ DELETE a booking

@@ -106,11 +106,11 @@ export default function TeamPage() {
         <div className="max-w-4xl mx-auto">
           <div className="grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
             <div>
-              <div className="text-3xl font-light text-gray-900 mb-2">2</div>
+              <div className="text-3xl font-light text-gray-900 mb-2">6</div>
               <div className="text-gray-600 text-sm">Team Members</div>
             </div>
             <div>
-              <div className="text-3xl font-light text-gray-900 mb-2">4+</div>
+              <div className="text-3xl font-light text-gray-900 mb-2">2+</div>
               <div className="text-gray-600 text-sm">Combined Years</div>
             </div>
             <div>

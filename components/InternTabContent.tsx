@@ -4,12 +4,12 @@ import { useEffect, useState } from "react";
 import { useUser } from "@clerk/nextjs";
 import { createClientComponentClient } from "@supabase/auth-helpers-nextjs";
 import React from "react";
-import Games from "./Games";
+
 // import Games from "./Games";
 
 type Database = any; // Replace with actual Supabase typings if available
 
-type Tab = "dashboard" | "learning" | "calendar" | "messages" | "achievements" | "games";
+type Tab = "dashboard" | "learning" | "calendar" | "messages" | "achievements";
 
 const TabPanel = ({
   title,

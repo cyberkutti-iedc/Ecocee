@@ -94,12 +94,14 @@ export default function BookingsAdminDashboard() {
   }
 
   async function updateStatus(id: number, status: string) {
+    setBookings(prev => prev.map(b => b.id === id ? { ...b, status } : b)); // Optimistic UI
     try {
       await fetch(`/api/bookings/${id}`, {
         method: "PATCH",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ status }),
       });
+      // Optionally refetch for accuracy
       fetchBookings();
     } catch (error) {
       console.error("Failed to update status", error);
@@ -159,7 +161,7 @@ export default function BookingsAdminDashboard() {
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-50 to-slate-100">
       {/* Header */}
-      <div className="bg-white shadow-sm border-b border-slate-200">
+      <div className="bg-white shadow-sm border-b border-slate-200 sticky top-0 z-20">
         <div className="max-w-7xl mx-auto px-6 py-4">
           <div className="flex items-center justify-between">
             <div>
@@ -167,7 +169,7 @@ export default function BookingsAdminDashboard() {
               <p className="text-slate-600 mt-1">Manage and track all your service bookings</p>
             </div>
             <div className="flex items-center gap-3">
-              <button className="flex items-center gap-2 bg-emerald-600 hover:bg-emerald-700 text-white px-4 py-2 rounded-lg transition-colors">
+              <button className="flex items-center gap-2 bg-emerald-600 hover:bg-emerald-700 text-white px-4 py-2 rounded-lg transition-colors shadow">
                 <Download size={16} />
                 Export
               </button>
@@ -175,7 +177,6 @@ export default function BookingsAdminDashboard() {
           </div>
         </div>
       </div>
-
       <div className="max-w-7xl mx-auto px-6 py-6">
         {/* Stats Cards */}
         <div className="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8">
@@ -227,9 +228,8 @@ export default function BookingsAdminDashboard() {
             </div>
           </div>
         </div>
-
         {/* Filters and Search */}
-        <div className="bg-white rounded-xl shadow-sm border border-slate-200 p-6 mb-6">
+        <div className="bg-white rounded-xl shadow-sm border border-slate-200 p-6 mb-6 sticky top-20 z-10">
           <div className="flex flex-col lg:flex-row gap-4">
             <div className="flex-1">
               <div className="relative">
@@ -239,11 +239,10 @@ export default function BookingsAdminDashboard() {
                   placeholder="Search bookings..."
                   value={searchTerm}
                   onChange={(e) => setSearchTerm(e.target.value)}
-                  className="w-full pl-10 pr-4 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                  className="w-full pl-10 pr-4 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent shadow"
                 />
               </div>
             </div>
-            
             <div className="flex gap-4">
               <select
                 value={statusFilter}
@@ -269,10 +268,9 @@ export default function BookingsAdminDashboard() {
             </div>
           </div>
         </div>
-
         {/* Bulk Actions */}
         {selectedIds.length > 0 && (
-          <div className="bg-white rounded-xl shadow-sm border border-slate-200 p-4 mb-6">
+          <div className="bg-white rounded-xl shadow-sm border border-slate-200 p-4 mb-6 sticky top-36 z-10">
             <div className="flex items-center justify-between">
               <span className="text-slate-700 font-medium">
                 {selectedIds.length} booking{selectedIds.length > 1 ? 's' : ''} selected
@@ -303,166 +301,149 @@ export default function BookingsAdminDashboard() {
             </div>
           </div>
         )}
-
         {/* Table */}
-        <div className="bg-white rounded-xl shadow-sm border border-slate-200 overflow-hidden">
+        <div className="bg-white rounded-xl shadow-sm border border-slate-200 overflow-x-auto">
           {loading ? (
             <div className="flex items-center justify-center py-12">
               <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-600"></div>
               <span className="ml-3 text-slate-600">Loading bookings...</span>
             </div>
           ) : (
-            <div className="overflow-x-auto">
-              <table className="min-w-full divide-y divide-slate-200">
-                <thead className="bg-slate-50">
-                  <tr>
-                    <th className="px-6 py-3 text-left">
+            <table className="min-w-full divide-y divide-slate-200">
+              <thead className="bg-slate-50 sticky top-0 z-10">
+                <tr>
+                  <th className="px-6 py-3 text-left bg-slate-50">
+                    <input
+                      type="checkbox"
+                      checked={selectedIds.length === filteredBookings.length && filteredBookings.length > 0}
+                      onChange={toggleSelectAll}
+                      className="rounded border-slate-300 text-blue-600 focus:ring-blue-500"
+                    />
+                  </th>
+                  <th className="px-6 py-3 text-left text-xs font-medium text-slate-500 uppercase tracking-wider">Customer</th>
+                  <th className="px-6 py-3 text-left text-xs font-medium text-slate-500 uppercase tracking-wider">Service</th>
+                  <th className="px-6 py-3 text-left text-xs font-medium text-slate-500 uppercase tracking-wider">Status</th>
+                  <th className="px-6 py-3 text-left text-xs font-medium text-slate-500 uppercase tracking-wider">Date</th>
+                  <th className="px-6 py-3 text-left text-xs font-medium text-slate-500 uppercase tracking-wider">Actions</th>
+                </tr>
+              </thead>
+              <tbody className="bg-white divide-y divide-slate-200">
+                {filteredBookings.map((booking) => (
+                  <tr key={booking.id} className="hover:bg-slate-50 transition-colors">
+                    <td className="px-6 py-4">
                       <input
                         type="checkbox"
-                        checked={selectedIds.length === filteredBookings.length && filteredBookings.length > 0}
-                        onChange={toggleSelectAll}
+                        checked={selectedIds.includes(booking.id)}
+                        onChange={() => toggleSelect(booking.id)}
                         className="rounded border-slate-300 text-blue-600 focus:ring-blue-500"
                       />
-                    </th>
-                    <th className="px-6 py-3 text-left text-xs font-medium text-slate-500 uppercase tracking-wider">
-                      Customer
-                    </th>
-                    <th className="px-6 py-3 text-left text-xs font-medium text-slate-500 uppercase tracking-wider">
-                      Service
-                    </th>
-                    <th className="px-6 py-3 text-left text-xs font-medium text-slate-500 uppercase tracking-wider">
-                      Status
-                    </th>
-                    <th className="px-6 py-3 text-left text-xs font-medium text-slate-500 uppercase tracking-wider">
-                      Date
-                    </th>
-                    <th className="px-6 py-3 text-left text-xs font-medium text-slate-500 uppercase tracking-wider">
-                      Actions
-                    </th>
+                    </td>
+                    <td className="px-6 py-4">
+                      <div className="flex items-center">
+                        <div className="flex-shrink-0 h-10 w-10">
+                          <div className="h-10 w-10 rounded-full bg-gradient-to-r from-blue-500 to-purple-600 flex items-center justify-center shadow">
+                            <span className="text-sm font-medium text-white">
+                              {booking.name.charAt(0).toUpperCase()}
+                            </span>
+                          </div>
+                        </div>
+                        <div className="ml-4">
+                          <div className="text-sm font-medium text-slate-900">{booking.name}</div>
+                          <div className="text-sm text-slate-500 flex items-center gap-1">
+                            <Mail size={12} />
+                            {booking.email}
+                          </div>
+                          <div className="text-sm text-slate-500 flex items-center gap-1">
+                            <Phone size={12} />
+                            {booking.phone}
+                          </div>
+                        </div>
+                      </div>
+                    </td>
+                    <td className="px-6 py-4">
+                      <div className="text-sm text-slate-900 font-medium">{booking.service}</div>
+                      <div className="text-sm text-slate-500 flex items-center gap-1">
+                        <MapPin size={12} />
+                        {booking.area}
+                      </div>
+                      <div className="text-xs text-slate-400 mt-1">Type: {booking.user_type}</div>
+                    </td>
+                    <td className="px-6 py-4">
+                      <div className="flex gap-2">
+                        {["pending", "completed", "not completed"].map(s => (
+                          <span
+                            key={s}
+                            onClick={() => updateStatus(booking.id, s)}
+                            className={`inline-flex px-2 py-1 text-xs font-semibold rounded-full shadow cursor-pointer transition-all duration-150 border ${{
+                              completed: "bg-green-100 text-green-800 border-green-200 hover:bg-green-200",
+                              pending: "bg-yellow-100 text-yellow-800 border-yellow-200 hover:bg-yellow-200",
+                              "not completed": "bg-red-100 text-red-800 border-red-200 hover:bg-red-200"
+                            }[s] || "bg-gray-100 text-gray-800 border-gray-200 hover:bg-gray-200"} ${booking.status === s ? "ring-2 ring-blue-400" : "opacity-70"}`}
+                            title={`Set status: ${s}`}
+                          >
+                            {s}
+                          </span>
+                        ))}
+                      </div>
+                    </td>
+                    <td className="px-6 py-4 text-sm text-slate-500">
+                      <div className="flex items-center gap-1">
+                        <Calendar size={12} />
+                        {formatDate(booking.created_at)}
+                      </div>
+                      {booking.updated_at !== booking.created_at && (
+                        <div className="text-xs text-slate-400 mt-1">Updated: {formatDate(booking.updated_at)}</div>
+                      )}
+                    </td>
+                    <td className="px-6 py-4">
+                      <div className="flex items-center gap-2">
+                        <button
+                          onClick={() => {
+                            setSelectedBooking(booking);
+                            setShowDetails(true);
+                          }}
+                          className="text-blue-600 hover:text-blue-900 transition-colors"
+                          title="View Details"
+                        >
+                          <Eye size={16} />
+                        </button>
+                        <div className="flex gap-1">
+                          <button
+                            onClick={() => updateStatus(booking.id, "pending")}
+                            className="px-2 py-1 text-xs bg-yellow-100 text-yellow-800 rounded hover:bg-yellow-200 transition-colors shadow"
+                            title="Set Pending"
+                          >P</button>
+                          <button
+                            onClick={() => updateStatus(booking.id, "completed")}
+                            className="px-2 py-1 text-xs bg-green-100 text-green-800 rounded hover:bg-green-200 transition-colors shadow"
+                            title="Set Completed"
+                          >C</button>
+                          <button
+                            onClick={() => updateStatus(booking.id, "not completed")}
+                            className="px-2 py-1 text-xs bg-red-100 text-red-800 rounded hover:bg-red-200 transition-colors shadow"
+                            title="Set Not Completed"
+                          >NC</button>
+                        </div>
+                        <button
+                          onClick={() => {
+                            if (confirm("Are you sure you want to delete this booking?")) {
+                              deleteBooking(booking.id);
+                            }
+                          }}
+                          className="text-red-600 hover:text-red-900 transition-colors"
+                          title="Delete"
+                        >
+                          <Trash2 size={16} />
+                        </button>
+                      </div>
+                    </td>
                   </tr>
-                </thead>
-                <tbody className="bg-white divide-y divide-slate-200">
-                  {filteredBookings.map((booking) => (
-                    <tr key={booking.id} className="hover:bg-slate-50 transition-colors">
-                      <td className="px-6 py-4">
-                        <input
-                          type="checkbox"
-                          checked={selectedIds.includes(booking.id)}
-                          onChange={() => toggleSelect(booking.id)}
-                          className="rounded border-slate-300 text-blue-600 focus:ring-blue-500"
-                        />
-                      </td>
-                      <td className="px-6 py-4">
-                        <div className="flex items-center">
-                          <div className="flex-shrink-0 h-10 w-10">
-                            <div className="h-10 w-10 rounded-full bg-gradient-to-r from-blue-500 to-purple-600 flex items-center justify-center">
-                              <span className="text-sm font-medium text-white">
-                                {booking.name.charAt(0).toUpperCase()}
-                              </span>
-                            </div>
-                          </div>
-                          <div className="ml-4">
-                            <div className="text-sm font-medium text-slate-900">{booking.name}</div>
-                            <div className="text-sm text-slate-500 flex items-center gap-1">
-                              <Mail size={12} />
-                              {booking.email}
-                            </div>
-                            <div className="text-sm text-slate-500 flex items-center gap-1">
-                              <Phone size={12} />
-                              {booking.phone}
-                            </div>
-                          </div>
-                        </div>
-                      </td>
-                      <td className="px-6 py-4">
-                        <div className="text-sm text-slate-900 font-medium">{booking.service}</div>
-                        <div className="text-sm text-slate-500 flex items-center gap-1">
-                          <MapPin size={12} />
-                          {booking.area}
-                        </div>
-                        <div className="text-xs text-slate-400 mt-1">
-                          Type: {booking.user_type}
-                        </div>
-                      </td>
-                      <td className="px-6 py-4">
-                        <span className={`inline-flex px-2 py-1 text-xs font-semibold rounded-full ${
-                          booking.status === "completed"
-                            ? "bg-green-100 text-green-800"
-                            : booking.status === "pending"
-                            ? "bg-yellow-100 text-yellow-800"
-                            : "bg-red-100 text-red-800"
-                        }`}>
-                          {booking.status}
-                        </span>
-                      </td>
-                      <td className="px-6 py-4 text-sm text-slate-500">
-                        <div className="flex items-center gap-1">
-                          <Calendar size={12} />
-                          {formatDate(booking.created_at)}
-                        </div>
-                        {booking.updated_at !== booking.created_at && (
-                          <div className="text-xs text-slate-400 mt-1">
-                            Updated: {formatDate(booking.updated_at)}
-                          </div>
-                        )}
-                      </td>
-                      <td className="px-6 py-4">
-                        <div className="flex items-center gap-2">
-                          <button
-                            onClick={() => {
-                              setSelectedBooking(booking);
-                              setShowDetails(true);
-                            }}
-                            className="text-blue-600 hover:text-blue-900 transition-colors"
-                            title="View Details"
-                          >
-                            <Eye size={16} />
-                          </button>
-                          <div className="flex gap-1">
-                            <button
-                              onClick={() => updateStatus(booking.id, "pending")}
-                              className="px-2 py-1 text-xs bg-yellow-100 text-yellow-800 rounded hover:bg-yellow-200 transition-colors"
-                              title="Set Pending"
-                            >
-                              P
-                            </button>
-                            <button
-                              onClick={() => updateStatus(booking.id, "completed")}
-                              className="px-2 py-1 text-xs bg-green-100 text-green-800 rounded hover:bg-green-200 transition-colors"
-                              title="Set Completed"
-                            >
-                              C
-                            </button>
-                            <button
-                              onClick={() => updateStatus(booking.id, "not completed")}
-                              className="px-2 py-1 text-xs bg-red-100 text-red-800 rounded hover:bg-red-200 transition-colors"
-                              title="Set Not Completed"
-                            >
-                              NC
-                            </button>
-                          </div>
-                          <button
-                            onClick={() => {
-                              if (confirm("Are you sure you want to delete this booking?")) {
-                                deleteBooking(booking.id);
-                              }
-                            }}
-                            className="text-red-600 hover:text-red-900 transition-colors"
-                            title="Delete"
-                          >
-                            <Trash2 size={16} />
-                          </button>
-                        </div>
-                      </td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
-            </div>
+                ))}
+              </tbody>
+            </table>
           )}
         </div>
       </div>
-
       {/* Details Modal */}
       {showDetails && selectedBooking && (
         <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50">
@@ -521,7 +502,7 @@ export default function BookingsAdminDashboard() {
               </div>
               <div>
                 <label className="text-sm font-medium text-slate-600">Description</label>
-                <p className="text-slate-900 mt-1 bg-slate-50 p-3 rounded-lg">{selectedBooking.description}</p>
+                <p className="text-slate-900 mt-1 bg-slate-50 p-3 rounded-lg shadow">{selectedBooking.description}</p>
               </div>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div>
@@ -535,7 +516,7 @@ export default function BookingsAdminDashboard() {
               </div>
               <div>
                 <label className="text-sm font-medium text-slate-600">Clerk User ID</label>
-                <p className="text-slate-900 mt-1 text-xs bg-slate-50 p-2 rounded font-mono">{selectedBooking.clerk_user_id}</p>
+                <p className="text-slate-900 mt-1 text-xs bg-slate-50 p-2 rounded font-mono shadow">{selectedBooking.clerk_user_id}</p>
               </div>
             </div>
           </div>

@@ -1,7 +1,7 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
+import { motion, AnimatePresence, easeInOut } from 'framer-motion';
 import { SignIn } from '@clerk/nextjs'; 
 
 
@@ -82,24 +82,27 @@ const LoginPage = () => {
 
   // Framer Motion variants for individual items
   const itemVariants = {
-    hidden: { opacity: 0, y: 30 },
+    hidden: { opacity: 0, y: 20 },
     visible: {
       opacity: 1,
       y: 0,
-      transition: { duration: 0.6, ease: "easeOut" }
+      transition: {
+        duration: 0.5,
+        ease: easeInOut
+      }
     }
   };
 
   // Framer Motion variants for subtle background elements (simplified for cleaner look)
   const subtleFloatingVariants = {
     animate: {
-      y: [-5, 5, -5], 
-      x: [-5, 5, -5],
-      rotate: [0, 1, -1, 0], 
+      y: [0, 10, 0],
+      x: [0, 5, 0],
+      rotate: [0, 2, 0],
       transition: {
-        duration: 8,
-        repeat: Infinity, 
-        ease: "easeInOut" 
+        duration: 4,
+        repeat: Infinity,
+        ease: easeInOut
       }
     }
   };
