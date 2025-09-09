@@ -1,4 +1,5 @@
 export type SerializedUser = {
+    status: any;
     id: string;
     firstName: string | null;
     lastName: string | null;

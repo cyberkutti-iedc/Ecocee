@@ -24,6 +24,21 @@ const ROLE_COLORS: Record<string, string> = {
   user: "bg-gray-100 text-gray-700 dark:bg-gray-800 dark:text-gray-100",
 };
 
+const STATUS_LABELS: Record<string, string> = {
+  admin: "Admin",
+  moderator: "Moderator",
+  intern: "Intern",
+  user: "User",
+  lead: "Lead",
+};
+const STATUS_COLORS: Record<string, string> = {
+  admin: "bg-indigo-200 text-indigo-800 dark:bg-indigo-900 dark:text-indigo-100",
+  moderator: "bg-green-200 text-green-800 dark:bg-green-900 dark:text-green-100",
+  intern: "bg-yellow-200 text-yellow-800 dark:bg-yellow-900 dark:text-yellow-100",
+  user: "bg-gray-200 text-gray-800 dark:bg-gray-900 dark:text-gray-100",
+  lead: "bg-blue-200 text-blue-800 dark:bg-blue-900 dark:text-blue-100",
+};
+
 export function UserRoleManager({ users }: UserRoleManagerProps) {
   const [loadingUserId, setLoadingUserId] = useState<string | null>(null);
   const [selectedRole, setSelectedRole] = useState<Record<string, string>>({});
@@ -109,6 +124,11 @@ export function UserRoleManager({ users }: UserRoleManagerProps) {
               <div className="flex flex-col truncate">
                 <span className="font-semibold text-lg truncate flex items-center gap-2">
                   {user.firstName} {user.lastName}
+                  {user.status && (
+                    <span className={`ml-2 px-2 py-0.5 rounded-full text-xs font-bold ${STATUS_COLORS[user.status] || "bg-gray-200 text-gray-700"}`}>
+                      {STATUS_LABELS[user.status] || user.status}
+                    </span>
+                  )}
                   {user.role && (
                     <>
                       <ShieldCheck className="w-4 h-4 text-indigo-500" />
