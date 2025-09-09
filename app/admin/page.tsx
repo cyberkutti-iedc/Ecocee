@@ -14,13 +14,14 @@ export default async function AdminPage() {
   const usersList = await (await clerkClient()).users.getUserList();
   
   const serializedUsers: SerializedUser[] = usersList.data.map(user => ({
+    status: user.publicMetadata.status ?? null,
     id: user.id,
-    firstName: user.firstName || "",
-    lastName: user.lastName || "",
+    firstName: user.firstName ?? null,
+    lastName: user.lastName ?? null,
     email:
       user.emailAddresses.find(email => email.id === user.primaryEmailAddressId)
-        ?.emailAddress || "",
-    role: (user.publicMetadata.status as string) || "",
+        ?.emailAddress ?? null,
+    role: (user.publicMetadata.status as string) ?? null,
     imageUrl: user.imageUrl || "",
   }));
   

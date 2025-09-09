@@ -1,6 +1,6 @@
 {
   "name": "ecocee-web",
-  "version": "0.1.0",
+  "version": "0.2.230",
   "private": true,
   "scripts": {
     "dev": "next dev --turbopack",
