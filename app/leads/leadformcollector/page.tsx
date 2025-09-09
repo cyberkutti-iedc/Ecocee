@@ -2,6 +2,8 @@
 import React, { useState, ChangeEvent, FormEvent, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { leadsFormStatus } from '@/data/leadsFormStatus';
+import { useRouter } from 'next/navigation';
+import { useUser } from '@clerk/nextjs';
 
 type FormState = {
   fullName: string;
@@ -121,6 +123,18 @@ const CheckboxField: React.FC<{
 );
 
 export default function LeadFormCollector() {
+  const router = useRouter();
+  const { user, isLoaded } = useUser();
+
+  useEffect(() => {
+    if (isLoaded) {
+      const status = user?.publicMetadata?.status;
+      if (status !== 'lead' && status !== 'admin') {
+        router.replace('/');
+      }
+    }
+  }, [isLoaded, user, router]);
+
   const [form, setForm] = useState<FormState>({
     fullName: '',
     dob: '',
