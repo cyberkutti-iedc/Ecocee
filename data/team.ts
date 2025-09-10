@@ -115,7 +115,7 @@ export const teamData: TeamMember[] = [
   },
   {
     id: 6,
-    name: "Akashi Sasi",
+    name: "Akash Sasi",
     role: "Operations Lead",
     department: "Executive",
     bio: "Operations Lead with 2.5+ years of entrepreneurial learning and expertise in operations management. Passionate about building scalable processes and continuous learning.",
