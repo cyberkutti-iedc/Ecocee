@@ -20,7 +20,7 @@ export async function POST(req: NextRequest) {
     const userEmail = user.emailAddresses?.[0]?.emailAddress ?? 'unknown@user.com';
 
     const body = await req.json();
-    const { name, phone, service, description, area, userType, how } = body;
+    const { name, phone, service, description, area, userType, how, referral } = body; // Add referral here
 
     const { error } = await supabase.from('bookings').insert({
       name,
@@ -31,6 +31,7 @@ export async function POST(req: NextRequest) {
       area,
       user_type: userType,
       how_did_you_know: how,
+      referral: referral || null,
       clerk_user_id: userId,
       status: 'pending',
     });

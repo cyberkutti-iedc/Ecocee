@@ -97,6 +97,14 @@ const steps = [
     required: true,
   },
   {
+  label: "Any referral? (Optional)",
+  name: "referral",
+  icon: <Users className="w-5 h-5 mr-2 text-blue-600 dark:text-blue-400" />,
+  placeholder: "If no one, leave empty",
+  type: "text",
+  required: false,
+},
+  {
     label: "How did you know about us?",
     name: "how",
     icon: <ArrowRight className="w-5 h-5 mr-2 text-blue-600 dark:text-blue-400" />,
@@ -124,6 +132,7 @@ interface FormData {
   area: string;
   userType: string;
   how: string;
+  referral: string; // New field for referral
 }
 
 export default function BookingForm() {
@@ -138,6 +147,7 @@ export default function BookingForm() {
     area: "",
     userType: "",
     how: "",
+    referral: "",
   });
   
   const [submitting, setSubmitting] = useState(false);
@@ -302,6 +312,7 @@ export default function BookingForm() {
         area: "",
         userType: "",
         how: "",
+         referral: "",
       });
 
       setStep(0);
