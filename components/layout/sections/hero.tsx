@@ -199,10 +199,10 @@ export const HeroSection = () => {
     <section className="relative w-full max-w-full overflow-hidden">
       {/* New Product Banner */}
     
- <KuttaiHeader t={{
+ {/* <KuttaiHeader t={{
   newProduct: "NEW LAUNCH",
   kuttaiTitle: "Kuttai AI"
-}}/>
+}}/> */}
 
       {/* Container with proper padding */}
       <div className="w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
