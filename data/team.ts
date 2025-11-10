@@ -58,27 +58,9 @@ export const teamData: TeamMember[] = [
     email: "#",
     joinedDate: "2024-07-13"
   },
+
   {
     id: 3,
-    name: "Seona Ann Tom",
-    role: "Marketing Lead",
-    department: "Marketing",
-    bio: "Marketing Lead with strong AI/ML interest, leadership experience, and a passion for driving innovation and strategic growth at Ecocee.",
-    skills: [
-      "Artificial Intelligence (AI)",
-      "Machine Learning (ML)",
-      "Deep Learning (DL)",
-      "Figma"
-    ],
-    experience: "Marketing Lead at Ecocee, with prior experience in leadership and organizing AI/ML initiatives.",
-    avatar: "👩‍💻",
-    linkedin: "https://linkedin.com/in/seona-ann-tom",
-    github: "https://github.com/seonaann",
-    email: "seonaanntom9@gmail.com",
-    joinedDate: "2025-09-10"
-  },
-  {
-    id: 4,
     name: "Rajesh V M",
     role: "Co-Founder",
     department: "Executive",
@@ -94,7 +76,7 @@ export const teamData: TeamMember[] = [
     joinedDate: "2023"
   },
   {
-    id: 5,
+    id: 4,
     name: "Amal Krishna O U",
     role: "Technical Lead",
     department: "Engineering",
@@ -114,7 +96,7 @@ export const teamData: TeamMember[] = [
     joinedDate: "2025-09-10"
   },
   {
-    id: 6,
+    id: 5,
     name: "Akash Sasi",
     role: "Operations Lead",
     department: "Executive",
