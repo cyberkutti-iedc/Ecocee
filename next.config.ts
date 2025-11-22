@@ -1,9 +1,14 @@
 import type { NextConfig } from 'next';
-const withTM = require('next-transpile-modules')(['@devnomic/marquee']);
 
 const nextConfig: NextConfig = {
-  eslint: {
-    ignoreDuringBuilds: false,
+  // ✅ Enable Turbopack (Next.js 16 default)
+  turbopack: {
+    rules: {
+      '*.svg': {
+        loaders: ['@svgr/webpack'],
+        as: '*.js',
+      },
+    },
   },
 
   // ✅ Security & Performance Headers
@@ -92,7 +97,6 @@ const nextConfig: NextConfig = {
         hostname: '**.supabase.co',
       },
     ],
-    domains: ['styxucsqgybzuprmkmft.supabase.co'],
     minimumCacheTTL: 60,
     deviceSizes: [640, 750, 828, 1080, 1200, 1920, 2048, 3840],
     imageSizes: [16, 32, 48, 64, 96, 128, 256, 384],
@@ -113,7 +117,6 @@ const nextConfig: NextConfig = {
 
   trailingSlash: true,
   compress: true,
-  swcMinify: true,
   productionBrowserSourceMaps: false,
   reactStrictMode: true,
 
@@ -123,4 +126,4 @@ const nextConfig: NextConfig = {
   },
 };
 
-export default withTM(nextConfig);
+export default nextConfig;

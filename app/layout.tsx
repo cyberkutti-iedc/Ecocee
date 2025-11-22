@@ -11,122 +11,136 @@ import { organizationSchema } from "@/lib/seo";
 
 const inter = Inter({ subsets: ["latin"], display: "swap" });
 
+
+
 export const metadata: Metadata = {
-  title: "Ecocee | Embedded Systems, IoT & AI Solutions | Kerala Startup",
-  description:
-    "Ecocee, a Kerala-based MSME startup, offers innovative embedded systems, IoT, AI development, and custom hardware & software solutions. Patentable projects and technical training.",
-     manifest: '/site.webmanifest',
+  title: "Ecocee | Embedded Systems & IoT Solutions Company in Kerala | India",
+  description: "Kerala-based IoT & embedded systems company specializing in custom hardware, firmware development, industrial automation, and AI solutions. MSME registered startup serving clients across India.",
   keywords: [
-    // Kerala statewide & city-specific
-    "Software development company in Kerala",
-    "Software development company in Kochi",
-    "Software development company in Ernakulam",
-    "1 software development company in thrissur",
-    "Embedded systems company in Thrissur",
-    "IoT solutions in Thrissur",
-    "Custom software solutions Thrissur",
-    "AI solutions in Thrissur",
-    "Firmware developers in Thrissur",
-    "Embedded systems services Thrissur",
-    "AI and machine learning services Thrissur",
-    "IoT firmware developers in Thrissur",
-    // Kochi & Ernakulam variants
-    "Embedded systems company in Kochi",
-    "IoT solutions in Kochi",
-    "Custom software solutions Kochi",
-    "AI solutions in Kochi",
-    "Firmware developers in Kochi",
-    "Embedded systems services Kochi",
-    "AI and machine learning services Kochi",
-    "IoT firmware developers in Kochi",
-    "Embedded systems company in Ernakulam",
-    "IoT solutions in Ernakulam",
-    "Custom software solutions Ernakulam",
-    "AI solutions in Ernakulam",
-    "Firmware developers in Ernakulam",
-    "Embedded systems services Ernakulam",
-    "AI and machine learning services Ernakulam",
-    "IoT firmware developers in Ernakulam",
-    "Embedded Systems Kerala",
-    "IoT Solutions Kerala",
-    "Industrial Automation Kerala",
-    "PCB Prototyping Kerala",
-    "Hardware Prototyping Kerala",
-    "Embedded Training Kerala",
-    "Smart Industry Kerala",
-    "Custom Electronics Kerala",
-    "MSME Embedded Systems Kerala",
-    "IoT Company Kerala",
-    "Embedded Systems India",
-    "IoT Solutions India",
-    "Industrial Automation India",
-    "PCB Design Services India",
-    "Firmware Development India",
-    "Custom Embedded Hardware India",
-    "AI Embedded Solutions India",
-    "Product Development Startup India",
-    "Electronics Prototyping India",
-    "Affordable embedded systems for startups Kerala",
-    "IoT product development Kerala startups",
-    "Embedded system training for students in Kerala",
-    "Industrial machine automation for small factories Kerala",
-    "Embedded systems for MSMEs in India",
-    "Embedded systems outsourcing India",
-    "IoT prototyping help for engineers Kerala",
-    "PCB prototyping services for startups in India",
-    "Ecocee embedded systems",
-    "Ecocee IoT solutions Kerala",
-    "Ecocee startup India",
-    "Ecocee hardware prototyping",
-    "Ecocee technical training",
-    "Ecocee automation services",
-    "Best IoT company in Kerala",
-    "Top embedded systems startup India",
-    "Affordable PCB design services",
-    "Industrial IoT solutions Kerala",
-    "Smart home automation Kerala",
-    "Embedded systems training center",
-    "Custom firmware development",
-    "Electronics product development",
-    "IoT consulting services",
-    "Embedded Linux development",
-    "ARM microcontroller programming",
-    "RTOS development services",
-    "Wireless IoT solutions",
+    // Kerala-wide
+  "Embedded Systems Kerala",
+  "IoT Solutions Kerala",
+  "Industrial Automation Kerala",
+  "PCB Prototyping Kerala",
+  "Hardware Prototyping Kerala",
+  "Embedded Training Kerala",
+  "Smart Industry Kerala",
+  "Custom Electronics Kerala",
+  "MSME Embedded Systems Kerala",
+  "IoT Company Kerala",
+  // High-intent local keywords
+  "1 software development company in thrissur",
+  "embedded systems company in thrissur",
+  "iot solutions in thrissur",
+  "custom software solutions thrissur",
+  "ai solutions in thrissur",
+  "firmware developers in thrissur",
+  "embedded systems services thrissur",
+  "ai and machine learning services thrissur",
+  "iot firmware developers in thrissur",
+  // Kochi & Ernakulam coverage
+  "software development company in kochi",
+  "software development company in ernakulam",
+  "embedded systems company in kochi",
+  "embedded systems company in ernakulam",
+  "iot solutions in kochi",
+  "iot solutions in ernakulam",
+  "custom software solutions kochi",
+  "custom software solutions ernakulam",
+  "ai solutions in kochi",
+  "ai solutions in ernakulam",
+  "firmware developers in kochi",
+  "firmware developers in ernakulam",
+  "embedded systems services kochi",
+  "embedded systems services ernakulam",
+  "ai and machine learning services kochi",
+  "ai and machine learning services ernakulam",
+  "iot firmware developers in kochi",
+  "iot firmware developers in ernakulam",
+
+  // India-wide
+  "Embedded Systems India",
+  "IoT Solutions India",
+  "Industrial Automation India",
+  "PCB Design Services India",
+  "Firmware Development India",
+  "Custom Embedded Hardware India",
+  "AI Embedded Solutions India",
+  "Product Development Startup India",
+  "Electronics Prototyping India",
+
+  // Kerala districts – Thrissur
+  "Embedded Systems Thrissur",
+  "IoT Solutions Thrissur",
+  "Industrial Automation Thrissur",
+  "PCB Prototyping Thrissur",
+  "Ecocee Thrissur",
+
+  // Ernakulam
+  "Embedded Systems Ernakulam",
+  "IoT Solutions Ernakulam",
+  "Industrial Automation Ernakulam",
+  "PCB Prototyping Ernakulam",
+  "Ecocee Ernakulam",
+
+  // Alappuzha
+  "Embedded Systems Alappuzha",
+  "IoT Solutions Alappuzha",
+  "Industrial Automation Alappuzha",
+  "PCB Prototyping Alappuzha",
+  "Ecocee Alappuzha",
+
+  // Long-tail & niche
+  "Affordable embedded systems for startups Kerala",
+  "IoT product development Kerala startups",
+  "Embedded system training for students in Kerala",
+  "Industrial machine automation for small factories Kerala",
+  "Embedded systems for MSMEs in India",
+  "Embedded systems outsourcing India",
+  "IoT prototyping help for engineers Kerala",
+  "PCB prototyping services for startups in India",
+
+  // Branding & trust
+  "Ecocee embedded systems",
+  "Ecocee IoT solutions Kerala",
+  "Ecocee startup India",
+  "Ecocee hardware prototyping",
+  "Ecocee technical training",
+  "Ecocee automation services",
+  "Ecocee"
   ],
   openGraph: {
-    title: "Ecocee | Embedded Systems, IoT & AI Solutions",
-    description:
-      "Kerala-based startup Ecocee provides embedded systems, IoT, and AI project solutions along with technical training and patentable innovations.",
-    url: "https://ecocee.in",
     type: "website",
-    siteName: "Ecocee",
-    locale: "en_IN",
-    countryName: "India",
+    url: "https://ecocee.in",
+    title: "Ecocee | Premier Embedded Systems & IoT Development Company in Kerala",
+    description: "Kerala's trusted partner for custom embedded systems, IoT solutions, and industrial automation. From concept to production, we deliver innovative technology solutions.",
     images: [
       {
-        url: "https://ecocee.in/og-banner.webp",
+        url: "https://opengraph.b-cdn.net/production/images/e6c0215e-ba2e-44eb-a7e9-c9c547f5c1c3.jpg?token=x6p4DMXdp7hH9v3r8lbop1ngGln1iE8A-fJmqFp8QJI&height=591&width=1200&expires=33291464882",
         width: 1200,
         height: 630,
-        alt: "Ecocee - Kerala's Premier Embedded Systems & IoT Solutions Provider",
+        alt: "Ecocee - Kerala's Leading Embedded Systems and IoT Development Company",
       },
+      {
+        url: "https://opengraph.b-cdn.net/production/images/e6c0215e-ba2e-44eb-a7e9-c9c547f5c1c3.jpg?token=x6p4DMXdp7hH9v3r8lbop1ngGln1iE8A-fJmqFp8QJI&height=591&width=1200&expires=33291464882",
+        width: 800,
+        height: 600,
+        alt: "Custom IoT Products Developed by Ecocee",
+      }
     ],
+    locale: "en_IN",
+    siteName: "Ecocee",
   },
   twitter: {
     card: "summary_large_image",
-    creator: "@Ecocee",
-    title: "Ecocee | Embedded Systems, IoT & AI Solutions",
-    description:
-      "Discover Ecocee's Kerala-based embedded systems, IoT, and AI development services with custom solutions and patentable projects.",
-    site: "@Ecocee",
-    images:
-      "https://opengraph.b-cdn.net/production/images/e6c0215e-ba2e-44eb-a7e9-c9c547f5c1c3.jpg?token=x6p4DMXdp7hH9v3r8lbop1ngGln1iE8A-fJmqFp8QJI&height=591&width=1200&expires=33291464882",
+    creator: "@EcoceeTech",
+    site: "@EcoceeTech",
+    title: "Ecocee | Embedded & IoT Solutions for Smart Industries",
+    description: "Transform your ideas into market-ready embedded products with Kerala's top IoT development team.",
+    images: "https://opengraph.b-cdn.net/production/images/e6c0215e-ba2e-44eb-a7e9-c9c547f5c1c3.jpg?token=x6p4DMXdp7hH9v3r8lbop1ngGln1iE8A-fJmqFp8QJI&height=591&width=1200&expires=33291464882"
   },
   alternates: {
     canonical: "https://ecocee.in",
-    languages: {
-      "en-IN": "https://ecocee.in/en",
-    },
   },
   robots: {
     index: true,
@@ -135,30 +149,256 @@ export const metadata: Metadata = {
     googleBot: {
       index: true,
       follow: true,
-      noimageindex: false,
       "max-video-preview": -1,
       "max-image-preview": "large",
       "max-snippet": -1,
     },
   },
   authors: [
-    { name: "Sreeraj V Rajesh", url: "https://ecocee.in/team" },
-    { name: "Ecocee Team", url: "https://ecocee.in/about" },
+    { name: "Sreeraj V Rajesh", url: "https://ecocee.in/team/" },
+    { name: "Ecocee Technologies", url: "https://ecocee.in" }
   ],
   publisher: "Ecocee Technologies",
-  applicationName: "Ecocee",
-  appleWebApp: {
-    title: "Ecocee",
-    statusBarStyle: "default",
-  },
   metadataBase: new URL("https://ecocee.in"),
-  other: {
-    "geo.region": "IN-KL",
-    "geo.placename": "Kodungallur, Thrissur, Kochi, Ernakulam, Kerala",
-    "geo.position": "10.2326;76.1951",
-    ICBM: "10.2326, 76.1951",
-  },
+  
 };
+
+// Enhanced Structured Data
+const structuredData = [
+  {
+    "@context": "https://schema.org",
+    "@type": "Organization",
+    "name": "Ecocee",
+    "url": "https://ecocee.in",
+    "logo": "https://opengraph.b-cdn.net/production/images/e6c0215e-ba2e-44eb-a7e9-c9c547f5c1c3.jpg?token=x6p4DMXdp7hH9v3r8lbop1ngGln1iE8A-fJmqFp8QJI&height=591&width=1200&expires=33291464882",
+    "foundingDate": "2025",
+    "founders": [
+      {
+        "@type": "Person",
+        "name": "Sreeraj V Rajesh"
+      }
+    ],
+    "address": {
+      "@type": "PostalAddress",
+      "streetAddress": "Your Street Address",
+      "addressLocality": "Kodungallur",
+      "addressRegion": "Kerala",
+      "postalCode": "680664",
+      "addressCountry": "India"
+    },
+    "contactPoint": {
+      "@type": "ContactPoint",
+      "telephone": "+91-9446715884",
+      "contactType": "customer service",
+      "areaServed": "India",
+      "availableLanguage": ["English", "Malayalam"]
+    },
+    "sameAs": [
+      "https://www.linkedin.com/company/ecocee",
+      "https://twitter.com/EcoceeTech",
+      "https://facebook.com/EcoceeTech"
+    ]
+  },
+  {
+    "@context": "https://schema.org",
+    "@type": "WebSite",
+    "name": "Ecocee",
+    "url": "https://ecocee.in",
+    "potentialAction": {
+      "@type": "SearchAction",
+      "target": "https://ecocee.in/search?q={search_term_string}",
+      "query-input": "required name=search_term_string"
+    }
+  },
+  {
+    "@context": "https://schema.org",
+    "@type": "LocalBusiness",
+    "name": "Ecocee Technologies",
+    "image": "https://ecocee.in/images/office.webp",
+    "@id": "https://ecocee.in",
+    "url": "https://ecocee.in",
+    "telephone": "+91-9446715884",
+    "priceRange": "$$",
+    "address": {
+      "@type": "PostalAddress",
+      "streetAddress": "Your Street Address",
+      "addressLocality": "Kodungallur",
+      "addressRegion": "Kerala",
+      "postalCode": "680664",
+      "addressCountry": "India"
+    },
+    "geo": {
+      "@type": "GeoCoordinates",
+      "latitude": "10.2326",
+      "longitude": "76.1951"
+    },
+    "openingHoursSpecification": {
+      "@type": "OpeningHoursSpecification",
+      "dayOfWeek": [
+        "Monday",
+        "Tuesday",
+        "Wednesday",
+        "Thursday",
+        "Friday",
+        "Saturday"
+      ],
+      "opens": "09:00",
+      "closes": "18:00"
+    },
+    "sameAs": [
+      "https://www.linkedin.com/company/ecocee"
+    ]
+  }
+];
+
+// export const metadata: Metadata = {
+//   title: "Ecocee | Embedded Systems, IoT & AI Solutions | Kerala Startup",
+//   description:
+//     "Ecocee, a Kerala-based MSME startup, offers innovative embedded systems, IoT, AI development, and custom hardware & software solutions. Patentable projects and technical training.",
+//      manifest: '/site.webmanifest',
+//   keywords: [
+//     // Kerala statewide & city-specific
+//     "Software development company in Kerala",
+//     "Software development company in Kochi",
+//     "Software development company in Ernakulam",
+//     "1 software development company in thrissur",
+//     "Embedded systems company in Thrissur",
+//     "IoT solutions in Thrissur",
+//     "Custom software solutions Thrissur",
+//     "AI solutions in Thrissur",
+//     "Firmware developers in Thrissur",
+//     "Embedded systems services Thrissur",
+//     "AI and machine learning services Thrissur",
+//     "IoT firmware developers in Thrissur",
+//     // Kochi & Ernakulam variants
+//     "Embedded systems company in Kochi",
+//     "IoT solutions in Kochi",
+//     "Custom software solutions Kochi",
+//     "AI solutions in Kochi",
+//     "Firmware developers in Kochi",
+//     "Embedded systems services Kochi",
+//     "AI and machine learning services Kochi",
+//     "IoT firmware developers in Kochi",
+//     "Embedded systems company in Ernakulam",
+//     "IoT solutions in Ernakulam",
+//     "Custom software solutions Ernakulam",
+//     "AI solutions in Ernakulam",
+//     "Firmware developers in Ernakulam",
+//     "Embedded systems services Ernakulam",
+//     "AI and machine learning services Ernakulam",
+//     "IoT firmware developers in Ernakulam",
+//     "Embedded Systems Kerala",
+//     "IoT Solutions Kerala",
+//     "Industrial Automation Kerala",
+//     "PCB Prototyping Kerala",
+//     "Hardware Prototyping Kerala",
+//     "Embedded Training Kerala",
+//     "Smart Industry Kerala",
+//     "Custom Electronics Kerala",
+//     "MSME Embedded Systems Kerala",
+//     "IoT Company Kerala",
+//     "Embedded Systems India",
+//     "IoT Solutions India",
+//     "Industrial Automation India",
+//     "PCB Design Services India",
+//     "Firmware Development India",
+//     "Custom Embedded Hardware India",
+//     "AI Embedded Solutions India",
+//     "Product Development Startup India",
+//     "Electronics Prototyping India",
+//     "Affordable embedded systems for startups Kerala",
+//     "IoT product development Kerala startups",
+//     "Embedded system training for students in Kerala",
+//     "Industrial machine automation for small factories Kerala",
+//     "Embedded systems for MSMEs in India",
+//     "Embedded systems outsourcing India",
+//     "IoT prototyping help for engineers Kerala",
+//     "PCB prototyping services for startups in India",
+//     "Ecocee embedded systems",
+//     "Ecocee IoT solutions Kerala",
+//     "Ecocee startup India",
+//     "Ecocee hardware prototyping",
+//     "Ecocee technical training",
+//     "Ecocee automation services",
+//     "Best IoT company in Kerala",
+//     "Top embedded systems startup India",
+//     "Affordable PCB design services",
+//     "Industrial IoT solutions Kerala",
+//     "Smart home automation Kerala",
+//     "Embedded systems training center",
+//     "Custom firmware development",
+//     "Electronics product development",
+//     "IoT consulting services",
+//     "Embedded Linux development",
+//     "ARM microcontroller programming",
+//     "RTOS development services",
+//     "Wireless IoT solutions",
+//   ],
+//   openGraph: {
+//     title: "Ecocee | Embedded Systems, IoT & AI Solutions",
+//     description:
+//       "Kerala-based startup Ecocee provides embedded systems, IoT, and AI project solutions along with technical training and patentable innovations.",
+//     url: "https://ecocee.in",
+//     type: "website",
+//     siteName: "Ecocee",
+//     locale: "en_IN",
+//     countryName: "India",
+//     images: [
+//       {
+//         url: "https://ecocee.in/og-banner.webp",
+//         width: 1200,
+//         height: 630,
+//         alt: "Ecocee - Kerala's Premier Embedded Systems & IoT Solutions Provider",
+//       },
+//     ],
+//   },
+//   twitter: {
+//     card: "summary_large_image",
+//     creator: "@Ecocee",
+//     title: "Ecocee | Embedded Systems, IoT & AI Solutions",
+//     description:
+//       "Discover Ecocee's Kerala-based embedded systems, IoT, and AI development services with custom solutions and patentable projects.",
+//     site: "@Ecocee",
+//     images:
+//       "https://opengraph.b-cdn.net/production/images/e6c0215e-ba2e-44eb-a7e9-c9c547f5c1c3.jpg?token=x6p4DMXdp7hH9v3r8lbop1ngGln1iE8A-fJmqFp8QJI&height=591&width=1200&expires=33291464882",
+//   },
+//   alternates: {
+//     canonical: "https://ecocee.in",
+//     languages: {
+//       "en-IN": "https://ecocee.in/en",
+//     },
+//   },
+//   robots: {
+//     index: true,
+//     follow: true,
+//     nocache: false,
+//     googleBot: {
+//       index: true,
+//       follow: true,
+//       noimageindex: false,
+//       "max-video-preview": -1,
+//       "max-image-preview": "large",
+//       "max-snippet": -1,
+//     },
+//   },
+//   authors: [
+//     { name: "Sreeraj V Rajesh", url: "https://ecocee.in/team" },
+//     { name: "Ecocee Team", url: "https://ecocee.in/about" },
+//   ],
+//   publisher: "Ecocee Technologies",
+//   applicationName: "Ecocee",
+//   appleWebApp: {
+//     title: "Ecocee",
+//     statusBarStyle: "default",
+//   },
+//   metadataBase: new URL("https://ecocee.in"),
+//   other: {
+//     "geo.region": "IN-KL",
+//     "geo.placename": "Kodungallur, Thrissur, Kochi, Ernakulam, Kerala",
+//     "geo.position": "10.2326;76.1951",
+//     ICBM: "10.2326, 76.1951",
+//   },
+// };
 
 export default function RootLayout({
   children,
