@@ -1,9 +1,43 @@
-# *
+# Ecocee - robots.txt
+# Optimized for search engine crawling and performance
+
+# Default rules for all bots
 User-agent: *
 Allow: /
+Disallow: /api/
+Disallow: /admin/
+Disallow: /dashboard/
+Disallow: /private/
+Disallow: /.git/
+Disallow: /node_modules/
+Disallow: /*.json$
+Disallow: /*.lock$
+Disallow: /*?sort=
+Disallow: /*?filter=
+Disallow: /search
+Disallow: /cart
 
-# Host
+# Specific crawler rules
+User-agent: Googlebot
+Allow: /
+Crawl-delay: 0
+
+User-agent: Bingbot
+Allow: /
+Crawl-delay: 1
+
+User-agent: Slurp
+Allow: /
+Crawl-delay: 1
+
+# Default crawl-delay
+User-agent: *
+Crawl-delay: 2
+Request-rate: 1/10s
+
+# Host configuration
 Host: https://ecocee.in
 
 # Sitemaps
 Sitemap: https://ecocee.in/sitemap.xml
+Sitemap: https://ecocee.in/sitemap-0.xml

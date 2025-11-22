@@ -7,6 +7,7 @@ import { Toaster } from "react-hot-toast";
 import { NavbarWrapper } from "@/components/layout/NavbarWrapper";
 import { ClerkProvider } from "@clerk/nextjs";
 import Seo from "@/components/seo/Seo";
+import { organizationSchema } from "@/lib/seo";
 
 const inter = Inter({ subsets: ["latin"], display: "swap" });
 

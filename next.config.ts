@@ -1,13 +1,78 @@
 import type { NextConfig } from 'next';
 const withTM = require('next-transpile-modules')(['@devnomic/marquee']);
 
-// Read environment variables from .env.local
 const nextConfig: NextConfig = {
   eslint: {
-    // Warning: This allows production builds to successfully complete even if
-    // your project has ESLint errors.
-    ignoreDuringBuilds: true,
+    ignoreDuringBuilds: false,
   },
+
+  // ✅ Security & Performance Headers
+  async headers() {
+    return [
+      {
+        source: '/:path*',
+        headers: [
+          {
+            key: 'X-Content-Type-Options',
+            value: 'nosniff',
+          },
+          {
+            key: 'X-Frame-Options',
+            value: 'SAMEORIGIN',
+          },
+          {
+            key: 'X-XSS-Protection',
+            value: '1; mode=block',
+          },
+          {
+            key: 'Referrer-Policy',
+            value: 'strict-origin-when-cross-origin',
+          },
+          {
+            key: 'Permissions-Policy',
+            value: 'camera=(), microphone=(), geolocation=()',
+          },
+          {
+            key: 'Strict-Transport-Security',
+            value: process.env.NODE_ENV === 'production' 
+              ? 'max-age=31536000; includeSubDomains; preload'
+              : 'max-age=0',
+          },
+        ],
+      },
+      {
+        source: '/api/auth/:path*',
+        headers: [
+          {
+            key: 'Cache-Control',
+            value: 'no-store, must-revalidate',
+          },
+        ],
+      },
+      {
+        source: '/dashboard/:path*',
+        headers: [
+          {
+            key: 'Cache-Control',
+            value: 'no-store, must-revalidate',
+          },
+        ],
+      },
+    ];
+  },
+
+  // ✅ Content redirects
+  async redirects() {
+    return [
+      {
+        source: '/admin',
+        destination: '/dashboard',
+        permanent: true,
+      },
+    ];
+  },
+
+  // ✅ Image optimization
   images: {
     remotePatterns: [
       {
@@ -26,25 +91,36 @@ const nextConfig: NextConfig = {
       {
         hostname: '**.supabase.co',
       },
-      // Add more patterns as needed
     ],
     domains: ['styxucsqgybzuprmkmft.supabase.co'],
+    minimumCacheTTL: 60,
+    deviceSizes: [640, 750, 828, 1080, 1200, 1920, 2048, 3840],
+    imageSizes: [16, 32, 48, 64, 96, 128, 256, 384],
   },
+
   env: {
     GOOGLE_SITE_VERIFICATION: process.env.GOOGLE_SITE_VERIFICATION,
-    SUPABASE_URL: process.env.SUPABASE_URL,
-    SUPABASE_ANON_KEY: process.env.SUPABASE_ANON_KEY,
-    SUPABASE_BUCKET: process.env.SUPABASE_BUCKET,
   },
+
   async rewrites() {
     return [
       {
         source: '/docs/:path*',
-        destination: '/public/docs/:path*', // Ensure static files in public/docs are accessible
+        destination: '/public/docs/:path*',
       },
     ];
   },
-  trailingSlash: true, // Ensures URLs like `/docs/niti_hal/` work correctly
+
+  trailingSlash: true,
+  compress: true,
+  swcMinify: true,
+  productionBrowserSourceMaps: false,
+  reactStrictMode: true,
+
+  onDemandEntries: {
+    maxInactiveAge: 60 * 1000,
+    pagesBufferLength: 5,
+  },
 };
 
-export default nextConfig;
+export default withTM(nextConfig);
