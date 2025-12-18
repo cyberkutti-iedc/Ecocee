@@ -164,7 +164,7 @@ export default function RootLayout({
 }: Readonly<{ children: React.ReactNode }>) {
   return (
     <ClerkProvider>
-      <html lang="en-IN" suppressHydrationWarning>
+      <html lang="en-IN" suppressHydrationWarning className="dark">
         <head>
           <meta
             name="viewport"
@@ -272,17 +272,11 @@ export default function RootLayout({
         />
         <body
           className={cn(
-            "min-h-screen w-full flex flex-col overflow-x-hidden bg-gradient-to-br from-slate-50 via-blue-50/30 to-indigo-50/50 dark:from-slate-950 dark:via-slate-900 dark:to-slate-800 text-slate-800 dark:text-slate-100 selection:bg-blue-200 dark:selection:bg-blue-800 antialiased",
+            "min-h-screen w-full flex flex-col overflow-x-hidden bg-slate-950 text-slate-100 selection:bg-blue-200 antialiased",
             inter.className
           )}
         >
-          <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
-            {/* Background */}
-            <div className="fixed inset-0 -z-10 pointer-events-none overflow-hidden">
-              <div className="absolute -top-20 -right-20 w-48 h-48 bg-gradient-to-br from-blue-400/15 to-purple-600/15 rounded-full blur-2xl animate-pulse"></div>
-              <div className="absolute -bottom-20 -left-20 w-48 h-48 bg-gradient-to-tr from-indigo-400/15 to-cyan-600/15 rounded-full blur-2xl animate-pulse delay-1000"></div>
-            </div>
-
+          <ThemeProvider attribute="class" defaultTheme="dark">
             {/* Navbar */}
             <NavbarWrapper />
 

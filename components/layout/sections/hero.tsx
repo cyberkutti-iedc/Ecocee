@@ -307,6 +307,6 @@ export const HeroSection = () => {
 
       {/* Bottom padding to account for mobile CTA bar */}
       <div className="h-16 lg:hidden" />
-    </section>
+   </section>
   );
 };

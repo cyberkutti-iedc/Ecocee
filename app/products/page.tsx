@@ -141,7 +141,7 @@ export default function ProductsPage() {
         />
       </Head>
 
-      <div className="min-h-screen bg-black text-white" itemScope itemType="https://schema.org/ItemList">
+      <div className="min-h-screen bg-slate-950 text-white" itemScope itemType="https://schema.org/ItemList">
         {/* Header Section */}
         <ProductsHeader />
 

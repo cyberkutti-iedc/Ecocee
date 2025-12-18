@@ -5,7 +5,7 @@ import { Cpu } from 'lucide-react'
 
 export default function LoadingSpinner() {
   return (
-    <div className="min-h-screen bg-black flex items-center justify-center">
+    <div className="min-h-screen bg-slate-950 flex items-center justify-center">
       <div className="text-center">
         {/* Animated icon */}
         <motion.div
