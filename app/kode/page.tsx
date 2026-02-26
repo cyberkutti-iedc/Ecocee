@@ -72,9 +72,9 @@ function CodeBlock({ code, label }: { code: string; label?: string }) {
 function InstallBar() {
   const cmd = "go install github.com/ecocee/kode-go/cmd/kode@latest";
   const { copied, copy } = useCopy(cmd);
-  const h = useHover();
+  const { on, ...h } = useHover();
   return (
-    <button onClick={copy} {...h} style={{ display: "flex", alignItems: "center", gap: 12, background: "rgba(124,58,237,0.1)", border: `1px solid ${h.on ? C.borderHi : C.border}`, borderRadius: 10, padding: "12px 20px", cursor: "pointer", fontFamily: C.mono, fontSize: 13, color: C.dim, width: "100%", maxWidth: 660, transition: "border-color 0.2s" }}>
+    <button onClick={copy} {...h} style={{ display: "flex", alignItems: "center", gap: 12, background: "rgba(124,58,237,0.1)", border: `1px solid ${on ? C.borderHi : C.border}`, borderRadius: 10, padding: "12px 20px", cursor: "pointer", fontFamily: C.mono, fontSize: 13, color: C.dim, width: "100%", maxWidth: 660, transition: "border-color 0.2s" }}>
       <span style={{ color: C.purple3, flexShrink: 0 }}>$</span>
       <span style={{ overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap", flex: 1, textAlign: "left" }}>{cmd}</span>
       {copied ? <CheckCheck size={14} style={{ color: C.purple3, flexShrink: 0 }} /> : <Copy size={14} style={{ color: C.muted, flexShrink: 0 }} />}
@@ -84,9 +84,9 @@ function InstallBar() {
 
 // ─── Feature card ─────────────────────────────────────────────────────────────
 function FeatureCard({ icon, title, desc }: { icon: React.ReactNode; title: string; desc: string }) {
-  const h = useHover();
+  const { on, ...h } = useHover();
   return (
-    <div {...h} style={card(h.on)}>
+    <div {...h} style={card(on)}>
       <div style={{ width: 42, height: 42, borderRadius: 10, background: "rgba(124,58,237,0.18)", display: "flex", alignItems: "center", justifyContent: "center", color: C.purple3, marginBottom: 14 }}>{icon}</div>
       <h3 style={{ fontFamily: C.sans, fontSize: 15, fontWeight: 600, color: C.text, marginBottom: 8 }}>{title}</h3>
       <p style={{ fontFamily: C.sans, fontSize: 13, color: C.muted, lineHeight: 1.7, margin: 0 }}>{desc}</p>
@@ -153,9 +153,9 @@ function RoadCard({ version, title, status, items }: { version: string; title: s
 
 // ─── Doc card ─────────────────────────────────────────────────────────────────
 function DocCard({ icon, title, desc, href }: { icon: React.ReactNode; title: string; desc: string; href: string }) {
-  const h = useHover();
+  const { on, ...h } = useHover();
   return (
-    <a href={href} target="_blank" rel="noopener noreferrer" {...h} style={{ ...card(h.on), textDecoration: "none", display: "flex", flexDirection: "column", gap: 8 }}>
+    <a href={href} target="_blank" rel="noopener noreferrer" {...h} style={{ ...card(on), textDecoration: "none", display: "flex", flexDirection: "column", gap: 8 }}>
       <span style={{ color: C.purple3 }}>{icon}</span>
       <h3 style={{ fontFamily: C.sans, fontSize: 14, fontWeight: 600, color: C.text, margin: 0 }}>{title}</h3>
       <p style={{ fontFamily: C.sans, fontSize: 12, color: C.muted, lineHeight: 1.65, margin: 0, flex: 1 }}>{desc}</p>
@@ -188,19 +188,19 @@ const SS = ({ c }: { c: string }) => <p style={{ fontFamily: C.sans, fontSize: 1
 
 // ─── Primary button ───────────────────────────────────────────────────────────
 function PBtn({ href, children }: { href: string; children: React.ReactNode }) {
-  const h = useHover();
+  const { on, ...h } = useHover();
   return (
-    <a href={href} {...h} style={{ display: "inline-flex", alignItems: "center", gap: 8, fontFamily: C.sans, fontSize: 14, fontWeight: 600, color: "#fff", background: h.on ? "linear-gradient(135deg,#6d28d9,#9333ea)" : C.gradBtn, padding: "13px 28px", borderRadius: 10, textDecoration: "none", transition: "background 0.2s", boxShadow: "0 4px 24px rgba(124,58,237,0.35)" }}>
+    <a href={href} {...h} style={{ display: "inline-flex", alignItems: "center", gap: 8, fontFamily: C.sans, fontSize: 14, fontWeight: 600, color: "#fff", background: on ? "linear-gradient(135deg,#6d28d9,#9333ea)" : C.gradBtn, padding: "13px 28px", borderRadius: 10, textDecoration: "none", transition: "background 0.2s", boxShadow: "0 4px 24px rgba(124,58,237,0.35)" }}>
       {children}
     </a>
   );
 }
 
 function GhostBtn({ href, children, ext }: { href: string; children: React.ReactNode; ext?: boolean }) {
-  const h = useHover();
+  const { on, ...h } = useHover();
   return (
     <a href={href} target={ext ? "_blank" : undefined} rel={ext ? "noopener noreferrer" : undefined} {...h}
-      style={{ display: "inline-flex", alignItems: "center", gap: 8, fontFamily: C.sans, fontSize: 14, color: h.on ? C.purple3 : C.dim, border: `1px solid ${h.on ? C.borderHi : C.border}`, padding: "13px 28px", borderRadius: 10, textDecoration: "none", transition: "all 0.2s" }}>
+      style={{ display: "inline-flex", alignItems: "center", gap: 8, fontFamily: C.sans, fontSize: 14, color: on ? C.purple3 : C.dim, border: `1px solid ${on ? C.borderHi : C.border}`, padding: "13px 28px", borderRadius: 10, textDecoration: "none", transition: "all 0.2s" }}>
       {children}
     </a>
   );
