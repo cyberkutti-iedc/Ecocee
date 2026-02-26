@@ -2,387 +2,12 @@
 import { useState, useEffect } from "react";
 import Head from "next/head";
 import {
-  ArrowRight, Check, Terminal, Code, FileCode,
-  Book, Zap, Github, Download, ExternalLink, Copy, CheckCheck,
-  ChevronRight, Layers, Globe, Server, GitBranch, Shuffle
+  ArrowRight, Check, Terminal, Code, FileCode, Book,
+  Zap, Github, Download, ExternalLink, Copy, CheckCheck,
+  ChevronRight, Layers, Globe, Server, GitBranch, Shuffle,
 } from "lucide-react";
 
-// ─── CSS extracted as a plain string — avoids JSX template-literal brace issues ──
-const PAGE_CSS = `
-  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
-  :root {
-    --bg: #080b10;
-    --bg2: #0c1018;
-    --bg3: #111620;
-    --border: rgba(255,255,255,0.07);
-    --accent: #38bdf8;
-    --accent2: #34d399;
-    --accent3: #a78bfa;
-    --text: #e2e8f0;
-    --muted: #64748b;
-    --code-bg: #090d14;
-    --radius: 10px;
-    --font-sans: 'Sora', sans-serif;
-    --font-mono: 'JetBrains Mono', monospace;
-  }
-
-  html { scroll-behavior: smooth; }
-  body {
-    background: var(--bg);
-    color: var(--text);
-    font-family: var(--font-sans);
-    line-height: 1.6;
-    overflow-x: hidden;
-  }
-
-  nav {
-    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
-    display: flex; align-items: center; justify-content: space-between;
-    padding: 0 clamp(1.5rem, 5vw, 4rem);
-    height: 64px;
-    transition: background 0.3s, border-bottom 0.3s;
-  }
-  nav.scrolled {
-    background: rgba(8,11,16,0.88);
-    backdrop-filter: blur(18px);
-    border-bottom: 1px solid var(--border);
-  }
-  .nav-logo {
-    font-family: var(--font-mono);
-    font-size: 1.2rem; font-weight: 700;
-    color: var(--accent); text-decoration: none;
-    display: flex; align-items: center; gap: 0.5rem;
-  }
-  .nav-logo .ver {
-    color: var(--muted); font-weight: 300; font-size: 0.78rem;
-    border: 1px solid var(--border); padding: 0.1rem 0.5rem;
-    border-radius: 100px; margin-left: 0.25rem;
-  }
-  .nav-links { display: flex; gap: 2rem; list-style: none; }
-  .nav-links a {
-    color: var(--muted); font-size: 0.875rem; text-decoration: none;
-    transition: color 0.2s;
-  }
-  .nav-links a:hover { color: var(--text); }
-  .nav-right { display: flex; align-items: center; gap: 0.75rem; }
-
-  .btn-ghost {
-    background: transparent; border: 1px solid var(--border);
-    color: var(--text); font-family: var(--font-sans);
-    font-size: 0.8rem; padding: 0.45rem 1rem; border-radius: 6px;
-    cursor: pointer; text-decoration: none;
-    display: inline-flex; align-items: center; gap: 0.4rem;
-    transition: border-color 0.2s, color 0.2s;
-  }
-  .btn-ghost:hover { border-color: var(--accent); color: var(--accent); }
-
-  .btn-primary {
-    background: var(--accent); color: #000;
-    font-family: var(--font-sans); font-weight: 600;
-    font-size: 0.85rem; padding: 0.5rem 1.1rem; border-radius: 6px;
-    border: none; cursor: pointer; text-decoration: none;
-    display: inline-flex; align-items: center; gap: 0.4rem;
-    transition: opacity 0.2s, transform 0.2s;
-  }
-  .btn-primary:hover { opacity: 0.88; transform: translateY(-1px); }
-  .btn-lg { font-size: 0.95rem !important; padding: 0.75rem 1.75rem !important; border-radius: 8px !important; }
-
-  .hero {
-    min-height: 100vh;
-    display: grid; grid-template-columns: 1fr 1fr;
-    align-items: center; gap: 3rem;
-    padding: 96px clamp(1.5rem, 5vw, 4rem) 4rem;
-    position: relative; overflow: hidden;
-  }
-  .hero::before {
-    content: '';
-    position: absolute; inset: 0;
-    background:
-      radial-gradient(ellipse 55% 50% at 10% 50%, rgba(56,189,248,0.06) 0%, transparent 60%),
-      radial-gradient(ellipse 45% 55% at 85% 25%, rgba(52,211,153,0.05) 0%, transparent 60%);
-    pointer-events: none;
-  }
-  .hero-eyebrow {
-    display: inline-flex; align-items: center; gap: 0.5rem;
-    border: 1px solid rgba(56,189,248,0.3);
-    background: rgba(56,189,248,0.07);
-    color: var(--accent); font-size: 0.72rem; font-family: var(--font-mono);
-    padding: 0.35rem 0.9rem; border-radius: 100px;
-    margin-bottom: 1.5rem;
-  }
-  .hero h1 {
-    font-size: clamp(2.4rem, 5vw, 3.6rem);
-    font-weight: 800; line-height: 1.1;
-    letter-spacing: -0.03em; margin-bottom: 1.25rem;
-  }
-  .hero h1 em {
-    font-style: normal;
-    background: linear-gradient(135deg, var(--accent), var(--accent2));
-    -webkit-background-clip: text; -webkit-text-fill-color: transparent;
-  }
-  .hero p {
-    color: var(--muted); font-size: 1.05rem;
-    max-width: 500px; margin-bottom: 2rem; line-height: 1.75;
-  }
-  .hero-actions { display: flex; gap: 0.75rem; flex-wrap: wrap; margin-bottom: 2rem; }
-  .hero-stats {
-    display: flex; gap: 2.5rem; padding-top: 1rem;
-    border-top: 1px solid var(--border);
-  }
-  .stat-num { font-size: 1.4rem; font-weight: 700; color: var(--text); font-family: var(--font-mono); }
-  .stat-label { font-size: 0.72rem; color: var(--muted); }
-
-  .hero-code {
-    background: var(--code-bg); border: 1px solid var(--border);
-    border-radius: 14px; overflow: hidden;
-    box-shadow: 0 32px 80px rgba(0,0,0,0.5);
-    animation: float 7s ease-in-out infinite;
-  }
-  @keyframes float {
-    0%, 100% { transform: translateY(0px) rotate(0.3deg); }
-    50% { transform: translateY(-10px) rotate(-0.3deg); }
-  }
-  .hero-code-bar {
-    background: #0e1420; padding: 0.7rem 1rem;
-    display: flex; align-items: center; gap: 0.5rem;
-    border-bottom: 1px solid var(--border);
-  }
-  .dot { width: 11px; height: 11px; border-radius: 50%; }
-  .dot-r { background: #ff5f57; }
-  .dot-y { background: #febc2e; }
-  .dot-g { background: #28c840; }
-  .hero-code-title { font-size: 0.72rem; color: var(--muted); margin-left: 0.5rem; font-family: var(--font-mono); }
-  .hero-code pre {
-    padding: 1.5rem; font-family: var(--font-mono);
-    font-size: 0.84rem; line-height: 1.85; margin: 0; color: var(--text);
-    white-space: pre;
-  }
-  .kw { color: #7dd3fc; }
-  .ty { color: #86efac; }
-  .fn-n { color: #c4b5fd; }
-  .str { color: #fbbf24; }
-  .op { color: #f472b6; }
-  .punc { color: #475569; }
-  .cm { color: #2d3f55; }
-  .out { color: var(--accent2); }
-
-  .install-section {
-    padding: 0 clamp(1.5rem, 5vw, 4rem) 1rem;
-    display: flex; justify-content: center;
-  }
-  .install-cmd {
-    display: flex; align-items: center; gap: 0.75rem;
-    background: var(--bg3); border: 1px solid var(--border);
-    color: var(--text); font-family: var(--font-mono); font-size: 0.85rem;
-    padding: 0.75rem 1.5rem; border-radius: 8px;
-    cursor: pointer; transition: border-color 0.2s;
-    max-width: 680px; width: 100%;
-  }
-  .install-cmd:hover { border-color: var(--accent); }
-  .prompt { color: var(--accent); flex-shrink: 0; }
-  .cmd-text { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; flex: 1; text-align: left; }
-  .copy-icon { flex-shrink: 0; color: var(--muted); }
-
-  section { padding: 5rem clamp(1.5rem, 5vw, 4rem); }
-  .section-label {
-    font-family: var(--font-mono); font-size: 0.7rem; letter-spacing: 0.15em;
-    text-transform: uppercase; color: var(--accent); margin-bottom: 0.75rem;
-  }
-  .section-title {
-    font-size: clamp(1.75rem, 3vw, 2.5rem);
-    font-weight: 700; letter-spacing: -0.02em; margin-bottom: 1rem;
-  }
-  .section-sub { color: var(--muted); max-width: 560px; font-size: 1rem; margin-bottom: 3rem; }
-
-  .features-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-    gap: 1.25rem;
-  }
-  .feature-card {
-    background: var(--bg3); border: 1px solid var(--border);
-    border-radius: var(--radius); padding: 1.5rem;
-    transition: border-color 0.2s, transform 0.2s;
-  }
-  .feature-card:hover { border-color: rgba(56,189,248,0.3); transform: translateY(-2px); }
-  .feature-icon {
-    width: 40px; height: 40px; border-radius: 8px;
-    background: rgba(56,189,248,0.1);
-    display: flex; align-items: center; justify-content: center;
-    color: var(--accent); margin-bottom: 1rem;
-  }
-  .feature-card h3 { font-size: 0.95rem; font-weight: 600; margin-bottom: 0.5rem; }
-  .feature-card p { font-size: 0.85rem; color: var(--muted); line-height: 1.6; }
-
-  .examples-section { background: var(--bg2); }
-  .examples-wrapper { max-width: 800px; }
-  .tab-bar {
-    display: flex; gap: 0.25rem; flex-wrap: wrap;
-    background: var(--bg3); border: 1px solid var(--border);
-    border-bottom: none; border-radius: var(--radius) var(--radius) 0 0;
-    padding: 0.5rem 0.5rem 0;
-  }
-  .tab-btn {
-    background: transparent; border: none;
-    color: var(--muted); font-family: var(--font-mono); font-size: 0.75rem;
-    padding: 0.4rem 0.85rem; border-radius: 6px 6px 0 0;
-    cursor: pointer; transition: color 0.2s;
-  }
-  .tab-btn:hover { color: var(--text); }
-  .tab-btn.active {
-    background: var(--code-bg); color: var(--accent);
-    border: 1px solid var(--border); border-bottom: 1px solid var(--code-bg);
-  }
-
-  .code-block {
-    position: relative; background: var(--code-bg);
-    border: 1px solid var(--border); border-radius: var(--radius);
-  }
-  .tab-bar + .code-block { border-radius: 0 var(--radius) var(--radius) var(--radius); }
-  .code-block pre {
-    padding: 1.5rem; overflow-x: auto;
-    font-family: var(--font-mono); font-size: 0.86rem;
-    line-height: 1.8; margin: 0; color: var(--text);
-  }
-  .code-label {
-    font-family: var(--font-mono); font-size: 0.7rem; color: var(--muted);
-    padding: 0.6rem 1rem; border-bottom: 1px solid var(--border);
-  }
-  .copy-btn {
-    position: absolute; top: 0.6rem; right: 0.6rem;
-    background: var(--bg3); border: 1px solid var(--border);
-    color: var(--muted); font-family: var(--font-mono); font-size: 0.7rem;
-    padding: 0.3rem 0.6rem; border-radius: 5px;
-    cursor: pointer; display: flex; align-items: center; gap: 0.35rem;
-    transition: color 0.2s, border-color 0.2s;
-  }
-  .copy-btn:hover { color: var(--accent); border-color: var(--accent); }
-
-  .install-grid {
-    display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; align-items: start;
-  }
-  .install-steps { display: flex; flex-direction: column; gap: 1rem; }
-  .step {
-    display: flex; gap: 1rem; align-items: flex-start;
-    background: var(--bg3); border: 1px solid var(--border);
-    border-radius: var(--radius); padding: 1rem 1.25rem;
-  }
-  .step-num {
-    width: 28px; height: 28px; border-radius: 50%;
-    background: rgba(56,189,248,0.15); color: var(--accent);
-    font-size: 0.72rem; font-weight: 700; font-family: var(--font-mono);
-    display: flex; align-items: center; justify-content: center;
-    flex-shrink: 0;
-  }
-  .step h4 { font-size: 0.875rem; font-weight: 600; margin-bottom: 0.2rem; }
-  .step p { font-size: 0.8rem; color: var(--muted); line-height: 1.5; }
-  .step code {
-    font-family: var(--font-mono); font-size: 0.75rem; color: var(--accent);
-    background: rgba(56,189,248,0.08); padding: 0.1rem 0.3rem; border-radius: 3px;
-  }
-
-  .docs-grid {
-    display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
-    gap: 1rem;
-  }
-  .doc-card {
-    background: var(--bg3); border: 1px solid var(--border);
-    border-radius: var(--radius); padding: 1.5rem;
-    text-decoration: none; color: var(--text);
-    transition: border-color 0.2s, transform 0.2s;
-    display: flex; flex-direction: column; gap: 0.5rem;
-  }
-  .doc-card:hover { border-color: var(--accent2); transform: translateY(-2px); }
-  .doc-card-icon { color: var(--accent2); margin-bottom: 0.25rem; }
-  .doc-card h3 { font-size: 0.9rem; font-weight: 600; }
-  .doc-card p { font-size: 0.8rem; color: var(--muted); line-height: 1.5; flex: 1; }
-  .doc-card-link {
-    font-size: 0.72rem; color: var(--accent2); font-family: var(--font-mono);
-    display: flex; align-items: center; gap: 0.3rem; margin-top: 0.5rem;
-  }
-
-  .roadmap-grid {
-    display: grid; grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-    gap: 1.25rem;
-  }
-  .roadmap-card {
-    background: var(--bg3); border: 1px solid var(--border);
-    border-radius: var(--radius); padding: 1.5rem;
-  }
-  .road-done { border-color: rgba(52,211,153,0.2); }
-  .road-current { border-color: rgba(56,189,248,0.25); }
-  .road-planned { border-color: rgba(167,139,250,0.15); }
-  .road-header {
-    display: flex; justify-content: space-between; align-items: center;
-    margin-bottom: 0.75rem;
-  }
-  .road-version { font-family: var(--font-mono); font-size: 0.72rem; color: var(--muted); }
-  .road-badge {
-    font-size: 0.62rem; font-weight: 600; letter-spacing: 0.05em;
-    padding: 0.2rem 0.6rem; border-radius: 100px;
-  }
-  .road-done .road-badge { background: rgba(52,211,153,0.15); color: var(--accent2); }
-  .road-current .road-badge { background: rgba(56,189,248,0.15); color: var(--accent); }
-  .road-planned .road-badge { background: rgba(167,139,250,0.15); color: var(--accent3); }
-  .roadmap-card h3 { font-size: 0.9rem; font-weight: 600; margin-bottom: 0.75rem; }
-  .roadmap-card ul { list-style: none; display: flex; flex-direction: column; gap: 0.5rem; }
-  .roadmap-card li {
-    display: flex; align-items: center; gap: 0.5rem;
-    font-size: 0.8rem; color: var(--muted);
-  }
-  .road-done li svg { color: var(--accent2); }
-  .road-current li svg { color: var(--accent); }
-  .road-planned li svg { color: var(--accent3); }
-
-  .cta-banner {
-    margin: 0 clamp(1.5rem, 5vw, 4rem) 5rem;
-    background: linear-gradient(135deg, rgba(56,189,248,0.07) 0%, rgba(52,211,153,0.05) 100%);
-    border: 1px solid rgba(56,189,248,0.2);
-    border-radius: 16px; padding: 3.5rem;
-    display: flex; justify-content: space-between;
-    align-items: center; gap: 2rem; flex-wrap: wrap;
-  }
-  .cta-banner h2 { font-size: clamp(1.5rem, 2.5vw, 2rem); font-weight: 700; }
-  .cta-banner p { color: var(--muted); font-size: 0.95rem; margin-top: 0.5rem; }
-  .cta-actions { display: flex; gap: 0.75rem; flex-wrap: wrap; }
-
-  footer {
-    border-top: 1px solid var(--border);
-    padding: 3rem clamp(1.5rem, 5vw, 4rem);
-  }
-  .footer-grid {
-    display: grid; grid-template-columns: 2fr 1fr 1fr 1fr;
-    gap: 2.5rem; margin-bottom: 2.5rem;
-  }
-  .footer-brand p { color: var(--muted); font-size: 0.85rem; margin-top: 0.75rem; max-width: 300px; line-height: 1.6; }
-  .footer-col h4 { font-size: 0.8rem; font-weight: 600; margin-bottom: 1rem; }
-  .footer-col ul { list-style: none; display: flex; flex-direction: column; gap: 0.6rem; }
-  .footer-col a { color: var(--muted); font-size: 0.8rem; text-decoration: none; transition: color 0.2s; }
-  .footer-col a:hover { color: var(--text); }
-  .footer-bottom {
-    border-top: 1px solid var(--border); padding-top: 1.5rem;
-    display: flex; justify-content: space-between;
-    align-items: center; flex-wrap: wrap; gap: 1rem;
-  }
-  .footer-bottom p { font-size: 0.72rem; color: var(--muted); }
-
-  @media (max-width: 960px) {
-    .hero { grid-template-columns: 1fr; padding-top: 110px; }
-    .hero-code { display: none; }
-    .install-grid { grid-template-columns: 1fr; }
-    .footer-grid { grid-template-columns: 1fr 1fr; }
-    .nav-links { display: none; }
-  }
-  @media (max-width: 600px) {
-    .footer-grid { grid-template-columns: 1fr; }
-    .cta-banner { padding: 2rem; }
-    .hero-stats { gap: 1.5rem; }
-    .install-cmd { font-size: 0.72rem; }
-  }
-`;
-
-// ─── Utility: copy hook ───────────────────────────────────────────────────────
+// ─── Copy hook ────────────────────────────────────────────────────────────────
 function useCopy(text: string) {
   const [copied, setCopied] = useState(false);
   const copy = () => {
@@ -397,13 +22,22 @@ function useCopy(text: string) {
 function CodeBlock({ code, label }: { code: string; label?: string }) {
   const { copied, copy } = useCopy(code);
   return (
-    <div className="code-block">
-      {label && <div className="code-label">{label}</div>}
-      <button className="copy-btn" onClick={copy}>
-        {copied ? <CheckCheck size={14} /> : <Copy size={14} />}
+    <div className="relative rounded-xl border border-white/[0.07] bg-[#060a10] overflow-hidden">
+      {label && (
+        <div className="px-4 py-2 border-b border-white/[0.07] font-mono text-xs text-slate-500">
+          {label}
+        </div>
+      )}
+      <button
+        onClick={copy}
+        className="absolute top-3 right-3 flex items-center gap-1.5 rounded-md border border-white/[0.07] bg-slate-900 px-2 py-1.5 font-mono text-[11px] text-slate-500 hover:text-sky-400 hover:border-sky-400/40 transition-colors"
+      >
+        {copied ? <CheckCheck size={12} /> : <Copy size={12} />}
         {copied ? "Copied!" : "Copy"}
       </button>
-      <pre><code>{code}</code></pre>
+      <pre className="p-5 overflow-x-auto font-mono text-[13.5px] leading-relaxed text-slate-300 whitespace-pre">
+        {code}
+      </pre>
     </div>
   );
 }
@@ -413,12 +47,15 @@ function InstallCommand() {
   const cmd = "go install github.com/ecocee/kode-go/cmd/kode@latest";
   const { copied, copy } = useCopy(cmd);
   return (
-    <button className="install-cmd" onClick={copy}>
-      <span className="prompt">$</span>
-      <span className="cmd-text">{cmd}</span>
+    <button
+      onClick={copy}
+      className="flex items-center gap-3 rounded-xl border border-white/[0.07] bg-slate-900/60 px-5 py-3.5 font-mono text-sm text-slate-300 hover:border-sky-400/40 transition-colors w-full max-w-2xl"
+    >
+      <span className="text-sky-400 shrink-0">$</span>
+      <span className="truncate text-left flex-1">{cmd}</span>
       {copied
-        ? <CheckCheck size={14} className="copy-icon" />
-        : <Copy size={14} className="copy-icon" />}
+        ? <CheckCheck size={14} className="shrink-0 text-emerald-400" />
+        : <Copy size={14} className="shrink-0 text-slate-500" />}
     </button>
   );
 }
@@ -428,10 +65,12 @@ function FeatureCard({ icon, title, description }: {
   icon: React.ReactNode; title: string; description: string;
 }) {
   return (
-    <div className="feature-card">
-      <div className="feature-icon">{icon}</div>
-      <h3>{title}</h3>
-      <p>{description}</p>
+    <div className="rounded-xl border border-white/[0.07] bg-slate-900/40 p-6 hover:border-sky-400/25 hover:-translate-y-0.5 transition-all duration-200">
+      <div className="w-10 h-10 rounded-lg bg-sky-400/10 flex items-center justify-center text-sky-400 mb-4">
+        {icon}
+      </div>
+      <h3 className="text-sm font-semibold text-slate-100 mb-2">{title}</h3>
+      <p className="text-sm text-slate-500 leading-relaxed">{description}</p>
     </div>
   );
 }
@@ -440,127 +79,88 @@ function FeatureCard({ icon, title, description }: {
 const EXAMPLES = [
   {
     tab: "Hello World",
-    code: `fn main() {
-    let msg = "Hello, World!";
-    print msg;
-}`,
+    code: `fn main() {\n    let msg = "Hello, World!";\n    print msg;\n}`,
   },
   {
     tab: "Goroutines",
-    code: `fn main() {
-    let ch: chan<int> = chan.new();
-
-    go fn() {
-        ch <- 42;
-    }();
-
-    let v = <-ch;
-    print v;  // 42
-}`,
+    code: `fn main() {\n    let ch: chan<int> = chan.new();\n\n    go fn() {\n        ch <- 42;\n    }();\n\n    let v = <-ch;\n    print v;  // 42\n}`,
   },
   {
     tab: "Select",
-    code: `fn main() {
-    let a: chan<string> = chan.new();
-    let b: chan<string> = chan.new();
-
-    go fn() { a <- "from a"; }();
-    go fn() { b <- "from b"; }();
-
-    select {
-        case let msg = <-a: print msg;
-        case let msg = <-b: print msg;
-    }
-}`,
+    code: `fn main() {\n    let a: chan<string> = chan.new();\n    let b: chan<string> = chan.new();\n\n    go fn() { a <- "from a"; }();\n    go fn() { b <- "from b"; }();\n\n    select {\n        case let msg = <-a: print msg;\n        case let msg = <-b: print msg;\n    }\n}`,
   },
   {
     tab: "Functions",
-    code: `fn add(a: int, b: int): int {
-    return a + b;
-}
-
-fn factorial(n: int): int {
-    if (n <= 1) {
-        return 1;
-    }
-    return n * factorial(n - 1);
-}
-
-fn main() {
-    print add(10, 32);    // 42
-    print factorial(5);   // 120
-}`,
+    code: `fn add(a: int, b: int): int {\n    return a + b;\n}\n\nfn factorial(n: int): int {\n    if (n <= 1) { return 1; }\n    return n * factorial(n - 1);\n}\n\nfn main() {\n    print add(10, 32);   // 42\n    print factorial(5);  // 120\n}`,
   },
   {
     tab: "Error Handling",
-    code: `fn divide(a: int, b: int): int {
-    if (b == 0) {
-        return a / b;
-    }
-    return a / b;
-}
-
-fn main() {
-    try {
-        print divide(10, 0);
-    } catch {
-        print "Cannot divide by zero";
-    }
-}`,
+    code: `fn divide(a: int, b: int): int {\n    return a / b;\n}\n\nfn main() {\n    try {\n        print divide(10, 0);\n    } catch {\n        print "Cannot divide by zero";\n    }\n}`,
   },
   {
     tab: "Arrays",
-    code: `fn main() {
-    let numbers = [1, 2, 3, 4, 5];
-    let sum = 0;
-
-    for (let i = 0; i < 5; i = i + 1) {
-        sum = sum + numbers[i];
-    }
-
-    print sum;  // 15
-}`,
+    code: `fn main() {\n    let nums = [1, 2, 3, 4, 5];\n    let sum = 0;\n\n    for (let i = 0; i < 5; i = i + 1) {\n        sum = sum + nums[i];\n    }\n\n    print sum;  // 15\n}`,
   },
 ];
 
 function CodeExamples() {
   const [active, setActive] = useState(0);
   return (
-    <div className="examples-wrapper">
-      <div className="tab-bar">
+    <div className="max-w-3xl">
+      <div className="flex gap-1 flex-wrap rounded-t-xl border border-b-0 border-white/[0.07] bg-slate-900/60 px-2 pt-2">
         {EXAMPLES.map((e, i) => (
           <button
             key={e.tab}
-            className={"tab-btn" + (i === active ? " active" : "")}
             onClick={() => setActive(i)}
+            className={`px-3.5 py-2 rounded-t-lg font-mono text-[11px] transition-colors ${
+              i === active
+                ? "bg-[#060a10] text-sky-400 border border-white/[0.07] border-b-[#060a10]"
+                : "text-slate-500 hover:text-slate-300"
+            }`}
           >
             {e.tab}
           </button>
         ))}
       </div>
-      <CodeBlock code={EXAMPLES[active].code} />
+      <div className="rounded-b-xl rounded-tr-xl border border-white/[0.07] bg-[#060a10] relative overflow-hidden">
+        <CodeBlock code={EXAMPLES[active].code} />
+      </div>
     </div>
   );
 }
 
 // ─── Roadmap Card ─────────────────────────────────────────────────────────────
+type RoadmapStatus = "done" | "current" | "planned";
+
+const statusStyles: Record<RoadmapStatus, { card: string; badge: string; icon: string }> = {
+  done:    { card: "border-emerald-500/20",  badge: "bg-emerald-500/10 text-emerald-400",  icon: "text-emerald-400" },
+  current: { card: "border-sky-400/25",      badge: "bg-sky-400/10 text-sky-400",          icon: "text-sky-400" },
+  planned: { card: "border-violet-400/15",   badge: "bg-violet-400/10 text-violet-400",    icon: "text-violet-400" },
+};
+const statusLabels: Record<RoadmapStatus, string> = {
+  done: "Released", current: "In Progress", planned: "Planned",
+};
+
 function RoadmapCard({ version, title, status, items }: {
-  version: string; title: string;
-  status: "done" | "current" | "planned"; items: string[];
+  version: string; title: string; status: RoadmapStatus; items: string[];
 }) {
-  const labels = { done: "Released", current: "In Progress", planned: "Planned" };
+  const s = statusStyles[status];
   return (
-    <div className={"roadmap-card road-" + status}>
-      <div className="road-header">
-        <span className="road-version">{version}</span>
-        <span className="road-badge">{labels[status]}</span>
+    <div className={`rounded-xl border bg-slate-900/40 p-5 ${s.card}`}>
+      <div className="flex items-center justify-between mb-3">
+        <span className="font-mono text-xs text-slate-500">{version}</span>
+        <span className={`text-[10px] font-semibold tracking-widest uppercase px-2.5 py-1 rounded-full ${s.badge}`}>
+          {statusLabels[status]}
+        </span>
       </div>
-      <h3>{title}</h3>
-      <ul>
+      <h3 className="text-sm font-semibold text-slate-100 mb-3">{title}</h3>
+      <ul className="space-y-2">
         {items.map((item) => (
-          <li key={item}>
-            {status === "done" ? <Check size={13} /> : <ChevronRight size={13} />}
-            {item}
+          <li key={item} className={`flex items-center gap-2 text-xs text-slate-500 ${s.icon}`}>
+            {status === "done"
+              ? <Check size={12} className="shrink-0" />
+              : <ChevronRight size={12} className="shrink-0" />}
+            <span className="text-slate-400">{item}</span>
           </li>
         ))}
       </ul>
@@ -568,21 +168,50 @@ function RoadmapCard({ version, title, status, items }: {
   );
 }
 
-// ─── Hero Code Window (rendered via dangerouslySetInnerHTML to avoid JSX brace issues) ──
-const HERO_CODE_HTML = `<span class="cm">// concurrent message passing</span>
-<span class="kw">fn</span> <span class="fn-n">worker</span><span class="punc">(</span>ch<span class="punc">:</span> <span class="ty">chan</span><span class="punc">&lt;</span><span class="ty">string</span><span class="punc">&gt;)</span> <span class="punc">{</span>
-    ch <span class="op">&lt;-</span> <span class="str">"job done"</span><span class="punc">;</span>
-<span class="punc">}</span>
+// ─── Step ─────────────────────────────────────────────────────────────────────
+function Step({ num, title, children }: { num: string; title: string; children: React.ReactNode }) {
+  return (
+    <div className="flex gap-4 rounded-xl border border-white/[0.07] bg-slate-900/40 p-4">
+      <div className="w-7 h-7 rounded-full bg-sky-400/15 text-sky-400 font-mono text-xs font-bold flex items-center justify-center shrink-0">
+        {num}
+      </div>
+      <div>
+        <h4 className="text-sm font-semibold text-slate-100 mb-1">{title}</h4>
+        <div className="text-xs text-slate-500 leading-relaxed">{children}</div>
+      </div>
+    </div>
+  );
+}
 
-<span class="kw">fn</span> <span class="fn-n">main</span><span class="punc">()</span> <span class="punc">{</span>
-    <span class="kw">let</span> ch<span class="punc">:</span> <span class="ty">chan</span><span class="punc">&lt;</span><span class="ty">string</span><span class="punc">&gt;</span> <span class="op">=</span> chan<span class="punc">.</span><span class="fn-n">new</span><span class="punc">();</span>
-    <span class="kw">go</span> <span class="fn-n">worker</span><span class="punc">(</span>ch<span class="punc">);</span>
-    <span class="kw">let</span> result <span class="op">=</span> <span class="op">&lt;-</span>ch<span class="punc">;</span>
-    <span class="fn-n">print</span> result<span class="punc">;</span>
-<span class="punc">}</span>
+// ─── Inline code helper ───────────────────────────────────────────────────────
+function IC({ children }: { children: React.ReactNode }) {
+  return (
+    <code className="font-mono text-sky-400 bg-sky-400/[0.08] px-1 py-0.5 rounded text-[11px]">
+      {children}
+    </code>
+  );
+}
 
-<span class="cm">// Output:</span>
-<span class="out">&#x2192; job done</span>`;
+// ─── Doc Card ─────────────────────────────────────────────────────────────────
+function DocCard({ icon, title, desc, href }: {
+  icon: React.ReactNode; title: string; desc: string; href: string;
+}) {
+  return (
+    <a
+      href={href}
+      target="_blank"
+      rel="noopener noreferrer"
+      className="flex flex-col gap-2 rounded-xl border border-white/[0.07] bg-slate-900/40 p-5 hover:border-emerald-400/30 hover:-translate-y-0.5 transition-all duration-200"
+    >
+      <div className="text-emerald-400 mb-1">{icon}</div>
+      <h3 className="text-sm font-semibold text-slate-100">{title}</h3>
+      <p className="text-xs text-slate-500 leading-relaxed flex-1">{desc}</p>
+      <span className="flex items-center gap-1 font-mono text-[11px] text-emerald-400 mt-1">
+        Read more <ExternalLink size={10} />
+      </span>
+    </a>
+  );
+}
 
 // ─── Main Page ────────────────────────────────────────────────────────────────
 export default function Home() {
@@ -604,160 +233,214 @@ export default function Home() {
           href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600;700&family=Sora:wght@300;400;600;700;800&display=swap"
           rel="stylesheet"
         />
-        <style dangerouslySetInnerHTML={{ __html: PAGE_CSS }} />
       </Head>
 
-      {/* NAV */}
-      <nav className={scrolled ? "scrolled" : ""}>
-        <a href="#" className="nav-logo">
-          <Terminal size={17} /> kode <span className="ver">v0.3.0</span>
-        </a>
-        <ul className="nav-links">
-          <li><a href="#features">Features</a></li>
-          <li><a href="#examples">Examples</a></li>
-          <li><a href="#install">Install</a></li>
-          <li><a href="#docs">Docs</a></li>
-          <li><a href="#roadmap">Roadmap</a></li>
-        </ul>
-        <div className="nav-right">
-          <a href="https://github.com/ecocee/Kode" className="btn-ghost" target="_blank" rel="noopener noreferrer">
-            <Github size={14} /> GitHub
-          </a>
-          <a href="#install" className="btn-primary">
-            Get Started <ArrowRight size={14} />
-          </a>
-        </div>
-      </nav>
+      <div className="min-h-screen bg-[#080b10] text-slate-200" style={{ fontFamily: "'Sora', sans-serif" }}>
 
-      {/* HERO */}
-      <div className="hero">
-        <div>
-          <div className="hero-eyebrow">
-            <Zap size={11} /> v0.3.0 — Concurrency &amp; stdlib release
+        {/* ── NAV ── */}
+        <nav className={`fixed top-0 left-0 right-0 z-50 flex items-center justify-between px-6 md:px-16 h-16 transition-all duration-300 ${
+          scrolled ? "bg-[#080b10]/85 backdrop-blur-xl border-b border-white/[0.06]" : ""
+        }`}>
+          <a href="#" className="flex items-center gap-2 font-mono text-lg font-bold text-sky-400 no-underline">
+            <Terminal size={17} />
+            kode
+            <span className="text-slate-500 font-light text-xs border border-white/[0.07] px-2 py-0.5 rounded-full ml-1">
+              v0.3.0
+            </span>
+          </a>
+          <ul className="hidden md:flex gap-8 list-none">
+            {["features", "examples", "install", "docs", "roadmap"].map((s) => (
+              <li key={s}>
+                <a href={`#${s}`} className="text-slate-500 text-sm no-underline capitalize hover:text-slate-200 transition-colors">
+                  {s}
+                </a>
+              </li>
+            ))}
+          </ul>
+          <div className="flex items-center gap-2">
+            <a
+              href="https://github.com/ecocee/Kode"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex items-center gap-1.5 text-xs text-slate-300 border border-white/[0.07] px-3.5 py-2 rounded-lg no-underline hover:border-sky-400/40 hover:text-sky-400 transition-colors"
+            >
+              <Github size={13} /> GitHub
+            </a>
+            <a
+              href="#install"
+              className="flex items-center gap-1.5 text-xs font-semibold text-black bg-sky-400 px-4 py-2 rounded-lg no-underline hover:opacity-90 transition-opacity"
+            >
+              Get Started <ArrowRight size={13} />
+            </a>
           </div>
-          <h1>
-            Backend systems,<br /><em>built to scale.</em>
-          </h1>
-          <p>
-            Kode is a concurrency-first, statically typed compiled language for backend
-            and distributed systems. It compiles to idiomatic Go — giving you native
-            performance and the full Go ecosystem.
+        </nav>
+
+        {/* ── HERO ── */}
+        <section className="min-h-screen grid grid-cols-1 lg:grid-cols-2 items-center gap-12 px-6 md:px-16 pt-24 pb-16 relative overflow-hidden">
+          {/* glow blobs */}
+          <div className="pointer-events-none absolute inset-0">
+            <div className="absolute top-1/2 left-0 -translate-y-1/2 w-[500px] h-[400px] bg-sky-400/[0.04] rounded-full blur-3xl" />
+            <div className="absolute top-1/4 right-0 w-[400px] h-[500px] bg-emerald-400/[0.03] rounded-full blur-3xl" />
+          </div>
+
+          <div className="relative z-10">
+            <div className="inline-flex items-center gap-2 border border-sky-400/30 bg-sky-400/[0.07] text-sky-400 font-mono text-[11px] px-3.5 py-1.5 rounded-full mb-6">
+              <Zap size={10} /> v0.3.0 — Concurrency &amp; stdlib release
+            </div>
+            <h1 className="text-4xl md:text-5xl lg:text-6xl font-extrabold leading-[1.08] tracking-tight mb-5">
+              Backend systems,{" "}
+              <span className="bg-gradient-to-r from-sky-400 to-emerald-400 bg-clip-text text-transparent">
+                built to scale.
+              </span>
+            </h1>
+            <p className="text-slate-400 text-base md:text-lg leading-relaxed max-w-lg mb-8">
+              Kode is a concurrency-first, statically typed compiled language for backend
+              and distributed systems. Compiles to idiomatic Go — native performance,
+              full ecosystem.
+            </p>
+            <div className="flex flex-wrap gap-3 mb-8">
+              <a
+                href="#install"
+                className="flex items-center gap-2 text-sm font-semibold text-black bg-sky-400 px-6 py-3 rounded-lg no-underline hover:opacity-90 transition-opacity"
+              >
+                <Download size={15} /> Install Kode
+              </a>
+              <a
+                href="https://github.com/ecocee/Kode"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex items-center gap-2 text-sm text-slate-300 border border-white/[0.07] px-6 py-3 rounded-lg no-underline hover:border-sky-400/40 hover:text-sky-400 transition-colors"
+              >
+                <Github size={15} /> View on GitHub
+              </a>
+            </div>
+            <div className="flex gap-10 pt-5 border-t border-white/[0.06]">
+              {[
+                { num: "Go", label: "compiles to" },
+                { num: "CSP", label: "concurrency model" },
+                { num: "HM", label: "type inference" },
+              ].map(({ num, label }) => (
+                <div key={label}>
+                  <div className="font-mono text-xl font-bold text-slate-100">{num}</div>
+                  <div className="text-[11px] text-slate-500 mt-0.5">{label}</div>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          {/* Floating code window */}
+          <div className="hidden lg:block relative z-10">
+            <div className="rounded-2xl border border-white/[0.07] bg-[#060a10] shadow-[0_32px_80px_rgba(0,0,0,0.5)] animate-[float_7s_ease-in-out_infinite]">
+              <div className="flex items-center gap-2 bg-[#0e1420] px-4 py-3 border-b border-white/[0.07] rounded-t-2xl">
+                <span className="w-3 h-3 rounded-full bg-[#ff5f57]" />
+                <span className="w-3 h-3 rounded-full bg-[#febc2e]" />
+                <span className="w-3 h-3 rounded-full bg-[#28c840]" />
+                <span className="font-mono text-[11px] text-slate-500 ml-2">server.kode</span>
+              </div>
+              <pre className="p-6 font-mono text-[13px] leading-[1.85] text-slate-300 whitespace-pre">
+                <span className="text-slate-600">{"// concurrent message passing"}</span>{"\n"}
+                <span className="text-sky-300">fn</span>{" "}
+                <span className="text-violet-400">worker</span>
+                <span className="text-slate-500">(</span>
+                {"ch"}
+                <span className="text-slate-500">:</span>{" "}
+                <span className="text-emerald-400">{"chan<string>"}</span>
+                <span className="text-slate-500">{")"}</span>{" "}
+                <span className="text-slate-500">{"{"}</span>{"\n"}
+                {"    "}{"ch "}
+                <span className="text-pink-400">{"<-"}</span>{" "}
+                <span className="text-amber-400">{'"job done"'}</span>
+                <span className="text-slate-500">{";"}</span>{"\n"}
+                <span className="text-slate-500">{"}"}</span>{"\n\n"}
+                <span className="text-sky-300">fn</span>{" "}
+                <span className="text-violet-400">main</span>
+                <span className="text-slate-500">{"()"}</span>{" "}
+                <span className="text-slate-500">{"{"}</span>{"\n"}
+                {"    "}
+                <span className="text-sky-300">let</span>{" ch"}
+                <span className="text-slate-500">:</span>{" "}
+                <span className="text-emerald-400">{"chan<string>"}</span>{" "}
+                <span className="text-pink-400">{"="}</span>{" "}
+                <span className="text-violet-400">chan.new</span>
+                <span className="text-slate-500">{"();"}</span>{"\n"}
+                {"    "}
+                <span className="text-sky-300">go</span>{" "}
+                <span className="text-violet-400">worker</span>
+                <span className="text-slate-500">{"(ch);"}</span>{"\n"}
+                {"    "}
+                <span className="text-sky-300">let</span>{" result "}
+                <span className="text-pink-400">{"="}</span>{" "}
+                <span className="text-pink-400">{"<-"}</span>
+                {"ch"}
+                <span className="text-slate-500">{";"}</span>{"\n"}
+                {"    "}
+                <span className="text-violet-400">print</span>{" result"}
+                <span className="text-slate-500">{";"}</span>{"\n"}
+                <span className="text-slate-500">{"}"}</span>{"\n\n"}
+                <span className="text-slate-600">{"// Output:"}</span>{"\n"}
+                <span className="text-emerald-400">{"→ job done"}</span>
+              </pre>
+            </div>
+          </div>
+        </section>
+
+        {/* ── INSTALL QUICK ── */}
+        <div className="flex justify-center px-6 md:px-16 pb-4">
+          <InstallCommand />
+        </div>
+
+        {/* ── FEATURES ── */}
+        <section id="features" className="px-6 md:px-16 py-20">
+          <p className="font-mono text-[11px] tracking-[0.15em] uppercase text-sky-400 mb-3">Why Kode</p>
+          <h2 className="text-3xl md:text-4xl font-bold tracking-tight mb-4">Designed for distributed systems.</h2>
+          <p className="text-slate-400 max-w-lg mb-10 leading-relaxed">
+            Every feature in Kode is aimed at making backend and concurrent programming safer, clearer, and faster to ship.
           </p>
-          <div className="hero-actions">
-            <a href="#install" className="btn-primary btn-lg">
-              <Download size={15} /> Install Kode
-            </a>
-            <a href="https://github.com/ecocee/Kode" className="btn-ghost btn-lg" target="_blank" rel="noopener noreferrer">
-              <Github size={15} /> View on GitHub
-            </a>
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+            <FeatureCard icon={<Shuffle size={18} />} title="Built-in Concurrency" description="First-class goroutines, typed channels, and select — CSP concurrency as a core language primitive, not an afterthought." />
+            <FeatureCard icon={<Zap size={18} />} title="Static Typing + Inference" description="Hindley-Milner type inference means you rarely annotate types, but still get full compile-time safety." />
+            <FeatureCard icon={<Code size={18} />} title="Compiles to Go" description="Kode emits idiomatic Go code. Native performance and seamless access to the entire Go package ecosystem." />
+            <FeatureCard icon={<Server size={18} />} title="Backend-First Design" description="HTTP server primitives and collection utilities in the stdlib. Built for microservices and data pipelines." />
+            <FeatureCard icon={<Terminal size={18} />} title="Modern CLI Toolchain" description="kode run, build, fmt, check — everything from a single fast CLI. Formatter and type checker included." />
+            <FeatureCard icon={<Globe size={18} />} title="Cross-Platform" description="Portable binaries via the Go toolchain. Runs on Windows, macOS, and Linux out of the box." />
           </div>
-          <div className="hero-stats">
-            <div>
-              <div className="stat-num">Go</div>
-              <div className="stat-label">compiles to</div>
-            </div>
-            <div>
-              <div className="stat-num">CSP</div>
-              <div className="stat-label">concurrency model</div>
-            </div>
-            <div>
-              <div className="stat-num">HM</div>
-              <div className="stat-label">type inference</div>
-            </div>
-          </div>
-        </div>
+        </section>
 
-        {/* Floating code window */}
-        <div className="hero-code">
-          <div className="hero-code-bar">
-            <span className="dot dot-r" />
-            <span className="dot dot-y" />
-            <span className="dot dot-g" />
-            <span className="hero-code-title">server.kode</span>
-          </div>
-          <pre dangerouslySetInnerHTML={{ __html: HERO_CODE_HTML }} />
-        </div>
-      </div>
+        {/* ── EXAMPLES ── */}
+        <section id="examples" className="px-6 md:px-16 py-20 bg-slate-950/60">
+          <p className="font-mono text-[11px] tracking-[0.15em] uppercase text-sky-400 mb-3">Syntax Showcase</p>
+          <h2 className="text-3xl md:text-4xl font-bold tracking-tight mb-4">Familiar. Expressive. Concurrent.</h2>
+          <p className="text-slate-400 max-w-lg mb-10 leading-relaxed">
+            Browse real Kode snippets — from Hello World to goroutines and select statements.
+          </p>
+          <CodeExamples />
+        </section>
 
-      {/* INSTALL QUICK */}
-      <div className="install-section">
-        <InstallCommand />
-      </div>
-
-      {/* FEATURES */}
-      <section id="features">
-        <div className="section-label">Why Kode</div>
-        <h2 className="section-title">Designed for distributed systems.</h2>
-        <p className="section-sub">
-          Every feature in Kode is aimed at making backend and concurrent programming
-          safer, clearer, and faster to ship.
-        </p>
-        <div className="features-grid">
-          <FeatureCard icon={<Shuffle size={18} />} title="Built-in Concurrency" description="First-class goroutines, typed channels, and select — CSP concurrency as a core language primitive, not an afterthought." />
-          <FeatureCard icon={<Zap size={18} />} title="Static Typing + Inference" description="Hindley-Milner type inference means you rarely annotate types, but still get full compile-time safety." />
-          <FeatureCard icon={<Code size={18} />} title="Compiles to Go" description="Kode emits idiomatic Go code. You get native performance and seamless access to the entire Go package ecosystem." />
-          <FeatureCard icon={<Server size={18} />} title="Backend-First Design" description="HTTP server primitives and collection utilities in the stdlib. Built for microservices and data pipelines." />
-          <FeatureCard icon={<Terminal size={18} />} title="Modern CLI Toolchain" description="kode run, build, fmt, check — everything you need from a single fast CLI. Formatter and type checker included." />
-          <FeatureCard icon={<Globe size={18} />} title="Cross-Platform" description="Portable binaries via the Go toolchain. Runs on Windows, macOS, and Linux out of the box." />
-        </div>
-      </section>
-
-      {/* EXAMPLES */}
-      <section id="examples" className="examples-section">
-        <div className="section-label">Syntax Showcase</div>
-        <h2 className="section-title">Familiar. Expressive. Concurrent.</h2>
-        <p className="section-sub">
-          Browse real Kode snippets — from Hello World to goroutines and select statements.
-        </p>
-        <CodeExamples />
-      </section>
-
-      {/* INSTALL */}
-      <section id="install">
-        <div className="section-label">Get Started</div>
-        <h2 className="section-title">Up and running in under a minute.</h2>
-        <p className="section-sub">
-          Kode requires the Go toolchain. Install with{" "}
-          <code style={{ fontFamily: "var(--font-mono)", fontSize: "0.9em", color: "var(--accent)", background: "rgba(56,189,248,0.08)", padding: "0.1rem 0.4rem", borderRadius: "3px" }}>
-            go install
-          </code>
-          , scaffold a project, and start building.
-        </p>
-        <div className="install-grid">
-          <div className="install-steps">
-            <div className="step">
-              <div className="step-num">1</div>
-              <div>
-                <h4>Install the CLI</h4>
-                <p>Run <code>go install github.com/ecocee/kode-go/cmd/kode@latest</code> — this adds <code>kode</code> to your PATH.</p>
-              </div>
+        {/* ── INSTALL ── */}
+        <section id="install" className="px-6 md:px-16 py-20">
+          <p className="font-mono text-[11px] tracking-[0.15em] uppercase text-sky-400 mb-3">Get Started</p>
+          <h2 className="text-3xl md:text-4xl font-bold tracking-tight mb-4">Up and running in under a minute.</h2>
+          <p className="text-slate-400 max-w-xl mb-10 leading-relaxed">
+            Kode requires the Go toolchain. Install with <IC>go install</IC>, scaffold a project, and start building.
+          </p>
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-start">
+            <div className="flex flex-col gap-3">
+              <Step num="1" title="Install the CLI">
+                Run <IC>go install github.com/ecocee/kode-go/cmd/kode@latest</IC> to add <IC>kode</IC> to your PATH.
+              </Step>
+              <Step num="2" title="Scaffold a new project">
+                <IC>kode new myproject</IC> generates a ready-to-run project structure.
+              </Step>
+              <Step num="3" title="Build and run">
+                <IC>kode build .</IC> generates Go code and compiles it. Then run the binary directly.
+              </Step>
+              <Step num="4" title="Explore the CLI">
+                Use <IC>kode run</IC>, <IC>kode fmt</IC>, and <IC>kode check</IC> in your dev workflow.
+              </Step>
             </div>
-            <div className="step">
-              <div className="step-num">2</div>
-              <div>
-                <h4>Scaffold a new project</h4>
-                <p><code>kode new myproject</code> generates a ready-to-run project structure.</p>
-              </div>
-            </div>
-            <div className="step">
-              <div className="step-num">3</div>
-              <div>
-                <h4>Build and run</h4>
-                <p><code>kode build .</code> generates Go code and compiles it. Then run the binary directly.</p>
-              </div>
-            </div>
-            <div className="step">
-              <div className="step-num">4</div>
-              <div>
-                <h4>Explore the CLI</h4>
-                <p>Use <code>kode run</code>, <code>kode fmt</code>, and <code>kode check</code> as part of your dev workflow.</p>
-              </div>
-            </div>
-          </div>
-          <CodeBlock
-            label="terminal"
-            code={
-`# Install via Go toolchain
+            <CodeBlock
+              label="terminal"
+              code={`# Install via Go toolchain
 go install github.com/ecocee/kode-go/cmd/kode@latest
 
 # Scaffold a new project
@@ -777,129 +460,141 @@ kode run path/to/file.kode
 kode fmt path/to/file.kode    # auto-format
 kode check path/to/file.kode  # type check only
 kode clean                    # remove artifacts
-kode version                  # show version info`
-            }
-          />
-        </div>
-      </section>
+kode version                  # show version info`}
+            />
+          </div>
+        </section>
 
-      {/* DOCS */}
-      <section id="docs" style={{ background: "var(--bg2)" }}>
-        <div className="section-label">Documentation</div>
-        <h2 className="section-title">Everything you need to know.</h2>
-        <p className="section-sub">Guides, references and architecture docs — all in the repository.</p>
-        <div className="docs-grid">
-          {[
-            { icon: <Book size={18} />, title: "Syntax & Grammar", desc: "Complete language syntax reference and grammar specification.", href: "https://github.com/ecocee/Kode/blob/main/docs/syntax.md" },
-            { icon: <Terminal size={18} />, title: "CLI Reference", desc: "All CLI commands: run, build, fmt, check, clean, version.", href: "https://github.com/ecocee/Kode/blob/main/docs/cli.md" },
-            { icon: <Layers size={18} />, title: "Architecture", desc: "AST to IR to Go compilation pipeline internals.", href: "https://github.com/ecocee/Kode/blob/main/docs/ARCHITECTURE.md" },
-            { icon: <FileCode size={18} />, title: "Bytecode Format", desc: "The .kode bytecode format for tooling and advanced users.", href: "https://github.com/ecocee/Kode/blob/main/docs/bytecode.md" },
-            { icon: <Globe size={18} />, title: "Complete Wiki", desc: "Full language guide including concurrency, stdlib, and more.", href: "https://github.com/ecocee/Kode/blob/main/docs/wiki.md" },
-            { icon: <GitBranch size={18} />, title: "Roadmap", desc: "Phased development plan from v0.2 through future JIT and cloud SDKs.", href: "https://github.com/ecocee/Kode/blob/main/docs/roadmap.md" },
-          ].map(({ icon, title, desc, href }) => (
-            <a key={title} href={href} target="_blank" rel="noopener noreferrer" className="doc-card">
-              <div className="doc-card-icon">{icon}</div>
-              <h3>{title}</h3>
-              <p>{desc}</p>
-              <span className="doc-card-link">Read more <ExternalLink size={11} /></span>
+        {/* ── DOCS ── */}
+        <section id="docs" className="px-6 md:px-16 py-20 bg-slate-950/60">
+          <p className="font-mono text-[11px] tracking-[0.15em] uppercase text-sky-400 mb-3">Documentation</p>
+          <h2 className="text-3xl md:text-4xl font-bold tracking-tight mb-4">Everything you need to know.</h2>
+          <p className="text-slate-400 max-w-lg mb-10 leading-relaxed">
+            Guides, references and architecture docs — all in the repository.
+          </p>
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+            <DocCard icon={<Book size={18} />} title="Syntax & Grammar" desc="Complete language syntax reference and grammar specification." href="https://github.com/ecocee/Kode/blob/main/docs/syntax.md" />
+            <DocCard icon={<Terminal size={18} />} title="CLI Reference" desc="All CLI commands: run, build, fmt, check, clean, version." href="https://github.com/ecocee/Kode/blob/main/docs/cli.md" />
+            <DocCard icon={<Layers size={18} />} title="Architecture" desc="AST to IR to Go compilation pipeline internals." href="https://github.com/ecocee/Kode/blob/main/docs/ARCHITECTURE.md" />
+            <DocCard icon={<FileCode size={18} />} title="Bytecode Format" desc="The .kode bytecode format for tooling and advanced users." href="https://github.com/ecocee/Kode/blob/main/docs/bytecode.md" />
+            <DocCard icon={<Globe size={18} />} title="Complete Wiki" desc="Full language guide including concurrency, stdlib, and more." href="https://github.com/ecocee/Kode/blob/main/docs/wiki.md" />
+            <DocCard icon={<GitBranch size={18} />} title="Roadmap" desc="Phased development plan from v0.2 through future JIT and cloud SDKs." href="https://github.com/ecocee/Kode/blob/main/docs/roadmap.md" />
+          </div>
+        </section>
+
+        {/* ── ROADMAP ── */}
+        <section id="roadmap" className="px-6 md:px-16 py-20">
+          <p className="font-mono text-[11px] tracking-[0.15em] uppercase text-sky-400 mb-3">Roadmap</p>
+          <h2 className="text-3xl md:text-4xl font-bold tracking-tight mb-4">Where Kode is headed.</h2>
+          <p className="text-slate-400 max-w-lg mb-10 leading-relaxed">
+            Semantic versioned milestones for the Kode language and toolchain.
+          </p>
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+            <RoadmapCard version="v0.2" title="Core Language" status="done"
+              items={["Lexer, parser & type checker", "Hindley-Milner inference", "IR & Go code generation", "Runtime scheduler", "Basic CLI (run, build)"]} />
+            <RoadmapCard version="v0.3" title="Concurrency & Stdlib" status="current"
+              items={["Full channel select multiplexing", "HTTP server/client helpers", "Basic collections library", "Formatter (kode fmt)", "Type-check only command"]} />
+            <RoadmapCard version="v0.4" title="Optimization & Packages" status="planned"
+              items={["LLVM backend option", "Package manager (kpm)", "Improved tooling & LSP", "Performance benchmarks", "Online playground"]} />
+            <RoadmapCard version="Future" title="Cloud & JIT" status="planned"
+              items={["JIT compilation", "Actor model support", "Cloud-native SDKs", "WebAssembly target", "VS Code extension"]} />
+          </div>
+        </section>
+
+        {/* ── CTA ── */}
+        <div className="mx-6 md:mx-16 mb-20 rounded-2xl border border-sky-400/20 bg-gradient-to-br from-sky-400/[0.07] to-emerald-400/[0.04] p-10 md:p-14 flex flex-col md:flex-row justify-between items-start md:items-center gap-6">
+          <div>
+            <h2 className="text-2xl md:text-3xl font-bold tracking-tight mb-2">Start building with Kode today.</h2>
+            <p className="text-slate-400 text-sm">Open source, MIT licensed, and actively developed by the ECOCEE team.</p>
+          </div>
+          <div className="flex flex-wrap gap-3 shrink-0">
+            <a
+              href="https://github.com/ecocee/Kode"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex items-center gap-2 text-sm text-slate-300 border border-white/[0.07] px-5 py-3 rounded-lg no-underline hover:border-sky-400/40 hover:text-sky-400 transition-colors"
+            >
+              <Github size={15} /> Star on GitHub
             </a>
-          ))}
+            <a
+              href="#install"
+              className="flex items-center gap-2 text-sm font-semibold text-black bg-sky-400 px-5 py-3 rounded-lg no-underline hover:opacity-90 transition-opacity"
+            >
+              Install Now <ArrowRight size={15} />
+            </a>
+          </div>
         </div>
-      </section>
 
-      {/* ROADMAP */}
-      <section id="roadmap">
-        <div className="section-label">Roadmap</div>
-        <h2 className="section-title">Where Kode is headed.</h2>
-        <p className="section-sub">Semantic versioned milestones for the Kode language and toolchain.</p>
-        <div className="roadmap-grid">
-          <RoadmapCard
-            version="v0.2"
-            title="Core Language"
-            status="done"
-            items={["Lexer, parser & type checker", "Hindley-Milner inference", "IR & Go code generation", "Runtime scheduler", "Basic CLI (run, build)"]}
-          />
-          <RoadmapCard
-            version="v0.3"
-            title="Concurrency & Stdlib"
-            status="current"
-            items={["Full channel select multiplexing", "HTTP server/client helpers", "Basic collections library", "Formatter (kode fmt)", "Type-check only command"]}
-          />
-          <RoadmapCard
-            version="v0.4"
-            title="Optimization & Packages"
-            status="planned"
-            items={["LLVM backend option", "Package manager (kpm)", "Improved tooling & LSP", "Performance benchmarks", "Online playground"]}
-          />
-          <RoadmapCard
-            version="Future"
-            title="Cloud & JIT"
-            status="planned"
-            items={["JIT compilation", "Actor model support", "Cloud-native SDKs", "WebAssembly target", "VS Code extension"]}
-          />
-        </div>
-      </section>
+        {/* ── FOOTER ── */}
+        <footer className="border-t border-white/[0.06] px-6 md:px-16 py-12">
+          <div className="grid grid-cols-1 md:grid-cols-4 gap-10 mb-10">
+            <div className="md:col-span-1">
+              <div className="flex items-center gap-2 font-mono text-base font-bold text-sky-400 mb-3">
+                <Terminal size={16} /> kode
+              </div>
+              <p className="text-xs text-slate-500 leading-relaxed max-w-xs">
+                A concurrency-first, statically typed compiled language for backend and distributed systems.
+                Compiles to idiomatic Go. MIT licensed.
+              </p>
+            </div>
+            {[
+              {
+                heading: "Documentation",
+                links: [
+                  { label: "Language Syntax", href: "https://github.com/ecocee/Kode/blob/main/docs/syntax.md" },
+                  { label: "CLI Reference", href: "https://github.com/ecocee/Kode/blob/main/docs/cli.md" },
+                  { label: "Architecture", href: "https://github.com/ecocee/Kode/blob/main/docs/ARCHITECTURE.md" },
+                  { label: "Complete Wiki", href: "https://github.com/ecocee/Kode/blob/main/docs/wiki.md" },
+                ],
+              },
+              {
+                heading: "Resources",
+                links: [
+                  { label: "GitHub", href: "https://github.com/ecocee/Kode" },
+                  { label: "Examples", href: "https://github.com/ecocee/Kode/tree/main/examples" },
+                  { label: "Changelog", href: "https://github.com/ecocee/Kode/blob/main/CHANGELOG.md" },
+                  { label: "Roadmap", href: "#roadmap" },
+                ],
+              },
+              {
+                heading: "Community",
+                links: [
+                  { label: "Contributing", href: "https://github.com/ecocee/Kode/blob/main/CONTRIBUTING.md" },
+                  { label: "Report a Bug", href: "https://github.com/ecocee/Kode/issues" },
+                  { label: "Discussions", href: "https://github.com/ecocee/Kode/discussions" },
+                  { label: "kode.ecocee.in", href: "https://kode.ecocee.in" },
+                ],
+              },
+            ].map(({ heading, links }) => (
+              <div key={heading}>
+                <h4 className="text-xs font-semibold text-slate-300 mb-4">{heading}</h4>
+                <ul className="space-y-2.5 list-none">
+                  {links.map(({ label, href }) => (
+                    <li key={label}>
+                      <a
+                        href={href}
+                        target={href.startsWith("http") ? "_blank" : undefined}
+                        rel={href.startsWith("http") ? "noopener noreferrer" : undefined}
+                        className="text-xs text-slate-500 no-underline hover:text-slate-200 transition-colors"
+                      >
+                        {label}
+                      </a>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            ))}
+          </div>
+          <div className="border-t border-white/[0.06] pt-6 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3">
+            <p className="text-[11px] text-slate-600">© 2026 ECOCEE · Kode Programming Language · MIT License</p>
+            <p className="font-mono text-[10px] text-slate-700">Built with Go · kode.ecocee.in</p>
+          </div>
+        </footer>
 
-      {/* CTA */}
-      <div className="cta-banner">
-        <div>
-          <h2>Start building with Kode today.</h2>
-          <p>Open source, MIT licensed, and actively developed by the ECOCEE team.</p>
-        </div>
-        <div className="cta-actions">
-          <a href="https://github.com/ecocee/Kode" target="_blank" rel="noopener noreferrer" className="btn-ghost btn-lg">
-            <Github size={15} /> Star on GitHub
-          </a>
-          <a href="#install" className="btn-primary btn-lg">
-            Install Now <ArrowRight size={15} />
-          </a>
-        </div>
       </div>
 
-      {/* FOOTER */}
-      <footer>
-        <div className="footer-grid">
-          <div className="footer-brand">
-            <a href="#" className="nav-logo" style={{ fontSize: "1.05rem" }}>
-              <Terminal size={16} /> kode
-            </a>
-            <p>A concurrency-first, statically typed compiled language for backend and distributed systems. Compiles to idiomatic Go. MIT licensed.</p>
-          </div>
-          <div className="footer-col">
-            <h4>Documentation</h4>
-            <ul>
-              <li><a href="https://github.com/ecocee/Kode/blob/main/docs/syntax.md" target="_blank" rel="noopener noreferrer">Language Syntax</a></li>
-              <li><a href="https://github.com/ecocee/Kode/blob/main/docs/cli.md" target="_blank" rel="noopener noreferrer">CLI Reference</a></li>
-              <li><a href="https://github.com/ecocee/Kode/blob/main/docs/ARCHITECTURE.md" target="_blank" rel="noopener noreferrer">Architecture</a></li>
-              <li><a href="https://github.com/ecocee/Kode/blob/main/docs/wiki.md" target="_blank" rel="noopener noreferrer">Complete Wiki</a></li>
-            </ul>
-          </div>
-          <div className="footer-col">
-            <h4>Resources</h4>
-            <ul>
-              <li><a href="https://github.com/ecocee/Kode" target="_blank" rel="noopener noreferrer">GitHub</a></li>
-              <li><a href="https://github.com/ecocee/Kode/tree/main/examples" target="_blank" rel="noopener noreferrer">Examples</a></li>
-              <li><a href="https://github.com/ecocee/Kode/blob/main/CHANGELOG.md" target="_blank" rel="noopener noreferrer">Changelog</a></li>
-              <li><a href="#roadmap">Roadmap</a></li>
-            </ul>
-          </div>
-          <div className="footer-col">
-            <h4>Community</h4>
-            <ul>
-              <li><a href="https://github.com/ecocee/Kode/blob/main/CONTRIBUTING.md" target="_blank" rel="noopener noreferrer">Contributing</a></li>
-              <li><a href="https://github.com/ecocee/Kode/issues" target="_blank" rel="noopener noreferrer">Report a Bug</a></li>
-              <li><a href="https://github.com/ecocee/Kode/discussions" target="_blank" rel="noopener noreferrer">Discussions</a></li>
-              <li><a href="https://kode.ecocee.in" target="_blank" rel="noopener noreferrer">kode.ecocee.in</a></li>
-            </ul>
-          </div>
-        </div>
-        <div className="footer-bottom">
-          <p>© 2026 ECOCEE · Kode Programming Language · MIT License</p>
-          <p style={{ fontFamily: "var(--font-mono)", color: "var(--muted)", fontSize: "0.68rem" }}>
-            Built with Go · kode.ecocee.in
-          </p>
-        </div>
-      </footer>
+      {/* Float animation keyframe — injected once as a tiny global */}
+      <style>{`@keyframes float{0%,100%{transform:translateY(0) rotate(.3deg)}50%{transform:translateY(-10px) rotate(-.3deg)}}`}</style>
     </>
   );
 }
