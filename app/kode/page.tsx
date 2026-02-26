@@ -4,10 +4,385 @@ import Head from "next/head";
 import {
   ArrowRight, Check, Terminal, Code, FileCode,
   Book, Zap, Github, Download, ExternalLink, Copy, CheckCheck,
-  ChevronRight, Layers, Cpu, Globe, Server, GitBranch, Shuffle
+  ChevronRight, Layers, Globe, Server, GitBranch, Shuffle
 } from "lucide-react";
 
-// ─── Utility: copy hook ──────────────────────────────────────────────────────
+// ─── CSS extracted as a plain string — avoids JSX template-literal brace issues ──
+const PAGE_CSS = `
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --bg: #080b10;
+    --bg2: #0c1018;
+    --bg3: #111620;
+    --border: rgba(255,255,255,0.07);
+    --accent: #38bdf8;
+    --accent2: #34d399;
+    --accent3: #a78bfa;
+    --text: #e2e8f0;
+    --muted: #64748b;
+    --code-bg: #090d14;
+    --radius: 10px;
+    --font-sans: 'Sora', sans-serif;
+    --font-mono: 'JetBrains Mono', monospace;
+  }
+
+  html { scroll-behavior: smooth; }
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: var(--font-sans);
+    line-height: 1.6;
+    overflow-x: hidden;
+  }
+
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 0 clamp(1.5rem, 5vw, 4rem);
+    height: 64px;
+    transition: background 0.3s, border-bottom 0.3s;
+  }
+  nav.scrolled {
+    background: rgba(8,11,16,0.88);
+    backdrop-filter: blur(18px);
+    border-bottom: 1px solid var(--border);
+  }
+  .nav-logo {
+    font-family: var(--font-mono);
+    font-size: 1.2rem; font-weight: 700;
+    color: var(--accent); text-decoration: none;
+    display: flex; align-items: center; gap: 0.5rem;
+  }
+  .nav-logo .ver {
+    color: var(--muted); font-weight: 300; font-size: 0.78rem;
+    border: 1px solid var(--border); padding: 0.1rem 0.5rem;
+    border-radius: 100px; margin-left: 0.25rem;
+  }
+  .nav-links { display: flex; gap: 2rem; list-style: none; }
+  .nav-links a {
+    color: var(--muted); font-size: 0.875rem; text-decoration: none;
+    transition: color 0.2s;
+  }
+  .nav-links a:hover { color: var(--text); }
+  .nav-right { display: flex; align-items: center; gap: 0.75rem; }
+
+  .btn-ghost {
+    background: transparent; border: 1px solid var(--border);
+    color: var(--text); font-family: var(--font-sans);
+    font-size: 0.8rem; padding: 0.45rem 1rem; border-radius: 6px;
+    cursor: pointer; text-decoration: none;
+    display: inline-flex; align-items: center; gap: 0.4rem;
+    transition: border-color 0.2s, color 0.2s;
+  }
+  .btn-ghost:hover { border-color: var(--accent); color: var(--accent); }
+
+  .btn-primary {
+    background: var(--accent); color: #000;
+    font-family: var(--font-sans); font-weight: 600;
+    font-size: 0.85rem; padding: 0.5rem 1.1rem; border-radius: 6px;
+    border: none; cursor: pointer; text-decoration: none;
+    display: inline-flex; align-items: center; gap: 0.4rem;
+    transition: opacity 0.2s, transform 0.2s;
+  }
+  .btn-primary:hover { opacity: 0.88; transform: translateY(-1px); }
+  .btn-lg { font-size: 0.95rem !important; padding: 0.75rem 1.75rem !important; border-radius: 8px !important; }
+
+  .hero {
+    min-height: 100vh;
+    display: grid; grid-template-columns: 1fr 1fr;
+    align-items: center; gap: 3rem;
+    padding: 96px clamp(1.5rem, 5vw, 4rem) 4rem;
+    position: relative; overflow: hidden;
+  }
+  .hero::before {
+    content: '';
+    position: absolute; inset: 0;
+    background:
+      radial-gradient(ellipse 55% 50% at 10% 50%, rgba(56,189,248,0.06) 0%, transparent 60%),
+      radial-gradient(ellipse 45% 55% at 85% 25%, rgba(52,211,153,0.05) 0%, transparent 60%);
+    pointer-events: none;
+  }
+  .hero-eyebrow {
+    display: inline-flex; align-items: center; gap: 0.5rem;
+    border: 1px solid rgba(56,189,248,0.3);
+    background: rgba(56,189,248,0.07);
+    color: var(--accent); font-size: 0.72rem; font-family: var(--font-mono);
+    padding: 0.35rem 0.9rem; border-radius: 100px;
+    margin-bottom: 1.5rem;
+  }
+  .hero h1 {
+    font-size: clamp(2.4rem, 5vw, 3.6rem);
+    font-weight: 800; line-height: 1.1;
+    letter-spacing: -0.03em; margin-bottom: 1.25rem;
+  }
+  .hero h1 em {
+    font-style: normal;
+    background: linear-gradient(135deg, var(--accent), var(--accent2));
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+  }
+  .hero p {
+    color: var(--muted); font-size: 1.05rem;
+    max-width: 500px; margin-bottom: 2rem; line-height: 1.75;
+  }
+  .hero-actions { display: flex; gap: 0.75rem; flex-wrap: wrap; margin-bottom: 2rem; }
+  .hero-stats {
+    display: flex; gap: 2.5rem; padding-top: 1rem;
+    border-top: 1px solid var(--border);
+  }
+  .stat-num { font-size: 1.4rem; font-weight: 700; color: var(--text); font-family: var(--font-mono); }
+  .stat-label { font-size: 0.72rem; color: var(--muted); }
+
+  .hero-code {
+    background: var(--code-bg); border: 1px solid var(--border);
+    border-radius: 14px; overflow: hidden;
+    box-shadow: 0 32px 80px rgba(0,0,0,0.5);
+    animation: float 7s ease-in-out infinite;
+  }
+  @keyframes float {
+    0%, 100% { transform: translateY(0px) rotate(0.3deg); }
+    50% { transform: translateY(-10px) rotate(-0.3deg); }
+  }
+  .hero-code-bar {
+    background: #0e1420; padding: 0.7rem 1rem;
+    display: flex; align-items: center; gap: 0.5rem;
+    border-bottom: 1px solid var(--border);
+  }
+  .dot { width: 11px; height: 11px; border-radius: 50%; }
+  .dot-r { background: #ff5f57; }
+  .dot-y { background: #febc2e; }
+  .dot-g { background: #28c840; }
+  .hero-code-title { font-size: 0.72rem; color: var(--muted); margin-left: 0.5rem; font-family: var(--font-mono); }
+  .hero-code pre {
+    padding: 1.5rem; font-family: var(--font-mono);
+    font-size: 0.84rem; line-height: 1.85; margin: 0; color: var(--text);
+    white-space: pre;
+  }
+  .kw { color: #7dd3fc; }
+  .ty { color: #86efac; }
+  .fn-n { color: #c4b5fd; }
+  .str { color: #fbbf24; }
+  .op { color: #f472b6; }
+  .punc { color: #475569; }
+  .cm { color: #2d3f55; }
+  .out { color: var(--accent2); }
+
+  .install-section {
+    padding: 0 clamp(1.5rem, 5vw, 4rem) 1rem;
+    display: flex; justify-content: center;
+  }
+  .install-cmd {
+    display: flex; align-items: center; gap: 0.75rem;
+    background: var(--bg3); border: 1px solid var(--border);
+    color: var(--text); font-family: var(--font-mono); font-size: 0.85rem;
+    padding: 0.75rem 1.5rem; border-radius: 8px;
+    cursor: pointer; transition: border-color 0.2s;
+    max-width: 680px; width: 100%;
+  }
+  .install-cmd:hover { border-color: var(--accent); }
+  .prompt { color: var(--accent); flex-shrink: 0; }
+  .cmd-text { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; flex: 1; text-align: left; }
+  .copy-icon { flex-shrink: 0; color: var(--muted); }
+
+  section { padding: 5rem clamp(1.5rem, 5vw, 4rem); }
+  .section-label {
+    font-family: var(--font-mono); font-size: 0.7rem; letter-spacing: 0.15em;
+    text-transform: uppercase; color: var(--accent); margin-bottom: 0.75rem;
+  }
+  .section-title {
+    font-size: clamp(1.75rem, 3vw, 2.5rem);
+    font-weight: 700; letter-spacing: -0.02em; margin-bottom: 1rem;
+  }
+  .section-sub { color: var(--muted); max-width: 560px; font-size: 1rem; margin-bottom: 3rem; }
+
+  .features-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 1.25rem;
+  }
+  .feature-card {
+    background: var(--bg3); border: 1px solid var(--border);
+    border-radius: var(--radius); padding: 1.5rem;
+    transition: border-color 0.2s, transform 0.2s;
+  }
+  .feature-card:hover { border-color: rgba(56,189,248,0.3); transform: translateY(-2px); }
+  .feature-icon {
+    width: 40px; height: 40px; border-radius: 8px;
+    background: rgba(56,189,248,0.1);
+    display: flex; align-items: center; justify-content: center;
+    color: var(--accent); margin-bottom: 1rem;
+  }
+  .feature-card h3 { font-size: 0.95rem; font-weight: 600; margin-bottom: 0.5rem; }
+  .feature-card p { font-size: 0.85rem; color: var(--muted); line-height: 1.6; }
+
+  .examples-section { background: var(--bg2); }
+  .examples-wrapper { max-width: 800px; }
+  .tab-bar {
+    display: flex; gap: 0.25rem; flex-wrap: wrap;
+    background: var(--bg3); border: 1px solid var(--border);
+    border-bottom: none; border-radius: var(--radius) var(--radius) 0 0;
+    padding: 0.5rem 0.5rem 0;
+  }
+  .tab-btn {
+    background: transparent; border: none;
+    color: var(--muted); font-family: var(--font-mono); font-size: 0.75rem;
+    padding: 0.4rem 0.85rem; border-radius: 6px 6px 0 0;
+    cursor: pointer; transition: color 0.2s;
+  }
+  .tab-btn:hover { color: var(--text); }
+  .tab-btn.active {
+    background: var(--code-bg); color: var(--accent);
+    border: 1px solid var(--border); border-bottom: 1px solid var(--code-bg);
+  }
+
+  .code-block {
+    position: relative; background: var(--code-bg);
+    border: 1px solid var(--border); border-radius: var(--radius);
+  }
+  .tab-bar + .code-block { border-radius: 0 var(--radius) var(--radius) var(--radius); }
+  .code-block pre {
+    padding: 1.5rem; overflow-x: auto;
+    font-family: var(--font-mono); font-size: 0.86rem;
+    line-height: 1.8; margin: 0; color: var(--text);
+  }
+  .code-label {
+    font-family: var(--font-mono); font-size: 0.7rem; color: var(--muted);
+    padding: 0.6rem 1rem; border-bottom: 1px solid var(--border);
+  }
+  .copy-btn {
+    position: absolute; top: 0.6rem; right: 0.6rem;
+    background: var(--bg3); border: 1px solid var(--border);
+    color: var(--muted); font-family: var(--font-mono); font-size: 0.7rem;
+    padding: 0.3rem 0.6rem; border-radius: 5px;
+    cursor: pointer; display: flex; align-items: center; gap: 0.35rem;
+    transition: color 0.2s, border-color 0.2s;
+  }
+  .copy-btn:hover { color: var(--accent); border-color: var(--accent); }
+
+  .install-grid {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; align-items: start;
+  }
+  .install-steps { display: flex; flex-direction: column; gap: 1rem; }
+  .step {
+    display: flex; gap: 1rem; align-items: flex-start;
+    background: var(--bg3); border: 1px solid var(--border);
+    border-radius: var(--radius); padding: 1rem 1.25rem;
+  }
+  .step-num {
+    width: 28px; height: 28px; border-radius: 50%;
+    background: rgba(56,189,248,0.15); color: var(--accent);
+    font-size: 0.72rem; font-weight: 700; font-family: var(--font-mono);
+    display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0;
+  }
+  .step h4 { font-size: 0.875rem; font-weight: 600; margin-bottom: 0.2rem; }
+  .step p { font-size: 0.8rem; color: var(--muted); line-height: 1.5; }
+  .step code {
+    font-family: var(--font-mono); font-size: 0.75rem; color: var(--accent);
+    background: rgba(56,189,248,0.08); padding: 0.1rem 0.3rem; border-radius: 3px;
+  }
+
+  .docs-grid {
+    display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+    gap: 1rem;
+  }
+  .doc-card {
+    background: var(--bg3); border: 1px solid var(--border);
+    border-radius: var(--radius); padding: 1.5rem;
+    text-decoration: none; color: var(--text);
+    transition: border-color 0.2s, transform 0.2s;
+    display: flex; flex-direction: column; gap: 0.5rem;
+  }
+  .doc-card:hover { border-color: var(--accent2); transform: translateY(-2px); }
+  .doc-card-icon { color: var(--accent2); margin-bottom: 0.25rem; }
+  .doc-card h3 { font-size: 0.9rem; font-weight: 600; }
+  .doc-card p { font-size: 0.8rem; color: var(--muted); line-height: 1.5; flex: 1; }
+  .doc-card-link {
+    font-size: 0.72rem; color: var(--accent2); font-family: var(--font-mono);
+    display: flex; align-items: center; gap: 0.3rem; margin-top: 0.5rem;
+  }
+
+  .roadmap-grid {
+    display: grid; grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: 1.25rem;
+  }
+  .roadmap-card {
+    background: var(--bg3); border: 1px solid var(--border);
+    border-radius: var(--radius); padding: 1.5rem;
+  }
+  .road-done { border-color: rgba(52,211,153,0.2); }
+  .road-current { border-color: rgba(56,189,248,0.25); }
+  .road-planned { border-color: rgba(167,139,250,0.15); }
+  .road-header {
+    display: flex; justify-content: space-between; align-items: center;
+    margin-bottom: 0.75rem;
+  }
+  .road-version { font-family: var(--font-mono); font-size: 0.72rem; color: var(--muted); }
+  .road-badge {
+    font-size: 0.62rem; font-weight: 600; letter-spacing: 0.05em;
+    padding: 0.2rem 0.6rem; border-radius: 100px;
+  }
+  .road-done .road-badge { background: rgba(52,211,153,0.15); color: var(--accent2); }
+  .road-current .road-badge { background: rgba(56,189,248,0.15); color: var(--accent); }
+  .road-planned .road-badge { background: rgba(167,139,250,0.15); color: var(--accent3); }
+  .roadmap-card h3 { font-size: 0.9rem; font-weight: 600; margin-bottom: 0.75rem; }
+  .roadmap-card ul { list-style: none; display: flex; flex-direction: column; gap: 0.5rem; }
+  .roadmap-card li {
+    display: flex; align-items: center; gap: 0.5rem;
+    font-size: 0.8rem; color: var(--muted);
+  }
+  .road-done li svg { color: var(--accent2); }
+  .road-current li svg { color: var(--accent); }
+  .road-planned li svg { color: var(--accent3); }
+
+  .cta-banner {
+    margin: 0 clamp(1.5rem, 5vw, 4rem) 5rem;
+    background: linear-gradient(135deg, rgba(56,189,248,0.07) 0%, rgba(52,211,153,0.05) 100%);
+    border: 1px solid rgba(56,189,248,0.2);
+    border-radius: 16px; padding: 3.5rem;
+    display: flex; justify-content: space-between;
+    align-items: center; gap: 2rem; flex-wrap: wrap;
+  }
+  .cta-banner h2 { font-size: clamp(1.5rem, 2.5vw, 2rem); font-weight: 700; }
+  .cta-banner p { color: var(--muted); font-size: 0.95rem; margin-top: 0.5rem; }
+  .cta-actions { display: flex; gap: 0.75rem; flex-wrap: wrap; }
+
+  footer {
+    border-top: 1px solid var(--border);
+    padding: 3rem clamp(1.5rem, 5vw, 4rem);
+  }
+  .footer-grid {
+    display: grid; grid-template-columns: 2fr 1fr 1fr 1fr;
+    gap: 2.5rem; margin-bottom: 2.5rem;
+  }
+  .footer-brand p { color: var(--muted); font-size: 0.85rem; margin-top: 0.75rem; max-width: 300px; line-height: 1.6; }
+  .footer-col h4 { font-size: 0.8rem; font-weight: 600; margin-bottom: 1rem; }
+  .footer-col ul { list-style: none; display: flex; flex-direction: column; gap: 0.6rem; }
+  .footer-col a { color: var(--muted); font-size: 0.8rem; text-decoration: none; transition: color 0.2s; }
+  .footer-col a:hover { color: var(--text); }
+  .footer-bottom {
+    border-top: 1px solid var(--border); padding-top: 1.5rem;
+    display: flex; justify-content: space-between;
+    align-items: center; flex-wrap: wrap; gap: 1rem;
+  }
+  .footer-bottom p { font-size: 0.72rem; color: var(--muted); }
+
+  @media (max-width: 960px) {
+    .hero { grid-template-columns: 1fr; padding-top: 110px; }
+    .hero-code { display: none; }
+    .install-grid { grid-template-columns: 1fr; }
+    .footer-grid { grid-template-columns: 1fr 1fr; }
+    .nav-links { display: none; }
+  }
+  @media (max-width: 600px) {
+    .footer-grid { grid-template-columns: 1fr; }
+    .cta-banner { padding: 2rem; }
+    .hero-stats { gap: 1.5rem; }
+    .install-cmd { font-size: 0.72rem; }
+  }
+`;
+
+// ─── Utility: copy hook ───────────────────────────────────────────────────────
 function useCopy(text: string) {
   const [copied, setCopied] = useState(false);
   const copy = () => {
@@ -18,13 +393,13 @@ function useCopy(text: string) {
   return { copied, copy };
 }
 
-// ─── Code Block ──────────────────────────────────────────────────────────────
+// ─── Code Block ───────────────────────────────────────────────────────────────
 function CodeBlock({ code, label }: { code: string; label?: string }) {
   const { copied, copy } = useCopy(code);
   return (
     <div className="code-block">
       {label && <div className="code-label">{label}</div>}
-      <button className="copy-btn" onClick={copy} aria-label="Copy code">
+      <button className="copy-btn" onClick={copy}>
         {copied ? <CheckCheck size={14} /> : <Copy size={14} />}
         {copied ? "Copied!" : "Copy"}
       </button>
@@ -41,13 +416,17 @@ function InstallCommand() {
     <button className="install-cmd" onClick={copy}>
       <span className="prompt">$</span>
       <span className="cmd-text">{cmd}</span>
-      {copied ? <CheckCheck size={14} className="copy-icon" /> : <Copy size={14} className="copy-icon" />}
+      {copied
+        ? <CheckCheck size={14} className="copy-icon" />
+        : <Copy size={14} className="copy-icon" />}
     </button>
   );
 }
 
 // ─── Feature Card ─────────────────────────────────────────────────────────────
-function FeatureCard({ icon, title, description }: { icon: React.ReactNode; title: string; description: string }) {
+function FeatureCard({ icon, title, description }: {
+  icon: React.ReactNode; title: string; description: string;
+}) {
   return (
     <div className="feature-card">
       <div className="feature-icon">{icon}</div>
@@ -108,8 +487,8 @@ fn factorial(n: int): int {
 }
 
 fn main() {
-    print add(10, 32);       // 42
-    print factorial(5);      // 120
+    print add(10, 32);    // 42
+    print factorial(5);   // 120
 }`,
   },
   {
@@ -152,7 +531,7 @@ function CodeExamples() {
         {EXAMPLES.map((e, i) => (
           <button
             key={e.tab}
-            className={`tab-btn ${i === active ? "active" : ""}`}
+            className={"tab-btn" + (i === active ? " active" : "")}
             onClick={() => setActive(i)}
           >
             {e.tab}
@@ -171,7 +550,7 @@ function RoadmapCard({ version, title, status, items }: {
 }) {
   const labels = { done: "Released", current: "In Progress", planned: "Planned" };
   return (
-    <div className={`roadmap-card road-${status}`}>
+    <div className={"roadmap-card road-" + status}>
       <div className="road-header">
         <span className="road-version">{version}</span>
         <span className="road-badge">{labels[status]}</span>
@@ -189,6 +568,22 @@ function RoadmapCard({ version, title, status, items }: {
   );
 }
 
+// ─── Hero Code Window (rendered via dangerouslySetInnerHTML to avoid JSX brace issues) ──
+const HERO_CODE_HTML = `<span class="cm">// concurrent message passing</span>
+<span class="kw">fn</span> <span class="fn-n">worker</span><span class="punc">(</span>ch<span class="punc">:</span> <span class="ty">chan</span><span class="punc">&lt;</span><span class="ty">string</span><span class="punc">&gt;)</span> <span class="punc">{</span>
+    ch <span class="op">&lt;-</span> <span class="str">"job done"</span><span class="punc">;</span>
+<span class="punc">}</span>
+
+<span class="kw">fn</span> <span class="fn-n">main</span><span class="punc">()</span> <span class="punc">{</span>
+    <span class="kw">let</span> ch<span class="punc">:</span> <span class="ty">chan</span><span class="punc">&lt;</span><span class="ty">string</span><span class="punc">&gt;</span> <span class="op">=</span> chan<span class="punc">.</span><span class="fn-n">new</span><span class="punc">();</span>
+    <span class="kw">go</span> <span class="fn-n">worker</span><span class="punc">(</span>ch<span class="punc">);</span>
+    <span class="kw">let</span> result <span class="op">=</span> <span class="op">&lt;-</span>ch<span class="punc">;</span>
+    <span class="fn-n">print</span> result<span class="punc">;</span>
+<span class="punc">}</span>
+
+<span class="cm">// Output:</span>
+<span class="out">&#x2192; job done</span>`;
+
 // ─── Main Page ────────────────────────────────────────────────────────────────
 export default function Home() {
   const [scrolled, setScrolled] = useState(false);
@@ -205,391 +600,12 @@ export default function Home() {
         <title>Kode — Concurrency-First Compiled Language</title>
         <meta name="description" content="Kode is a statically typed, concurrency-first compiled language for backend and distributed systems. Compiles to idiomatic Go." />
         <link rel="preconnect" href="https://fonts.googleapis.com" />
-        <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600;700&family=Sora:wght@300;400;600;700;800&display=swap" rel="stylesheet" />
+        <link
+          href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600;700&family=Sora:wght@300;400;600;700;800&display=swap"
+          rel="stylesheet"
+        />
+        <style dangerouslySetInnerHTML={{ __html: PAGE_CSS }} />
       </Head>
-
-      <style>{`
-        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
-        :root {
-          --bg: #080b10;
-          --bg2: #0c1018;
-          --bg3: #111620;
-          --border: rgba(255,255,255,0.07);
-          --accent: #38bdf8;
-          --accent2: #34d399;
-          --accent3: #a78bfa;
-          --text: #e2e8f0;
-          --muted: #64748b;
-          --code-bg: #090d14;
-          --radius: 10px;
-          --font-sans: 'Sora', sans-serif;
-          --font-mono: 'JetBrains Mono', monospace;
-        }
-
-        html { scroll-behavior: smooth; }
-        body {
-          background: var(--bg);
-          color: var(--text);
-          font-family: var(--font-sans);
-          line-height: 1.6;
-          overflow-x: hidden;
-        }
-
-        /* NAV */
-        nav {
-          position: fixed; top: 0; left: 0; right: 0; z-index: 100;
-          display: flex; align-items: center; justify-content: space-between;
-          padding: 0 clamp(1.5rem, 5vw, 4rem);
-          height: 64px;
-          transition: background 0.3s, border-bottom 0.3s;
-        }
-        nav.scrolled {
-          background: rgba(8,11,16,0.88);
-          backdrop-filter: blur(18px);
-          border-bottom: 1px solid var(--border);
-        }
-        .nav-logo {
-          font-family: var(--font-mono);
-          font-size: 1.2rem; font-weight: 700;
-          color: var(--accent); text-decoration: none;
-          display: flex; align-items: center; gap: 0.5rem;
-        }
-        .nav-logo .ver {
-          color: var(--muted); font-weight: 300; font-size: 0.78rem;
-          border: 1px solid var(--border); padding: 0.1rem 0.5rem;
-          border-radius: 100px; margin-left: 0.25rem;
-        }
-        .nav-links { display: flex; gap: 2rem; list-style: none; }
-        .nav-links a {
-          color: var(--muted); font-size: 0.875rem; text-decoration: none;
-          transition: color 0.2s;
-        }
-        .nav-links a:hover { color: var(--text); }
-        .nav-right { display: flex; align-items: center; gap: 0.75rem; }
-
-        .btn-ghost {
-          background: transparent; border: 1px solid var(--border);
-          color: var(--text); font-family: var(--font-sans);
-          font-size: 0.8rem; padding: 0.45rem 1rem; border-radius: 6px;
-          cursor: pointer; text-decoration: none;
-          display: inline-flex; align-items: center; gap: 0.4rem;
-          transition: border-color 0.2s, color 0.2s;
-        }
-        .btn-ghost:hover { border-color: var(--accent); color: var(--accent); }
-
-        .btn-primary {
-          background: var(--accent); color: #000;
-          font-family: var(--font-sans); font-weight: 600;
-          font-size: 0.85rem; padding: 0.5rem 1.1rem; border-radius: 6px;
-          border: none; cursor: pointer; text-decoration: none;
-          display: inline-flex; align-items: center; gap: 0.4rem;
-          transition: opacity 0.2s, transform 0.2s;
-        }
-        .btn-primary:hover { opacity: 0.88; transform: translateY(-1px); }
-        .btn-lg { font-size: 0.95rem !important; padding: 0.75rem 1.75rem !important; border-radius: 8px !important; }
-
-        /* HERO */
-        .hero {
-          min-height: 100vh;
-          display: grid; grid-template-columns: 1fr 1fr;
-          align-items: center; gap: 3rem;
-          padding: 96px clamp(1.5rem, 5vw, 4rem) 4rem;
-          position: relative; overflow: hidden;
-        }
-        .hero::before {
-          content: '';
-          position: absolute; inset: 0;
-          background:
-            radial-gradient(ellipse 55% 50% at 10% 50%, rgba(56,189,248,0.06) 0%, transparent 60%),
-            radial-gradient(ellipse 45% 55% at 85% 25%, rgba(52,211,153,0.05) 0%, transparent 60%);
-          pointer-events: none;
-        }
-        .hero-eyebrow {
-          display: inline-flex; align-items: center; gap: 0.5rem;
-          border: 1px solid rgba(56,189,248,0.3);
-          background: rgba(56,189,248,0.07);
-          color: var(--accent); font-size: 0.72rem; font-family: var(--font-mono);
-          padding: 0.35rem 0.9rem; border-radius: 100px;
-          margin-bottom: 1.5rem;
-        }
-        .hero h1 {
-          font-size: clamp(2.4rem, 5vw, 3.6rem);
-          font-weight: 800; line-height: 1.1;
-          letter-spacing: -0.03em; margin-bottom: 1.25rem;
-        }
-        .hero h1 em {
-          font-style: normal;
-          background: linear-gradient(135deg, var(--accent), var(--accent2));
-          -webkit-background-clip: text; -webkit-text-fill-color: transparent;
-        }
-        .hero p {
-          color: var(--muted); font-size: 1.05rem;
-          max-width: 500px; margin-bottom: 2rem; line-height: 1.75;
-        }
-        .hero-actions { display: flex; gap: 0.75rem; flex-wrap: wrap; margin-bottom: 2rem; }
-        .hero-stats {
-          display: flex; gap: 2.5rem; padding-top: 1rem;
-          border-top: 1px solid var(--border);
-        }
-        .stat-num { font-size: 1.4rem; font-weight: 700; color: var(--text); font-family: var(--font-mono); }
-        .stat-label { font-size: 0.72rem; color: var(--muted); }
-
-        .hero-code {
-          background: var(--code-bg); border: 1px solid var(--border);
-          border-radius: 14px; overflow: hidden;
-          box-shadow: 0 32px 80px rgba(0,0,0,0.5);
-          animation: float 7s ease-in-out infinite;
-        }
-        @keyframes float {
-          0%, 100% { transform: translateY(0px) rotate(0.3deg); }
-          50% { transform: translateY(-10px) rotate(-0.3deg); }
-        }
-        .hero-code-bar {
-          background: #0e1420; padding: 0.7rem 1rem;
-          display: flex; align-items: center; gap: 0.5rem;
-          border-bottom: 1px solid var(--border);
-        }
-        .dot { width: 11px; height: 11px; border-radius: 50%; }
-        .dot-r { background: #ff5f57; }
-        .dot-y { background: #febc2e; }
-        .dot-g { background: #28c840; }
-        .hero-code-title { font-size: 0.72rem; color: var(--muted); margin-left: 0.5rem; font-family: var(--font-mono); }
-        .hero-code pre {
-          padding: 1.5rem; font-family: var(--font-mono);
-          font-size: 0.84rem; line-height: 1.85; margin: 0; color: var(--text);
-        }
-        .kw { color: #7dd3fc; }
-        .ty { color: #86efac; }
-        .fn-n { color: #c4b5fd; }
-        .str { color: #fbbf24; }
-        .op { color: #f472b6; }
-        .punc { color: #475569; }
-        .comment { color: #2d3f55; }
-        .out { color: var(--accent2); }
-
-        /* INSTALL CMD */
-        .install-section {
-          padding: 0 clamp(1.5rem, 5vw, 4rem) 1rem;
-          display: flex; justify-content: center;
-        }
-        .install-cmd {
-          display: flex; align-items: center; gap: 0.75rem;
-          background: var(--bg3); border: 1px solid var(--border);
-          color: var(--text); font-family: var(--font-mono); font-size: 0.85rem;
-          padding: 0.75rem 1.5rem; border-radius: 8px;
-          cursor: pointer; transition: border-color 0.2s;
-          max-width: 680px; width: 100%;
-        }
-        .install-cmd:hover { border-color: var(--accent); }
-        .prompt { color: var(--accent); flex-shrink: 0; }
-        .cmd-text { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; flex: 1; text-align: left; }
-        .copy-icon { flex-shrink: 0; color: var(--muted); }
-
-        /* SECTIONS */
-        section { padding: 5rem clamp(1.5rem, 5vw, 4rem); }
-        .section-label {
-          font-family: var(--font-mono); font-size: 0.7rem; letter-spacing: 0.15em;
-          text-transform: uppercase; color: var(--accent); margin-bottom: 0.75rem;
-        }
-        .section-title {
-          font-size: clamp(1.75rem, 3vw, 2.5rem);
-          font-weight: 700; letter-spacing: -0.02em; margin-bottom: 1rem;
-        }
-        .section-sub { color: var(--muted); max-width: 560px; font-size: 1rem; margin-bottom: 3rem; }
-
-        /* FEATURES */
-        .features-grid {
-          display: grid;
-          grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-          gap: 1.25rem;
-        }
-        .feature-card {
-          background: var(--bg3); border: 1px solid var(--border);
-          border-radius: var(--radius); padding: 1.5rem;
-          transition: border-color 0.2s, transform 0.2s;
-        }
-        .feature-card:hover { border-color: rgba(56,189,248,0.3); transform: translateY(-2px); }
-        .feature-icon {
-          width: 40px; height: 40px; border-radius: 8px;
-          background: rgba(56,189,248,0.1);
-          display: flex; align-items: center; justify-content: center;
-          color: var(--accent); margin-bottom: 1rem;
-        }
-        .feature-card h3 { font-size: 0.95rem; font-weight: 600; margin-bottom: 0.5rem; }
-        .feature-card p { font-size: 0.85rem; color: var(--muted); line-height: 1.6; }
-
-        /* EXAMPLES */
-        .examples-section { background: var(--bg2); }
-        .examples-wrapper { max-width: 800px; }
-        .tab-bar {
-          display: flex; gap: 0.25rem; flex-wrap: wrap;
-          background: var(--bg3); border: 1px solid var(--border);
-          border-bottom: none; border-radius: var(--radius) var(--radius) 0 0;
-          padding: 0.5rem 0.5rem 0;
-        }
-        .tab-btn {
-          background: transparent; border: none;
-          color: var(--muted); font-family: var(--font-mono); font-size: 0.75rem;
-          padding: 0.4rem 0.85rem; border-radius: 6px 6px 0 0;
-          cursor: pointer; transition: color 0.2s;
-        }
-        .tab-btn:hover { color: var(--text); }
-        .tab-btn.active {
-          background: var(--code-bg); color: var(--accent);
-          border: 1px solid var(--border); border-bottom: 1px solid var(--code-bg);
-        }
-
-        /* CODE BLOCK */
-        .code-block {
-          position: relative; background: var(--code-bg);
-          border: 1px solid var(--border); border-radius: var(--radius);
-        }
-        .tab-bar + .code-block { border-radius: 0 var(--radius) var(--radius) var(--radius); }
-        .code-block pre {
-          padding: 1.5rem; overflow-x: auto;
-          font-family: var(--font-mono); font-size: 0.86rem;
-          line-height: 1.8; margin: 0; color: var(--text);
-        }
-        .code-label {
-          font-family: var(--font-mono); font-size: 0.7rem; color: var(--muted);
-          padding: 0.6rem 1rem; border-bottom: 1px solid var(--border);
-        }
-        .copy-btn {
-          position: absolute; top: 0.6rem; right: 0.6rem;
-          background: var(--bg3); border: 1px solid var(--border);
-          color: var(--muted); font-family: var(--font-mono); font-size: 0.7rem;
-          padding: 0.3rem 0.6rem; border-radius: 5px;
-          cursor: pointer; display: flex; align-items: center; gap: 0.35rem;
-          transition: color 0.2s, border-color 0.2s;
-        }
-        .copy-btn:hover { color: var(--accent); border-color: var(--accent); }
-
-        /* INSTALL STEPS */
-        .install-grid {
-          display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; align-items: start;
-        }
-        .install-steps { display: flex; flex-direction: column; gap: 1rem; }
-        .step {
-          display: flex; gap: 1rem; align-items: flex-start;
-          background: var(--bg3); border: 1px solid var(--border);
-          border-radius: var(--radius); padding: 1rem 1.25rem;
-        }
-        .step-num {
-          width: 28px; height: 28px; border-radius: 50%;
-          background: rgba(56,189,248,0.15); color: var(--accent);
-          font-size: 0.72rem; font-weight: 700; font-family: var(--font-mono);
-          display: flex; align-items: center; justify-content: center;
-          flex-shrink: 0;
-        }
-        .step h4 { font-size: 0.875rem; font-weight: 600; margin-bottom: 0.2rem; }
-        .step p { font-size: 0.8rem; color: var(--muted); line-height: 1.5; }
-        .step code { font-family: var(--font-mono); font-size: 0.75rem; color: var(--accent); background: rgba(56,189,248,0.08); padding: 0.1rem 0.3rem; border-radius: 3px; }
-
-        /* DOCS */
-        .docs-grid {
-          display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
-          gap: 1rem;
-        }
-        .doc-card {
-          background: var(--bg3); border: 1px solid var(--border);
-          border-radius: var(--radius); padding: 1.5rem;
-          text-decoration: none; color: var(--text);
-          transition: border-color 0.2s, transform 0.2s;
-          display: flex; flex-direction: column; gap: 0.5rem;
-        }
-        .doc-card:hover { border-color: var(--accent2); transform: translateY(-2px); }
-        .doc-card-icon { color: var(--accent2); margin-bottom: 0.25rem; }
-        .doc-card h3 { font-size: 0.9rem; font-weight: 600; }
-        .doc-card p { font-size: 0.8rem; color: var(--muted); line-height: 1.5; flex: 1; }
-        .doc-card-link {
-          font-size: 0.72rem; color: var(--accent2); font-family: var(--font-mono);
-          display: flex; align-items: center; gap: 0.3rem; margin-top: 0.5rem;
-        }
-
-        /* ROADMAP */
-        .roadmap-grid {
-          display: grid; grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-          gap: 1.25rem;
-        }
-        .roadmap-card {
-          background: var(--bg3); border: 1px solid var(--border);
-          border-radius: var(--radius); padding: 1.5rem;
-        }
-        .road-done { border-color: rgba(52,211,153,0.2); }
-        .road-current { border-color: rgba(56,189,248,0.25); }
-        .road-planned { border-color: rgba(167,139,250,0.15); }
-        .road-header {
-          display: flex; justify-content: space-between; align-items: center;
-          margin-bottom: 0.75rem;
-        }
-        .road-version { font-family: var(--font-mono); font-size: 0.72rem; color: var(--muted); }
-        .road-badge {
-          font-size: 0.62rem; font-weight: 600; letter-spacing: 0.05em;
-          padding: 0.2rem 0.6rem; border-radius: 100px;
-        }
-        .road-done .road-badge { background: rgba(52,211,153,0.15); color: var(--accent2); }
-        .road-current .road-badge { background: rgba(56,189,248,0.15); color: var(--accent); }
-        .road-planned .road-badge { background: rgba(167,139,250,0.15); color: var(--accent3); }
-        .roadmap-card h3 { font-size: 0.9rem; font-weight: 600; margin-bottom: 0.75rem; }
-        .roadmap-card ul { list-style: none; display: flex; flex-direction: column; gap: 0.5rem; }
-        .roadmap-card li {
-          display: flex; align-items: center; gap: 0.5rem;
-          font-size: 0.8rem; color: var(--muted);
-        }
-        .road-done li svg { color: var(--accent2); }
-        .road-current li svg { color: var(--accent); }
-        .road-planned li svg { color: var(--accent3); }
-
-        /* CTA */
-        .cta-banner {
-          margin: 0 clamp(1.5rem, 5vw, 4rem) 5rem;
-          background: linear-gradient(135deg, rgba(56,189,248,0.07) 0%, rgba(52,211,153,0.05) 100%);
-          border: 1px solid rgba(56,189,248,0.2);
-          border-radius: 16px; padding: 3.5rem;
-          display: flex; justify-content: space-between;
-          align-items: center; gap: 2rem; flex-wrap: wrap;
-        }
-        .cta-banner h2 { font-size: clamp(1.5rem, 2.5vw, 2rem); font-weight: 700; }
-        .cta-banner p { color: var(--muted); font-size: 0.95rem; margin-top: 0.5rem; }
-        .cta-actions { display: flex; gap: 0.75rem; flex-wrap: wrap; }
-
-        /* FOOTER */
-        footer {
-          border-top: 1px solid var(--border);
-          padding: 3rem clamp(1.5rem, 5vw, 4rem);
-        }
-        .footer-grid {
-          display: grid; grid-template-columns: 2fr 1fr 1fr 1fr;
-          gap: 2.5rem; margin-bottom: 2.5rem;
-        }
-        .footer-brand p { color: var(--muted); font-size: 0.85rem; margin-top: 0.75rem; max-width: 300px; line-height: 1.6; }
-        .footer-col h4 { font-size: 0.8rem; font-weight: 600; margin-bottom: 1rem; }
-        .footer-col ul { list-style: none; display: flex; flex-direction: column; gap: 0.6rem; }
-        .footer-col a { color: var(--muted); font-size: 0.8rem; text-decoration: none; transition: color 0.2s; }
-        .footer-col a:hover { color: var(--text); }
-        .footer-bottom {
-          border-top: 1px solid var(--border); padding-top: 1.5rem;
-          display: flex; justify-content: space-between;
-          align-items: center; flex-wrap: wrap; gap: 1rem;
-        }
-        .footer-bottom p { font-size: 0.72rem; color: var(--muted); }
-
-        /* RESPONSIVE */
-        @media (max-width: 960px) {
-          .hero { grid-template-columns: 1fr; padding-top: 110px; }
-          .hero-code { display: none; }
-          .install-grid { grid-template-columns: 1fr; }
-          .footer-grid { grid-template-columns: 1fr 1fr; }
-          .nav-links { display: none; }
-        }
-        @media (max-width: 600px) {
-          .footer-grid { grid-template-columns: 1fr; }
-          .cta-banner { padding: 2rem; }
-          .hero-stats { gap: 1.5rem; }
-          .install-cmd { font-size: 0.72rem; }
-        }
-      `}</style>
 
       {/* NAV */}
       <nav className={scrolled ? "scrolled" : ""}>
@@ -654,23 +670,12 @@ export default function Home() {
         {/* Floating code window */}
         <div className="hero-code">
           <div className="hero-code-bar">
-            <span className="dot dot-r" /><span className="dot dot-y" /><span className="dot dot-g" />
+            <span className="dot dot-r" />
+            <span className="dot dot-y" />
+            <span className="dot dot-g" />
             <span className="hero-code-title">server.kode</span>
           </div>
-          <pre><span className="comment">// concurrent message passing</span>{`
-`}<span className="kw">fn</span> <span className="fn-n">worker</span><span className="punc">(</span>ch<span className="punc">:</span> <span className="ty">chan</span><span className="punc">&lt;</span><span className="ty">string</span><span className="punc">&gt;) {</span>
-{`    `}ch <span className="op">&lt;-</span> <span className="str">"job done"</span><span className="punc">;</span>
-<span className="punc">{"}"}</span>
-{`
-`}<span className="kw">fn</span> <span className="fn-n">main</span><span className="punc">() {</span>
-{`    `}<span className="kw">let</span> ch<span className="punc">:</span> <span className="ty">chan</span><span className="punc">&lt;</span><span className="ty">string</span><span className="punc">&gt; =</span> <span className="fn-n">chan.new</span><span className="punc">();</span>
-{`    `}<span className="kw">go</span> <span className="fn-n">worker</span><span className="punc">(</span>ch<span className="punc">);</span>
-{`    `}<span className="kw">let</span> result <span className="op">=</span> <span className="op">&lt;-</span>ch<span className="punc">;</span>
-{`    `}<span className="fn-n">print</span> result<span className="punc">;</span>
-<span className="punc">{"}"}</span>
-{`
-`}<span className="comment">// Output:</span>
-<span className="out">→ job done</span></pre>
+          <pre dangerouslySetInnerHTML={{ __html: HERO_CODE_HTML }} />
         </div>
       </div>
 
@@ -712,7 +717,11 @@ export default function Home() {
         <div className="section-label">Get Started</div>
         <h2 className="section-title">Up and running in under a minute.</h2>
         <p className="section-sub">
-          Kode requires the Go toolchain. Install with <code style={{ fontFamily: "var(--font-mono)", fontSize: "0.9em", color: "var(--accent)", background: "rgba(56,189,248,0.08)", padding: "0.1rem 0.4rem", borderRadius: "3px" }}>go install</code>, scaffold a project, and start building.
+          Kode requires the Go toolchain. Install with{" "}
+          <code style={{ fontFamily: "var(--font-mono)", fontSize: "0.9em", color: "var(--accent)", background: "rgba(56,189,248,0.08)", padding: "0.1rem 0.4rem", borderRadius: "3px" }}>
+            go install
+          </code>
+          , scaffold a project, and start building.
         </p>
         <div className="install-grid">
           <div className="install-steps">
@@ -747,7 +756,8 @@ export default function Home() {
           </div>
           <CodeBlock
             label="terminal"
-            code={`# Install via Go toolchain
+            code={
+`# Install via Go toolchain
 go install github.com/ecocee/kode-go/cmd/kode@latest
 
 # Scaffold a new project
@@ -767,7 +777,8 @@ kode run path/to/file.kode
 kode fmt path/to/file.kode    # auto-format
 kode check path/to/file.kode  # type check only
 kode clean                    # remove artifacts
-kode version                  # show version info`}
+kode version                  # show version info`
+            }
           />
         </div>
       </section>
@@ -781,7 +792,7 @@ kode version                  # show version info`}
           {[
             { icon: <Book size={18} />, title: "Syntax & Grammar", desc: "Complete language syntax reference and grammar specification.", href: "https://github.com/ecocee/Kode/blob/main/docs/syntax.md" },
             { icon: <Terminal size={18} />, title: "CLI Reference", desc: "All CLI commands: run, build, fmt, check, clean, version.", href: "https://github.com/ecocee/Kode/blob/main/docs/cli.md" },
-            { icon: <Layers size={18} />, title: "Architecture", desc: "AST → IR → Go compilation pipeline internals.", href: "https://github.com/ecocee/Kode/blob/main/docs/ARCHITECTURE.md" },
+            { icon: <Layers size={18} />, title: "Architecture", desc: "AST to IR to Go compilation pipeline internals.", href: "https://github.com/ecocee/Kode/blob/main/docs/ARCHITECTURE.md" },
             { icon: <FileCode size={18} />, title: "Bytecode Format", desc: "The .kode bytecode format for tooling and advanced users.", href: "https://github.com/ecocee/Kode/blob/main/docs/bytecode.md" },
             { icon: <Globe size={18} />, title: "Complete Wiki", desc: "Full language guide including concurrency, stdlib, and more.", href: "https://github.com/ecocee/Kode/blob/main/docs/wiki.md" },
             { icon: <GitBranch size={18} />, title: "Roadmap", desc: "Phased development plan from v0.2 through future JIT and cloud SDKs.", href: "https://github.com/ecocee/Kode/blob/main/docs/roadmap.md" },
