@@ -375,8 +375,7 @@ let srv = newServer(3000)
 health(srv)
 get(srv, "/", fn(req) { return okJSON("{\"hello\":\"world\"}") })
 print("Server is running on http://localhost:3000")
-start(srv)
-}`}
+start(srv)`}
               </pre>
             </div>
           </div>
