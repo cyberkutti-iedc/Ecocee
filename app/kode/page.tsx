@@ -256,7 +256,7 @@ export default function Home() {
         <div style={{ background: "linear-gradient(90deg,#6d28d9,#9333ea,#a855f7)", padding: "10px clamp(1.2rem,6vw,5rem)", display: "flex", alignItems: "center", justifyContent: "center", gap: 8 }}>
           <Zap size={14} color="#fff" />
           <span style={{ fontFamily: C.sans, fontSize: 13, fontWeight: 500, color: "#fff", textAlign: "center" }}>
-            Kode v0.3.3 is here — Concurrency & stdlib release →
+            Kode v0.3.3 — Concurrency & stdlib release →
           </span>
         </div>
 
@@ -364,20 +364,16 @@ export default function Home() {
               </div>
               <pre style={{ fontFamily: C.mono, fontSize: 13, lineHeight: 1.9, padding: "1.5rem 1.6rem", margin: 0, whiteSpace: "pre", color: "#c4b5fd" }}>
 {`// You are a developer
-fn main() {
-    print("You are a developer");
-}
+print("You are a developer")
 
-// Concurrent channels
-fn worker(ch: chan<string>) {
-    ch <- "Hello, Kode!";
-}
+// Simple HTTP server
+import { newServer, get, health, start, okJSON } from "server"
 
-fn app() {
-    let ch: chan<string> = chan.new();
-    go worker(ch);
-    let msg = <-ch;
-    print(msg);
+let srv = newServer(3000)
+health(srv)
+get(srv, "/", fn(req) { return okJSON("{\"hello\":\"world\"}") })
+print("Server is running on http://localhost:3000")
+start(srv)
 }`}
               </pre>
             </div>

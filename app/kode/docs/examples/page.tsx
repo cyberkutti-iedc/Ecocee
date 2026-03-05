@@ -21,7 +21,7 @@ export default function ExamplesPage() {
             <Badge className="ml-2 bg-gradient-to-r from-violet-500 to-purple-500">Basic</Badge>
           </h2>
           <CodeBlock language="kode">
-{`func main() {
+{`fn main() {
     println("Hello, World!")
 }`}
           </CodeBlock>
@@ -31,14 +31,14 @@ export default function ExamplesPage() {
       <div>
         <h2 className="text-2xl font-semibold mb-4 text-slate-900 dark:text-slate-100">Fibonacci Sequence</h2>
         <CodeBlock language="kode">
-{`func fib(n: int) -> int {
+{`fn fib(n: int) -> int {
     if (n <= 1) {
         return n
     }
     return fib(n - 1) + fib(n - 2)
 }
 
-func main() {
+fn main() {
     for (let i = 0; i < 10; i++) {
         print(fib(i))
         print(" ")
@@ -51,14 +51,14 @@ func main() {
       <div>
         <h2 className="text-2xl font-semibold mb-4 text-slate-900 dark:text-slate-100">Factorial Calculator</h2>
         <CodeBlock language="kode">
-{`func factorial(n: int) -> int {
+{`fn factorial(n: int) -> int {
     if (n <= 1) {
         return 1
     }
     return n * factorial(n - 1)
 }
 
-func main() {
+fn main() {
     println(factorial(5))   // 120
     println(factorial(10))  // 3628800
 }`}
@@ -68,7 +68,7 @@ func main() {
       <div>
         <h2 className="text-2xl font-semibold mb-4 text-slate-900 dark:text-slate-100">Array Manipulation</h2>
         <CodeBlock language="kode">
-{`func main() {
+{`fn main() {
     let nums = [5, 2, 8, 1, 9]
     
     print("Original: ")
@@ -95,19 +95,19 @@ func main() {
       <div>
         <h2 className="text-2xl font-semibold mb-4 text-slate-900 dark:text-slate-100">Higher-Order Functions</h2>
         <CodeBlock language="kode">
-{`func apply(f: func, x: int) -> int {
+{`fn apply(f: fn, x: int) -> int {
     return f(x)
 }
 
-func double(x: int) -> int {
+fn double(x: int) -> int {
     return x * 2
 }
 
-func triple(x: int) -> int {
+fn triple(x: int) -> int {
     return x * 3
 }
 
-func main() {
+fn main() {
     println(apply(double, 5))  // 10
     println(apply(triple, 5))  // 15
 }`}
@@ -117,15 +117,15 @@ func main() {
       <div>
         <h2 className="text-2xl font-semibold mb-4 text-slate-900 dark:text-slate-100">Closures Example</h2>
         <CodeBlock language="kode">
-{`func makeCounter() -> func {
+{`fn makeCounter() -> fn {
     let count = 0
-    return func() {
+    return fn() {
         count = count + 1
         return count
     }
 }
 
-func main() {
+fn main() {
     let counter = makeCounter()
     println(counter())  // 1
     println(counter())  // 2
@@ -143,16 +143,16 @@ func main() {
 }
 
 impl Rectangle {
-    func area() -> float {
+    fn area() -> float {
         return this.width * this.height
     }
     
-    func perimeter() -> float {
+    fn perimeter() -> float {
         return 2 * (this.width + this.height)
     }
 }
 
-func main() {
+fn main() {
     let rect = Rectangle { width: 10.0, height: 5.0 }
     println("Area: " + str(rect.area()))           // 50.0
     println("Perimeter: " + str(rect.perimeter())) // 30.0
@@ -169,7 +169,7 @@ func main() {
     Pending
 }
 
-func processStatus(status: Status) {
+fn processStatus(status: Status) {
     match (status) {
         Status.Success(v) => println("Got value: " + str(v)),
         Status.Error(msg) => println("Error: " + msg),
@@ -177,7 +177,7 @@ func processStatus(status: Status) {
     }
 }
 
-func main() {
+fn main() {
     processStatus(Status.Success(42))
     processStatus(Status.Error("Connection timeout"))
     processStatus(Status.Pending)
@@ -191,7 +191,7 @@ func main() {
       <div>
         <h2 className="text-2xl font-semibold mb-4 text-slate-900 dark:text-slate-100">Simple Calculator</h2>
         <CodeBlock language="kode">
-{`func calculate(op: string, a: int, b: int) -> int {
+{`fn calculate(op: string, a: int, b: int) -> int {
     match (op) {
         "add" => return a + b,
         "sub" => return a - b,
@@ -201,7 +201,7 @@ func main() {
     }
 }
 
-func main() {
+fn main() {
     println(calculate("add", 10, 5))  // 15
     println(calculate("sub", 10, 5))  // 5
     println(calculate("mul", 10, 5))  // 50

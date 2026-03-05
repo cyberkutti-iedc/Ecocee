@@ -48,7 +48,7 @@ greet(name)`}
       
       <h3>Functions and Recursion</h3>
       <CodeBlock language="kode">
-{`func factorial(n: int) = if (n <= 1) { 1 } else { n * factorial(n - 1) }
+{`fn factorial(n: int) = if (n <= 1) { 1 } else { n * factorial(n - 1) }
 
 print(factorial(5))    // 120`}
       </CodeBlock>

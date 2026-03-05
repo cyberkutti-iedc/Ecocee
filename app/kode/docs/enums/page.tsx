@@ -67,7 +67,7 @@ let error = Result.Error("Connection timeout")`}
 }
 
 impl Status {
-    func isReady() -> bool {
+    fn isReady() -> bool {
         return this == Status.Active
     }
 }

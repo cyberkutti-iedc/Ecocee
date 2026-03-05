@@ -38,7 +38,7 @@ export default function ErrorHandlingPage() {
     Unknown(message: string)
 }
 
-func divide(a: int, b: int) -> Result<int, Error> {
+fn divide(a: int, b: int) -> Result<int, Error> {
     if (b == 0) {
         return Result.Error(Error.DivisionByZero)
     }
@@ -62,7 +62,7 @@ match (result) {
       <div>
         <h2 className="text-2xl font-semibold mb-4 text-slate-900 dark:text-slate-100">Safe Division Function</h2>
         <CodeBlock language="kode">
-{`func safeDivide(a: int, b: int) int {
+{`fn safeDivide(a: int, b: int) int {
     try {
         return a / b
     } catch (e) {
@@ -83,7 +83,7 @@ print(safeDivide(10, 0))   // Error: division by zero  →  -1`}
           <code className="px-2 py-1 bg-violet-100 dark:bg-violet-900/30 text-violet-700 dark:text-violet-300 rounded">defer</code> schedules cleanup code to run before function returns:
         </p>
         <CodeBlock language="kode">
-{`func riskyOp() {
+{`fn riskyOp() {
     defer { print("cleanup done") }
     print("doing work...")
 }

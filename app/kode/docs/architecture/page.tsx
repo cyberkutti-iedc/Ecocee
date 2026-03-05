@@ -190,7 +190,7 @@ export default function ArchitecturePage() {
       <div>
         <h2 className="text-2xl font-semibold mb-4 text-slate-900 dark:text-slate-100">Execution Model</h2>
         <CodeBlock language="kode">
-{`func add(a: int, b: int) -> int {
+{`fn add(a: int, b: int) -> int {
     return a + b
 }
 
@@ -251,9 +251,9 @@ print(result)`}
           Closures capture their environment for lexical scoping:
         </p>
         <CodeBlock language="kode">
-{`func makeCounter() -> func {
+{`fn makeCounter() -> fn {
     let count = 0
-    return func() {
+    return fn() {
         count = count + 1
         return count
     }
