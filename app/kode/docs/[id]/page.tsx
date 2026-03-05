@@ -24,16 +24,18 @@ export async function generateStaticParams() {
   }));
 }
 
-export function generateMetadata({ params }: { params: { id: string } }) {
-  const doc = docs.find((d) => d.id === params.id);
+export async function generateMetadata({ params }: { params: Promise<{ id: string }> }) {
+  const { id } = await params;
+  const doc = docs.find((d) => d.id === id);
   return {
     title: `${doc?.title || "Documentation"} | Kode Docs`,
     description: `Learn about ${doc?.title?.toLowerCase() || "Kode programming language"}`,
   };
 }
 
-export default function DocPage({ params }: { params: { id: string } }) {
-  const currentIndex = docs.findIndex((d) => d.id === params.id);
+export default async function DocPage({ params }: { params: Promise<{ id: string }> }) {
+  const { id } = await params;
+  const currentIndex = docs.findIndex((d) => d.id === id);
   const currentDoc = docs[currentIndex];
   const prevDoc = currentIndex > 0 ? docs[currentIndex - 1] : null;
   const nextDoc = currentIndex < docs.length - 1 ? docs[currentIndex + 1] : null;
