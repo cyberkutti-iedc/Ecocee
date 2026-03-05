@@ -21,11 +21,11 @@ export default function ModulesPage() {
           </p>
           <CodeBlock language="kode">
 {`// math.kode
-export func add(a: int, b: int) -> int {
+export fn add(a: int, b: int) -> int {
     return a + b
 }
 
-export func multiply(a: int, b: int) -> int {
+export fn multiply(a: int, b: int) -> int {
     return a * b
 }
 

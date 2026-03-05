@@ -128,7 +128,7 @@ export default function IntroductionPage() {
         </p>
 
         <CodeBlock language="kode">
-{`func main() {
+{`fn main() {
     print("Hello, Kode!")
 }`}
         </CodeBlock>

@@ -7,17 +7,17 @@ export default function ClosuresPage() {
       
       <h2>Anonymous Functions (Lambda)</h2>
       <CodeBlock language="kode">
-{`let square = func(x) { return x * x }
+{`let square = fn(x) { return x * x }
 print(square(5))  // 25
 
-let add = func(a, b) { return a + b }
+let add = fn(a, b) { return a + b }
 print(add(3, 4))  // 7`}
       </CodeBlock>
       
       <h2>Closures with Captured Variables</h2>
       <CodeBlock language="kode">
-{`func makeMultiplier(factor) {
-    return func(x) { return x * factor }
+{`fn makeMultiplier(factor) {
+    return fn(x) { return x * factor }
 }
 
 let double = makeMultiplier(2)
@@ -29,17 +29,17 @@ print(triple(5))  // 15`}
       
       <h2>First-Class Functions</h2>
       <CodeBlock language="kode">
-{`func applyTwice(f, x) {
+{`fn applyTwice(f, x) {
     return f(f(x))
 }
 
-let increment = func(n) { return n + 1 }
+let increment = fn(n) { return n + 1 }
 print(applyTwice(increment, 5))  // 7`}
       </CodeBlock>
       
       <h2>Immediately Invoked Function Expressions (IIFE)</h2>
       <CodeBlock language="kode">
-{`let result = (func() {
+{`let result = (fn() {
     let privateVar = 42
     return privateVar * 2
 })()
@@ -49,19 +49,19 @@ print(result)  // 84`}
       
       <h2>Higher-Order Functions</h2>
       <CodeBlock language="kode">
-{`func applyOperation(a, b, op) {
+{`fn applyOperation(a, b, op) {
     return op(a, b)
 }
 
-applyOperation(5, 3, func(x, y) { return x + y })  // 8
-applyOperation(5, 3, func(x, y) { return x * y })  // 15`}
+applyOperation(5, 3, fn(x, y) { return x + y })  // 8
+applyOperation(5, 3, fn(x, y) { return x * y })  // 15`}
       </CodeBlock>
       
       <h2>Closures Capturing Mutable State</h2>
       <CodeBlock language="kode">
-{`func createCounter() {
+{`fn createCounter() {
     let count = 0
-    return func() {
+    return fn() {
         count = count + 1
         return count
     }

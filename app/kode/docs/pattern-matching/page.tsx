@@ -41,7 +41,7 @@ match (x) {
 }
 
 // Bind matched value to a name
-func describe(n: int) {
+fn describe(n: int) {
     match (n) {
         0 => print("zero"),
         1 => print("one"),

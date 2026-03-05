@@ -33,9 +33,9 @@ let isDone: bool = false`}
 let message: string = "Hello, world!"`}
       </CodeBlock>
       
-      <h3>Nil</h3>
+      <h3>Null</h3>
       <CodeBlock language="kode">
-{`let empty = nil`}
+{`let empty = null`}
       </CodeBlock>
       
       <h2>Composite Types</h2>
@@ -70,8 +70,8 @@ let scores: {string: int} = {
       
       <h3>Function Types</h3>
       <CodeBlock language="kode">
-{`let add: (int, int) -> int = func(a, b) { return a + b }
-let greet: (string) -> string = func(name) { return "Hello, " + name }`}
+{`let add: (int, int) -> int = fn(a, b) { return a + b }
+let greet: (string) -> string = fn(name) { return "Hello, " + name }`}
       </CodeBlock>
       
       <h2>Generic Types</h2>

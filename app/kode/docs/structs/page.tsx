@@ -62,12 +62,11 @@ print(point.y)         // 20`}
 }
 
 impl Circle {
-    func area() -> float {
+    fn area() -> float {
         return 3.14159 * this.radius * this.radius
     }
-    
-    func circumference() -> float {
-        return 2 * 3.14159 * this.radius
+
+    fn circumference() -> float {
     }
 }
 

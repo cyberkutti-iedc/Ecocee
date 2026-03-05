@@ -18,14 +18,14 @@ export default function FunctionsPage() {
 
       <h2>Function Declaration</h2>
 
-      <p>Functions are declared using the <code>func</code> keyword:</p>
+      <p>Functions are declared using the <code>fn</code> keyword:</p>
 
       <CodeBlock language="kode">
-        {`func greet(name: string) {
+        {`fn greet(name: string) {
     print("Hello, " + name)
 }
 
-func add(a: int, b: int) -> int {
+fn add(a: int, b: int) -> int {
     return a + b
 }`}
       </CodeBlock>
@@ -36,17 +36,17 @@ func add(a: int, b: int) -> int {
 
       <CodeBlock language="kode">
         {`// No return type (returns void)
-func log(message: string) {
+fn log(message: string) {
     print("[LOG] " + message)
 }
 
 // Explicit return type
-func multiply(x: int, y: int) -> int {
+fn multiply(x: int, y: int) -> int {
     return x * y
 }
 
 // Multiple parameters
-func calculate(a: int, b: int, operation: string) -> int {
+fn calculate(a: int, b: int, operation: string) -> int {
     if operation == "add" {
         return a + b
     } else if operation == "multiply" {
@@ -72,8 +72,8 @@ let calc = calculate(10, 5, "multiply")  // calc = 50`}
       <p>Functions can capture variables from their surrounding scope:</p>
 
       <CodeBlock language="kode">
-        {`func makeAdder(x: int) -> func(int) -> int {
-    return func(y: int) -> int {
+        {`fn makeAdder(x: int) -> fn(int) -> int {
+    return fn(y: int) -> int {
         return x + y
     }
 }
@@ -90,7 +90,7 @@ print(add10(3))  // Prints: 13`}
       <p>You can create anonymous functions without names:</p>
 
       <CodeBlock language="kode">
-        {`let square = func(x: int) -> int {
+        {`let square = fn(x: int) -> int {
     return x * x
 }
 
@@ -104,7 +104,7 @@ let squares = numbers.map(square)
       <p>Functions can call themselves recursively:</p>
 
       <CodeBlock language="kode">
-        {`func factorial(n: int) -> int {
+        {`fn factorial(n: int) -> int {
     if n <= 1 {
         return 1
     }

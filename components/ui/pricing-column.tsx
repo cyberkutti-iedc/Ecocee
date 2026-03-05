@@ -35,7 +35,7 @@ export interface PricingColumnProps
   promotionText?: ReactNode;
   priceNote: string;
   cta: {
-    variant: "glow" | "default";
+    variant: "default" | "link" | "destructive" | "outline" | "secondary" | "ghost";
     label: string;
     href: string;
   };

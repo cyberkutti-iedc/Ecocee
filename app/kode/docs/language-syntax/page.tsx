@@ -47,14 +47,14 @@ const APP_NAME = "My App"`}
 
       <h2>Functions</h2>
 
-      <p>Functions are declared with the <code>func</code> keyword:</p>
+      <p>Functions are declared with the <code>fn</code> keyword:</p>
 
       <CodeBlock language="kode">
-        {`func add(a: int, b: int) -> int {
+        {`fn add(a: int, b: int) -> int {
     return a + b
 }
 
-func greet(name: string) {
+fn greet(name: string) {
     print("Hello, " + name)
 }`}
       </CodeBlock>
