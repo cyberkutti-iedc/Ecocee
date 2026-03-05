@@ -264,7 +264,7 @@ export default function Home() {
         {/* ── NAV ── */}
         <nav style={{ position: "sticky", top: 0, zIndex: 100, display: "flex", alignItems: "center", justifyContent: "space-between", padding: "0 clamp(1.2rem,6vw,5rem)", height: 62, background: scrolled ? "rgba(13,8,20,0.92)" : "rgba(13,8,20,0.6)", backdropFilter: "blur(20px)", borderBottom: `1px solid ${scrolled ? C.border : "transparent"}`, transition: "all 0.3s" }}>
           <a href="#" style={{ display: "flex", alignItems: "center", gap: 9, fontFamily: C.mono, fontSize: 17, fontWeight: 700, color: C.purple3, textDecoration: "none" }}>
-            <Image src="/kode/logo.png" alt="Kode Logo" width={24} height={24} style={{ filter: "brightness(0) saturate(100%) invert(61%) sepia(68%) saturate(3458%) hue-rotate(239deg) brightness(101%) contrast(92%)" }} />
+            <Image src="/kode/logo.png" alt="Kode Logo" width={42} height={42}  />
             kode
             <span style={{ fontFamily: C.mono, fontSize: 10, color: C.muted, border: `1px solid ${C.border}`, padding: "2px 8px", borderRadius: 100, marginLeft: 2 }}>v0.3.3</span>
           </a>
