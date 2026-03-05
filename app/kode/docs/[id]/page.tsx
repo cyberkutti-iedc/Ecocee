@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { ChevronLeft, ChevronRight } from "lucide-react";
-import { CodeBlock } from "@/components/kode/CodeBlock";
+import { CodeBlock } from "@/components/Kode/CodeBlock";
 
 // Documentation pages data
 const docs = [
