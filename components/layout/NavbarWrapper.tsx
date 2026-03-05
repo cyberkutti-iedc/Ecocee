@@ -13,7 +13,7 @@ export function NavbarWrapper() {
     const subdomain = hostname.split(".")[0];
 
     const hideForSubdomains = ["kode", "niti"];
-    const hideForPaths = ["/niti", "/kode/","/products", "/kuttai"];
+    const hideForPaths = ["/niti", "/kode/", "/products", "/kuttai", "/docs"];
 
     const shouldHideSubdomain = hideForSubdomains.includes(subdomain);
     const shouldHidePath = hideForPaths.some((prefix) => pathname.startsWith(prefix));

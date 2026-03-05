@@ -5,7 +5,7 @@ import { Cpu, Zap, Lightbulb } from 'lucide-react'
 
 export default function ProductsHeader() {
   return (
-    <div className="relative overflow-hidden bg-gradient-to-br from-black via-gray-900 to-black">
+    <div className="relative overflow-hidden bg-gradient-to-br from-slate-950 via-gray-900 to-slate-950">
       {/* Animated background pattern */}
       <div className="absolute inset-0 opacity-20">
         <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-green-500 rounded-full mix-blend-multiply filter blur-xl animate-pulse"></div>

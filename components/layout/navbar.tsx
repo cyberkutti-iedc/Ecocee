@@ -23,16 +23,8 @@ import {
   NavigationMenuTrigger,
 } from "../ui/navigation-menu";
 import { Button } from "../ui/button";
-import { ToggleTheme } from "./toogle-theme";
-
-// 🧠 Clerk Components
-import {
-  SignedIn,
-  SignedOut,
-  UserButton,
-  SignInButton,
-  SignOutButton,
-} from "@clerk/nextjs";
+import { AuthButtons } from "./AuthButtons";
+import { ModeToggle } from "../ui/mode-toggle";
 
 // Interface for routes and features
 interface RouteProps {
@@ -118,23 +110,11 @@ export const Navbar = () => {
 
             <SheetFooter className="flex-col sm:flex-col justify-start items-start">
               <Separator className="mb-2" />
-              <ToggleTheme />
-              {/* Mobile Auth Buttons */}
-              <div className="mt-2">
-                <SignedOut>
-                  <SignInButton mode="modal">
-                    <Button size="sm" variant="outline" className="w-full rounded-xl">
-                      Sign In
-                    </Button>
-                  </SignInButton>
-                </SignedOut>
-                <SignedIn>
-                  <SignOutButton>
-                    <Button size="sm" variant="outline" className="w-full mt-2 rounded-xl">
-                      Sign Out
-                    </Button>
-                  </SignOutButton>
-                </SignedIn>
+
+              {/* Mobile theme + auth */}
+              <div className="mt-3 flex items-center gap-3">
+                <ModeToggle />
+                <AuthButtons />
               </div>
             </SheetFooter>
           </SheetContent>
@@ -215,17 +195,8 @@ export const Navbar = () => {
 
       {/* Additional Actions - Desktop */}
       <div className="hidden lg:flex items-center gap-2">
-        <ToggleTheme />
-        <SignedOut>
-          <SignInButton mode="modal">
-            <Button size="sm" variant="outline" className="rounded-xl">
-              Sign In
-            </Button>
-          </SignInButton>
-        </SignedOut>
-        <SignedIn>
-          <UserButton afterSignOutUrl="/" />
-        </SignedIn>
+        <ModeToggle showLabel={false} />
+        <AuthButtons />
       </div>
     </header>
   );
