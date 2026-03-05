@@ -1,167 +1,221 @@
 import { Separator } from "@/components/ui/separator";
 import Link from "next/link";
-import Image from "next/image";
-import { Mail, Instagram, Linkedin } from "lucide-react";
+import { Mail, Linkedin, Github, ExternalLink } from "lucide-react";
 
 export const FooterSection = () => {
+  const currentYear = new Date().getFullYear();
+
   return (
-    <footer id="footer" className="container py-24 sm:py-32">
-      <div className="p-10 bg-gradient-to-br from-blue-50 via-white to-violet-50 dark:from-slate-900 dark:via-slate-800 dark:to-slate-900 border border-secondary rounded-2xl shadow-2xl">
-        <div className="grid grid-cols-2 md:grid-cols-4 xl:grid-cols-6 gap-x-12 gap-y-8">
-          {/* Logo & About */}
-          <div className="col-span-full xl:col-span-2 flex flex-col gap-3 items-start">
-            <Link href="/" className="flex items-center gap-4 font-bold mb-2">
-              <span className="w-200 h-200 rounded-full overflow-hidden bg-black flex items-center justify-center shadow-xl border-2 border-blue-200">
-                <Image
-                  src="/logo_black.png"
-                  alt="Ecocee Logo"
-                  width={100}
-                  height={100}
-                  className="object-contain"
-                  priority
-                />
-              </span>
-              <span className="text-3xl font-extrabold text-blue-700 tracking-tight">
-                Ecocee
-              </span>
+    <footer id="footer" className="bg-background text-foreground py-16 md:py-20">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        {/* Main Footer Grid */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-12 mb-12">
+          {/* Brand Column */}
+          <div className="lg:col-span-1">
+            <Link href="/" className="flex items-center gap-3 mb-6">
+              <div className="w-8 h-8 rounded-sm bg-primary flex items-center justify-center flex-shrink-0">
+                <span className="text-sm font-bold text-white">E</span>
+              </div>
+              <span className="font-semibold text-white">Ecocee</span>
             </Link>
-            <p className="text-base text-muted-foreground mt-2 font-medium">
-              MSME Registered | Embedded, IoT & AI Solutions
+            <p className="text-sm text-gray-300 leading-relaxed mb-6">
+              AI and Edge Computing Research Startup in Kerala, India.
             </p>
-           
-          </div>
-
-          {/* Contact */}
-          <div className="flex flex-col gap-2">
-            <h3 className="font-bold text-lg mb-1">Contact</h3>
-            <div className="flex items-center gap-2">
-              <Mail className="w-5 h-5 text-blue-700" />
-              <a
-                href="mailto:info@ecocee.in"
-                className="opacity-80 hover:opacity-100 transition"
-              >
-                info@ecocee.in
-              </a>
-            </div>
-            <div className="flex items-center gap-2">
-              <Instagram className="w-5 h-5 text-pink-600" />
-              <a
-                href="https://instagram.com/ecocee.offical"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="opacity-80 hover:opacity-100 transition"
-              >
-                @ecocee.offical
-              </a>
-            </div>
-            <div className="flex items-center gap-2">
-              <Linkedin className="w-5 h-5 text-blue-600" />
+            <div className="flex gap-4">
               <a
                 href="https://www.linkedin.com/company/ecocee"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="opacity-80 hover:opacity-100 transition"
+                className="w-8 h-8 rounded-sm bg-primary/10 flex items-center justify-center text-primary hover:bg-primary hover:text-white transition-colors"
+                title="LinkedIn"
               >
-                Ecocee
+                <Linkedin className="w-4 h-4" />
               </a>
-            </div>
-          </div>
-
-           {/* Legal & Careers */}
-          <div className="flex flex-col gap-2">
-            <h3 className="font-bold text-lg mb-1">Legal</h3>
-            <Link
-              href="/privacy-policy"
-              className="opacity-60 hover:opacity-100"
-            >
-              Privacy Policy
-            </Link>
-            <Link
-              href="/terms-and-conditions"
-              className="opacity-60 hover:opacity-100"
-            >
-              Terms &amp; Conditions
-            </Link>
-            <Link href="/careers" className="opacity-60 hover:opacity-100">
-              Careers
-            </Link>
-          </div>
-
-          {/* Help */}
-          <div className="flex flex-col gap-2">
-            <h3 className="font-bold text-lg mb-1">Help</h3>
-            <Link href="/contact" className="opacity-60 hover:opacity-100">
-              Contact Us
-            </Link>
-            <Link href="/faq" className="opacity-60 hover:opacity-100">
-              FAQ
-            </Link>
-            <Link href="#" className="opacity-60 hover:opacity-100">
-              Feedback
-            </Link>
-             <Link href="/internship-certificate" className="opacity-60 hover:opacity-100">
-    Internship Certificate Validate
-  </Link>
-          </div>
-
-          {/* Socials */}
-          <div className="flex flex-col gap-2">
-            <h3 className="font-bold text-lg mb-1">Socials</h3>
-            <div className="flex items-center gap-2">
-              <Instagram className="w-5 h-5 text-pink-600" />
               <a
-                href="https://instagram.com/ecocee.offical"
+                href="https://github.com/ecocee"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="opacity-80 hover:opacity-100 transition"
+                className="w-8 h-8 rounded-sm bg-primary/10 flex items-center justify-center text-primary hover:bg-primary hover:text-white transition-colors"
+                title="GitHub"
               >
-                Instagram
+                <Github className="w-4 h-4" />
               </a>
-            </div>
-            <div className="flex items-center gap-2">
-              <Linkedin className="w-5 h-5 text-blue-600" />
-              <a
-                href="https://www.linkedin.com/company/ecocee"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="opacity-80 hover:opacity-100 transition"
-              >
-                LinkedIn
-              </a>
-            </div>
-            <div className="flex items-center gap-2">
-              <Mail className="w-5 h-5 text-blue-700" />
               <a
                 href="mailto:info@ecocee.in"
-                className="opacity-80 hover:opacity-100 transition"
+                className="w-8 h-8 rounded-sm bg-primary/10 flex items-center justify-center text-primary hover:bg-primary hover:text-white transition-colors"
+                title="Email"
               >
-                Email
+                <Mail className="w-4 h-4" />
               </a>
             </div>
           </div>
 
-         
+          {/* Products & Solutions */}
+          <div>
+            <h3 className="font-semibold text-white mb-5 text-sm uppercase tracking-widest">
+              Products
+            </h3>
+            <ul className="space-y-3">
+              <li>
+                <a
+                  href="/#systems-architecture"
+                  className="text-sm text-gray-300 hover:text-primary transition-colors flex items-center gap-2"
+                >
+                  Systems Architecture
+                </a>
+              </li>
+              <li>
+                <a
+                  href="/#engineering-domains"
+                  className="text-sm text-gray-300 hover:text-primary transition-colors flex items-center gap-2"
+                >
+                  Engineering Domains
+                </a>
+              </li>
+              <li>
+                <a
+                  href="/products"
+                  className="text-sm text-gray-300 hover:text-primary transition-colors flex items-center gap-2"
+                >
+                  All Products
+                </a>
+              </li>
+            </ul>
+          </div>
+
+          {/* Research & Technology */}
+          <div>
+            <h3 className="font-semibold text-white mb-5 text-sm uppercase tracking-widest">
+              Research
+            </h3>
+            <ul className="space-y-3">
+              <li>
+                <a
+                  href="/#research"
+                  className="text-sm text-gray-300 hover:text-primary transition-colors flex items-center gap-2"
+                >
+                  Research Initiatives
+                </a>
+              </li>
+              <li>
+                <a
+                  href="/#infrastructure-vision"
+                  className="text-sm text-gray-300 hover:text-primary transition-colors flex items-center gap-2"
+                >
+                  Infrastructure Vision
+                </a>
+              </li>
+              <li>
+                <a
+                  href="/ideas"
+                  className="text-sm text-gray-300 hover:text-primary transition-colors flex items-center gap-2"
+                >
+                  Ideas
+                </a>
+              </li>
+            </ul>
+          </div>
+
+          {/* Company */}
+          <div>
+            <h3 className="font-semibold text-white mb-5 text-sm uppercase tracking-widest">
+              Company
+            </h3>
+            <ul className="space-y-3">
+              <li>
+                <a
+                  href="/Team"
+                  className="text-sm text-gray-300 hover:text-primary transition-colors flex items-center gap-2"
+                >
+                  Team
+                </a>
+              </li>
+              <li>
+                <a
+                  href="/careers"
+                  className="text-sm text-gray-300 hover:text-primary transition-colors flex items-center gap-2"
+                >
+                  Careers
+                </a>
+              </li>
+              <li>
+                <a
+                  href="/#contact"
+                  className="text-sm text-gray-300 hover:text-primary transition-colors flex items-center gap-2"
+                >
+                  Contact
+                </a>
+              </li>
+            </ul>
+          </div>
+
+          {/* Contact & Support */}
+          <div>
+            <h3 className="font-semibold text-white mb-5 text-sm uppercase tracking-widest">
+              Contact
+            </h3>
+            <ul className="space-y-3">
+              <li>
+                <p className="text-xs text-gray-400 uppercase tracking-wider mb-1">Engineering</p>
+                <a
+                  href="mailto:engineering@ecocee.in"
+                  className="text-sm text-gray-300 hover:text-primary transition-colors"
+                >
+                 info@ecocee.in
+                </a>
+              </li>
+             
+            </ul>
+          </div>
         </div>
 
-        <Separator className="my-8" />
-        <section className="flex flex-col md:flex-row items-center justify-between gap-2">
-          <div className="flex items-center gap-2">
-            <span className="text-xs bg-green-100 text-green-700 px-2 py-1 rounded font-semibold">
-              MSME Registered
-            </span>
-            <span className="text-gray-500 text-xs">| UDYAM-KL-07-*****</span>
+        {/* Bottom Bar */}
+        <div className="border-t border-gray-800 pt-8">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-6">
+            {/* Legal Links */}
+            <div className="flex flex-wrap gap-6">
+              <a
+                href="/privacy-policy"
+                className="text-xs text-gray-400 hover:text-gray-200 transition-colors"
+              >
+                Privacy Policy
+              </a>
+              <a
+                href="/terms-and-conditions"
+                className="text-xs text-gray-400 hover:text-gray-200 transition-colors"
+              >
+                Terms & Conditions
+              </a>
+              <a
+                href="/niti"
+                className="text-xs text-gray-400 hover:text-gray-200 transition-colors"
+              >
+                Policies
+              </a>
+            </div>
+
+            {/* Copyright */}
+            <div className="text-xs text-gray-400 md:text-right">
+              &copy; {currentYear} Ecocee. All rights reserved.
+            </div>
           </div>
-          <h3 className="text-sm text-muted-foreground mt-2 md:mt-0">
-            &copy; 2025-26 Designed and developed by
-            <Link
-              target="_blank"
-              href="https://github.com/cyberkutti-iedc"
-              className="text-primary transition-all border-primary hover:border-b-2 ml-1"
-            >
-              Ecocee
-            </Link>
-          </h3>
-        </section>
+
+          {/* Developed By */}
+          <div className="text-xs text-gray-500 border-t border-gray-800 pt-6">
+            <p>
+              Developed by{" "}
+              <a
+                href="https://github.com/cyberkutti-iedc"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-primary hover:underline inline-flex items-center gap-1"
+              >
+                Ecocee Engineering
+                <ExternalLink className="w-3 h-3" />
+              </a>
+            </p>
+          </div>
+        </div>
       </div>
     </footer>
   );

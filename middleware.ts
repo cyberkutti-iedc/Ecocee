@@ -18,6 +18,8 @@ const isPublicRoute = createRouteMatcher([
   '/internship-certificate(.*)',
   '/products(.*)',
   '/kuttai(.*)',
+  '/docs(.*)',
+  
 ]);
 
 // API routes accessible without auth

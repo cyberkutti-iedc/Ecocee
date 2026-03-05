@@ -164,7 +164,7 @@ export default function RootLayout({
 }: Readonly<{ children: React.ReactNode }>) {
   return (
     <ClerkProvider>
-      <html lang="en-IN" suppressHydrationWarning className="dark">
+      <html lang="en-IN" suppressHydrationWarning>
         <head>
           <meta
             name="viewport"
@@ -174,8 +174,8 @@ export default function RootLayout({
           <meta name="mobile-web-app-capable" content="yes" />
           <meta name="apple-mobile-web-app-capable" content="yes" />
           <meta name="apple-mobile-web-app-status-bar-style" content="default" />
-          <meta name="theme-color" content="#3B82F6" />
-          <meta name="msapplication-TileColor" content="#3B82F6" />
+          <meta name="theme-color" content="#10B981" />
+          <meta name="msapplication-TileColor" content="#10B981" />
           <meta name="msapplication-config" content="/browserconfig.xml" />
           <link rel="manifest" href="/site.webmanifest" />
           <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -272,7 +272,7 @@ export default function RootLayout({
         />
         <body
           className={cn(
-            "min-h-screen w-full flex flex-col overflow-x-hidden bg-slate-950 text-slate-100 selection:bg-blue-200 antialiased",
+            "min-h-screen w-full flex flex-col overflow-x-hidden bg-background text-foreground selection:bg-primary\/30 antialiased",
             inter.className
           )}
         >

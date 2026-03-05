@@ -24,6 +24,7 @@ import {
 } from "../ui/navigation-menu";
 import { Button } from "../ui/button";
 import { AuthButtons } from "./AuthButtons";
+import { ModeToggle } from "../ui/mode-toggle";
 
 // Interface for routes and features
 interface RouteProps {
@@ -109,8 +110,10 @@ export const Navbar = () => {
 
             <SheetFooter className="flex-col sm:flex-col justify-start items-start">
               <Separator className="mb-2" />
-              {/* Mobile Auth Buttons */}
-              <div className="mt-2">
+
+              {/* Mobile theme + auth */}
+              <div className="mt-3 flex items-center gap-3">
+                <ModeToggle />
                 <AuthButtons />
               </div>
             </SheetFooter>
@@ -192,6 +195,7 @@ export const Navbar = () => {
 
       {/* Additional Actions - Desktop */}
       <div className="hidden lg:flex items-center gap-2">
+        <ModeToggle showLabel={false} />
         <AuthButtons />
       </div>
     </header>
