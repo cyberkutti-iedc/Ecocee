@@ -264,7 +264,7 @@ export default function Home() {
         <nav style={{ position: "sticky", top: 0, zIndex: 100, display: "flex", alignItems: "center", justifyContent: "space-between", padding: "0 clamp(1.2rem,6vw,5rem)", height: 62, background: scrolled ? "rgba(13,8,20,0.92)" : "rgba(13,8,20,0.6)", backdropFilter: "blur(20px)", borderBottom: `1px solid ${scrolled ? C.border : "transparent"}`, transition: "all 0.3s" }}>
           <a href="#" style={{ display: "flex", alignItems: "center", gap: 9, fontFamily: C.mono, fontSize: 17, fontWeight: 700, color: C.purple3, textDecoration: "none" }}>
             <Terminal size={16} />kode
-            <span style={{ fontFamily: C.mono, fontSize: 10, color: C.muted, border: `1px solid ${C.border}`, padding: "2px 8px", borderRadius: 100, marginLeft: 2 }}>v0.2.0</span>
+            <span style={{ fontFamily: C.mono, fontSize: 10, color: C.muted, border: `1px solid ${C.border}`, padding: "2px 8px", borderRadius: 100, marginLeft: 2 }}>v0.3.3</span>
           </a>
 
           {/* Desktop nav */}
