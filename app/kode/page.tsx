@@ -1,5 +1,6 @@
 "use client";
 import { useState, useEffect } from "react";
+import Image from "next/image";
 import {
   ArrowRight, Check, Terminal, Code, FileCode, Book,
   Zap, Github, Download, ExternalLink, Copy, CheckCheck,
@@ -70,7 +71,7 @@ function CodeBlock({ code, label }: { code: string; label?: string }) {
 
 // ─── Install bar ──────────────────────────────────────────────────────────────
 function InstallBar() {
-  const cmd = "go install github.com/ecocee/kode-go/cmd/kode@latest";
+  const cmd = "go install github.com/ecocee/kode/cmd/kode@latest";
   const { copied, copy } = useCopy(cmd);
   const { on, ...h } = useHover();
   return (
@@ -263,8 +264,9 @@ export default function Home() {
         {/* ── NAV ── */}
         <nav style={{ position: "sticky", top: 0, zIndex: 100, display: "flex", alignItems: "center", justifyContent: "space-between", padding: "0 clamp(1.2rem,6vw,5rem)", height: 62, background: scrolled ? "rgba(13,8,20,0.92)" : "rgba(13,8,20,0.6)", backdropFilter: "blur(20px)", borderBottom: `1px solid ${scrolled ? C.border : "transparent"}`, transition: "all 0.3s" }}>
           <a href="#" style={{ display: "flex", alignItems: "center", gap: 9, fontFamily: C.mono, fontSize: 17, fontWeight: 700, color: C.purple3, textDecoration: "none" }}>
-            <Terminal size={16} />kode
-            <span style={{ fontFamily: C.mono, fontSize: 10, color: C.muted, border: `1px solid ${C.border}`, padding: "2px 8px", borderRadius: 100, marginLeft: 2 }}>v0.2.0</span>
+            <Image src="/kode/logo.png" alt="Kode Logo" width={24} height={24} style={{ filter: "brightness(0) saturate(100%) invert(61%) sepia(68%) saturate(3458%) hue-rotate(239deg) brightness(101%) contrast(92%)" }} />
+            kode
+            <span style={{ fontFamily: C.mono, fontSize: 10, color: C.muted, border: `1px solid ${C.border}`, padding: "2px 8px", borderRadius: 100, marginLeft: 2 }}>v0.3.3</span>
           </a>
 
           {/* Desktop nav */}
@@ -416,27 +418,27 @@ start(srv)
           <div className="install-grid" style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 28, alignItems: "start" }}>
             <div style={{ display: "flex", flexDirection: "column", gap: 12 }}>
               <Step num="1" title="Install the CLI">
-                Run <IC c="go install github.com/ecocee/kode-go/cmd/kode@latest" /> to add <IC c="kode" /> to your PATH.
+                Run <IC c="go install github.com/ecocee/kode/cmd/kode@latest" /> to add <IC c="kode" /> to your PATH.
               </Step>
               <Step num="2" title="Scaffold a project">
                 <IC c="kode new myproject" /> creates a ready-to-run project.
               </Step>
               <Step num="3" title="Build and run">
-                <IC c="kode build ." /> compiles your code. Then run the binary.
+                <IC c="kode build" /> compiles your code. Then run the binary.
               </Step>
               <Step num="4" title="Explore commands">
                 Use <IC c="kode run" />, <IC c="kode fmt" />, and <IC c="kode check" /> as you develop.
               </Step>
             </div>
             <CodeBlock label="terminal" code={`# Install
-go install github.com/ecocee/kode-go/cmd/kode@latest
+go install github.com/ecocee/kode/cmd/kode@latest
 
 # New project
 kode new myproject
 cd myproject
 
 # Build
-kode build .
+kode build
 ./myproject
 
 # Run a file
@@ -499,7 +501,8 @@ kode version           # show version`} />
           <div className="footer-grid" style={{ display: "grid", gridTemplateColumns: "2fr 1fr 1fr 1fr", gap: "2.5rem 3rem", marginBottom: "2.5rem" }}>
             <div>
               <div style={{ display: "flex", alignItems: "center", gap: 8, fontFamily: C.mono, fontSize: 15, fontWeight: 700, color: C.purple3, marginBottom: 12 }}>
-                <Terminal size={15} />kode
+                <Image src="/kode/logo.png" alt="Kode Logo" width={20} height={20} style={{ filter: "brightness(0) saturate(100%) invert(61%) sepia(68%) saturate(3458%) hue-rotate(239deg) brightness(101%) contrast(92%)" }} />
+                kode
               </div>
               <p style={{ fontFamily: C.sans, fontSize: 12, color: C.muted, lineHeight: 1.75, maxWidth: 280 }}>
                 A concurrency-first, statically typed compiled language. Write once, run anywhere. MIT licensed.
