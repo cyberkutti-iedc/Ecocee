@@ -1,5 +1,3 @@
-"use client";
-
 import Link from "next/link";
 
 const docSections = [
@@ -17,14 +15,15 @@ const docSections = [
   { id: "builtins", label: "Built-in Functions" },
 ];
 
-export default function DocsLayout({
+export default async function DocsLayout({
   children,
   params,
 }: {
   children: React.ReactNode;
-  params: { id?: string };
+  params: Promise<{ id?: string }>;
 }) {
-  const currentIndex = docSections.findIndex((s) => s.id === params?.id);
+  const { id } = await params;
+  const currentIndex = docSections.findIndex((s) => s.id === id);
   const prevSection = currentIndex > 0 ? docSections[currentIndex - 1] : null;
   const nextSection = currentIndex < docSections.length - 1 ? docSections[currentIndex + 1] : null;
 
@@ -59,7 +58,7 @@ export default function DocsLayout({
                     key={section.id}
                     href={`/kode/docs/${section.id}`}
                     className={`block text-sm py-2 px-3 rounded-md transition-colors ${
-                      params?.id === section.id
+                      id === section.id
                         ? "bg-blue-50 dark:bg-blue-950/30 text-blue-600 dark:text-blue-400 font-medium"
                         : "text-slate-600 dark:text-slate-400 hover:text-blue-600 dark:hover:text-blue-400 hover:bg-slate-50 dark:hover:bg-slate-800/50"
                     }`}
