@@ -26,8 +26,7 @@ export const ProductsSection: React.FC = () => {
             Products & Solutions
           </h2>
           <p className="text-lg text-muted-foreground max-w-3xl">
-            Production-ready embedded hardware, Edge AI modules and specialized prototypes for
-            industrial-grade deployments. Minimal, secure, and designed for scale.
+            Production-ready embedded hardware, Edge AI systems, and custom AI/IoT solutions built for scale and privacy.
           </p>
         </div>
 
@@ -80,6 +79,13 @@ export const ProductsSection: React.FC = () => {
           <Link href="/products">
             <Button className="bg-primary text-primary-foreground px-8 py-3 font-semibold">Browse full catalog</Button>
           </Link>
+        </div>
+
+        <div className="mt-20 border-t border-border pt-12">
+          <h3 className="text-2xl font-semibold text-foreground mb-4">Our Approach</h3>
+          <p className="text-muted-foreground text-lg leading-relaxed max-w-3xl">
+            We believe in building systems that perform in the real world. By controlling the stack from custom hardware to advanced AI models, we deliver scalable, secure, and private solutions engineered for reliability.
+          </p>
         </div>
       </div>
     </section>
