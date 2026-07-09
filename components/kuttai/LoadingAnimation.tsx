@@ -1,4 +1,18 @@
+import React from 'react';
 export default function LoadingAnimation() {
+  const [randomValues, setRandomValues] = React.useState<any[]>([]);
+
+  React.useEffect(() => {
+    setRandomValues(
+      [...Array(25)].map(() => ({
+        left: `${Math.random() * 100}%`,
+        top: `${Math.random() * 100}%`,
+        duration: `${15 + Math.random() * 10}s`,
+        text: Math.random() > 0.5 ? '1' : '0'
+      }))
+    );
+  }, []);
+
   return (
     <div className="min-h-screen bg-gradient-to-br from-gray-900 to-black flex items-center justify-center overflow-hidden font-mono">
       {/* Animated background elements */}
@@ -9,18 +23,18 @@ export default function LoadingAnimation() {
         </div>
         
         {/* Floating binary code */}
-        {[...Array(25)].map((_, i) => (
+        {randomValues.map((val, i) => (
           <div
             key={i}
             className="absolute text-green-400/30 text-xs animate-float"
             style={{
-              left: `${Math.random() * 100}%`,
-              top: `${Math.random() * 100}%`,
+              left: val.left,
+              top: val.top,
               animationDelay: `${i * 0.7}s`,
-              animationDuration: `${15 + Math.random() * 10}s`
+              animationDuration: val.duration
             }}
           >
-            {Math.random() > 0.5 ? '1' : '0'}
+            {val.text}
           </div>
         ))}
       </div>

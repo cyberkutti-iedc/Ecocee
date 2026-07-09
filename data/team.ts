@@ -59,22 +59,22 @@ export const teamData: TeamMember[] = [
     joinedDate: "2024-07-13"
   },
 
-  {
-    id: 3,
-    name: "Rajesh V M",
-    role: "Co-Founder",
-    department: "Executive",
-    bio: "Co-Founder of Ecocee with 35+ years of expertise in electronics and technical fields, bringing deep experience and leadership to the company’s foundation.",
-    skills: [
-      "Electronics",
-      "Technical Expertise",
-      "Leadership",
-      "Team Mentoring"
-    ],
-    experience: "35+ years in electronics and technical leadership, Co-Founder of Ecocee.",
-    avatar: "👨‍🔧",
-    joinedDate: "2023"
-  },
+  // {
+  //   id: 3,
+  //   name: "Rajesh V M",
+  //   role: "Co-Founder",
+  //   department: "Executive",
+  //   bio: "Co-Founder of Ecocee with 35+ years of expertise in electronics and technical fields, bringing deep experience and leadership to the company’s foundation.",
+  //   skills: [
+  //     "Electronics",
+  //     "Technical Expertise",
+  //     "Leadership",
+  //     "Team Mentoring"
+  //   ],
+  //   experience: "35+ years in electronics and technical leadership, Co-Founder of Ecocee.",
+  //   avatar: "👨‍🔧",
+  //   joinedDate: "2023"
+  // },
   {
     id: 4,
     name: "Amal Krishna O U",
@@ -95,26 +95,26 @@ export const teamData: TeamMember[] = [
     email: "amal@gmail.com",
     joinedDate: "2025-09-10"
   },
-  {
-    id: 5,
-    name: "Akash Sasi",
-    role: "Operations Lead",
-    department: "Executive",
-    bio: "Operations Lead with 2.5+ years of entrepreneurial learning and expertise in operations management. Passionate about building scalable processes and continuous learning.",
-    skills: [
-      "Operations Management",
-      "Entrepreneurship",
-      "Process Optimization",
-      "Team Collaboration",
-      "Leadership"
-    ],
-    experience: "2.5+ years in entrepreneurship and operations management, with strong focus on learning and growth.",
-    avatar: "👨‍🏭",
-    linkedin: "https://linkedin.com/in/example-akashisasi",
-    github: "https://github.com/example-akashisasi",
-    email: "akashisasi@example.com",
-    joinedDate: "2025-09-10"
-  }
+  // {
+  //   id: 5,
+  //   name: "Akash Sasi",
+  //   role: "Operations Lead",
+  //   department: "Executive",
+  //   bio: "Operations Lead with 2.5+ years of entrepreneurial learning and expertise in operations management. Passionate about building scalable processes and continuous learning.",
+  //   skills: [
+  //     "Operations Management",
+  //     "Entrepreneurship",
+  //     "Process Optimization",
+  //     "Team Collaboration",
+  //     "Leadership"
+  //   ],
+  //   experience: "2.5+ years in entrepreneurship and operations management, with strong focus on learning and growth.",
+  //   avatar: "👨‍🏭",
+  //   linkedin: "https://linkedin.com/in/example-akashisasi",
+  //   github: "https://github.com/example-akashisasi",
+  //   email: "akashisasi@example.com",
+  //   joinedDate: "2025-09-10"
+  // }
 ];
 
 export const departments = [

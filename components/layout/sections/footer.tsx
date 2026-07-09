@@ -3,7 +3,7 @@ import Link from "next/link";
 import { Mail, Linkedin, Github, ExternalLink } from "lucide-react";
 
 export const FooterSection = () => {
-  const currentYear = new Date().getFullYear();
+  const currentYear = 2026;
 
   return (
     <footer id="footer" className="bg-background text-foreground py-16 md:py-20">

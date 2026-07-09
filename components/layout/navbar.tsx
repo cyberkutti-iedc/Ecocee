@@ -23,7 +23,6 @@ import {
   NavigationMenuTrigger,
 } from "../ui/navigation-menu";
 import { Button } from "../ui/button";
-import { AuthButtons } from "./AuthButtons";
 import { ModeToggle } from "../ui/mode-toggle";
 
 // Interface for routes and features
@@ -114,7 +113,6 @@ export const Navbar = () => {
               {/* Mobile theme + auth */}
               <div className="mt-3 flex items-center gap-3">
                 <ModeToggle />
-                <AuthButtons />
               </div>
             </SheetFooter>
           </SheetContent>
@@ -196,7 +194,6 @@ export const Navbar = () => {
       {/* Additional Actions - Desktop */}
       <div className="hidden lg:flex items-center gap-2">
         <ModeToggle showLabel={false} />
-        <AuthButtons />
       </div>
     </header>
   );

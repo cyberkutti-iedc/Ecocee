@@ -1,3 +1,4 @@
+import React from 'react';
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
@@ -5,7 +6,6 @@ import { cn } from "@/lib/utils";
 import { ThemeProvider } from "@/components/layout/theme-provider";
 import { Toaster } from "react-hot-toast";
 import { NavbarWrapper } from "@/components/layout/NavbarWrapper";
-import { ClerkProvider } from "@clerk/nextjs";
 import Seo from "@/components/seo/Seo";
 
 const inter = Inter({ subsets: ["latin"], display: "swap" });
@@ -163,9 +163,8 @@ export default function RootLayout({
   children,
 }: Readonly<{ children: React.ReactNode }>) {
   return (
-    <ClerkProvider>
-      <html lang="en-IN" suppressHydrationWarning>
-        <head>
+    <html lang="en-IN" suppressHydrationWarning>
+      <head>
           <meta
             name="viewport"
             content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes"
@@ -278,7 +277,9 @@ export default function RootLayout({
         >
           <ThemeProvider attribute="class" defaultTheme="dark">
             {/* Navbar */}
-            <NavbarWrapper />
+            <React.Suspense fallback={null}>
+              <NavbarWrapper />
+            </React.Suspense>
 
             {/* Main content */}
             <main className="flex-1 w-full overflow-x-hidden">{children}</main>
@@ -295,7 +296,6 @@ export default function RootLayout({
             />
           </ThemeProvider>
         </body>
-      </html>
-    </ClerkProvider>
+    </html>
   );
 }
