@@ -163,7 +163,7 @@ export default function RootLayout({
   children,
 }: Readonly<{ children: React.ReactNode }>) {
   return (
-    <html lang="en-IN" suppressHydrationWarning>
+    <html lang="en-IN" suppressHydrationWarning className="dark">
       <head>
           <meta
             name="viewport"
@@ -275,7 +275,7 @@ export default function RootLayout({
             inter.className
           )}
         >
-          <ThemeProvider attribute="class" defaultTheme="dark">
+          <ThemeProvider attribute="class" defaultTheme="dark" forcedTheme="dark">
             {/* Navbar */}
             <React.Suspense fallback={null}>
               <NavbarWrapper />

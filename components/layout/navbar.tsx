@@ -23,7 +23,7 @@ import {
   NavigationMenuTrigger,
 } from "../ui/navigation-menu";
 import { Button } from "../ui/button";
-import { ModeToggle } from "../ui/mode-toggle";
+
 
 // Interface for routes and features
 interface RouteProps {
@@ -65,8 +65,9 @@ export const Navbar = () => {
   return (
     <header className="shadow-inner bg-opacity-15 w-[95%] md:w-[80%] lg:w-[75%] lg:max-w-screen-xl top-5 mx-auto sticky border border-secondary z-40 rounded-2xl flex justify-between items-center p-2 bg-card/90 backdrop-blur-xl">
       {/* Logo Section */}
-      <Link href="/" className="font-bold text-2xl flex items-center gap-2 tracking-tight bg-gradient-to-r from-green-600 via-blue-600 to-violet-600 bg-clip-text text-transparent" style={{ fontFamily: 'Poppins, sans-serif' }}>
-        ECOCEE
+      <Link href="/" className="font-bold text-2xl flex items-center gap-3 tracking-tight bg-gradient-to-r from-green-600 via-blue-600 to-violet-600 bg-clip-text text-transparent" style={{ fontFamily: 'Poppins, sans-serif' }}>
+        <Image src="/login-logo.png" alt="Ecocee Logo" width={48} height={48} className="object-contain" />
+     
       </Link>
 
       {/* Mobile Navigation */}
@@ -86,7 +87,8 @@ export const Navbar = () => {
             <div>
               <SheetHeader className="mb-4 ml-4">
                 <SheetTitle className="flex items-center gap-2 text-xl font-bold bg-gradient-to-r from-green-600 via-blue-600 to-violet-600 bg-clip-text text-transparent">
-                  <Link href="/" className="flex items-center">
+                  <Link href="/" className="flex items-center gap-3">
+                    <Image src="/login-logo.png" alt="Ecocee Logo" width={36} height={36} className="object-contain" />
                     Ecocee
                   </Link>
                 </SheetTitle>
@@ -112,7 +114,6 @@ export const Navbar = () => {
 
               {/* Mobile theme + auth */}
               <div className="mt-3 flex items-center gap-3">
-                <ModeToggle />
               </div>
             </SheetFooter>
           </SheetContent>
@@ -193,7 +194,6 @@ export const Navbar = () => {
 
       {/* Additional Actions - Desktop */}
       <div className="hidden lg:flex items-center gap-2">
-        <ModeToggle showLabel={false} />
       </div>
     </header>
   );
