@@ -1,199 +1,258 @@
 "use client";
 
-import React, { useState } from "react";
-import { Contact2Icon, Menu } from "lucide-react";
+import React, { useState, useEffect, useCallback } from "react";
+import { Menu, ArrowRight, ChevronDown, X, Bot, Building2, Warehouse, Sun, Moon } from "lucide-react";
 import Link from "next/link";
 import Image from "next/image";
+import { useTheme } from "next-themes";
 
-import {
-  Sheet,
-  SheetContent,
-  SheetFooter,
-  SheetHeader,
-  SheetTitle,
-  SheetTrigger,
-} from "../ui/sheet";
-import { Separator } from "../ui/separator";
-import {
-  NavigationMenu,
-  NavigationMenuContent,
-  NavigationMenuItem,
-  NavigationMenuLink,
-  NavigationMenuList,
-  NavigationMenuTrigger,
-} from "../ui/navigation-menu";
+import { Sheet, SheetContent, SheetTrigger } from "../ui/sheet";
 import { Button } from "../ui/button";
 
+/* ─── Data ──────────────────────────────────────────────────── */
 
-// Interface for routes and features
+interface DropdownItem {
+  href: string;
+  label: string;
+  description: string;
+  icon: React.ReactNode;
+}
+
 interface RouteProps {
   href: string;
   label: string;
-}
-
-interface FeatureProps {
-  title: string;
-  description: string;
+  dropdown?: DropdownItem[];
 }
 
 const routeList: RouteProps[] = [
-  { href: "/#services", label: "Services" },
-  { href: "/Team", label: "Team" },
-  { href: "/#contact", label: "Contact" },
-  { href: "/#faq", label: "FAQ" },
+  {
+    href: "/ai-agents",
+    label: "Solutions",
+    dropdown: [
+      { href: "/ai-agents#business", label: "Business Agent", description: "Customer support, lead capture, and sales automation", icon: <Bot className="w-5 h-5" /> },
+      { href: "/ai-agents#office", label: "Office Agent", description: "Email, scheduling, HR, and document management", icon: <Building2 className="w-5 h-5" /> },
+      { href: "/ai-agents#warehouse", label: "Warehouse Agent", description: "Inventory, logistics, and supply chain automation", icon: <Warehouse className="w-5 h-5" /> },
+    ],
+  },
+  { href: "/#how-we-work", label: "How We Work" },
+  { href: "/about", label: "About" },
   { href: "/careers", label: "Careers" },
 ];
 
-const featureList: FeatureProps[] = [
-  {
-    title: "Innovative Approach",
-    description: "Cutting-edge solutions to drive business growth.",
-  },
-  {
-    title: "Cost-Effective",
-    description: "Affordable solutions without compromising quality.",
-  },
-  {
-    title: "Expert Team",
-    description: "Experienced professionals dedicated to your success.",
-  },
-];
+/* ─── Theme Toggle (inline for navbar) ──────────────────────── */
+
+function ThemeToggle() {
+  const { theme, setTheme } = useTheme();
+  const [mounted, setMounted] = useState(false);
+  useEffect(() => setMounted(true), []);
+
+  if (!mounted) return <div className="w-9 h-9" />;
+
+  const isDark = theme === "dark";
+
+  return (
+    <button
+      onClick={() => setTheme(isDark ? "light" : "dark")}
+      className="w-9 h-9 rounded-lg flex items-center justify-center text-gray-500 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white hover:bg-gray-100 dark:hover:bg-white/10 transition-all duration-200"
+      aria-label={isDark ? "Switch to light mode" : "Switch to dark mode"}
+    >
+      {isDark ? <Sun className="w-[18px] h-[18px]" /> : <Moon className="w-[18px] h-[18px]" />}
+    </button>
+  );
+}
+
+/* ─── Main Navbar ───────────────────────────────────────────── */
 
 export const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
+  const [activeDropdown, setActiveDropdown] = useState<string | null>(null);
+  const [mobileExpanded, setMobileExpanded] = useState<string | null>(null);
+  const hoverTimer = React.useRef<ReturnType<typeof setTimeout> | null>(null);
+
+  useEffect(() => {
+    const onScroll = () => setScrolled(window.scrollY > 10);
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => window.removeEventListener("scroll", onScroll);
+  }, []);
+
+  useEffect(() => () => { if (hoverTimer.current) clearTimeout(hoverTimer.current); }, []);
+
+  const onEnter = useCallback((label: string) => {
+    if (hoverTimer.current) clearTimeout(hoverTimer.current);
+    setActiveDropdown(label);
+  }, []);
+
+  const onLeave = useCallback(() => {
+    hoverTimer.current = setTimeout(() => setActiveDropdown(null), 120);
+  }, []);
+
+  /* ---------- Logo component (works in both light & dark) ---- */
+  const Logo = ({ size = "normal" }: { size?: "normal" | "small" }) => {
+    const h = size === "small" ? "h-8" : "h-10";
+    return (
+      <Link href="/" className="flex items-center gap-2.5 shrink-0">
+        <Image
+          src="/logo_black.png"
+          alt="Ecocee"
+          width={size === "small" ? 32 : 40}
+          height={size === "small" ? 32 : 40}
+          priority
+          className={`${h} w-auto dark:invert`}
+        />
+      </Link>
+    );
+  };
 
   return (
-    <header className="shadow-inner bg-opacity-15 w-[95%] md:w-[80%] lg:w-[75%] lg:max-w-screen-xl top-5 mx-auto sticky border border-secondary z-40 rounded-2xl flex justify-between items-center p-2 bg-card/90 backdrop-blur-xl">
-      {/* Logo Section */}
-      <Link href="/" className="font-bold text-2xl flex items-center gap-3 tracking-tight bg-gradient-to-r from-green-600 via-blue-600 to-violet-600 bg-clip-text text-transparent" style={{ fontFamily: 'Poppins, sans-serif' }}>
-        <Image src="/login-logo.png" alt="Ecocee Logo" width={48} height={48} className="object-contain" />
-     
-      </Link>
+    <header
+      className={`fixed top-0 inset-x-0 z-50 transition-all duration-300 ${
+        scrolled
+          ? "bg-white/90 dark:bg-gray-950/90 backdrop-blur-xl shadow-[0_1px_3px_rgba(0,0,0,0.06)] dark:shadow-[0_1px_3px_rgba(0,0,0,0.3)] border-b border-black/5 dark:border-white/5"
+          : "bg-white dark:bg-gray-950"
+      }`}
+    >
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-between h-[4.25rem]">
+        {/* ── Logo ── */}
+        <Logo />
 
-      {/* Mobile Navigation */}
-      <div className="flex items-center lg:hidden">
-        <Sheet open={isOpen} onOpenChange={setIsOpen}>
-          <SheetTrigger asChild>
-            <Menu
-              onClick={() => setIsOpen(!isOpen)}
-              className="cursor-pointer lg:hidden"
-            />
-          </SheetTrigger>
+        {/* ── Desktop Nav ── */}
+        <nav className="hidden lg:flex items-center gap-0.5 mx-auto">
+          {routeList.map(({ href, label, dropdown }) => (
+            <div
+              key={label}
+              className="relative"
+              onMouseEnter={() => dropdown && onEnter(label)}
+              onMouseLeave={() => dropdown && onLeave()}
+            >
+              <Link
+                href={dropdown ? dropdown[0].href : href}
+                className="relative flex items-center gap-1 px-3 py-2 text-[13px] font-medium text-gray-600 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white transition-colors rounded-lg hover:bg-gray-50 dark:hover:bg-white/5"
+              >
+                {label}
+                {dropdown && (
+                  <ChevronDown className={`w-3.5 h-3.5 text-gray-400 transition-transform duration-200 ${activeDropdown === label ? "rotate-180" : ""}`} />
+                )}
+              </Link>
 
-          <SheetContent
-            side="left"
-            className="flex flex-col justify-between rounded-tr-2xl rounded-br-2xl bg-card/95 border-secondary"
-          >
-            <div>
-              <SheetHeader className="mb-4 ml-4">
-                <SheetTitle className="flex items-center gap-2 text-xl font-bold bg-gradient-to-r from-green-600 via-blue-600 to-violet-600 bg-clip-text text-transparent">
-                  <Link href="/" className="flex items-center gap-3">
-                    <Image src="/login-logo.png" alt="Ecocee Logo" width={36} height={36} className="object-contain" />
-                    Ecocee
-                  </Link>
-                </SheetTitle>
-              </SheetHeader>
-
-              <div className="flex flex-col gap-2">
-                {routeList.map(({ href, label }) => (
-                  <Button
-                    key={href}
-                    onClick={() => setIsOpen(false)}
-                    asChild
-                    variant="ghost"
-                    className="justify-start text-base rounded-xl hover:bg-gradient-to-r hover:from-blue-50 hover:to-green-50"
-                  >
-                    <Link href={href}>{label}</Link>
-                  </Button>
-                ))}
-              </div>
-            </div>
-
-            <SheetFooter className="flex-col sm:flex-col justify-start items-start">
-              <Separator className="mb-2" />
-
-              {/* Mobile theme + auth */}
-              <div className="mt-3 flex items-center gap-3">
-              </div>
-            </SheetFooter>
-          </SheetContent>
-        </Sheet>
-      </div>
-
-      {/* Desktop Navigation */}
-      <NavigationMenu className="hidden lg:block mx-auto">
-        <NavigationMenuList>
-          {/* Features Dropdown */}
-          <NavigationMenuItem>
-            <NavigationMenuTrigger className={`
-              bg-card text-base font-semibold rounded-xl px-4 py-2 transition-all
-              hover:bg-gradient-to-r hover:from-green-50 hover:to-blue-50
-              dark:hover:bg-gradient-to-r dark:hover:from-green-900 dark:hover:to-blue-900
-              text-gray-900 dark:text-gray-100
-              focus:outline-none focus:ring-2 focus:ring-blue-400 dark:focus:ring-green-400
-            `}>
-              Features
-            </NavigationMenuTrigger>
-            <NavigationMenuContent>
-              <div className="grid w-[600px] grid-cols-2 gap-6 p-6">
-                <div className="flex flex-col items-center justify-center">
-                  <div className="bg-black dark:bg-gray-900 rounded-2xl flex items-center justify-center w-48 h-48">
-                    <Image
-                      src="/logo.png"
-                      alt="My Logo"
-                      className="w-36 h-36 object-contain"
-                      width={192}
-                      height={192}
-                    />
-                  </div>
-                  <span className="mt-4 text-lg font-bold bg-gradient-to-r from-green-600 via-blue-600 to-violet-600 bg-clip-text text-transparent dark:from-green-300 dark:via-blue-400 dark:to-violet-400">Ecocee</span>
-                </div>
-                <ul className="flex flex-col gap-4">
-                  {featureList.map(({ title, description }, idx) => (
-                    <li
-                      key={title}
-                      className="rounded-xl p-4 bg-gradient-to-br from-blue-50 via-green-50 to-violet-50 dark:from-gray-900 dark:via-green-950 dark:to-blue-950 hover:from-blue-100 hover:to-green-100 dark:hover:from-gray-800 dark:hover:to-green-900 shadow group transition-all duration-200 border border-transparent hover:border-blue-200 dark:hover:border-green-700"
-                    >
-                      <div className="flex items-center gap-3 mb-1">
-                        <span className={`inline-block w-3 h-3 rounded-full ${idx === 0 ? "bg-green-400 dark:bg-green-600" : idx === 1 ? "bg-blue-400 dark:bg-blue-600" : "bg-violet-400 dark:bg-violet-600"}`}></span>
-                        <p className="font-semibold text-base text-foreground group-hover:text-blue-700 dark:text-green-200 dark:group-hover:text-blue-300">{title}</p>
-                      </div>
-                      <p className="line-clamp-2 text-muted-foreground text-sm group-hover:text-blue-600 dark:text-gray-300 dark:group-hover:text-blue-300">{description}</p>
-                    </li>
-                  ))}
-                  <li className="rounded-xl p-4 bg-gradient-to-br from-green-50 via-blue-50 to-violet-50 dark:from-gray-900 dark:via-blue-950 dark:to-violet-950 shadow border border-dashed border-green-200 dark:border-green-700 flex items-center gap-2 mt-2">
-                    <Contact2Icon className="w-5 h-5 text-green-600 dark:text-green-400" />
-                    <span className="font-medium text-green-700 dark:text-green-300">Talk to our experts for a custom solution!</span>
-                  </li>
-                </ul>
-              </div>
-            </NavigationMenuContent>
-          </NavigationMenuItem>
-
-          {/* Route Links */}
-          <NavigationMenuItem>
-            {routeList.map(({ href, label }) => (
-              <NavigationMenuLink key={href} asChild>
-                <Link
-                  href={href}
-                  className={`
-                    text-base px-3 py-2 rounded-xl font-medium transition-all
-                    hover:bg-gradient-to-r hover:from-green-50 hover:to-blue-50
-                    dark:hover:bg-gradient-to-r dark:hover:from-green-900 dark:hover:to-blue-900
-                    text-gray-900 dark:text-gray-100
-                    focus:outline-none focus:ring-2 focus:ring-blue-400 dark:focus:ring-green-400
-                  `}
+              {/* Dropdown */}
+              {dropdown && activeDropdown === label && (
+                <div
+                  className="absolute top-full left-1/2 -translate-x-1/2 pt-2"
+                  onMouseEnter={() => onEnter(label)}
+                  onMouseLeave={onLeave}
                 >
-                  {label}
-                </Link>
-              </NavigationMenuLink>
-            ))}
-          </NavigationMenuItem>
-        </NavigationMenuList>
-      </NavigationMenu>
+                  <div className="bg-white dark:bg-gray-900 rounded-xl border border-gray-200 dark:border-gray-800 shadow-xl shadow-gray-200/40 dark:shadow-black/40 p-2 w-80 animate-in fade-in slide-in-from-top-1 duration-150">
+                    {dropdown.map((item) => (
+                      <Link
+                        key={item.href}
+                        href={item.href}
+                        className="flex items-start gap-3 p-3 rounded-lg hover:bg-gray-50 dark:hover:bg-white/5 transition-colors group/item"
+                      >
+                        <span className="mt-0.5 p-2 rounded-lg bg-primary/10 text-primary group-hover/item:bg-primary group-hover/item:text-white transition-colors shrink-0">
+                          {item.icon}
+                        </span>
+                        <div className="min-w-0">
+                          <div className="text-sm font-medium text-gray-900 dark:text-gray-100">{item.label}</div>
+                          <div className="text-xs text-gray-500 dark:text-gray-400 mt-0.5 leading-relaxed">{item.description}</div>
+                        </div>
+                      </Link>
+                    ))}
+                    <div className="mt-1 pt-1 border-t border-gray-100 dark:border-gray-800">
+                      <Link href={href} className="flex items-center gap-2 px-3 py-2.5 text-sm font-medium text-primary hover:bg-primary/5 dark:hover:bg-primary/10 rounded-lg transition-colors">
+                        View all solutions
+                        <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-0.5 transition-transform" />
+                      </Link>
+                    </div>
+                  </div>
+                </div>
+              )}
+            </div>
+          ))}
+        </nav>
 
-      {/* Additional Actions - Desktop */}
-      <div className="hidden lg:flex items-center gap-2">
+        {/* ── Desktop Right: Theme + CTA ── */}
+        <div className="hidden lg:flex items-center gap-1.5 shrink-0">
+          <ThemeToggle />
+          <a href="mailto:info@ecocee.in" className="text-[13px] font-medium text-gray-500 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white px-3 py-2 rounded-lg hover:bg-gray-50 dark:hover:bg-white/5 transition-colors">
+            Contact
+          </a>
+          <Button size="sm" className="bg-primary text-primary-foreground font-semibold text-sm h-9 px-5 group rounded-lg" asChild>
+            <a href="/#contact">
+              Get Started
+              <ArrowRight className="w-3.5 h-3.5 ml-1 group-hover:translate-x-0.5 transition-transform" />
+            </a>
+          </Button>
+        </div>
+
+        {/* ── Mobile Right: Theme Toggle + Hamburger ── */}
+        <div className="flex items-center gap-1 lg:hidden">
+          <ThemeToggle />
+          <Sheet open={isOpen} onOpenChange={setIsOpen}>
+            <SheetTrigger asChild>
+              <button className="p-2 rounded-lg hover:bg-gray-100 dark:hover:bg-white/10 active:scale-95 transition-all" aria-label="Open menu">
+                <Menu className="w-5 h-5 text-gray-700 dark:text-gray-200" />
+              </button>
+            </SheetTrigger>
+            <SheetContent side="right" className="w-[85vw] max-w-sm bg-white dark:bg-gray-950 p-0 border-l border-gray-100 dark:border-gray-800">
+              <div className="flex flex-col h-full">
+                {/* Mobile header */}
+                <div className="flex items-center justify-between p-5 border-b border-gray-100 dark:border-gray-800">
+                  <Logo size="small" />
+                  <button onClick={() => setIsOpen(false)} className="p-2 rounded-lg hover:bg-gray-100 dark:hover:bg-white/10 transition-colors" aria-label="Close menu">
+                    <X className="w-5 h-5 text-gray-400" />
+                  </button>
+                </div>
+
+                {/* Mobile nav items */}
+                <nav className="flex-1 overflow-y-auto p-4 space-y-1">
+                  {routeList.map(({ href, label, dropdown }) => (
+                    <div key={label}>
+                      {dropdown ? (
+                        <>
+                          <button
+                            onClick={() => setMobileExpanded(mobileExpanded === label ? null : label)}
+                            className="w-full flex items-center justify-between px-4 py-3 rounded-xl text-sm font-medium text-gray-900 dark:text-gray-100 hover:bg-gray-50 dark:hover:bg-white/5 transition-colors"
+                          >
+                            {label}
+                            <ChevronDown className={`w-4 h-4 text-gray-400 transition-transform duration-200 ${mobileExpanded === label ? "rotate-180" : ""}`} />
+                          </button>
+                          {mobileExpanded === label && (
+                            <div className="ml-2 mt-1 mb-2 space-y-0.5 animate-in slide-in-from-top-1 duration-150">
+                              {dropdown.map((item) => (
+                                <Link key={item.href} href={item.href} onClick={() => setIsOpen(false)} className="flex items-start gap-3 px-4 py-3 rounded-xl hover:bg-gray-50 dark:hover:bg-white/5 transition-colors">
+                                  <span className="mt-0.5 text-primary shrink-0">{item.icon}</span>
+                                  <div className="min-w-0">
+                                    <div className="text-sm font-medium text-gray-900 dark:text-gray-100">{item.label}</div>
+                                    <div className="text-xs text-gray-500 dark:text-gray-400 mt-0.5">{item.description}</div>
+                                  </div>
+                                </Link>
+                              ))}
+                            </div>
+                          )}
+                        </>
+                      ) : (
+                        <Link href={href} onClick={() => setIsOpen(false)} className="block px-4 py-3 rounded-xl text-sm font-medium text-gray-900 dark:text-gray-100 hover:bg-gray-50 dark:hover:bg-white/5 transition-colors">
+                          {label}
+                        </Link>
+                      )}
+                    </div>
+                  ))}
+                </nav>
+
+                {/* Mobile CTA */}
+                <div className="p-4 border-t border-gray-100 dark:border-gray-800 space-y-2.5">
+                  <a href="mailto:info@ecocee.in" className="flex items-center justify-center gap-2 w-full py-3 text-sm font-medium text-gray-700 dark:text-gray-300 bg-gray-50 dark:bg-white/5 rounded-xl hover:bg-gray-100 dark:hover:bg-white/10 transition-colors">
+                    Email Us
+                  </a>
+                  <Button className="w-full bg-primary text-primary-foreground font-semibold h-12 rounded-xl" onClick={() => setIsOpen(false)} asChild>
+                    <a href="/#contact">Book a Demo</a>
+                  </Button>
+                </div>
+              </div>
+            </SheetContent>
+          </Sheet>
+        </div>
       </div>
     </header>
   );

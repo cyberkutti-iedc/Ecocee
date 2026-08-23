@@ -71,8 +71,8 @@ We encourage you to review this page periodically.
     content: `
 If you have any questions or concerns regarding this Privacy Policy, feel free to reach out to us at:
 
-📧 info@ecocee.in
-📍 Ecocee MSME.
+Email: info@ecocee.in
+Ecocee MSME, Kodungallur, Thrissur, Kerala.
     `,
   },
 ];

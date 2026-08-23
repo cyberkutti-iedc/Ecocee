@@ -2,190 +2,91 @@
 @tailwind components;
 @tailwind utilities;
 
-
-
 html {
   scroll-behavior: smooth;
 }
 
-/* Prevent accidental horizontal overflow site-wide */
 body, html {
   overflow-x: hidden;
 }
 
-/* Make media responsive and avoid layout shifts causing x-scroll */
 img, video, canvas, svg {
   max-width: 100%;
 }
 
-/* Simple marquee keyframes for hero products scroller */
 @keyframes scrollX {
   0% { transform: translateX(0); }
   100% { transform: translateX(-50%); }
 }
 
-/* *=========== Default theme =========== */
-/* @layer base {
-  :root {
-    --background: 0 0% 100%;
-    --foreground: 240 10% 3.9%;
+/* ============================================================
+   DESIGN SYSTEM — LED Emerald + Warm Copper
+   ============================================================ */
 
-    --muted: 240 4.8% 95.9%;
-    --muted-foreground: 240 3.8% 46.1%;
-
-    --popover: 0 0% 100%;
-    --popover-foreground: 240 10% 3.9%;
-
-    --card: 0 0% 100%;
-    --card-foreground: 240 10% 3.9%;
-
-    --border: 240 5.9% 90%;
-    --input: 240 5.9% 90%;
-
-    --primary: 240 5.9% 10%;
-    --primary-foreground: 0 0% 98%;
-
-    --secondary: 240 4.8% 95.9%;
-    --secondary-foreground: 240 5.9% 10%;
-
-    --accent: 240 4.8% 95.9%;
-    --accent-foreground: 240 5.9% 10%;
-
-    --destructive: 0 84.2% 60.2%;
-    --destructive-foreground: 0 0% 98%;
-
-    --ring: 240 10% 3.9%;
-
-    --radius: 0.5rem;
-  }
-
-  .dark {
-    --background: 240 10% 3.9%;
-    --foreground: 0 0% 98%;
-
-    --muted: 240 3.7% 15.9%;
-    --muted-foreground: 240 5% 64.9%;
-
-    --popover: 240 10% 3.9%;
-    --popover-foreground: 0 0% 98%;
-
-    --card: 240 10% 3.9%;
-    --card-foreground: 0 0% 98%;
-
-    --border: 240 3.7% 15.9%;
-    --input: 240 3.7% 15.9%;
-
-    --primary: 0 0% 98%;
-    --primary-foreground: 240 5.9% 10%;
-
-    --secondary: 240 3.7% 15.9%;
-    --secondary-foreground: 0 0% 98%;
-
-    --accent: 240 3.7% 15.9%;
-    --accent-foreground: 0 0% 98%;
-
-    --destructive: 0 62.8% 30.6%;
-    --destructive-foreground: 0 0% 98%;
-
-    --ring: 240 4.9% 83.9%;
-  }
-} */
-
-/* *=========== Deep-Technology Emerald / Black Theme =========== */
 @layer base {
-  /* Light theme tokens (default) */
   :root {
-    --background: 210 20% 98%;   /* light surface */
-    --foreground: 210 12% 8%;    /* dark text */
+    --background: 156 30% 96%;
+    --foreground: 156 58% 5%;
 
     --card: 0 0% 100%;
-    --card-foreground: 210 12% 8%;
+    --card-foreground: 156 58% 5%;
 
     --popover: 0 0% 100%;
-    --popover-foreground: 210 12% 8%;
+    --popover-foreground: 156 58% 5%;
 
-    --primary: 145 100% 39%;     /* #00C853 */
-    --primary-foreground: 0 0% 98%;
+    --primary: 160 84% 39%;
+    --primary-foreground: 0 0% 100%;
 
-    --secondary: 210 12% 96%;
-    --secondary-foreground: 210 12% 8%;
+    --secondary: 156 20% 92%;
+    --secondary-foreground: 156 40% 20%;
 
-    --muted: 210 12% 96%;
-    --muted-foreground: 210 12% 50%;
+    --muted: 156 20% 92%;
+    --muted-foreground: 156 10% 45%;
 
-    --accent: 145 100% 39%;
-    --accent-foreground: 0 0% 98%;
+    --accent: 15 64% 60%;
+    --accent-foreground: 0 0% 100%;
 
-    --destructive: 0 62.8% 30.6%;
-    --destructive-foreground: 0 0% 98%;
+    --destructive: 0 84% 60%;
+    --destructive-foreground: 0 0% 100%;
 
-    --border: 210 12% 88%;
-    --input: 210 12% 96%;
-    --ring: 145 100% 39%;
-    --radius: 0.5rem;
+    --border: 156 20% 88%;
+    --input: 156 20% 88%;
+    --ring: 160 84% 39%;
 
-    --chart-1: 145 100% 39%;
-    --chart-2: 150 60% 45%;
-    --chart-3: 145 50% 40%;
-    --chart-4: 170 60% 50%;
-    --chart-5: 200 60% 55%;
-
-    /* sparkline/chart color (light-mode default) */
-    --sparkline-1: rgba(0,143,58,0.12); /* #008F3A @ 12% */
-    --sparkline-2: rgba(0,143,58,0.02); /* #008F3A @ 2% */
+    --radius: 0.625rem;
   }
 
   .dark {
-    /* Dark mode variants */
-    --background: 210 12% 6%;
-    --foreground: 210 10% 96%;
+    --background: 156 54% 5%;
+    --foreground: 156 30% 93%;
 
-    --card: 210 14% 9%;
-    --card-foreground: 210 10% 96%;
+    --card: 156 45% 9%;
+    --card-foreground: 156 30% 93%;
 
-    --popover: 210 12% 8%;
-    --popover-foreground: 210 10% 96%;
+    --popover: 156 45% 9%;
+    --popover-foreground: 156 30% 93%;
 
-    --primary: 145 92% 45%; /* #00C853 — dark-mode adjusted */
-    --primary-foreground: 210 10% 6%;
+    --primary: 160 84% 45%;
+    --primary-foreground: 0 0% 100%;
 
-    --secondary: 210 12% 16%;
-    --secondary-foreground: 210 10% 96%;
+    --secondary: 156 30% 15%;
+    --secondary-foreground: 156 20% 80%;
 
-    --muted: 210 12% 16%;
-    --muted-foreground: 210 10% 70%;
+    --muted: 156 30% 15%;
+    --muted-foreground: 156 15% 60%;
 
-    --accent: 158 78% 44%;
-    --accent-foreground: 210 10% 6%;
+    --accent: 15 64% 60%;
+    --accent-foreground: 0 0% 100%;
 
-    --destructive: 0 62.8% 30.6%;
-    --destructive-foreground: 0 0% 98%;
+    --destructive: 0 72% 51%;
+    --destructive-foreground: 0 0% 100%;
 
-    --border: 210 12% 16%;
-    --input: 210 12% 16%;
-    --ring: 158 78% 44%;
-
-    --chart-1: 158 78% 44%;
-    --chart-2: 150 60% 45%;
-    --chart-3: 145 50% 40%;
-    --chart-4: 170 60% 50%;
-    --chart-5: 200 60% 55%;
-
-    /* sparkline/chart color (dark-mode) */
-    --sparkline-1: rgba(16,185,129,0.12); /* original emerald tint */
-    --sparkline-2: rgba(16,185,129,0.02);
-  
+    --border: 156 30% 18%;
+    --input: 156 30% 18%;
+    --ring: 160 84% 45%;
+  }
 }
 
-/* Shadows */
-.shadow-light {
-  box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.085);
-}
-.shadow-dark {
-  box-shadow: inset 0 0 5px rgba(255, 255, 255, 0.141);
-}
-
-/* Base resets */
 @layer base {
   * {
     @apply border-border;
@@ -195,37 +96,40 @@ img, video, canvas, svg {
   }
 }
 
-@keyframes float {
-  0%, 100% {
-    transform: translateY(0) rotate(0deg);
-  }
-  50% {
-    transform: translateY(-20px) rotate(5deg);
-  }
+:focus-visible {
+  outline: 2px solid hsl(var(--ring));
+  outline-offset: 2px;
+  border-radius: var(--radius);
 }
 
-@keyframes fadeIn {
-  from {
+/* Onam gold shimmer */
+@keyframes goldShimmer {
+  0%, 100% { opacity: 0.4; }
+  50% { opacity: 1; }
+}
+.gold-shimmer {
+  animation: goldShimmer 3s ease-in-out infinite;
+}
+
+/* Subtle pulse */
+@keyframes subtlePulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.5; }
+}
+.pulse-subtle {
+  animation: subtlePulse 2s ease-in-out infinite;
+}
+
+/* Falling flower petals */
+@keyframes flowerFall {
+  0% {
+    transform: translateY(-10vh) rotate(0deg) translateX(0);
     opacity: 0;
-    transform: translateY(20px);
   }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-@keyframes fadeInUp {
-  from {
+  10% { opacity: 0.7; }
+  90% { opacity: 0.5; }
+  100% {
+    transform: translateY(110vh) rotate(720deg) translateX(40px);
     opacity: 0;
-    transform: translateY(40px);
   }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-
-
 }

@@ -9,13 +9,23 @@ const config = {
     '/dashboard',
     '/dashboard/*',
     '/internship-certificate',
-    '/terms-and-conditions',
   ],
   transform: async (config, path) => {
+    // Define priority based on route importance
+    const priorities = {
+      '/': 1.0,
+      '/ai-agents': 0.9,
+      '/about': 0.8,
+      '/products': 0.8,
+      '/onam': 0.7,
+      '/Team': 0.6,
+      '/careers': 0.6,
+    };
+
     return {
       loc: path,
-      changefreq: 'weekly',
-      priority: path === '/' ? 1.0 : 0.5,
+      changefreq: path === '/' ? 'weekly' : 'monthly',
+      priority: priorities[path] || 0.5,
       lastmod: new Date().toISOString(),
     };
   },

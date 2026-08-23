@@ -1,6 +1,6 @@
 import React from 'react';
 import type { Metadata } from "next";
-import { Inter } from "next/font/google";
+import { Inter, Space_Grotesk } from "next/font/google";
 import "./globals.css";
 import { cn } from "@/lib/utils";
 import { ThemeProvider } from "@/components/layout/theme-provider";
@@ -8,7 +8,8 @@ import { Toaster } from "react-hot-toast";
 import { NavbarWrapper } from "@/components/layout/NavbarWrapper";
 import Seo from "@/components/seo/Seo";
 
-const inter = Inter({ subsets: ["latin"], display: "swap" });
+const inter = Inter({ subsets: ["latin"], display: "swap", variable: "--font-body" });
+const spaceGrotesk = Space_Grotesk({ subsets: ["latin"], display: "swap", variable: "--font-display" });
 
 export const metadata: Metadata = {
   title: "Ecocee | Embedded Systems, IoT & AI Solutions | Kerala Startup",
@@ -163,7 +164,7 @@ export default function RootLayout({
   children,
 }: Readonly<{ children: React.ReactNode }>) {
   return (
-    <html lang="en-IN" suppressHydrationWarning className="dark">
+    <html lang="en-IN" suppressHydrationWarning>
       <head>
           <meta
             name="viewport"
@@ -191,98 +192,22 @@ export default function RootLayout({
             crossOrigin="anonymous"
           />
         </head>
-        <Seo
-          title="Ecocee | Embedded Systems, IoT & AI Solutions | Kerala Startup"
-          description="Ecocee, a Kerala-based MSME startup, offers innovative embedded systems, IoT, AI development, and custom hardware & software solutions. Patentable projects and technical training."
-          canonical="https://ecocee.in"
-          image="https://opengraph.b-cdn.net/production/images/e6c0215e-ba2e-44eb-a7e9-c9c547f5c1c3.jpg?token=x6p4DMXdp7hH9v3r8lbop1ngGln1iE8A-fJmqFp8QJI&height=591&width=1200&expires=33291464882"
-          twitterHandle="@Ecocee"
-          siteName="Ecocee"
-          structuredData={[
-            {
-              "@context": "https://schema.org",
-              "@type": "Organization",
-              name: "Ecocee",
-              url: "https://ecocee.in",
-              logo: "https://ecocee.in/logo.webp",
-              sameAs: [
-                "https://www.linkedin.com/company/ecocee",
-                "https://twitter.com/Ecocee",
-                "https://facebook.com/Ecocee",
-              ],
-              contactPoint: {
-                "@type": "ContactPoint",
-                telephone: "+91-9446715884",
-                contactType: "Customer Support",
-                areaServed: ["Thrissur", "Kochi", "Ernakulam", "Kerala", "IN"],
-                availableLanguage: ["English", "Malayalam"],
-              },
-              address: {
-                "@type": "PostalAddress",
-                streetAddress: "Your Street Address",
-                addressLocality: "Kodungallur",
-                addressRegion: "Kerala",
-                postalCode: "680664",
-                addressCountry: "IN",
-              },
-            },
-            {
-              "@context": "https://schema.org",
-              "@type": "LocalBusiness",
-              name: "Ecocee",
-              image:
-                "https://opengraph.b-cdn.net/production/images/e6c0215e-ba2e-44eb-a7e9-c9c547f5c1c3.jpg?token=x6p4DMXdp7hH9v3r8lbop1ngGln1iE8A-fJmqFp8QJI&height=591&width=1200&expires=33291464882",
-              "@id": "https://ecocee.in",
-              url: "https://ecocee.in",
-              telephone: "+919446715884",
-              priceRange: "$$",
-              address: {
-                "@type": "PostalAddress",
-                streetAddress: "Your Street Address",
-                addressLocality: "Kodungallur",
-                addressRegion: "Kerala",
-                postalCode: "680664",
-                addressCountry: "IN",
-              },
-              geo: {
-                "@type": "GeoCoordinates",
-                latitude: "10.2326",
-                longitude: "76.1951",
-              },
-              openingHoursSpecification: {
-                "@type": "OpeningHoursSpecification",
-                dayOfWeek: [
-                  "Monday",
-                  "Tuesday",
-                  "Wednesday",
-                  "Thursday",
-                  "Friday",
-                  "Saturday",
-                ],
-                opens: "09:00",
-                closes: "18:00",
-              },
-              sameAs: [
-                "https://www.linkedin.com/company/ecocee",
-                "https://twitter.com/Ecocee",
-              ],
-            },
-          ]}
-        />
-        <body
-          className={cn(
+
+        <body            className={cn(
             "min-h-screen w-full flex flex-col overflow-x-hidden bg-background text-foreground selection:bg-primary\/30 antialiased",
+            inter.variable,
+            spaceGrotesk.variable,
             inter.className
           )}
         >
-          <ThemeProvider attribute="class" defaultTheme="dark" forcedTheme="dark">
+          <ThemeProvider attribute="class" defaultTheme="light">
             {/* Navbar */}
             <React.Suspense fallback={null}>
               <NavbarWrapper />
             </React.Suspense>
 
             {/* Main content */}
-            <main className="flex-1 w-full overflow-x-hidden">{children}</main>
+            <main className="flex-1 w-full overflow-x-hidden pt-16" id="main-content">{children}</main>
 
             <Toaster
               position="top-right"

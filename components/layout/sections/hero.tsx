@@ -1,151 +1,183 @@
 "use client";
 
 import { Button } from "@/components/ui/button";
-import { Separator } from "@/components/ui/separator";
 import { Badge } from "@/components/ui/badge";
-import { Card } from "@/components/ui/card";
-import { ArrowRight } from "lucide-react";
+import { ArrowRight, Bot, Cpu, Wifi } from "lucide-react";
+import { useEffect, useState, useRef } from "react";
+
+function useCountUp(target: number, duration: number = 2000) {
+  const [count, setCount] = useState(0);
+  const ref = useRef<HTMLSpanElement>(null);
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        if (entries[0].isIntersecting) {
+          const start = Date.now();
+          const tick = () => {
+            const elapsed = Date.now() - start;
+            const progress = Math.min(elapsed / duration, 1);
+            const eased = 1 - Math.pow(1 - progress, 3);
+            setCount(Math.floor(eased * target));
+            if (progress < 1) requestAnimationFrame(tick);
+          };
+          requestAnimationFrame(tick);
+          observer.disconnect();
+        }
+      },
+      { threshold: 0.5 }
+    );
+    if (ref.current) observer.observe(ref.current);
+    return () => observer.disconnect();
+  }, [target, duration]);
+
+  return { count, ref };
+}
+
+import { FallingFlowers } from "@/components/ui/falling-flowers";
+import { motion } from "framer-motion";
 
 export const HeroSection = () => {
-  const scrollToSection = (id: string) => {
-    const element = document.getElementById(id);
-    if (element) element.scrollIntoView({ behavior: "smooth" });
-  };
+  const models = useCountUp(5, 1800);
+  const clients = useCountUp(50, 2000);
+
+  // Simple typing effect simulation
+  const [typedText, setTypedText] = useState("");
+  const fullText = "Yes! ESP32-S3 and ESP32-P4 available. Bulk quote or single unit?";
+  
+  useEffect(() => {
+    let i = 0;
+    const interval = setInterval(() => {
+      setTypedText(fullText.substring(0, i));
+      i++;
+      if (i > fullText.length) clearInterval(interval);
+    }, 40);
+    return () => clearInterval(interval);
+  }, []);
 
   return (
-    <section className="w-full bg-background py-12 md:py-20 overflow-hidden relative" aria-label="Hero">
-      {/* Decorative abstract tech background — subtle and non-intrusive */}
-      <div aria-hidden className="pointer-events-none absolute inset-0 -z-10 opacity-20">
-        <svg width="100%" height="100%" viewBox="0 0 900 360" fill="none" xmlns="http://www.w3.org/2000/svg" className="w-full h-full">
-          <defs>
-            <linearGradient id="gTech" x1="0" x2="1">
-              <stop offset="0%" stopColor="rgba(16,185,129,0.12)" />
-              <stop offset="100%" stopColor="rgba(79,70,229,0.04)" />
-            </linearGradient>
-          </defs>
-          <g stroke="url(#gTech)" strokeWidth="1" strokeOpacity="0.6" strokeLinecap="round">
-            <path d="M20 200 C140 60, 300 340, 460 200 S740 60, 860 200" stroke="rgba(16,185,129,0.04)" />
-            <circle cx="120" cy="100" r="4" fill="rgba(16,185,129,0.16)" />
-            <circle cx="380" cy="260" r="3" fill="rgba(79,70,229,0.08)" />
-            <circle cx="640" cy="160" r="5" fill="rgba(16,185,129,0.12)" />
-          </g>
-        </svg>
-      </div>
+    <section className="relative w-full bg-background pt-20 pb-16 md:pt-28 md:pb-24 lg:pt-36 lg:pb-28 overflow-hidden" aria-label="Hero">
+      <FallingFlowers />
+      <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="grid gap-16 lg:grid-cols-12 items-center">
+          {/* Left - Copy */}
+          <div className="lg:col-span-6 space-y-8">
+            <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6 }} className="flex items-center gap-3">
+              <Badge className="bg-primary/10 text-primary text-xs px-3 py-1.5 rounded-full border border-primary/20 font-medium">
+                AI + Electronics
+              </Badge>
+              <span className="text-xs text-muted-foreground font-medium">
+                Kerala, India · Est. 2023
+              </span>
+            </motion.div>
 
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="grid gap-10 lg:grid-cols-12 items-center">
-          {/* Left - Messaging */}
-          <div className="lg:col-span-7 space-y-6">
-            <div className="inline-flex items-center gap-3">
-              <Badge className="bg-primary/10 text-primary text-xs px-2 py-1 rounded-full">Ecocee · Startup</Badge>
-              <span className="text-xs text-muted-foreground">AI · Edge Computing</span>
-            </div>
+            <motion.h1
+              initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6, delay: 0.1 }}
+              className="text-4xl sm:text-5xl md:text-6xl lg:text-[4.25rem] font-extrabold text-foreground leading-[1.08] tracking-tight"
+              style={{ fontFamily: "var(--font-display), 'Inter', system-ui, sans-serif" }}
+            >
+              AI That Lives
+              <br />
+              <span className="text-primary">Where You Work</span>
+            </motion.h1>
 
-            <h1 className="text-5xl md:text-6xl lg:text-7xl font-extrabold text-foreground leading-tight animate-in fade-in">
-              AI & Edge Computing.
-            </h1>
+            <motion.p initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6, delay: 0.2 }} className="text-lg text-muted-foreground max-w-xl leading-relaxed">
+              Custom AI agents, private infrastructure, and embedded systems — built for your workflows, not generic templates.
+            </motion.p>
 
-            <p className="text-lg md:text-xl text-muted-foreground max-w-2xl animate-in fade-in">
-              Research-driven startup building intelligent edge devices and AI solutions in Kerala.
-            </p>
-
-            <div className="flex flex-wrap gap-3 items-center mt-6">
+            <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6, delay: 0.3 }} className="flex flex-wrap gap-3 items-center">
               <Button
-                onClick={() => (window.location.href = '/products')}
-                className="h-12 px-6 bg-primary text-primary-foreground font-semibold shadow-md hover:shadow-lg hover:brightness-105 transform-gpu transition-all duration-200"
-                aria-label="Explore Our Solutions"
+                size="lg"
+                onClick={() => document.getElementById("ai-agents")?.scrollIntoView({ behavior: "smooth" })}
+                className="h-12 px-7 bg-primary text-primary-foreground font-semibold shadow-md hover:shadow-lg hover:shadow-primary/20 transition-all duration-200 group"
               >
-                Explore Our Solutions
-                <ArrowRight className="w-4 h-4 ml-2" />
+                Get a Consultation
+                <ArrowRight className="w-4 h-4 ml-2 group-hover:translate-x-1 transition-transform" />
               </Button>
-
               <Button
                 variant="outline"
-                onClick={() => scrollToSection("contact")}
-                className="h-12 px-6 hover:shadow hover:bg-secondary/5 transition-all duration-200"
-                aria-label="Get in Touch"
+                size="lg"
+                onClick={() => document.getElementById("contact")?.scrollIntoView({ behavior: "smooth" })}
+                className="h-12 px-7"
               >
-                Get in Touch
+                See How We Work
               </Button>
+            </motion.div>
+          </div>
 
-              <a
-                href="#research"
-                className="ml-3 text-sm text-muted-foreground hover:text-foreground transition-colors"
-              >
-                See research →
-              </a>
-            </div>
+          {/* Right — Live Product Demo */}
+          <motion.div initial={{ opacity: 0, scale: 0.95 }} animate={{ opacity: 1, scale: 1 }} transition={{ duration: 0.8, delay: 0.2 }} className="lg:col-span-6 relative">
+            <div className="absolute -inset-1 bg-gradient-to-tr from-primary/30 to-accent/30 rounded-2xl blur-2xl opacity-50" />
+            <div className="relative bg-card border border-border/50 rounded-2xl p-6 shadow-2xl backdrop-blur-sm">
+              <div className="flex items-center justify-between mb-6 pb-4 border-b border-border/50">
+                <div className="flex items-center gap-3">
+                  <div className="w-2.5 h-2.5 rounded-full bg-emerald-500 pulse-subtle" />
+                  <span className="text-sm font-semibold text-foreground">Ecocee AI Operations Agent</span>
+                </div>
+                <Badge variant="outline" className="text-[10px] border-emerald-500/30 text-emerald-600 dark:text-emerald-400 bg-emerald-500/5">
+                  Secure On-Premise
+                </Badge>
+              </div>
 
-            <div className="mt-6 flex items-center gap-6">
-              <div className="flex items-center gap-4 text-sm text-muted-foreground">
-                <span className="text-foreground/70">Capabilities</span>
-                <div className="flex items-center gap-2">
-                  <div className="px-3 py-1 bg-card/40 rounded-full text-xs font-medium text-foreground">Edge AI</div>
-                  <div className="px-3 py-1 bg-card/40 rounded-full text-xs font-medium text-foreground">IoT Devices</div>
-                  <div className="px-3 py-1 bg-card/40 rounded-full text-xs font-medium text-foreground">AI Research</div>
+              {/* Chat Interface */}
+              <div className="space-y-4 mb-6 font-mono text-sm">
+                <div className="flex gap-3">
+                  <div className="w-8 h-8 rounded-lg bg-secondary flex items-center justify-center text-xs font-bold text-muted-foreground shrink-0 border border-border">
+                    OPS
+                  </div>
+                  <div className="bg-secondary/50 rounded-xl rounded-tl-sm px-4 py-2.5 text-foreground max-w-[85%] border border-border/50">
+                    Do we have ESP32 boards in stock for the warehouse deployment?
+                  </div>
+                </div>
+                <div className="flex gap-3 justify-end">
+                  <div className="bg-primary/10 border border-primary/20 rounded-xl rounded-tr-sm px-4 py-2.5 text-foreground max-w-[85%] relative">
+                    {typedText}
+                    {typedText.length < fullText.length && (
+                      <span className="inline-block w-1.5 h-4 ml-1 bg-primary animate-pulse align-middle" />
+                    )}
+                  </div>
+                  <div className="w-8 h-8 rounded-lg bg-primary flex items-center justify-center shrink-0 shadow-lg shadow-primary/20">
+                    <Bot className="w-4 h-4 text-primary-foreground" />
+                  </div>
                 </div>
               </div>
 
-              <div className="hidden sm:flex items-center gap-3 text-xs text-muted-foreground">
-                <span className="inline-flex items-center gap-1 px-2 py-1 bg-card/60 rounded text-foreground">Research‑led</span>
-                <span className="inline-flex items-center gap-1 px-2 py-1 bg-card/60 rounded text-foreground">Production‑ready</span>
+              {/* Live Metrics */}
+              <div className="grid grid-cols-3 gap-4 pt-4 border-t border-border/50 bg-background/50 -mx-6 -mb-6 p-6 rounded-b-2xl">
+                {[
+                  { value: "0.8s", label: "Latency" },
+                  { value: "Local", label: "Compute" },
+                  { value: "AES-256", label: "Encryption" },
+                ].map((m) => (
+                  <div key={m.label} className="text-center">
+                    <div className="text-sm font-bold text-foreground">{m.value}</div>
+                    <div className="text-[10px] text-muted-foreground uppercase tracking-wider mt-1">{m.label}</div>
+                  </div>
+                ))}
               </div>
             </div>
-          </div>
-
-          {/* Right - Product mockup */}
-          <div className="lg:col-span-5 relative">
-            <div className="relative mx-auto w-full max-w-md">
-              {/* Decorative gradient */}
-              <div
-                aria-hidden
-                className="absolute -left-12 -top-10 w-48 h-48 rounded-full bg-gradient-to-tr from-primary/20 via-primary/10 to-transparent blur-xl opacity-60"
-              />
-
-              <Card className="bg-card border border-border shadow-2xl transform-gpu transition-transform hover:scale-[1.02]">
-                <div className="p-5">
-                  <div className="flex items-center justify-between mb-4">
-                    <div className="text-sm font-semibold text-foreground">AI Research Progress</div>
-                    <div className="text-xs text-muted-foreground">Growth</div>
-                  </div>
-
-                  <div className="rounded-md overflow-hidden bg-gradient-to-b from-slate-800/30 to-transparent p-4">
-                    {/* Mini sparkline / chart (SVG) */}
-                    <svg viewBox="0 0 120 40" className="w-full h-20" aria-hidden>
-                      <defs>
-                        <linearGradient id="g1" x1="0" x2="1">
-                        <stop offset="0%" stopColor="var(--sparkline-1)" />
-                        <stop offset="100%" stopColor="var(--sparkline-2)" />
-                      </linearGradient>
-                      </defs>
-                      <path d="M0 28 C20 10, 40 30, 60 18 C80 6, 100 26, 120 12" fill="none" stroke="url(#g1)" strokeWidth={3} strokeLinecap="round" />
-                    </svg>
-
-                    <div className="mt-4 grid grid-cols-2 gap-3 text-sm text-muted-foreground">
-                      <div className="flex flex-col">
-                        <span className="text-xs">YoY growth</span>
-                        <span className="text-foreground font-medium">+142%</span>
-                      </div>
-                      <div className="flex flex-col text-right">
-                        <span className="text-xs">Models deployed</span>
-                        <span className="text-foreground font-medium">38</span>
-                      </div>
-                    </div>
-                  </div>
-
-                  <div className="mt-4 flex gap-3">
-                    <div className="px-3 py-2 bg-secondary/10 rounded text-xs text-muted-foreground">AI Research</div>
-                    <div className="px-3 py-2 bg-secondary/10 rounded text-xs text-muted-foreground">Edge AI</div>
-                    <div className="px-3 py-2 bg-secondary/10 rounded text-xs text-muted-foreground">Kerala</div>
-                  </div>
-                </div>
-              </Card>
-
-              {/* Floating device card */}
-              <div className="absolute -right-8 top-12 w-36 h-20 bg-gradient-to-br from-primary/10 to-transparent rounded-2xl border border-border shadow-lg transform rotate-3 opacity-90 hover:rotate-0 transition-transform" aria-hidden />
-            </div>
-          </div>
+          </motion.div>
         </div>
+
+        {/* Credibility Strip */}
+        <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6, delay: 0.6 }} className="mt-24 pt-8 border-t border-border/60">
+          <p className="text-center text-sm font-medium text-muted-foreground mb-8 uppercase tracking-widest">
+          TRUSTED BY BUSINESSES AROUND THE WORLD
+
+          </p>
+          <div className="flex flex-wrap justify-center gap-x-12 gap-y-8 items-center opacity-70 grayscale hover:grayscale-0 transition-all duration-500">
+            {/* Replace with actual client SVGs when available */}
+            <div className="text-xl font-bold font-serif">Ordato.ai</div>
+            <div className="text-xl font-bold tracking-tight">Adara Screens</div>
+            <div className="text-xl font-extrabold italic">RALLYBOX</div>
+            <div className="text-xl font-bold font-mono">Movi</div>
+            
+            <div className="hidden md:flex items-center gap-2 border-l border-border pl-12">
+              <span ref={models.ref} className="text-2xl font-bold text-foreground">{models.count}+</span>
+              <span className="text-xs text-muted-foreground leading-tight">Models<br/>Deployed</span>
+            </div>
+          </div>
+        </motion.div>
       </div>
     </section>
   );

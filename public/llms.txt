@@ -1,0 +1,36 @@
+# Ecocee — AI Agents & Edge Computing | Kerala, India
+> Ecocee is a Kerala-based technology company that builds custom AI agents, private AI infrastructure, and embedded hardware systems for businesses across India.
+
+## What We Build
+- **Custom AI Agents**: Trained on your business data. Automate workflows, customer inquiries, inventory, and operations. Deployed on-premise — no public cloud.
+- **Private AI Infrastructure**: NVIDIA-based local AI servers. Your data never leaves your facility. No vendor lock-in, full data sovereignty.
+- **Embedded Systems & IoT**: Custom firmware, ESP32/ARM hardware, PCB prototyping, IoT sensor networks for real-time operational data.
+
+## Who We Serve
+- Manufacturing and warehouse businesses in Kerala
+- Retail and hospitality businesses needing 24/7 automated operations
+- Educational institutions needing AI knowledge management
+- Any business handling sensitive data requiring on-premise AI
+
+## Real Projects
+- **Ordato**: AI-powered restaurant order management and guest experience system
+- **Adara Screens**: Digital signage with AI content optimization
+- **Rallybox**: Motorsport telemetry AI with custom edge hardware
+
+## Operating Flow
+1. Discovery & Assessment — Map workflows before writing code
+2. Solution & Architecture — Custom design, transparent Statement of Work
+3. Engineering & MVP — Iterative build with client demonstrations
+4. UAT & Deployment — On-premise with zero data leakage guarantee
+5. Handover & Partnership — Full docs, SLA support, long-term partnership
+
+## Contact
+- Email: info@ecocee.in
+- LinkedIn: https://www.linkedin.com/company/ecocee
+- Location: Kodungallur, Thrissur, Kerala 680664, India
+- Website: https://ecocee.in
+
+## Tech Stack
+- AI/ML: Custom LLMs, RAG, on-premise inference,Agents,AGI
+- Hardware: ESP32, ARM Cortex, NVIDIA Jetson, custom PCB
+- Software: Next.js, Python, Node.js, embedded C/C++ ,golang
