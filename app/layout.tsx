@@ -193,7 +193,7 @@ export default function RootLayout({
           />
         </head>
 
-        <body            className={cn(
+        <body className={cn(
             "min-h-screen w-full flex flex-col overflow-x-hidden bg-background text-foreground selection:bg-primary\/30 antialiased",
             inter.variable,
             spaceGrotesk.variable,
@@ -206,8 +206,8 @@ export default function RootLayout({
               <NavbarWrapper />
             </React.Suspense>
 
-            {/* Main content */}
-            <main className="flex-1 w-full overflow-x-hidden pt-16" id="main-content">{children}</main>
+            {/* Main content - responsive padding for bigger navbar */}
+            <main className="flex-1 w-full overflow-x-hidden pt-40 md:pt-48 lg:pt-56" id="main-content">{children}</main>
 
             <Toaster
               position="top-right"

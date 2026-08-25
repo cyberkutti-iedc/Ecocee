@@ -87,18 +87,20 @@ export const Navbar = () => {
     hoverTimer.current = setTimeout(() => setActiveDropdown(null), 120);
   }, []);
 
-  /* ---------- Logo component (works in both light & dark) ---- */
+  /* ---------- Logo: logo.png = white text on transparent bg ---- */
   const Logo = ({ size = "normal" }: { size?: "normal" | "small" }) => {
-    const h = size === "small" ? "h-8" : "h-10";
+    const maxH = size === "small" ? "max-h-28" : "max-h-56";
+    const w = size === "small" ? 700 : 1200;
+    const h = size === "small" ? 175 : 300;
     return (
-      <Link href="/" className="flex items-center gap-2.5 shrink-0">
+      <Link href="/" className="flex items-center justify-center shrink-0">
         <Image
-          src="/logo_black.png"
+          src="/logo.png"
           alt="Ecocee"
-          width={size === "small" ? 32 : 40}
-          height={size === "small" ? 32 : 40}
+          width={w}
+          height={h}
           priority
-          className={`${h} w-auto dark:invert`}
+          className={`h-auto w-auto ${maxH} invert dark:invert-0 object-contain object-center`}
         />
       </Link>
     );
@@ -108,11 +110,11 @@ export const Navbar = () => {
     <header
       className={`fixed top-0 inset-x-0 z-50 transition-all duration-300 ${
         scrolled
-          ? "bg-white/90 dark:bg-gray-950/90 backdrop-blur-xl shadow-[0_1px_3px_rgba(0,0,0,0.06)] dark:shadow-[0_1px_3px_rgba(0,0,0,0.3)] border-b border-black/5 dark:border-white/5"
-          : "bg-white dark:bg-gray-950"
+          ? "bg-white/95 dark:bg-gray-950/95 backdrop-blur-2xl shadow-lg shadow-gray-200/30 dark:shadow-black/50 border-b border-gray-200 dark:border-gray-800"
+          : "bg-white/98 dark:bg-gray-950/98 border-b border-gray-100/50 dark:border-gray-800/50"
       }`}
     >
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-between h-[4.25rem]">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-between h-40 md:h-48 lg:h-56">
         {/* ── Logo ── */}
         <Logo />
 
@@ -127,7 +129,7 @@ export const Navbar = () => {
             >
               <Link
                 href={dropdown ? dropdown[0].href : href}
-                className="relative flex items-center gap-1 px-3 py-2 text-[13px] font-medium text-gray-600 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white transition-colors rounded-lg hover:bg-gray-50 dark:hover:bg-white/5"
+                className="relative flex items-center gap-1 px-4 py-2.5 text-sm font-semibold text-gray-700 dark:text-gray-200 hover:text-primary dark:hover:text-primary/90 transition-all duration-200 rounded-lg hover:bg-gray-50/80 dark:hover:bg-primary/10"
               >
                 {label}
                 {dropdown && (
@@ -142,7 +144,7 @@ export const Navbar = () => {
                   onMouseEnter={() => onEnter(label)}
                   onMouseLeave={onLeave}
                 >
-                  <div className="bg-white dark:bg-gray-900 rounded-xl border border-gray-200 dark:border-gray-800 shadow-xl shadow-gray-200/40 dark:shadow-black/40 p-2 w-80 animate-in fade-in slide-in-from-top-1 duration-150">
+                  <div className="bg-white dark:bg-gray-900/95 rounded-xl border border-gray-200/50 dark:border-gray-700/50 shadow-2xl shadow-gray-300/20 dark:shadow-black/40 p-2 w-80 backdrop-blur-sm animate-in fade-in slide-in-from-top-2 duration-200">
                     {dropdown.map((item) => (
                       <Link
                         key={item.href}
@@ -174,10 +176,10 @@ export const Navbar = () => {
         {/* ── Desktop Right: Theme + CTA ── */}
         <div className="hidden lg:flex items-center gap-1.5 shrink-0">
           <ThemeToggle />
-          <a href="mailto:info@ecocee.in" className="text-[13px] font-medium text-gray-500 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white px-3 py-2 rounded-lg hover:bg-gray-50 dark:hover:bg-white/5 transition-colors">
+          <a href="mailto:info@ecocee.in" className="text-sm font-semibold text-gray-700 dark:text-gray-200 hover:text-primary dark:hover:text-primary/90 px-4 py-2.5 rounded-lg hover:bg-gray-50/80 dark:hover:bg-primary/10 transition-all duration-200">
             Contact
           </a>
-          <Button size="sm" className="bg-primary text-primary-foreground font-semibold text-sm h-9 px-5 group rounded-lg" asChild>
+          <Button size="sm" className="bg-primary hover:bg-primary/90 text-white font-bold text-sm h-10 px-6 group rounded-lg shadow-md hover:shadow-lg transition-all duration-200 dark:bg-primary dark:hover:bg-primary/80" asChild>
             <a href="/#contact">
               Get Started
               <ArrowRight className="w-3.5 h-3.5 ml-1 group-hover:translate-x-0.5 transition-transform" />
@@ -194,7 +196,7 @@ export const Navbar = () => {
                 <Menu className="w-5 h-5 text-gray-700 dark:text-gray-200" />
               </button>
             </SheetTrigger>
-            <SheetContent side="right" className="w-[85vw] max-w-sm bg-white dark:bg-gray-950 p-0 border-l border-gray-100 dark:border-gray-800">
+            <SheetContent side="right" className="w-[85vw] max-w-sm bg-white dark:bg-gray-950/98 p-0 border-l border-gray-200 dark:border-gray-800 backdrop-blur-sm">
               <div className="flex flex-col h-full">
                 {/* Mobile header */}
                 <div className="flex items-center justify-between p-5 border-b border-gray-100 dark:border-gray-800">
@@ -212,7 +214,7 @@ export const Navbar = () => {
                         <>
                           <button
                             onClick={() => setMobileExpanded(mobileExpanded === label ? null : label)}
-                            className="w-full flex items-center justify-between px-4 py-3 rounded-xl text-sm font-medium text-gray-900 dark:text-gray-100 hover:bg-gray-50 dark:hover:bg-white/5 transition-colors"
+                            className="w-full flex items-center justify-between px-4 py-3.5 rounded-lg text-base font-semibold text-gray-800 dark:text-gray-100 hover:text-primary dark:hover:text-primary/90 hover:bg-gray-50/80 dark:hover:bg-primary/10 transition-all duration-200"
                           >
                             {label}
                             <ChevronDown className={`w-4 h-4 text-gray-400 transition-transform duration-200 ${mobileExpanded === label ? "rotate-180" : ""}`} />
@@ -232,7 +234,7 @@ export const Navbar = () => {
                           )}
                         </>
                       ) : (
-                        <Link href={href} onClick={() => setIsOpen(false)} className="block px-4 py-3 rounded-xl text-sm font-medium text-gray-900 dark:text-gray-100 hover:bg-gray-50 dark:hover:bg-white/5 transition-colors">
+                        <Link href={href} onClick={() => setIsOpen(false)} className="block px-4 py-3.5 rounded-lg text-base font-semibold text-gray-800 dark:text-gray-100 hover:text-primary dark:hover:text-primary/90 hover:bg-gray-50/80 dark:hover:bg-primary/10 transition-all duration-200">
                           {label}
                         </Link>
                       )}
@@ -242,10 +244,10 @@ export const Navbar = () => {
 
                 {/* Mobile CTA */}
                 <div className="p-4 border-t border-gray-100 dark:border-gray-800 space-y-2.5">
-                  <a href="mailto:info@ecocee.in" className="flex items-center justify-center gap-2 w-full py-3 text-sm font-medium text-gray-700 dark:text-gray-300 bg-gray-50 dark:bg-white/5 rounded-xl hover:bg-gray-100 dark:hover:bg-white/10 transition-colors">
+                  <a href="mailto:info@ecocee.in" className="flex items-center justify-center gap-2 w-full py-3.5 text-base font-semibold text-gray-700 dark:text-gray-200 bg-gray-50/80 dark:bg-gray-800/50 rounded-lg hover:bg-gray-100 dark:hover:bg-primary/20 transition-all duration-200">
                     Email Us
                   </a>
-                  <Button className="w-full bg-primary text-primary-foreground font-semibold h-12 rounded-xl" onClick={() => setIsOpen(false)} asChild>
+                  <Button className="w-full bg-primary hover:bg-primary/90 text-white font-bold h-12 rounded-lg shadow-md hover:shadow-lg transition-all duration-200 dark:bg-primary dark:hover:bg-primary/80" onClick={() => setIsOpen(false)} asChild>
                     <a href="/#contact">Book a Demo</a>
                   </Button>
                 </div>

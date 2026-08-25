@@ -14,11 +14,11 @@ export const FooterSection = () => {
           <div className="lg:col-span-4">
             <Link href="/" className="inline-flex items-center mb-4">
               <Image
-                src="/logo.webp"
+                src="/logo.png"
                 alt="Ecocee"
-                width={120}
-                height={32}
-                className="h-8 w-auto dark:invert"
+                width={140}
+                height={36}
+                className="h-8 w-auto invert dark:invert-0"
                 priority
               />
             </Link>

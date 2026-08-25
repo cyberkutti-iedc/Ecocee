@@ -11,7 +11,7 @@ export const organizationSchema = {
   "@type": "Organization",
   name: "Ecocee",
   url: SITE_URL,
-  logo: `${SITE_URL}/logo.webp`,
+  logo: `${SITE_URL}/logo.png`,
   description:
     "Ecocee builds custom AI agents, private AI infrastructure, and embedded IoT systems for businesses in Kerala and across India.",
   foundingDate: "2023",
@@ -82,7 +82,7 @@ export const websiteSchema = {
   publisher: {
     "@type": "Organization",
     name: "Ecocee",
-    logo: `${SITE_URL}/logo.webp`,
+    logo: `${SITE_URL}/logo.png`,
   },
   potentialAction: {
     "@type": "SearchAction",
