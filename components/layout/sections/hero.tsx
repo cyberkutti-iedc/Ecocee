@@ -114,30 +114,33 @@ export const HeroSection = () => {
                   <div className="w-2.5 h-2.5 rounded-full bg-emerald-500 pulse-subtle" />
                   <span className="text-sm font-semibold text-foreground">Ecocee AI Operations Agent</span>
                 </div>
-                <Badge variant="outline" className="text-[10px] border-emerald-500/30 text-emerald-600 dark:text-emerald-400 bg-emerald-500/5">
+                <Badge variant="outline" className="text-[10px] border-emerald-300 dark:border-emerald-700 text-emerald-800 dark:text-emerald-300 bg-emerald-100 dark:bg-emerald-900/50 font-semibold">
                   Secure On-Premise
                 </Badge>
               </div>
 
               {/* Chat Interface */}
               <div className="space-y-4 mb-6 font-mono text-sm">
-                <div className="flex gap-3">
-                  <div className="w-8 h-8 rounded-lg bg-secondary flex items-center justify-center text-xs font-bold text-muted-foreground shrink-0 border border-border">
-                    OPS
-                  </div>
-                  <div className="bg-secondary/50 rounded-xl rounded-tl-sm px-4 py-2.5 text-foreground max-w-[85%] border border-border/50">
+                {/* User Message (Right aligned) */}
+                <div className="flex gap-3 justify-end">
+                  <div className="bg-secondary/80 rounded-xl rounded-tr-sm px-4 py-2.5 text-foreground max-w-[85%] border border-border/50">
                     Do we have ESP32 boards in stock for the warehouse deployment?
                   </div>
+                  <div className="w-8 h-8 rounded-lg bg-secondary flex items-center justify-center text-[10px] font-bold text-muted-foreground shrink-0 border border-border">
+                    OPS
+                  </div>
                 </div>
-                <div className="flex gap-3 justify-end">
-                  <div className="bg-primary/10 border border-primary/20 rounded-xl rounded-tr-sm px-4 py-2.5 text-foreground max-w-[85%] relative">
+                
+                {/* AI Message (Left aligned) */}
+                <div className="flex gap-3">
+                  <div className="w-8 h-8 rounded-lg bg-primary flex items-center justify-center shrink-0 shadow-lg shadow-primary/20">
+                    <Bot className="w-4 h-4 text-primary-foreground" />
+                  </div>
+                  <div className="bg-primary/10 border border-primary/20 rounded-xl rounded-tl-sm px-4 py-2.5 text-foreground max-w-[85%] relative">
                     {typedText}
                     {typedText.length < fullText.length && (
                       <span className="inline-block w-1.5 h-4 ml-1 bg-primary animate-pulse align-middle" />
                     )}
-                  </div>
-                  <div className="w-8 h-8 rounded-lg bg-primary flex items-center justify-center shrink-0 shadow-lg shadow-primary/20">
-                    <Bot className="w-4 h-4 text-primary-foreground" />
                   </div>
                 </div>
               </div>
