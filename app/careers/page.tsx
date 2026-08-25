@@ -268,7 +268,7 @@ const CareerPage: React.FC = () => {
 				siteName="Ecocee"
 				structuredData={jsonLd}
 			/>
-			<div className="min-h-screen bg-gradient-to-br from-gray-900 via-green-900 to-black">
+			<div className="min-h-screen bg-background">
 				<HeroSection onViewPositions={scrollToPositions} />
 				<div ref={positionsRef as any}>
 					<CategoryFilter selectedCategory={selectedCategory} onChange={setSelectedCategory} />
@@ -276,16 +276,16 @@ const CareerPage: React.FC = () => {
 				<PositionsList positions={filteredPositions} onJobClick={handleJobClick} />
 
 				{/* About section kept simple and could be modularized later if needed */}
-				<section className="py-20 px-6 bg-gray-800/30 backdrop-blur-sm">
+				<section className="py-20 px-6 bg-secondary/30 backdrop-blur-sm">
 					<div className="max-w-4xl mx-auto text-center">
-						<h2 className="text-4xl font-bold text-white mb-6">About Ecocee</h2>
-						<p className="text-xl text-gray-300 leading-relaxed mb-8">
+						<h2 className="text-4xl font-bold text-foreground mb-6 font-display">About Ecocee</h2>
+						<p className="text-xl text-muted-foreground leading-relaxed mb-8">
 							We are an innovative MSME specializing in AI/ML solutions, embedded systems, and IoT technologies. 
 							Our leadership team drives cutting-edge innovation that bridges the physical and digital worlds, 
 							creating impactful technology solutions for businesses and communities across Kerala and India.
 						</p>
 						<div className="flex justify-center">
-							<a href="mailto:info@ecocee.in" className="inline-flex items-center text-green-400 hover:text-green-300 transition-colors text-lg font-medium">Get in touch</a>
+							<a href="mailto:info@ecocee.in" className="inline-flex items-center text-primary hover:text-primary/80 transition-colors text-lg font-medium">Get in touch</a>
 						</div>
 					</div>
 				</section>

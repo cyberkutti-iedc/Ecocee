@@ -14,14 +14,14 @@ const JobDetailsModal: React.FC<JobDetailsModalProps> = ({ job, onClose, onApply
     <AnimatePresence>
       {job && (
         <motion.div
-          className="fixed inset-0 bg-black/70 backdrop-blur-sm flex items-center justify-center p-4 z-50 overflow-y-auto"
+          className="fixed inset-0 bg-background/80 backdrop-blur-sm flex items-center justify-center p-4 z-50 overflow-y-auto"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
           onClick={onClose}
         >
           <motion.div
-            className="bg-gray-900 border border-green-600/30 rounded-3xl p-8 max-w-4xl w-full my-8 shadow-2xl max-h-[90vh] overflow-y-auto"
+            className="bg-card border border-border rounded-3xl p-8 max-w-4xl w-full my-8 shadow-2xl max-h-[90vh] overflow-y-auto"
             initial={{ scale: 0.95, opacity: 0 }}
             animate={{ scale: 1, opacity: 1 }}
             exit={{ scale: 0.95, opacity: 0 }}
@@ -36,32 +36,32 @@ const JobDetailsModal: React.FC<JobDetailsModalProps> = ({ job, onClose, onApply
                     ? 'bg-gradient-to-r from-purple-900/50 to-pink-900/50 border border-purple-500/30'
                     : 'bg-gradient-to-r from-green-900/50 to-emerald-900/50 border border-green-500/30'
                 }`}>
-                  <job.icon className="w-5 h-5 text-green-400" />
+                  <job.icon className="w-5 h-5 text-primary" />
                 </div>
                 <div>
-                  <h3 className="text-2xl font-bold text-white">{job.title}</h3>
-                  <p className="text-gray-400">{job.department} • {job.type}</p>
+                  <h3 className="text-2xl font-bold text-foreground font-display">{job.title}</h3>
+                  <p className="text-muted-foreground">{job.department} • {job.type}</p>
                 </div>
               </div>
               <button 
                 onClick={onClose}
-                className="p-2 hover:bg-gray-800 rounded-full transition-colors"
+                className="p-2 hover:bg-secondary rounded-full transition-colors"
                 type="button"
               >
-                <X className="w-6 h-6 text-gray-400" />
+                <X className="w-6 h-6 text-muted-foreground" />
               </button>
             </div>
 
             <div className="space-y-8">
               <div>
-                <h4 className="text-lg font-semibold text-white mb-3 flex items-center">
-                  <FileText className="w-5 h-5 mr-2 text-green-400" />
+                <h4 className="text-lg font-semibold text-foreground mb-3 flex items-center font-display">
+                  <FileText className="w-5 h-5 mr-2 text-primary" />
                   Description
                 </h4>
-                <p className="text-gray-300 leading-relaxed">{job.description}</p>
+                <p className="text-muted-foreground leading-relaxed">{job.description}</p>
               </div>
 
-              <div className="flex flex-wrap gap-6 text-gray-400">
+              <div className="flex flex-wrap gap-6 text-muted-foreground">
                 <div className="flex items-center">
                   <MapPin className="w-4 h-4 mr-2" />
                   <span>{job.location}</span>
@@ -73,14 +73,14 @@ const JobDetailsModal: React.FC<JobDetailsModalProps> = ({ job, onClose, onApply
               </div>
 
               <div>
-                <h4 className="text-lg font-semibold text-white mb-3 flex items-center">
-                  <Check className="w-5 h-5 mr-2 text-green-400" />
+                <h4 className="text-lg font-semibold text-foreground mb-3 flex items-center font-display">
+                  <Check className="w-5 h-5 mr-2 text-primary" />
                   Skills Required
                 </h4>
                 <div className="grid grid-cols-2 gap-2">
                   {job.skills.map((skill, index) => (
-                    <div key={index} className="flex items-center text-gray-300">
-                      <CheckCircle className="w-4 h-4 mr-2 text-green-500" />
+                    <div key={index} className="flex items-center text-muted-foreground">
+                      <CheckCircle className="w-4 h-4 mr-2 text-primary" />
                       {skill}
                     </div>
                   ))}
@@ -88,14 +88,14 @@ const JobDetailsModal: React.FC<JobDetailsModalProps> = ({ job, onClose, onApply
               </div>
 
               <div>
-                <h4 className="text-lg font-semibold text-white mb-3 flex items-center">
-                  <Shield className="w-5 h-5 mr-2 text-green-400" />
+                <h4 className="text-lg font-semibold text-foreground mb-3 flex items-center font-display">
+                  <Shield className="w-5 h-5 mr-2 text-primary" />
                   Key Responsibilities
                 </h4>
                 <ul className="space-y-2">
                   {job.responsibilities.map((responsibility, index) => (
-                    <li key={index} className="flex items-start text-gray-300">
-                      <ArrowRight className="w-4 h-4 mr-2 mt-0.5 text-green-500 flex-shrink-0" />
+                    <li key={index} className="flex items-start text-muted-foreground">
+                      <ArrowRight className="w-4 h-4 mr-2 mt-0.5 text-primary flex-shrink-0" />
                       {responsibility}
                     </li>
                   ))}
@@ -103,14 +103,14 @@ const JobDetailsModal: React.FC<JobDetailsModalProps> = ({ job, onClose, onApply
               </div>
 
               <div>
-                <h4 className="text-lg font-semibold text-white mb-3 flex items-center">
-                  <Award className="w-5 h-5 mr-2 text-green-400" />
+                <h4 className="text-lg font-semibold text-foreground mb-3 flex items-center font-display">
+                  <Award className="w-5 h-5 mr-2 text-primary" />
                   Learning Outcomes
                 </h4>
                 <ul className="space-y-2">
                   {job.learningOutcomes.map((outcome, index) => (
-                    <li key={index} className="flex items-start text-gray-300">
-                      <Star className="w-4 h-4 mr-2 mt-0.5 text-yellow-500 flex-shrink-0" />
+                    <li key={index} className="flex items-start text-muted-foreground">
+                      <Star className="w-4 h-4 mr-2 mt-0.5 text-primary flex-shrink-0" />
                       {outcome}
                     </li>
                   ))}
@@ -118,14 +118,14 @@ const JobDetailsModal: React.FC<JobDetailsModalProps> = ({ job, onClose, onApply
               </div>
 
               <div>
-                <h4 className="text-lg font-semibold text-white mb-3 flex items-center">
-                  <Target className="w-5 h-5 mr-2 text-green-400" />
+                <h4 className="text-lg font-semibold text-foreground mb-3 flex items-center font-display">
+                  <Target className="w-5 h-5 mr-2 text-primary" />
                   Requirements
                 </h4>
                 <ul className="space-y-2">
                   {job.requirements.map((requirement, index) => (
-                    <li key={index} className="flex items-start text-gray-300">
-                      <CheckCircle className="w-4 h-4 mr-2 mt-0.5 text-blue-500 flex-shrink-0" />
+                    <li key={index} className="flex items-start text-muted-foreground">
+                      <CheckCircle className="w-4 h-4 mr-2 mt-0.5 text-primary flex-shrink-0" />
                       {requirement}
                     </li>
                   ))}
@@ -136,7 +136,7 @@ const JobDetailsModal: React.FC<JobDetailsModalProps> = ({ job, onClose, onApply
             <div className="mt-8 text-center">
               <button
                 onClick={() => onApply(job.title)}
-                className="px-8 py-4 bg-gradient-to-r from-green-600 to-emerald-600 text-white font-semibold rounded-2xl hover:from-green-700 hover:to-emerald-700 transition-all duration-300 shadow-lg hover:shadow-xl transform hover:scale-105"
+                className="px-8 py-4 bg-primary text-primary-foreground font-semibold rounded-2xl hover:bg-primary/90 transition-all duration-300 shadow-lg hover:shadow-xl transform hover:scale-105"
               >
                 Apply Now
               </button>
