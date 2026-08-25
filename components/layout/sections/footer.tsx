@@ -16,9 +16,9 @@ export const FooterSection = () => {
               <Image
                 src="/logo.png"
                 alt="Ecocee"
-                width={140}
-                height={36}
-                className="h-8 w-auto invert dark:invert-0"
+                width={1200}
+                height={300}
+                className="h-16 w-auto invert dark:invert-0 object-contain"
                 priority
               />
             </Link>
@@ -116,7 +116,7 @@ export const FooterSection = () => {
               ))}
             </div>
             <p className="text-xs text-muted-foreground">
-              &copy; {currentYear} Ecocee Technologies Pvt. Ltd.
+              &copy; {currentYear} Ecocee.
             </p>
           </div>
         </div>

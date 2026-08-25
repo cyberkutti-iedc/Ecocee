@@ -207,7 +207,7 @@ export default function RootLayout({
             </React.Suspense>
 
             {/* Main content - responsive padding for bigger navbar */}
-            <main className="flex-1 w-full overflow-x-hidden pt-40 md:pt-48 lg:pt-56" id="main-content">{children}</main>
+            <main className="flex-1 w-full overflow-x-hidden pt-20 md:pt-24 lg:pt-28" id="main-content">{children}</main>
 
             <Toaster
               position="top-right"

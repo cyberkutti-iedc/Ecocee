@@ -89,7 +89,7 @@ export const Navbar = () => {
 
   /* ---------- Logo: logo.png = white text on transparent bg ---- */
   const Logo = ({ size = "normal" }: { size?: "normal" | "small" }) => {
-    const maxH = size === "small" ? "max-h-28" : "max-h-56";
+    const maxH = size === "small" ? "max-h-12" : "max-h-20";
     const w = size === "small" ? 700 : 1200;
     const h = size === "small" ? 175 : 300;
     return (
@@ -114,7 +114,7 @@ export const Navbar = () => {
           : "bg-white/98 dark:bg-gray-950/98 border-b border-gray-100/50 dark:border-gray-800/50"
       }`}
     >
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-between h-40 md:h-48 lg:h-56">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-between h-20 md:h-24 lg:h-28">
         {/* ── Logo ── */}
         <Logo />
 
