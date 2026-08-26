@@ -23,7 +23,7 @@ export const FooterSection = () => {
               />
             </Link>
             <p className="text-sm text-muted-foreground leading-relaxed mb-5 max-w-xs">
-              AI agents and edge computing solutions built in Kerala for businesses across India.
+              Built in Kerala. Serving businesses worldwide.
             </p>
             <div className="flex gap-2">
               {[
@@ -44,15 +44,15 @@ export const FooterSection = () => {
             </div>
           </div>
 
-          {/* AI Agents */}
+          {/* Capabilities */}
           <div className="lg:col-span-3">
-            <h3 className="font-semibold text-foreground mb-4 text-xs uppercase tracking-wider">AI Agents</h3>
+            <h3 className="font-semibold text-foreground mb-4 text-xs uppercase tracking-wider">Capabilities</h3>
             <ul className="space-y-2.5">
               {[
-                { label: "Business Agent", href: "/ai-agents#business" },
-                { label: "Office Agent", href: "/ai-agents#office" },
-                { label: "Warehouse Agent", href: "/ai-agents#warehouse" },
-                { label: "All Agents & Pricing", href: "/ai-agents" },
+                { label: "AI Business Automation", href: "/#solutions" },
+                { label: "Private AI Systems", href: "/#solutions" },
+                { label: "Edge AI & IoT", href: "/#solutions" },
+                { label: "Hardware Integration", href: "/#solutions" },
               ].map(({ label, href }) => (
                 <li key={label}>
                   <a href={href} className="text-sm text-muted-foreground hover:text-primary transition-colors duration-150">
@@ -69,7 +69,7 @@ export const FooterSection = () => {
             <ul className="space-y-2.5">
               {[
                 { label: "About", href: "/about" },
-                { label: "Team", href: "/Team" },
+                { label: "Team", href: "/about#team" },
                 { label: "Careers", href: "/careers" },
                 { label: "FAQ", href: "/#faq" },
               ].map(({ label, href }) => (
@@ -93,8 +93,7 @@ export const FooterSection = () => {
               </li>
               <li>
                 <p className="text-sm text-muted-foreground leading-relaxed">
-                  Kodungallur, Thrissur District<br />
-                  Kerala 680664, India
+                  Kodungallur, Kerala, India
                 </p>
               </li>
             </ul>

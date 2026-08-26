@@ -11,14 +11,14 @@ export const EcoceeStackSection = () => {
   const stackLayers = [
     {
       id: 1,
-      title: "Software Layer",
+      title: "Intelligence Layer",
       subtitle: "Custom AI Agents",
       icon: Bot,
       color: "text-emerald-500",
       bgHover: "hover:bg-emerald-500/10",
       borderColor: "border-emerald-500/30",
-      description: "Agents trained on your data to automate repetitive workflows. They connect to your existing CRM, ERP, and databases securely.",
-      features: ["Retrieval-Augmented Generation (RAG)", "API-first integration", "Role-based access control"],
+      description: "AI agents connected to business data, tools and workflows to automate operational tasks.",
+      features: ["Workflow Automation", "System Integration", "Data Grounding"],
     },
     {
       id: 2,
@@ -28,8 +28,8 @@ export const EcoceeStackSection = () => {
       color: "text-blue-500",
       bgHover: "hover:bg-blue-500/10",
       borderColor: "border-blue-500/30",
-      description: "We don't send your proprietary data to public clouds. We deploy local or hybrid AI servers that you fully control.",
-      features: ["NVIDIA-powered local inference", "Zero cloud dependency", "DPDPA/GDPR compliance"],
+      description: "Cloud, private, on-premise or hybrid infrastructure designed around security, performance and operational requirements.",
+      features: ["Flexible Deployment", "Security-First Architecture", "Scalable Compute"],
     },
     {
       id: 3,
@@ -39,8 +39,8 @@ export const EcoceeStackSection = () => {
       color: "text-amber-500",
       bgHover: "hover:bg-amber-500/10",
       borderColor: "border-amber-500/30",
-      description: "Custom firmware and IoT sensors that feed real-world data directly into your AI stack for real-time operational decisions.",
-      features: ["ESP32 custom firmware", "Real-time telemetry", "Industrial IoT sensors"],
+      description: "Sensors, firmware and connected devices that bring real-world data into intelligent systems.",
+      features: ["Sensor Integration", "Custom Firmware", "Real-Time Data Processing"],
     },
   ];
 
@@ -103,9 +103,24 @@ export const EcoceeStackSection = () => {
             
             <div className="h-full flex flex-col justify-center min-h-[300px]">
               {activeLayer === null ? (
-                <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="text-center text-muted-foreground">
-                  <Bot className="w-12 h-12 mx-auto mb-4 opacity-20" />
-                  <p>Hover over a layer to see technical details.</p>
+                <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="flex flex-col items-center justify-center h-full space-y-6">
+                  <div className="text-center font-mono text-sm text-muted-foreground/80 space-y-3 bg-background/50 p-6 rounded-xl border border-border/50">
+                    <div className="font-bold text-foreground">REAL WORLD</div>
+                    <div>Sensors / Devices</div>
+                    <div className="text-primary">↓</div>
+                    <div className="font-bold text-foreground">EDGE</div>
+                    <div>Local Intelligence</div>
+                    <div className="text-primary">↓</div>
+                    <div className="font-bold text-foreground">PRIVATE AI</div>
+                    <div>Models / Agents</div>
+                    <div className="text-primary">↓</div>
+                    <div className="font-bold text-foreground">BUSINESS SYSTEMS</div>
+                    <div>ERP / CRM / Databases</div>
+                    <div className="text-primary">↓</div>
+                    <div className="font-bold text-foreground">ACTION</div>
+                    <div>Automation / Decisions</div>
+                  </div>
+                  <p className="text-sm text-muted-foreground mt-4">Illustrative Ecocee Architecture</p>
                 </motion.div>
               ) : (
                 stackLayers.map((layer) => (

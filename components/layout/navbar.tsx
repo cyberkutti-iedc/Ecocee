@@ -26,15 +26,15 @@ interface RouteProps {
 
 const routeList: RouteProps[] = [
   {
-    href: "/ai-agents",
-    label: "Solutions",
+    href: "/#solutions",
+    label: "Capabilities",
     dropdown: [
-      { href: "/ai-agents#business", label: "Business Agent", description: "Customer support, lead capture, and sales automation", icon: <Bot className="w-5 h-5" /> },
-      { href: "/ai-agents#office", label: "Office Agent", description: "Email, scheduling, HR, and document management", icon: <Building2 className="w-5 h-5" /> },
-      { href: "/ai-agents#warehouse", label: "Warehouse Agent", description: "Inventory, logistics, and supply chain automation", icon: <Warehouse className="w-5 h-5" /> },
+      { href: "/#solutions", label: "AI Automation", description: "Automate repetitive operational workflows", icon: <Bot className="w-5 h-5" /> },
+      { href: "/#solutions", label: "Private AI", description: "Deploy AI in private or on-premise environments", icon: <Building2 className="w-5 h-5" /> },
+      { href: "/#solutions", label: "Edge AI & IoT", description: "Process real-world data locally and connect sensors", icon: <Warehouse className="w-5 h-5" /> },
     ],
   },
-  { href: "/#how-we-work", label: "How We Work" },
+  { href: "/#ecocee-stack", label: "Architecture" },
   { href: "/about", label: "About" },
   { href: "/careers", label: "Careers" },
 ];
@@ -147,7 +147,7 @@ export const Navbar = () => {
                   <div className="bg-white dark:bg-gray-900/95 rounded-xl border border-gray-200/50 dark:border-gray-700/50 shadow-2xl shadow-gray-300/20 dark:shadow-black/40 p-2 w-80 backdrop-blur-sm animate-in fade-in slide-in-from-top-2 duration-200">
                     {dropdown.map((item) => (
                       <Link
-                        key={item.href}
+                        key={item.label}
                         href={item.href}
                         className="flex items-start gap-3 p-3 rounded-lg hover:bg-gray-50 dark:hover:bg-white/5 transition-colors group/item"
                       >
@@ -222,7 +222,7 @@ export const Navbar = () => {
                           {mobileExpanded === label && (
                             <div className="ml-2 mt-1 mb-2 space-y-0.5 animate-in slide-in-from-top-1 duration-150">
                               {dropdown.map((item) => (
-                                <Link key={item.href} href={item.href} onClick={() => setIsOpen(false)} className="flex items-start gap-3 px-4 py-3 rounded-xl hover:bg-gray-50 dark:hover:bg-white/5 transition-colors">
+                                <Link key={item.label} href={item.href} onClick={() => setIsOpen(false)} className="flex items-start gap-3 px-4 py-3 rounded-xl hover:bg-gray-50 dark:hover:bg-white/5 transition-colors">
                                   <span className="mt-0.5 text-primary shrink-0">{item.icon}</span>
                                   <div className="min-w-0">
                                     <div className="text-sm font-medium text-gray-900 dark:text-gray-100">{item.label}</div>

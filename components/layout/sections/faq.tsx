@@ -15,63 +15,53 @@ interface FAQProps {
 
 const FAQList: FAQProps[] = [
   {
-    question: "What is Ecocee and how do you work?",
-    answer:
-      "Ecocee is a technology partnership company based in Kodungallur, Kerala. We do not simply build what is requested. We first understand the business problem, discover the actual requirements, assess the current situation, and then recommend the most appropriate solution. Our process follows a structured flow: Discovery, Assessment, Solution Exploration, Recommendation, Proposal, SOW, Engineering, Deployment, and ongoing Support.",
+    question: "What problems does Ecocee solve?",
+    answer: "We solve complex operational problems using AI automation, private AI infrastructure, and embedded systems. Whether it's automating business workflows, processing real-world data at the edge, or integrating custom hardware with intelligent software, we design the technology around your specific bottleneck.",
     value: "item-1",
   },
   {
-    question: "What happens during the discovery phase?",
-    answer:
-      "During discovery, we ask questions to understand the real problem behind your stated requirement. We determine what problem is being solved, who experiences it, how it is currently handled, what technology exists, what limitations exist, and what the expected business outcome is. A client requesting a mobile app, for example, may actually need a simpler web tool or an AI agent. We identify the right solution before any development begins.",
+    question: "Can Ecocee integrate AI with our existing systems?",
+    answer: "Yes. Our AI systems are designed to connect with your existing CRM, ERP, databases, and operational tools. We prioritize seamless integration so that the intelligence operates directly within the workflows your team already uses.",
     value: "item-2",
   },
   {
-    question: "How do your AI agents work for businesses?",
-    answer:
-      "We build three types of AI agents, each custom-trained on your specific business data and workflows. The Business AI Agent handles customer inquiries via email and your website, automatically qualifying leads and managing your CRM. The Office AI Agent manages emails, scheduling, HR tasks, and document workflows. The Warehouse AI Agent handles inventory tracking, logistics, and supply chain automation. Setup typically takes 1 to 3 days, and the agents learn and improve over time.",
+    question: "Can AI run privately or on-premise?",
+    answer: "Yes. We design deployment architectures based on your specific security and data handling requirements. This includes fully private, on-premise, or hybrid infrastructure to ensure your business data remains secure and compliant.",
     value: "item-3",
   },
   {
-    question: "Can the warehouse AI agent work offline?",
-    answer:
-      "Yes. Our Warehouse AI Agent can run on edge computing devices we manufacture, enabling real-time inventory tracking, anomaly detection, and demand forecasting without internet connectivity. Data syncs automatically when the connection is restored. This is critical for warehouses and factories in areas with unreliable network coverage.",
+    question: "Can Ecocee build both hardware and software?",
+    answer: "Yes. We provide full-stack engineering, from custom AI software agents down to the physical sensors and embedded microcontrollers. This allows us to build cohesive systems that connect real-world environments to digital intelligence.",
     value: "item-4",
   },
   {
-    question: "What embedded systems and IoT solutions do you offer?",
-    answer:
-      "We develop custom embedded hardware using ESP32, ARM, and PIC microcontrollers. Our services include PCB prototyping, firmware development, real-time operating systems, and full IoT solutions with cloud integration and remote monitoring. Every hardware project goes through our standard process: requirement understanding, architecture, design, engineering, validation, and deployment.",
+    question: "How does a project start?",
+    answer: "Every engagement begins with an initial discussion to understand your business problem. From there, we move into Discovery and Technical Assessment to evaluate your workflows and constraints before recommending a specific architecture or solution.",
     value: "item-5",
   },
   {
-    question: "How do you determine pricing?",
-    answer:
-      "Pricing is determined after understanding your requirements through the discovery and assessment phases. Our AI agent subscriptions start from Rs 9,999 per month. For custom projects, we provide a transparent proposal covering scope, deliverables, milestones, timeline, and commercial terms before any work begins. We do not begin development until the SOW is approved by both parties.",
+    question: "How do you handle confidential information?",
+    answer: "We operate under strict confidentiality agreements. Security and data-handling requirements are defined as a core part of the system architecture early in the process. We do not use your proprietary data to train public models.",
     value: "item-6",
   },
   {
-    question: "How long does a typical project take?",
-    answer:
-      "Solution assessment takes 3 to 7 working days. Architecture and technology planning takes 1 to 2 weeks depending on complexity. We target an MVP delivery in approximately 4 weeks where appropriate. The full timeline depends on project scope and is defined in the SOW with clear milestones. We conduct continuous reviews throughout development to avoid surprises at delivery.",
+    question: "How much does a project cost?",
+    answer: "Project costs depend on the complexity of the problem, the required architecture (software vs hardware), and integration depth. Following our Technical Assessment, we provide a transparent commercial proposal detailing the scope and investment before any engineering begins.",
     value: "item-7",
   },
   {
-    question: "What industries do you serve?",
-    answer:
-      "We serve manufacturing, retail, logistics, hospitality, education, and healthcare sectors. Our approach is industry-agnostic because we start by understanding the business problem rather than applying pre-built solutions. Whether it is automated customer support for retail, inventory management for factories, or process automation for offices, the process is the same: understand, recommend, engineer, deliver.",
+    question: "How long does development take?",
+    answer: "Development timelines vary based on project scope. Once the architecture is defined, we establish a clear roadmap with iterative milestones. We focus on delivering an early working version to validate the solution in your environment as quickly as practical.",
     value: "item-8",
   },
   {
-    question: "Do you provide support after deployment?",
-    answer:
-      "Yes. Support after delivery is governed by a Service Level Agreement (SLA) that defines support hours, severity levels, response times, resolution targets, and escalation processes. This may include bug fixes, monitoring, infrastructure support, security updates, dependency updates, and incident response. Beyond support, we also review performance, scalability, and new opportunities to continuously improve your system.",
+    question: "Do you provide post-deployment support?",
+    answer: "Yes. After deployment, we offer ongoing SLA-driven support, system monitoring, and continuous evolution. We act as your long-term technology partner to ensure the system adapts as your business grows.",
     value: "item-9",
   },
   {
-    question: "How do I get started with Ecocee?",
-    answer:
-      "Send us a message through the contact form or email us at info@ecocee.in. We will schedule a discovery call to understand your business context and the problem you are trying to solve. There is no commitment at this stage. Based on the discovery, we provide a recommendation and proposal before any commercial or development agreement is made.",
+    question: "What industries do you work with?",
+    answer: "We serve businesses with complex operational needs across manufacturing, logistics, retail, healthcare, and corporate operations. Because we engineer the system around the problem, our approach applies to any industry that requires reliable automation and connected intelligence.",
     value: "item-10",
   },
 ];

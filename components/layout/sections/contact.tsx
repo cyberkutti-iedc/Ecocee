@@ -63,13 +63,12 @@ export const ContactSection = () => {
             className="text-3xl md:text-5xl font-extrabold text-foreground tracking-tight mb-5"
             style={{ fontFamily: "var(--font-display)" }}
           >
-            Let&apos;s Build Your
+            Tell Us What You're
             <br />
-            <span className="text-primary">AI Solution</span>
+            <span className="text-primary">Trying To Solve</span>
           </h2>
           <p className="text-lg text-muted-foreground leading-relaxed">
-            Tell us about your business and we&apos;ll show you how AI agents and edge computing
-            can transform your operations. Free consultation, no commitment.
+            Tell us about your business problem. We&apos;ll help determine whether AI, edge computing, embedded systems or automation can solve it. No commitment.
           </p>
         </div>
 
@@ -95,7 +94,7 @@ export const ContactSection = () => {
               </div>
               <div className="min-w-0">
                 <p className="text-sm font-semibold text-foreground">Location</p>
-                <p className="text-xs text-muted-foreground truncate">Kodungallur, Thrissur, Kerala</p>
+                <p className="text-xs text-muted-foreground truncate">Kodungallur, Kerala, India</p>
               </div>
             </CardContent>
           </Card>
@@ -140,12 +139,15 @@ export const ContactSection = () => {
                           <SelectValue placeholder="Select your interest" />
                         </SelectTrigger>
                         <SelectContent>
-                          <SelectItem value="business-ai">Business AI Agent</SelectItem>
-                          <SelectItem value="office-ai">Office AI Agent</SelectItem>
-                          <SelectItem value="warehouse-ai">Warehouse AI Agent</SelectItem>
-                          <SelectItem value="edge-device">Custom Edge Device</SelectItem>
-                          <SelectItem value="iot">IoT Solution</SelectItem>
-                          <SelectItem value="pcb">PCB Prototyping</SelectItem>
+                          <SelectItem value="ai-business-automation">AI Business Automation</SelectItem>
+                          <SelectItem value="ai-agent">AI Agent</SelectItem>
+                          <SelectItem value="private-ai">Private AI / On-Premise AI</SelectItem>
+                          <SelectItem value="edge-ai">Edge AI</SelectItem>
+                          <SelectItem value="computer-vision">Computer Vision</SelectItem>
+                          <SelectItem value="iot-embedded">IoT / Embedded System</SelectItem>
+                          <SelectItem value="custom-hardware">Custom Hardware</SelectItem>
+                          <SelectItem value="pcb-prototyping">PCB Prototyping</SelectItem>
+                          <SelectItem value="ai-hardware">AI + Hardware</SelectItem>
                           <SelectItem value="other">Something Else</SelectItem>
                         </SelectContent>
                       </Select>
@@ -157,7 +159,7 @@ export const ContactSection = () => {
                     <Button type="submit" disabled={isSubmitting} className="w-full bg-primary text-primary-foreground font-semibold h-11 group">
                       {isSubmitting ? "Sending..." : (
                         <span className="flex items-center">
-                          Send Message
+                          Talk to an Ecocee Architect
                           <ArrowRight className="w-4 h-4 ml-2 group-hover:translate-x-0.5 transition-transform" />
                         </span>
                       )}
@@ -184,17 +186,17 @@ export const ContactSection = () => {
               <CardContent className="p-5">
                 <div className="flex items-center gap-2 mb-2">
                   <Calendar className="w-4 h-4 text-primary" />
-                  <span className="text-sm font-semibold text-foreground">Free Consultation</span>
+                  <span className="text-sm font-semibold text-foreground">30-Minute Discovery Call</span>
                 </div>
                 <p className="text-sm text-muted-foreground mb-3">
-                  Book a 30-minute call to discuss your project. No commitment.
+                  Book a call to discuss your project. No commitment.
                 </p>
                 <Button
                   variant="outline"
                   className="w-full text-sm"
                   asChild
                 >
-                  <a href="mailto:info@ecocee.in?subject=Free%20Consultation%20Request">
+                  <a href="mailto:info@ecocee.in?subject=Discovery%20Call%20Request">
                     Request via Email
                   </a>
                 </Button>
@@ -207,10 +209,10 @@ export const ContactSection = () => {
                   <span className="text-sm font-semibold text-foreground">Location</span>
                 </div>
                 <p className="text-sm text-muted-foreground">
-                  Kodungallur, Thrissur District<br />Kerala 680664, India
+                  Kodungallur, Kerala, India
                 </p>
                 <p className="text-xs text-muted-foreground mt-2">
-                  Serving businesses across Kerala and remotely worldwide.
+                  Built in Kerala. Serving businesses worldwide.
                 </p>
               </CardContent>
             </Card>

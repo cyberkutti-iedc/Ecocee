@@ -43,7 +43,7 @@ export const HeroSection = () => {
 
   // Simple typing effect simulation
   const [typedText, setTypedText] = useState("");
-  const fullText = "Yes! ESP32-S3 and ESP32-P4 available. Bulk quote or single unit?";
+  const fullText = "Analyzing operational data... 3 priority tasks require attention.";
   
   useEffect(() => {
     let i = 0;
@@ -82,7 +82,7 @@ export const HeroSection = () => {
             </motion.h1>
 
             <motion.p initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6, delay: 0.2 }} className="text-lg text-muted-foreground max-w-xl leading-relaxed">
-              Custom AI agents, private infrastructure, and embedded systems — built for your workflows, not generic templates.
+              We build private AI agents, edge intelligence, and intelligent hardware that automate real-world business operations.
             </motion.p>
 
             <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6, delay: 0.3 }} className="flex flex-wrap gap-3 items-center">
@@ -91,7 +91,7 @@ export const HeroSection = () => {
                 onClick={() => document.getElementById("ai-agents")?.scrollIntoView({ behavior: "smooth" })}
                 className="h-12 px-7 bg-primary text-primary-foreground font-semibold shadow-md hover:shadow-lg hover:shadow-primary/20 transition-all duration-200 group"
               >
-                Get a Consultation
+                Talk to an Ecocee Architect
                 <ArrowRight className="w-4 h-4 ml-2 group-hover:translate-x-1 transition-transform" />
               </Button>
               <Button
@@ -100,7 +100,7 @@ export const HeroSection = () => {
                 onClick={() => document.getElementById("contact")?.scrollIntoView({ behavior: "smooth" })}
                 className="h-12 px-7"
               >
-                See How We Work
+                Explore Our Capabilities
               </Button>
             </motion.div>
           </div>
@@ -124,7 +124,7 @@ export const HeroSection = () => {
                 {/* User Message (Right aligned) */}
                 <div className="flex gap-3 justify-end">
                   <div className="bg-secondary/80 rounded-xl rounded-tr-sm px-4 py-2.5 text-foreground max-w-[85%] border border-border/50">
-                    Do we have ESP32 boards in stock for the warehouse deployment?
+                    What tasks require attention today?
                   </div>
                   <div className="w-8 h-8 rounded-lg bg-secondary flex items-center justify-center text-[10px] font-bold text-muted-foreground shrink-0 border border-border">
                     OPS
@@ -148,9 +148,9 @@ export const HeroSection = () => {
               {/* Live Metrics */}
               <div className="grid grid-cols-3 gap-4 pt-4 border-t border-border/50 bg-background/50 -mx-6 -mb-6 p-6 rounded-b-2xl">
                 {[
-                  { value: "0.8s", label: "Latency" },
-                  { value: "Local", label: "Compute" },
-                  { value: "AES-256", label: "Encryption" },
+                  { value: "PRIVATE", label: "Infrastructure" },
+                  { value: "EDGE-READY", label: "Deployment" },
+                  { value: "INTEGRATION", label: "System Ready" },
                 ].map((m) => (
                   <div key={m.label} className="text-center">
                     <div className="text-sm font-bold text-foreground">{m.value}</div>
@@ -166,19 +166,13 @@ export const HeroSection = () => {
         <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6, delay: 0.6 }} className="mt-24 pt-8 border-t border-border/60">
           <p className="text-center text-sm font-medium text-muted-foreground mb-8 uppercase tracking-widest">
           TRUSTED BY BUSINESSES AROUND THE WORLD
-
           </p>
           <div className="flex flex-wrap justify-center gap-x-12 gap-y-8 items-center opacity-70 grayscale hover:grayscale-0 transition-all duration-500">
-            {/* Replace with actual client SVGs when available */}
+            {/* Client logos */}
             <div className="text-xl font-bold font-serif">Ordato.ai</div>
             <div className="text-xl font-bold tracking-tight">Adara Screens</div>
             <div className="text-xl font-extrabold italic">RALLYBOX</div>
             <div className="text-xl font-bold font-mono">Movi</div>
-            
-            <div className="hidden md:flex items-center gap-2 border-l border-border pl-12">
-              <span ref={models.ref} className="text-2xl font-bold text-foreground">{models.count}+</span>
-              <span className="text-xs text-muted-foreground leading-tight">Models<br/>Deployed</span>
-            </div>
           </div>
         </motion.div>
       </div>

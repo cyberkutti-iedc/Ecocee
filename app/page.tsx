@@ -5,6 +5,10 @@ import { DeploymentFlowSection } from "@/components/layout/sections/deployment-f
 import { FAQSection } from "@/components/layout/sections/faq";
 import { ContactSection } from "@/components/layout/sections/contact";
 import { FooterSection } from "@/components/layout/sections/footer";
+import { SolutionsSection } from "@/components/layout/sections/solutions";
+import { TargetAudienceSection } from "@/components/layout/sections/target-audience";
+import { EcoceeLabsSection } from "@/components/layout/sections/ecocee-labs";
+import { ProcessNextSection } from "@/components/layout/sections/process-next";
 import { AnimatedSection } from "@/components/ui/animated-section";
 import Seo from "@/components/seo/Seo";
 import {
@@ -86,6 +90,11 @@ export default function Home() {
             <HeroSection />
           </section>
 
+        {/* Solutions - What Can Ecocee Solve? */}
+        <AnimatedSection variant="fade-up" delay={0.1}>
+          <SolutionsSection />
+        </AnimatedSection>
+
         {/* The Ecocee Stack — Software + Compute + Edge */}
         <AnimatedSection variant="fade-up" delay={0.1}>
           <EcoceeStackSection />
@@ -98,11 +107,26 @@ export default function Home() {
           </section>
         </AnimatedSection>
 
-        {/* FAQ — critical for AEO featured snippets */}
+        {/* Target Audience / Who We Work With */}
+        <AnimatedSection variant="fade-up" delay={0.1}>
+          <TargetAudienceSection />
+        </AnimatedSection>
+
+        {/* Ecocee Labs */}
+        <AnimatedSection variant="fade-up" delay={0.1}>
+          <EcoceeLabsSection />
+        </AnimatedSection>
+
+        {/* FAQ */}
         <AnimatedSection variant="fade-up" delay={0.05}>
           <section aria-label="Frequently Asked Questions">
             <FAQSection />
           </section>
+        </AnimatedSection>
+
+        {/* What Happens Next? */}
+        <AnimatedSection variant="fade-up" delay={0.1}>
+          <ProcessNextSection />
         </AnimatedSection>
 
         {/* Contact — lead capture */}
