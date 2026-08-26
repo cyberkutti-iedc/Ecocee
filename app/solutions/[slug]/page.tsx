@@ -16,7 +16,8 @@ export function generateStaticParams() {
 }
 
 export async function generateMetadata({ params }: { params: { slug: string } }): Promise<Metadata> {
-  const solution = solutionsData[params.slug];
+  const cleanSlug = params.slug.replace(/\/$/, '');
+  const solution = solutionsData[cleanSlug];
   
   if (!solution) {
     return {};
@@ -27,18 +28,19 @@ export async function generateMetadata({ params }: { params: { slug: string } })
     description: solution.description,
     keywords: solution.keywords,
     alternates: {
-      canonical: `https://ecocee.in/solutions/${params.slug}`,
+      canonical: `https://ecocee.in/solutions/${cleanSlug}`,
     },
     openGraph: {
       title: solution.title,
       description: solution.description,
-      url: `https://ecocee.in/solutions/${params.slug}`,
+      url: `https://ecocee.in/solutions/${cleanSlug}`,
     },
   };
 }
 
 export default function SolutionPage({ params }: { params: { slug: string } }) {
-  const solution = solutionsData[params.slug];
+  const cleanSlug = params.slug.replace(/\/$/, '');
+  const solution = solutionsData[cleanSlug];
   
   if (!solution) {
     notFound();
@@ -48,13 +50,13 @@ export default function SolutionPage({ params }: { params: { slug: string } }) {
     webPageSchema(
       solution.title,
       solution.description,
-      `https://ecocee.in/solutions/${params.slug}`,
+      `https://ecocee.in/solutions/${cleanSlug}`,
       solution.faqs
     ),
     breadcrumbSchema([
       { name: 'Home', url: 'https://ecocee.in' },
       { name: 'Solutions', url: 'https://ecocee.in/solutions' },
-      { name: solution.h1, url: `https://ecocee.in/solutions/${params.slug}` },
+      { name: solution.h1, url: `https://ecocee.in/solutions/${cleanSlug}` },
     ]),
   ];
 
@@ -63,7 +65,7 @@ export default function SolutionPage({ params }: { params: { slug: string } }) {
       <Seo
         title={solution.title}
         description={solution.description}
-        canonical={`https://ecocee.in/solutions/${params.slug}`}
+        canonical={`https://ecocee.in/solutions/${cleanSlug}`}
         structuredData={structuredData}
       />
       
