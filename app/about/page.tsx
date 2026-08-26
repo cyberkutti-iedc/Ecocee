@@ -13,17 +13,22 @@ import { AnimatedSection } from "@/components/ui/animated-section";
 import { FooterSection } from "@/components/layout/sections/footer";
 import { EcoceeLabsSection } from "@/components/layout/sections/ecocee-labs";
 import Seo from "@/components/seo/Seo";
-import { organizationSchema, breadcrumbSchema } from "@/lib/seo/schemas";
+import { organizationSchema, breadcrumbSchema, webPageSchema } from "@/lib/seo/schemas";
 import { teamData } from "@/data/team";
 
 export const metadata: Metadata = {
-  title: "About Ecocee — AI & Electronics Technology Company",
-  description: "Ecocee is an AI + Electronics technology company that engineers intelligent systems connecting AI, private infrastructure, edge computing and physical devices.",
+  title: "About Ecocee — AI & Electronics Technology Company | Kerala, India",
+  description: "Ecocee builds custom AI agents, private AI infrastructure, IoT solutions, and embedded systems for businesses in Kerala. Based in Kodungallur, serving India.",
 };
 
 export default function AboutPage() {
   const structuredData = [
     organizationSchema,
+    webPageSchema(
+      metadata.title as string,
+      metadata.description as string,
+      "https://ecocee.in/about"
+    ),
     breadcrumbSchema([
       { name: "Home", url: "https://ecocee.in" },
       { name: "About", url: "https://ecocee.in/about" },
@@ -33,8 +38,8 @@ export default function AboutPage() {
   return (
     <>
       <Seo
-        title="About Ecocee — AI & Electronics Technology Company"
-        description="Ecocee is an AI + Electronics technology company that engineers intelligent systems connecting AI, private infrastructure, edge computing and physical devices."
+        title={metadata.title as string}
+        description={metadata.description as string}
         canonical="https://ecocee.in/about"
         image="https://ecocee.in/og-banner.webp"
         twitterHandle="@Ecocee"

@@ -14,11 +14,9 @@ const config = {
     // Define priority based on route importance
     const priorities = {
       '/': 1.0,
-      '/ai-agents': 0.9,
+      '/solutions': 0.9,
+      '/solutions/*': 0.85,
       '/about': 0.8,
-      '/products': 0.8,
-      '/onam': 0.7,
-      '/Team': 0.6,
       '/careers': 0.6,
     };
 

@@ -18,7 +18,9 @@ import {
   serviceSchema,
   aiAgentSchemas,
   speakableSchema,
+  faqSchema,
 } from "@/lib/seo/schemas";
+import { FAQList } from "@/components/layout/sections/faq";
 
 export const metadata: Metadata = {
   title: 'Ecocee — Custom AI Agents & On-Premise AI Infrastructure | Kerala, India',
@@ -71,13 +73,14 @@ export default function Home() {
     serviceSchema,
     ...aiAgentSchemas,
     speakableSchema,
+    faqSchema(FAQList),
   ];
 
   return (
     <>
       <Seo
-        title="Ecocee — Custom AI Agents & Edge Computing | Kerala, India"
-        description="Ecocee builds custom AI agents for business, office, and warehouse automation in Kerala. Edge computing devices, IoT solutions & embedded systems."
+        title="Custom AI Agents & IoT Solutions in Kerala | Ecocee | AI Automation, Embedded Systems"
+        description="Ecocee builds custom AI agents, private AI infrastructure, IoT solutions, and embedded systems for businesses in Kerala. On-premise AI deployment, edge computing, business automation. Free consultation."
         canonical="https://ecocee.in"
         image="https://ecocee.in/og-banner.webp"
         twitterHandle="@Ecocee"

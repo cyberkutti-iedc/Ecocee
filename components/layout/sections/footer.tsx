@@ -44,20 +44,21 @@ export const FooterSection = () => {
             </div>
           </div>
 
-          {/* Capabilities */}
+          {/* Solutions */}
           <div className="lg:col-span-3">
-            <h3 className="font-semibold text-foreground mb-4 text-xs uppercase tracking-wider">Capabilities</h3>
+            <h3 className="font-semibold text-foreground mb-4 text-xs uppercase tracking-wider">Solutions</h3>
             <ul className="space-y-2.5">
               {[
-                { label: "AI Business Automation", href: "/#solutions" },
-                { label: "Private AI Systems", href: "/#solutions" },
-                { label: "Edge AI & IoT", href: "/#solutions" },
-                { label: "Hardware Integration", href: "/#solutions" },
+                { label: "IoT Solutions", href: "/solutions/iot-companies-kerala" },
+                { label: "AI Business Automation", href: "/solutions/ai-automation-business" },
+                { label: "Private AI", href: "/solutions/private-ai-infrastructure" },
+                { label: "Embedded Systems", href: "/solutions/embedded-systems-kerala" },
+                { label: "Edge Computing", href: "/solutions/edge-computing-solutions" },
               ].map(({ label, href }) => (
                 <li key={label}>
-                  <a href={href} className="text-sm text-muted-foreground hover:text-primary transition-colors duration-150">
+                  <Link href={href} className="text-sm text-muted-foreground hover:text-primary transition-colors duration-150">
                     {label}
-                  </a>
+                  </Link>
                 </li>
               ))}
             </ul>

@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import { motion } from "framer-motion";
 import { Bot, Server, Eye, Cpu, MonitorPlay, Code2 } from "lucide-react";
 import { Card, CardContent } from "@/components/ui/card";
@@ -13,6 +14,7 @@ const solutions = [
     color: "text-blue-500",
     bgColor: "bg-blue-500/10",
     borderColor: "border-blue-500/20",
+    href: "/solutions/ai-automation-business",
   },
   {
     id: 2,
@@ -22,6 +24,7 @@ const solutions = [
     color: "text-emerald-500",
     bgColor: "bg-emerald-500/10",
     borderColor: "border-emerald-500/20",
+    href: "/solutions/private-ai-infrastructure",
   },
   {
     id: 3,
@@ -31,6 +34,7 @@ const solutions = [
     color: "text-amber-500",
     bgColor: "bg-amber-500/10",
     borderColor: "border-amber-500/20",
+    href: "/solutions/edge-computing-solutions",
   },
   {
     id: 4,
@@ -40,6 +44,7 @@ const solutions = [
     color: "text-purple-500",
     bgColor: "bg-purple-500/10",
     borderColor: "border-purple-500/20",
+    href: "/solutions/iot-companies-kerala",
   },
   {
     id: 5,
@@ -49,6 +54,7 @@ const solutions = [
     color: "text-rose-500",
     bgColor: "bg-rose-500/10",
     borderColor: "border-rose-500/20",
+    href: "/solutions/embedded-systems-kerala",
   },
   {
     id: 6,
@@ -58,6 +64,7 @@ const solutions = [
     color: "text-cyan-500",
     bgColor: "bg-cyan-500/10",
     borderColor: "border-cyan-500/20",
+    href: "/solutions",
   },
 ];
 
@@ -86,17 +93,19 @@ export const SolutionsSection = () => {
               viewport={{ once: true }}
               transition={{ delay: i * 0.1 }}
             >
-              <Card className="h-full bg-card border-border/50 hover:border-primary/30 transition-all duration-300 hover:shadow-lg group">
-                <CardContent className="p-8">
-                  <div className={`w-14 h-14 rounded-2xl ${solution.bgColor} border ${solution.borderColor} flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-300`}>
-                    <solution.icon className={`w-7 h-7 ${solution.color}`} />
-                  </div>
-                  <h3 className="text-xl font-bold text-foreground mb-3">{solution.title}</h3>
-                  <p className="text-muted-foreground leading-relaxed text-sm">
-                    {solution.description}
-                  </p>
-                </CardContent>
-              </Card>
+              <Link href={solution.href} className="block h-full group">
+                <Card className="h-full bg-card border-border/50 hover:border-primary/30 transition-all duration-300 hover:shadow-lg">
+                  <CardContent className="p-8">
+                    <div className={`w-14 h-14 rounded-2xl ${solution.bgColor} border ${solution.borderColor} flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-300`}>
+                      <solution.icon className={`w-7 h-7 ${solution.color}`} />
+                    </div>
+                    <h3 className="text-xl font-bold text-foreground mb-3">{solution.title}</h3>
+                    <p className="text-muted-foreground leading-relaxed text-sm">
+                      {solution.description}
+                    </p>
+                  </CardContent>
+                </Card>
+              </Link>
             </motion.div>
           ))}
         </div>

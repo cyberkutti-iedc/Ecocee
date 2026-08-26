@@ -9,6 +9,7 @@ const SITE_URL = "https://ecocee.in";
 export const organizationSchema = {
   "@context": "https://schema.org",
   "@type": "Organization",
+  "@id": `${SITE_URL}/#organization`,
   name: "Ecocee",
   url: SITE_URL,
   logo: `${SITE_URL}/logo.png`,
@@ -41,10 +42,10 @@ export const localBusinessSchema = {
   "@type": "LocalBusiness",
   name: "Ecocee",
   image: `${SITE_URL}/og-banner.webp`,
-  "@id": SITE_URL,
+  "@id": `${SITE_URL}/#local`,
   url: SITE_URL,
   telephone: "+919446715884",
-  priceRange: "$$",
+  priceRange: "$$$$",
   description:
     "Ecocee builds custom AI agents and edge computing solutions for businesses in Kerala. AI for offices, warehouses, and customer support.",
   address: {
@@ -60,6 +61,7 @@ export const localBusinessSchema = {
     latitude: "10.2326",
     longitude: "76.1951",
   },
+  areaServed: ["IN-KL", "IN-TG", "IN-KA", "IN-TN"],
   openingHoursSpecification: {
     "@type": "OpeningHoursSpecification",
     dayOfWeek: ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"],
@@ -90,6 +92,27 @@ export const websiteSchema = {
     "query-input": "required name=search_term_string",
   },
 };
+
+export const webPageSchema = (title: string, description: string, url: string, faqs?: Array<{ question: string; answer: string }>) => ({
+  "@context": "https://schema.org",
+  "@type": "WebPage",
+  headline: title,
+  description: description,
+  url: url,
+  ...(faqs && faqs.length > 0 ? {
+    mainEntity: {
+      "@type": "FAQPage",
+      mainEntity: faqs.map((faq) => ({
+        "@type": "Question",
+        name: faq.question,
+        acceptedAnswer: {
+          "@type": "Answer",
+          text: faq.answer,
+        },
+      })),
+    }
+  } : {}),
+});
 
 export const aiAgentSchemas = [
   {

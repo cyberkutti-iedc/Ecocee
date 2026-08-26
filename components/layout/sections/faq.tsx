@@ -13,7 +13,7 @@ interface FAQProps {
   value: string;
 }
 
-const FAQList: FAQProps[] = [
+export const FAQList: FAQProps[] = [
   {
     question: "What problems does Ecocee solve?",
     answer: "We solve complex operational problems using AI automation, private AI infrastructure, and embedded systems. Whether it's automating business workflows, processing real-world data at the edge, or integrating custom hardware with intelligent software, we design the technology around your specific bottleneck.",

@@ -12,9 +12,9 @@ const inter = Inter({ subsets: ["latin"], display: "swap", variable: "--font-bod
 const spaceGrotesk = Space_Grotesk({ subsets: ["latin"], display: "swap", variable: "--font-display" });
 
 export const metadata: Metadata = {
-  title: "Ecocee | Embedded Systems, IoT & AI Solutions | Kerala Startup",
+  title: "Custom AI Agents & IoT Solutions in Kerala | Ecocee | AI Automation, Embedded Systems",
   description:
-    "Ecocee, a Kerala-based MSME startup, offers innovative embedded systems, IoT, AI development, and custom hardware & software solutions. Patentable projects and technical training.",
+    "Ecocee builds custom AI agents, private AI infrastructure, IoT solutions, and embedded systems for businesses in Kerala. On-premise AI deployment, edge computing, business automation. Free consultation.",
      manifest: '/site.webmanifest',
   keywords: [
     // Kerala statewide & city-specific
@@ -108,7 +108,7 @@ export const metadata: Metadata = {
         url: "https://ecocee.in/og-banner.webp",
         width: 1200,
         height: 630,
-        alt: "Ecocee - Kerala's Premier Embedded Systems & IoT Solutions Provider",
+        alt: "Ecocee AI Agents & Edge Computing",
       },
     ],
   },
@@ -119,14 +119,10 @@ export const metadata: Metadata = {
     description:
       "Discover Ecocee's Kerala-based embedded systems, IoT, and AI development services with custom solutions and patentable projects.",
     site: "@Ecocee",
-    images:
-      "https://opengraph.b-cdn.net/production/images/e6c0215e-ba2e-44eb-a7e9-c9c547f5c1c3.jpg?token=x6p4DMXdp7hH9v3r8lbop1ngGln1iE8A-fJmqFp8QJI&height=591&width=1200&expires=33291464882",
+    images: ["https://ecocee.in/og-banner.webp"],
   },
   alternates: {
     canonical: "https://ecocee.in",
-    languages: {
-      "en-IN": "https://ecocee.in/en",
-    },
   },
   robots: {
     index: true,
@@ -142,7 +138,7 @@ export const metadata: Metadata = {
     },
   },
   authors: [
-    { name: "Sreeraj V Rajesh", url: "https://ecocee.in/team" },
+    { name: "Sreeraj V Rajesh", url: "https://ecocee.in/about#team" },
     { name: "Ecocee Team", url: "https://ecocee.in/about" },
   ],
   publisher: "Ecocee Technologies",
@@ -178,6 +174,8 @@ export default function RootLayout({
           <meta name="msapplication-TileColor" content="#10B981" />
           <meta name="msapplication-config" content="/browserconfig.xml" />
           <link rel="manifest" href="/site.webmanifest" />
+          {/* llms.txt — LLM-friendly site overview for AI agents */}
+          <link rel="describedby" href="/llms.txt" />
           <link rel="preconnect" href="https://fonts.googleapis.com" />
           <link
             rel="preconnect"
