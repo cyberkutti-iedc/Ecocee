@@ -9,6 +9,12 @@ import { AnimatedSection } from '@/components/ui/animated-section';
 import { Button } from '@/components/ui/button';
 import { solutionsData } from '@/content/solutions';
 
+export function generateStaticParams() {
+  return Object.keys(solutionsData).map((slug) => ({
+    slug: slug,
+  }));
+}
+
 export async function generateMetadata({ params }: { params: { slug: string } }): Promise<Metadata> {
   const solution = solutionsData[params.slug];
   
