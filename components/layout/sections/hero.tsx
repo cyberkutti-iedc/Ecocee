@@ -1,181 +1,155 @@
 "use client";
 
 import { Button } from "@/components/ui/button";
-import { Badge } from "@/components/ui/badge";
-import { ArrowRight, Bot, Cpu, Wifi } from "lucide-react";
-import { useEffect, useState, useRef } from "react";
-
-function useCountUp(target: number, duration: number = 2000) {
-  const [count, setCount] = useState(0);
-  const ref = useRef<HTMLSpanElement>(null);
-
-  useEffect(() => {
-    const observer = new IntersectionObserver(
-      (entries) => {
-        if (entries[0].isIntersecting) {
-          const start = Date.now();
-          const tick = () => {
-            const elapsed = Date.now() - start;
-            const progress = Math.min(elapsed / duration, 1);
-            const eased = 1 - Math.pow(1 - progress, 3);
-            setCount(Math.floor(eased * target));
-            if (progress < 1) requestAnimationFrame(tick);
-          };
-          requestAnimationFrame(tick);
-          observer.disconnect();
-        }
-      },
-      { threshold: 0.5 }
-    );
-    if (ref.current) observer.observe(ref.current);
-    return () => observer.disconnect();
-  }, [target, duration]);
-
-  return { count, ref };
-}
-
-import { FallingFlowers } from "@/components/ui/falling-flowers";
+import { ArrowRight } from "lucide-react";
 import { motion } from "framer-motion";
+import { GOOGLE_FORM_URL } from "@/lib/config";
 
+const SpeedWord = ({ children }: { children: React.ReactNode }) => (
+  <span className="relative inline-block overflow-hidden">
+    {/* Speed trail lines */}
+    <motion.span
+      className="absolute top-1/2 -translate-y-1/2 -left-8 h-[3px] bg-gradient-to-r from-transparent via-cyan-400 to-transparent rounded-full"
+      initial={{ width: 0, opacity: 0 }}
+      animate={{ width: 60, opacity: [0, 0.8, 0] }}
+      transition={{ duration: 0.8, delay: 1.0, ease: "easeOut" }}
+    />
+    <motion.span
+      className="absolute top-[30%] -left-6 h-[2px] bg-gradient-to-r from-transparent via-blue-400/60 to-transparent rounded-full"
+      initial={{ width: 0, opacity: 0 }}
+      animate={{ width: 40, opacity: [0, 0.6, 0] }}
+      transition={{ duration: 0.6, delay: 1.15, ease: "easeOut" }}
+    />
+    <motion.span
+      className="absolute top-[70%] -left-4 h-[2px] bg-gradient-to-r from-transparent via-purple-400/50 to-transparent rounded-full"
+      initial={{ width: 0, opacity: 0 }}
+      animate={{ width: 30, opacity: [0, 0.5, 0] }}
+      transition={{ duration: 0.5, delay: 1.25, ease: "easeOut" }}
+    />
+    {/* Main word with speed blur entry */}
+    <motion.span
+      className="inline-block bg-gradient-to-r from-cyan-400 via-blue-400 to-purple-400 bg-clip-text text-transparent"
+      initial={{ opacity: 0, x: -80, filter: "blur(12px)" }}
+      animate={{ opacity: 1, x: 0, filter: "blur(0px)" }}
+      transition={{ duration: 0.7, delay: 0.9, ease: [0.16, 1, 0.3, 1] }}
+    >
+      {children}
+    </motion.span>
+  </span>
+);
 export const HeroSection = () => {
-  const models = useCountUp(5, 1800);
-  const clients = useCountUp(50, 2000);
-
-  // Simple typing effect simulation
-  const [typedText, setTypedText] = useState("");
-  const fullText = "Analyzing operational data... 3 priority tasks require attention.";
-  
-  useEffect(() => {
-    let i = 0;
-    const interval = setInterval(() => {
-      setTypedText(fullText.substring(0, i));
-      i++;
-      if (i > fullText.length) clearInterval(interval);
-    }, 40);
-    return () => clearInterval(interval);
-  }, []);
-
   return (
-    <section className="relative w-full bg-background pt-20 pb-16 md:pt-28 md:pb-24 lg:pt-36 lg:pb-28 overflow-hidden" aria-label="Hero">
-      <FallingFlowers />
-      <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="grid gap-16 lg:grid-cols-12 items-center">
-          {/* Left - Copy */}
-          <div className="lg:col-span-6 space-y-8">
-            <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6 }} className="flex items-center gap-3">
-              <Badge className="bg-primary/10 text-primary text-xs px-3 py-1.5 rounded-full border border-primary/20 font-medium">
-                AI + Electronics
-              </Badge>
-              <span className="text-xs text-muted-foreground font-medium">
-                Kerala, India · Est. 2023
-              </span>
-            </motion.div>
+    <section className="relative w-full min-h-screen flex items-center overflow-hidden" aria-label="Hero">
+      {/* Dark gradient background */}
+      <div className="absolute inset-0 z-0 bg-gradient-to-br from-black via-gray-950 to-black" />
+      
+      <div className="relative z-10 max-w-7xl mx-auto px-6 lg:px-8 py-32 md:py-40 w-full">
+        <div className="max-w-4xl lg:max-w-3xl xl:max-w-4xl">
+          {/* Overline */}
+          
 
-            <motion.h1
-              initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6, delay: 0.1 }}
-              className="text-4xl sm:text-5xl md:text-6xl lg:text-[4.25rem] font-extrabold text-foreground leading-[1.08] tracking-tight"
-              style={{ fontFamily: "var(--font-display), 'Inter', system-ui, sans-serif" }}
+          {/* Headline */}
+       
+<motion.h1
+  initial={{ opacity: 0, y: 24 }}
+  animate={{ opacity: 1, y: 0 }}
+  transition={{
+    duration: 0.9,
+    ease: [0.16, 1, 0.3, 1],
+  }}
+  className="
+    mb-8
+    text-[2.8rem]
+    leading-[0.98]
+    tracking-[-0.04em]
+    font-bold
+    text-white
+    sm:text-5xl
+    sm:leading-[1]
+    md:text-7xl
+    lg:text-8xl
+    xl:text-[6.5rem]
+  "
+>
+  Technology
+  <br />
+
+  <motion.span
+    initial={{ opacity: 0, y: 18 }}
+    animate={{ opacity: 1, y: 0 }}
+    transition={{
+      delay: 0.12,
+      duration: 0.8,
+      ease: [0.16, 1, 0.3, 1],
+    }}
+    className="inline-block text-white"
+  >
+    That Moves
+  </motion.span>
+
+  <br />
+
+  <span className="text-white">
+    Ideas{" "}
+  </span>
+
+  <motion.span initial={{ opacity: 0, x: -80, scale: 0.88, filter: "blur(12px)", }} animate={{ opacity: 1, x: 0, scale: 1, filter: "blur(0px)", }} transition={{ delay: 0.45, duration: 1.1, ease: [0.16, 1, 0.3, 1], }} whileHover={{ x: 45, scale: 1.06, filter: "blur(0px)", transition: { duration: 0.18, ease: [0.7, 0, 0.84, 0], }, }} className="inline-block cursor-pointer text-white will-change-transform" > Forward. </motion.span>
+</motion.h1>
+
+
+
+
+          {/* Subheadline */}
+          <motion.p
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, delay: 0.3 }}
+            className="text-lg md:text-xl text-white/60 max-w-2xl leading-relaxed mb-12"
+          >
+            AI, software and product engineering for ideas that need to become real.
+          </motion.p>
+
+          {/* CTAs */}
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, delay: 0.4 }}
+            className="flex flex-wrap gap-4 items-center"
+          >
+            <Button
+              size="lg"
+              onClick={() => document.getElementById("work")?.scrollIntoView({ behavior: "smooth" })}
+              className="h-14 px-8 bg-white text-black hover:bg-gray-200 font-semibold text-base transition-all duration-200 group rounded-full hover-lift shadow-lg shadow-white/10"
             >
-              AI That Lives
-              <br />
-              <span className="text-primary">Where You Work</span>
-            </motion.h1>
-
-            <motion.p initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6, delay: 0.2 }} className="text-lg text-muted-foreground max-w-xl leading-relaxed">
-              We build private AI agents, edge intelligence, and intelligent hardware that automate real-world business operations.
-            </motion.p>
-
-            <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6, delay: 0.3 }} className="flex flex-wrap gap-3 items-center">
-              <Button
-                size="lg"
-                onClick={() => document.getElementById("ai-agents")?.scrollIntoView({ behavior: "smooth" })}
-                className="h-12 px-7 bg-primary text-primary-foreground font-semibold shadow-md hover:shadow-lg hover:shadow-primary/20 transition-all duration-200 group"
-              >
-                Talk to an Ecocee Architect
-                <ArrowRight className="w-4 h-4 ml-2 group-hover:translate-x-1 transition-transform" />
-              </Button>
-              <Button
-                variant="outline"
-                size="lg"
-                onClick={() => document.getElementById("contact")?.scrollIntoView({ behavior: "smooth" })}
-                className="h-12 px-7"
-              >
-                Explore Our Capabilities
-              </Button>
-            </motion.div>
-          </div>
-
-          {/* Right — Live Product Demo */}
-          <motion.div initial={{ opacity: 0, scale: 0.95 }} animate={{ opacity: 1, scale: 1 }} transition={{ duration: 0.8, delay: 0.2 }} className="lg:col-span-6 relative">
-            <div className="absolute -inset-1 bg-gradient-to-tr from-primary/30 to-accent/30 rounded-2xl blur-2xl opacity-50" />
-            <div className="relative bg-card border border-border/50 rounded-2xl p-6 shadow-2xl backdrop-blur-sm">
-              <div className="flex items-center justify-between mb-6 pb-4 border-b border-border/50">
-                <div className="flex items-center gap-3">
-                  <div className="w-2.5 h-2.5 rounded-full bg-emerald-500 pulse-subtle" />
-                  <span className="text-sm font-semibold text-foreground">Ecocee AI Operations Agent</span>
-                </div>
-                <Badge variant="outline" className="text-[10px] border-emerald-300 dark:border-emerald-700 text-emerald-800 dark:text-emerald-300 bg-emerald-100 dark:bg-emerald-900/50 font-semibold">
-                  Secure On-Premise
-                </Badge>
-              </div>
-
-              {/* Chat Interface */}
-              <div className="space-y-4 mb-6 font-mono text-sm">
-                {/* User Message (Right aligned) */}
-                <div className="flex gap-3 justify-end">
-                  <div className="bg-secondary/80 rounded-xl rounded-tr-sm px-4 py-2.5 text-foreground max-w-[85%] border border-border/50">
-                    What tasks require attention today?
-                  </div>
-                  <div className="w-8 h-8 rounded-lg bg-secondary flex items-center justify-center text-[10px] font-bold text-muted-foreground shrink-0 border border-border">
-                    OPS
-                  </div>
-                </div>
-                
-                {/* AI Message (Left aligned) */}
-                <div className="flex gap-3">
-                  <div className="w-8 h-8 rounded-lg bg-primary flex items-center justify-center shrink-0 shadow-lg shadow-primary/20">
-                    <Bot className="w-4 h-4 text-primary-foreground" />
-                  </div>
-                  <div className="bg-primary/10 border border-primary/20 rounded-xl rounded-tl-sm px-4 py-2.5 text-foreground max-w-[85%] relative">
-                    {typedText}
-                    {typedText.length < fullText.length && (
-                      <span className="inline-block w-1.5 h-4 ml-1 bg-primary animate-pulse align-middle" />
-                    )}
-                  </div>
-                </div>
-              </div>
-
-              {/* Live Metrics */}
-              <div className="grid grid-cols-3 gap-4 pt-4 border-t border-border/50 bg-background/50 -mx-6 -mb-6 p-6 rounded-b-2xl">
-                {[
-                  { value: "PRIVATE", label: "Infrastructure" },
-                  { value: "EDGE-READY", label: "Deployment" },
-                  { value: "INTEGRATION", label: "System Ready" },
-                ].map((m) => (
-                  <div key={m.label} className="text-center">
-                    <div className="text-sm font-bold text-foreground">{m.value}</div>
-                    <div className="text-[10px] text-muted-foreground uppercase tracking-wider mt-1">{m.label}</div>
-                  </div>
-                ))}
-              </div>
-            </div>
+              Explore our work
+              <ArrowRight className="w-5 h-5 ml-2 group-hover:translate-x-1 transition-transform" />
+            </Button>
+            <Button
+              variant="outline"
+              size="lg"
+              onClick={() => window.open(GOOGLE_FORM_URL, "_blank")}
+              className="h-14 px-8 border-white/30 text-white hover:bg-white/10 font-semibold text-base transition-all duration-200 rounded-full border-glow hover:border-white/50"
+            >
+              Start a project
+              <ArrowRight className="w-5 h-5 ml-2 group-hover:translate-x-1 transition-transform" />
+            </Button>
           </motion.div>
         </div>
-
-        {/* Credibility Strip */}
-        <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6, delay: 0.6 }} className="mt-24 pt-8 border-t border-border/60">
-          <p className="text-center text-sm font-medium text-muted-foreground mb-8 uppercase tracking-widest">
-          TRUSTED BY BUSINESSES AROUND THE WORLD
-          </p>
-          <div className="flex flex-wrap justify-center gap-x-12 gap-y-8 items-center opacity-70 grayscale hover:grayscale-0 transition-all duration-500">
-            {/* Client logos */}
-            <div className="text-xl font-bold font-serif">Ordato.ai</div>
-            <div className="text-xl font-bold tracking-tight">Adara Screens</div>
-            <div className="text-xl font-extrabold italic">RALLYBOX</div>
-            <div className="text-xl font-bold font-mono">Movi</div>
-          </div>
-        </motion.div>
       </div>
+
+      {/* Scroll indicator */}
+      <motion.div
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ delay: 1 }}
+        className="absolute bottom-8 left-1/2 -translate-x-1/2 z-10"
+      >
+        <motion.div
+          animate={{ y: [0, 8, 0] }}
+          transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
+          className="w-px h-12 bg-gradient-to-b from-transparent to-white/50"
+        />
+      </motion.div>
     </section>
   );
 };

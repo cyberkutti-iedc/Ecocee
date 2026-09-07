@@ -4,6 +4,7 @@ import { motion } from "framer-motion";
 import { Bot, Server, Cpu, ArrowRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useState } from "react";
+import { GOOGLE_FORM_URL } from "@/lib/config";
 
 export const EcoceeStackSection = () => {
   const [activeLayer, setActiveLayer] = useState<number | null>(null);
@@ -14,9 +15,9 @@ export const EcoceeStackSection = () => {
       title: "Intelligence Layer",
       subtitle: "Custom AI Agents",
       icon: Bot,
-      color: "text-emerald-500",
-      bgHover: "hover:bg-emerald-500/10",
-      borderColor: "border-emerald-500/30",
+      color: "text-blue-500",
+      bgHover: "hover:bg-blue-500/10",
+      borderColor: "border-blue-500/30",
       description: "AI agents connected to business data, tools and workflows to automate operational tasks.",
       features: ["Workflow Automation", "System Integration", "Data Grounding"],
     },
@@ -65,7 +66,7 @@ export const EcoceeStackSection = () => {
           {/* Left Side: The Stack Visualization */}
           <div className="relative space-y-4">
             {/* Connecting line behind */}
-            <div className="absolute left-8 top-10 bottom-10 w-0.5 bg-gradient-to-b from-emerald-500 via-blue-500 to-amber-500 opacity-20" />
+            <div className="absolute left-8 top-10 bottom-10 w-0.5 bg-gradient-to-b from-blue-500 via-violet-500 to-purple-500 opacity-20" />
             
             {stackLayers.map((layer) => (
               <motion.div
@@ -149,8 +150,8 @@ export const EcoceeStackSection = () => {
                         ))}
                       </ul>
                       <div className="pt-6">
-                        <Button variant="outline" className="group">
-                          View Tech Specs
+                        <Button variant="outline" className="group" onClick={() => window.open(GOOGLE_FORM_URL, "_blank")}>
+                          Discuss Your Project
                           <ArrowRight className="w-4 h-4 ml-2 group-hover:translate-x-1 transition-transform" />
                         </Button>
                       </div>

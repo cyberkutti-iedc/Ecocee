@@ -15,6 +15,7 @@ import { EcoceeLabsSection } from "@/components/layout/sections/ecocee-labs";
 import Seo from "@/components/seo/Seo";
 import { organizationSchema, breadcrumbSchema, webPageSchema } from "@/lib/seo/schemas";
 import { teamData } from "@/data/team";
+import { GOOGLE_FORM_URL } from "@/lib/config";
 
 export const metadata: Metadata = {
   title: "About Ecocee — AI & Electronics Technology Company | Kerala, India",
@@ -67,7 +68,7 @@ export default function AboutPage() {
             </p>
             <div className="flex flex-wrap justify-center gap-4">
               <Button className="bg-primary text-primary-foreground font-semibold h-11 px-6 group" asChild>
-                <Link href="/#contact">
+                <Link href={GOOGLE_FORM_URL} target="_blank" rel="noopener noreferrer">
                   Talk to an Ecocee Architect
                   <ArrowRight className="w-4 h-4 ml-2 group-hover:translate-x-1 transition-transform" />
                 </Link>
@@ -390,7 +391,7 @@ export default function AboutPage() {
               </p>
               <div className="flex flex-col items-center">
                 <Button className="bg-primary text-primary-foreground font-semibold h-12 px-8 mb-4 group shadow-md" asChild>
-                  <Link href="/#contact">
+                  <Link href={GOOGLE_FORM_URL} target="_blank" rel="noopener noreferrer">
                     Talk to an Ecocee Architect
                     <ArrowRight className="w-4 h-4 ml-2 group-hover:translate-x-1 transition-transform" />
                   </Link>

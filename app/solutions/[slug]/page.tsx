@@ -8,6 +8,7 @@ import { FooterSection } from '@/components/layout/sections/footer';
 import { AnimatedSection } from '@/components/ui/animated-section';
 import { Button } from '@/components/ui/button';
 import { solutionsData } from '@/content/solutions';
+import { GOOGLE_FORM_URL } from "@/lib/config";
 
 export function generateStaticParams() {
   return Object.keys(solutionsData).map((slug) => ({
@@ -124,7 +125,7 @@ export default async function SolutionPage(props: { params: Promise<{ slug: stri
                 {solution.localCta}
               </p>
               <Button className="bg-primary text-primary-foreground font-semibold h-12 px-8 group" asChild>
-                <Link href="/#contact">
+                <Link href={GOOGLE_FORM_URL} target="_blank" rel="noopener noreferrer">
                   Talk to an Ecocee Architect
                   <ArrowRight className="w-4 h-4 ml-2 group-hover:translate-x-1 transition-transform" />
                 </Link>
