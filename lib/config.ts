@@ -9,4 +9,4 @@
  *    e.g. https://docs.google.com/forms/d/e/ABC123/viewform → ABC123
  */
 export const GOOGLE_FORM_URL =
-  "https://docs.google.com/forms/d/e/YOUR_FORM_ID/viewform";
+  "https://forms.gle/rn9bFD3C2q85EC958";
