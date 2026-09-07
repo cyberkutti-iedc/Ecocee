@@ -622,7 +622,7 @@ function FileManagerModal({ files, currentPath, onNavigate, onUpload, onSelect, 
               className="border rounded-lg p-4 cursor-pointer text-center hover:bg-gray-50"
               onClick={() => onNavigate(currentPath.split('/').slice(0, -1).join('/'))}
             >
-              <div className="text-2xl mb-2">📁</div>
+              <div className="text-xs font-bold text-muted-foreground">FOLDER</div>
               <p className="text-sm truncate">..</p>
             </div>
           )}
@@ -646,11 +646,11 @@ function FileManagerModal({ files, currentPath, onNavigate, onUpload, onSelect, 
 
               ) : file.type === 'video' ? (
                 <div className="w-full h-32 bg-gray-200 flex items-center justify-center">
-                  <div className="text-2xl">🎬</div>
+                  <div className="text-xs font-bold text-muted-foreground">VIDEO</div>
                 </div>
               ) : (
                 <div className="w-full h-32 bg-gray-100 flex items-center justify-center">
-                  <div className="text-2xl">📁</div>
+                  <div className="text-xs font-bold text-muted-foreground">FILE</div>
                 </div>
               )}
               <div className="p-2">

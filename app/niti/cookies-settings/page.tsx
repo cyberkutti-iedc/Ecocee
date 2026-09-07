@@ -28,7 +28,7 @@ const CookiesSettings = () => {
         initial={{ opacity: 0, y: 30 }}
         animate={{ opacity: 1, y: 0 }}
       >
-        <h1 className="text-3xl font-semibold mb-4 text-center">Manage Cookie Preferences 🍪</h1>
+        <h1 className="text-3xl font-semibold mb-4 text-center">Manage Cookie Preferences</h1>
         <p className="text-gray-600 text-center mb-6">
           Control how we use cookies on your device.
         </p>
@@ -40,7 +40,7 @@ const CookiesSettings = () => {
           </div>
 
           <div className="flex justify-between items-center">
-            <span className="text-gray-700 font-medium">📊 Analytics Cookies</span>
+            <span className="text-gray-700 font-medium">Analytics Cookies</span>
             <button
               className={`px-4 py-2 text-sm rounded-md transition ${
                 settings.analytics ? theme.primaryButton + " text-white" : theme.secondaryButton
@@ -52,7 +52,7 @@ const CookiesSettings = () => {
           </div>
 
           <div className="flex justify-between items-center">
-            <span className="text-gray-700 font-medium">🎯 Advertising Cookies</span>
+            <span className="text-gray-700 font-medium">Advertising Cookies</span>
             <button
               className={`px-4 py-2 text-sm rounded-md transition ${
                 settings.advertising ? theme.primaryButton + " text-white" : theme.secondaryButton

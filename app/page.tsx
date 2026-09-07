@@ -1,14 +1,17 @@
 import type { Metadata } from "next";
 import { HeroSection } from "@/components/layout/sections/hero";
-import { EcoceeStackSection } from "@/components/layout/sections/ecocee-stack";
-import { DeploymentFlowSection } from "@/components/layout/sections/deployment-flow";
-import { FAQSection } from "@/components/layout/sections/faq";
-import { ContactSection } from "@/components/layout/sections/contact";
+import { CapabilitiesSection } from "@/components/layout/sections/capabilities";
+import { WorkSection } from "@/components/layout/sections/work";
+import { ProcessSection } from "@/components/layout/sections/process";
+import { PositioningSection } from "@/components/layout/sections/positioning";
+import { EngineeringSection } from "@/components/layout/sections/engineering";
+import { StackSection } from "@/components/layout/sections/stack";
+import { WhyNowSection } from "@/components/layout/sections/why-now";
+import { LabsSection } from "@/components/layout/sections/labs";
+import { AboutSection } from "@/components/layout/sections/about";
+import { ClientsSection } from "@/components/layout/sections/clients";
+import { CTASection } from "@/components/layout/sections/cta";
 import { FooterSection } from "@/components/layout/sections/footer";
-import { SolutionsSection } from "@/components/layout/sections/solutions";
-import { TargetAudienceSection } from "@/components/layout/sections/target-audience";
-import { EcoceeLabsSection } from "@/components/layout/sections/ecocee-labs";
-import { ProcessNextSection } from "@/components/layout/sections/process-next";
 import { AnimatedSection } from "@/components/ui/animated-section";
 import Seo from "@/components/seo/Seo";
 import {
@@ -23,47 +26,41 @@ import {
 import { FAQList } from "@/components/layout/sections/faq";
 
 export const metadata: Metadata = {
-  title: 'Ecocee — Custom AI Agents & On-Premise AI Infrastructure | Kerala, India',
-  description: 'Ecocee builds custom AI agents, private AI infrastructure, and embedded IoT systems for businesses in Kerala and across India. On-premise, secure, no vendor lock-in. Free consultation.',
+  title: "Ecocee — AI, Software & Product Engineering",
+  description:
+    "AI, software and product engineering for ideas that need to become real. Custom AI agents, private infrastructure, embedded systems. Built in Kerala.",
   keywords: [
-    'custom AI agents Kerala',
-    'on-premise AI infrastructure India',
-    'AI automation for business Kerala',
-    'private AI server India',
-    'embedded systems Thrissur',
-    'IoT solutions Kerala',
-    'AI consulting Kerala',
-    'Ecocee AI',
-    'business automation AI Kerala',
-    'warehouse AI agent India',
-    'AI startup Kerala',
-    'edge computing India',
+    "AI engineering",
+    "product engineering",
+    "custom AI agents",
+    "embedded systems",
+    "software development",
+    "Kerala",
   ],
   alternates: {
-    canonical: 'https://ecocee.in',
+    canonical: "https://ecocee.in",
   },
   openGraph: {
-    title: 'Ecocee — Custom AI Agents & On-Premise AI Infrastructure',
-    description: 'Ecocee builds custom AI agents, private AI infrastructure, and embedded IoT systems for businesses in Kerala and across India.',
-    url: 'https://ecocee.in',
-    siteName: 'Ecocee',
-    images: [{ url: 'https://ecocee.in/og-banner.webp', width: 1200, height: 630, alt: 'Ecocee AI Agents & Edge Computing' }],
-    locale: 'en_IN',
-    type: 'website',
+    title: "Ecocee — AI, Software & Product Engineering",
+    description: "AI, software and product engineering for ideas that need to become real.",
+    url: "https://ecocee.in",
+    siteName: "Ecocee",
+    images: [{ url: "https://ecocee.in/og-banner.webp", width: 1200, height: 630, alt: "Ecocee" }],
+    locale: "en_IN",
+    type: "website",
   },
   twitter: {
-    card: 'summary_large_image',
-    title: 'Ecocee — Custom AI Agents & Edge Computing | Kerala',
-    description: 'Custom AI agents, private AI infrastructure, embedded systems. Built in Kerala for businesses across India.',
-    images: ['https://ecocee.in/og-banner.webp'],
+    card: "summary_large_image",
+    title: "Ecocee — AI, Software & Product Engineering",
+    description: "AI, software and product engineering for ideas that need to become real.",
+    images: ["https://ecocee.in/og-banner.webp"],
   },
   robots: {
     index: true,
     follow: true,
-    googleBot: { index: true, follow: true, 'max-snippet': -1, 'max-image-preview': 'large' },
+    googleBot: { index: true, follow: true, "max-snippet": -1, "max-image-preview": "large" },
   },
 };
-
 
 export default function Home() {
   const structuredData = [
@@ -73,71 +70,72 @@ export default function Home() {
     serviceSchema,
     ...aiAgentSchemas,
     speakableSchema,
-    faqSchema(FAQList),
   ];
 
   return (
     <>
       <Seo
-        title="Custom AI Agents & IoT Solutions in Kerala | Ecocee | AI Automation, Embedded Systems"
-        description="Ecocee builds custom AI agents, private AI infrastructure, IoT solutions, and embedded systems for businesses in Kerala. On-premise AI deployment, edge computing, business automation. Free consultation."
+        title="Ecocee — AI, Software & Product Engineering"
+        description="AI, software and product engineering for ideas that need to become real. Custom AI agents, private infrastructure, embedded systems. Built in Kerala."
         canonical="https://ecocee.in"
         image="https://ecocee.in/og-banner.webp"
         twitterHandle="@Ecocee"
         siteName="Ecocee"
         structuredData={structuredData}
       />
-        <main itemScope itemType="https://schema.org/WebPage">
-          {/* Hero — the thesis: AI that lives where you work */}
-          <section aria-label="Hero Section" itemScope itemProp="mainContentOfPage">
-            <HeroSection />
-          </section>
+      <main className="bg-background min-h-screen">
+        {/* 01 — Hero */}
+        <section aria-label="Hero">
+          <HeroSection />
+        </section>
 
-        {/* Solutions - What Can Ecocee Solve? */}
+        {/* 02 — Capabilities */}
         <AnimatedSection variant="fade-up" delay={0.1}>
-          <SolutionsSection />
+          <CapabilitiesSection />
         </AnimatedSection>
 
-        {/* The Ecocee Stack — Software + Compute + Edge */}
+        {/* 03 — Clients */}
         <AnimatedSection variant="fade-up" delay={0.1}>
-          <EcoceeStackSection />
+          <ClientsSection />
         </AnimatedSection>
 
-        {/* How we work / Deployment Flow */}
+        {/* 04 — From Idea to Reality */}
         <AnimatedSection variant="fade-up" delay={0.05}>
-          <section aria-label="How We Work">
-            <DeploymentFlowSection />
-          </section>
+          <ProcessSection />
         </AnimatedSection>
 
-        {/* Target Audience / Who We Work With */}
+        {/* 05 — Why Ecocee */}
         <AnimatedSection variant="fade-up" delay={0.1}>
-          <TargetAudienceSection />
+          <PositioningSection />
         </AnimatedSection>
 
-        {/* Ecocee Labs */}
+        {/* 06 — Why Now */}
         <AnimatedSection variant="fade-up" delay={0.1}>
-          <EcoceeLabsSection />
+          <WhyNowSection />
         </AnimatedSection>
 
-        {/* FAQ */}
-        <AnimatedSection variant="fade-up" delay={0.05}>
-          <section aria-label="Frequently Asked Questions">
-            <FAQSection />
-          </section>
-        </AnimatedSection>
-
-        {/* What Happens Next? */}
+        {/* 07 — Engineering Capabilities */}
         <AnimatedSection variant="fade-up" delay={0.1}>
-          <ProcessNextSection />
+          <EngineeringSection />
         </AnimatedSection>
 
-        {/* Contact — lead capture */}
+        {/* 08 — Ecocee Labs */}
         <AnimatedSection variant="fade-up" delay={0.1}>
-          <section aria-label="Contact">
-            <ContactSection />
-          </section>
+          <LabsSection />
         </AnimatedSection>
+
+        {/* 09 — Technology Stack */}
+        <AnimatedSection variant="fade-up" delay={0.1}>
+          <StackSection />
+        </AnimatedSection>
+
+        {/* 10 — About */}
+        <AnimatedSection variant="fade-up" delay={0.1}>
+          <AboutSection />
+        </AnimatedSection>
+
+        {/* 11 — Final CTA */}
+        <CTASection />
       </main>
 
       <FooterSection />

@@ -20,7 +20,7 @@ const TermsOfService = () => {
         initial={{ opacity: 0, y: 30 }}
         animate={{ opacity: 1, y: 0 }}
       >
-        <h1 className="text-3xl font-semibold mb-4 text-center">Terms of Service 📜</h1>
+        <h1 className="text-3xl font-semibold mb-4 text-center">Terms of Service</h1>
         <p className="text-gray-600 text-center mb-6">
           These Terms of Service govern your use of Niti and all related services provided by Ecocee Technologies.
         </p>

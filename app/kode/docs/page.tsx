@@ -56,7 +56,7 @@ export default function DocsPage() {
           </Card>
           <Card className="border-violet-200 dark:border-violet-800 bg-gradient-to-br from-violet-50/50 to-purple-50/50 dark:from-violet-950/20 dark:to-purple-950/20">
             <CardContent className="p-4">
-              <h3 className="font-semibold mb-2 text-slate-900 dark:text-slate-100">🎯 Modern Type System</h3>
+              <h3 className="font-semibold mb-2 text-slate-900 dark:text-slate-100">Modern Type System</h3>
               <p className="text-sm text-slate-600 dark:text-slate-400">
                 Static typing with full inference, generics, traits/interfaces, and pattern matching
               </p>
@@ -64,7 +64,7 @@ export default function DocsPage() {
           </Card>
           <Card className="border-violet-200 dark:border-violet-800 bg-gradient-to-br from-violet-50/50 to-purple-50/50 dark:from-violet-950/20 dark:to-purple-950/20">
             <CardContent className="p-4">
-              <h3 className="font-semibold mb-2 text-slate-900 dark:text-slate-100">🚀 Concurrency-First</h3>
+              <h3 className="font-semibold mb-2 text-slate-900 dark:text-slate-100">Concurrency-First</h3>
               <p className="text-sm text-slate-600 dark:text-slate-400">
                 Lightweight goroutines, channels, select statements, and built-in synchronization primitives
               </p>
@@ -326,12 +326,12 @@ fn main() {
                   <li>⏳ Math library functions</li>
                   <li>⏳ Package manager (Kodepm)</li>
                 </ul>
-                <h3 className="font-semibold text-blue-600 dark:text-blue-400 mb-3 mt-6">🔮 Planned</h3>
+                <h3 className="font-semibold text-blue-600 dark:text-blue-400 mb-3 mt-6">Planned</h3>
                 <ul className="space-y-2 text-sm text-slate-600 dark:text-slate-400">
-                  <li>🔮 Async/await syntax sugar</li>
-                  <li>🔮 LLVM backend option</li>
-                  <li>🔮 WebAssembly target</li>
-                  <li>🔮 FFI (Foreign Function Interface)</li>
+                  <li>Async/await syntax sugar</li>
+                  <li>LLVM backend option</li>
+                  <li>WebAssembly target</li>
+                  <li>FFI (Foreign Function Interface)</li>
                 </ul>
               </div>
             </div>

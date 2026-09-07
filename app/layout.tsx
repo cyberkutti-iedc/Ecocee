@@ -1,103 +1,39 @@
 import React from 'react';
 import type { Metadata } from "next";
-import { Inter, Space_Grotesk } from "next/font/google";
+import { Inter } from "next/font/google";
 import "./globals.css";
 import { cn } from "@/lib/utils";
 import { ThemeProvider } from "@/components/layout/theme-provider";
 import { Toaster } from "react-hot-toast";
 import { NavbarWrapper } from "@/components/layout/NavbarWrapper";
-import Seo from "@/components/seo/Seo";
 
-const inter = Inter({ subsets: ["latin"], display: "swap", variable: "--font-body" });
-const spaceGrotesk = Space_Grotesk({ subsets: ["latin"], display: "swap", variable: "--font-display" });
+const inter = Inter({ 
+  subsets: ["latin"], 
+  display: "swap", 
+  variable: "--font-body",
+  weight: ["300", "400", "500", "600", "700", "800", "900"]
+});
 
 export const metadata: Metadata = {
-  title: "Custom AI Agents & IoT Solutions in Kerala | Ecocee | AI Automation, Embedded Systems",
+  title: "Ecocee | Custom AI Agents & Edge Computing",
   description:
-    "Ecocee builds custom AI agents, private AI infrastructure, IoT solutions, and embedded systems for businesses in Kerala. On-premise AI deployment, edge computing, business automation. Free consultation.",
-     manifest: '/site.webmanifest',
+    "Custom AI agents, private AI infrastructure, and embedded systems. Built in Kerala for businesses across India.",
+  manifest: '/site.webmanifest',
   keywords: [
-    // Kerala statewide & city-specific
-    "Software development company in Kerala",
-    "Software development company in Kochi",
-    "Software development company in Ernakulam",
-    "1 software development company in thrissur",
-    "Embedded systems company in Thrissur",
-    "IoT solutions in Thrissur",
-    "Custom software solutions Thrissur",
-    "AI solutions in Thrissur",
-    "Firmware developers in Thrissur",
-    "Embedded systems services Thrissur",
-    "AI and machine learning services Thrissur",
-    "IoT firmware developers in Thrissur",
-    // Kochi & Ernakulam variants
-    "Embedded systems company in Kochi",
-    "IoT solutions in Kochi",
-    "Custom software solutions Kochi",
-    "AI solutions in Kochi",
-    "Firmware developers in Kochi",
-    "Embedded systems services Kochi",
-    "AI and machine learning services Kochi",
-    "IoT firmware developers in Kochi",
-    "Embedded systems company in Ernakulam",
-    "IoT solutions in Ernakulam",
-    "Custom software solutions Ernakulam",
-    "AI solutions in Ernakulam",
-    "Firmware developers in Ernakulam",
-    "Embedded systems services Ernakulam",
-    "AI and machine learning services Ernakulam",
-    "IoT firmware developers in Ernakulam",
-    "Embedded Systems Kerala",
-    "IoT Solutions Kerala",
-    "Industrial Automation Kerala",
-    "PCB Prototyping Kerala",
-    "Hardware Prototyping Kerala",
-    "Embedded Training Kerala",
-    "Smart Industry Kerala",
-    "Custom Electronics Kerala",
-    "MSME Embedded Systems Kerala",
-    "IoT Company Kerala",
-    "Embedded Systems India",
-    "IoT Solutions India",
-    "Industrial Automation India",
-    "PCB Design Services India",
-    "Firmware Development India",
-    "Custom Embedded Hardware India",
-    "AI Embedded Solutions India",
-    "Product Development Startup India",
-    "Electronics Prototyping India",
-    "Affordable embedded systems for startups Kerala",
-    "IoT product development Kerala startups",
-    "Embedded system training for students in Kerala",
-    "Industrial machine automation for small factories Kerala",
-    "Embedded systems for MSMEs in India",
-    "Embedded systems outsourcing India",
-    "IoT prototyping help for engineers Kerala",
-    "PCB prototyping services for startups in India",
-    "Ecocee embedded systems",
-    "Ecocee IoT solutions Kerala",
-    "Ecocee startup India",
-    "Ecocee hardware prototyping",
-    "Ecocee technical training",
-    "Ecocee automation services",
-    "Best IoT company in Kerala",
-    "Top embedded systems startup India",
-    "Affordable PCB design services",
-    "Industrial IoT solutions Kerala",
-    "Smart home automation Kerala",
-    "Embedded systems training center",
-    "Custom firmware development",
-    "Electronics product development",
-    "IoT consulting services",
-    "Embedded Linux development",
-    "ARM microcontroller programming",
-    "RTOS development services",
-    "Wireless IoT solutions",
+    "custom AI agents",
+    "private AI infrastructure",
+    "edge computing",
+    "embedded systems Kerala",
+    "IoT solutions India",
+    "AI automation business",
+    "computer vision",
+    "on-premise AI",
+    "Ecocee",
   ],
   openGraph: {
-    title: "Ecocee | Embedded Systems, IoT & AI Solutions",
+    title: "Ecocee | Custom AI Agents & Edge Computing",
     description:
-      "Kerala-based startup Ecocee provides embedded systems, IoT, and AI project solutions along with technical training and patentable innovations.",
+      "Custom AI agents, private AI infrastructure, and embedded systems. Built in Kerala.",
     url: "https://ecocee.in",
     type: "website",
     siteName: "Ecocee",
@@ -115,9 +51,9 @@ export const metadata: Metadata = {
   twitter: {
     card: "summary_large_image",
     creator: "@Ecocee",
-    title: "Ecocee | Embedded Systems, IoT & AI Solutions",
+    title: "Ecocee | Custom AI Agents & Edge Computing",
     description:
-      "Discover Ecocee's Kerala-based embedded systems, IoT, and AI development services with custom solutions and patentable projects.",
+      "Custom AI agents, private AI infrastructure, and embedded systems. Built in Kerala.",
     site: "@Ecocee",
     images: ["https://ecocee.in/og-banner.webp"],
   },
@@ -160,7 +96,7 @@ export default function RootLayout({
   children,
 }: Readonly<{ children: React.ReactNode }>) {
   return (
-    <html lang="en-IN" suppressHydrationWarning>
+    <html lang="en-IN" className="dark" suppressHydrationWarning>
       <head>
           <meta
             name="viewport"
@@ -170,8 +106,8 @@ export default function RootLayout({
           <meta name="mobile-web-app-capable" content="yes" />
           <meta name="apple-mobile-web-app-capable" content="yes" />
           <meta name="apple-mobile-web-app-status-bar-style" content="default" />
-          <meta name="theme-color" content="#10B981" />
-          <meta name="msapplication-TileColor" content="#10B981" />
+          <meta name="theme-color" content="#0a0f1a" />
+          <meta name="msapplication-TileColor" content="#0a0f1a" />
           <meta name="msapplication-config" content="/browserconfig.xml" />
           <link rel="manifest" href="/site.webmanifest" />
           {/* llms.txt — LLM-friendly site overview for AI agents */}
@@ -192,20 +128,19 @@ export default function RootLayout({
         </head>
 
         <body className={cn(
-            "min-h-screen w-full flex flex-col overflow-x-hidden bg-background text-foreground selection:bg-primary\/30 antialiased",
+            "min-h-screen w-full flex flex-col overflow-x-hidden bg-background text-foreground selection:bg-primary/30 antialiased",
             inter.variable,
-            spaceGrotesk.variable,
             inter.className
           )}
         >
-          <ThemeProvider attribute="class" defaultTheme="light">
+          <ThemeProvider attribute="class" defaultTheme="dark" forcedTheme="dark">
             {/* Navbar */}
             <React.Suspense fallback={null}>
               <NavbarWrapper />
             </React.Suspense>
 
-            {/* Main content - responsive padding for bigger navbar */}
-            <main className="flex-1 w-full overflow-x-hidden pt-20 md:pt-24 lg:pt-28" id="main-content">{children}</main>
+            {/* Main content */}
+            <main className="flex-1 w-full overflow-x-hidden" id="main-content">{children}</main>
 
             <Toaster
               position="top-right"

@@ -19,7 +19,7 @@ const CookiePolicy = () => {
         initial={{ opacity: 0, y: 30 }}
         animate={{ opacity: 1, y: 0 }}
       >
-        <h1 className="text-3xl font-semibold mb-4">Cookie Policy 🍪</h1>
+        <h1 className="text-3xl font-semibold mb-4">Cookie Policy</h1>
         <p className="text-gray-600 mb-6">
           We use cookies to enhance your experience, analyze traffic, and improve our services. By continuing to browse,
           you agree to our use of cookies.
@@ -28,8 +28,8 @@ const CookiePolicy = () => {
         <h2 className="text-lg font-medium mb-3">How We Use Cookies:</h2>
         <ul className="text-gray-600 text-left mb-6 space-y-2">
           <li>✅ Essential: Required for site functionality.</li>
-          <li>📊 Analytics: Helps us improve user experience.</li>
-          <li>🎯 Advertising: Shows relevant ads.</li>
+          <li>Analytics: Helps us improve user experience.</li>
+          <li>Advertising: Shows relevant ads.</li>
         </ul>
 
         <button

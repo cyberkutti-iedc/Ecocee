@@ -22,7 +22,7 @@ const LicenseAgreement = () => {
         initial={{ opacity: 0, y: 30 }}
         animate={{ opacity: 1, y: 0 }}
       >
-        <h1 className="text-3xl font-semibold mb-4 text-center">Niti License Agreement 📜</h1>
+        <h1 className="text-3xl font-semibold mb-4 text-center">Niti License Agreement</h1>
         <p className="text-gray-600 text-center mb-6">
   This End-User License Agreement (&quot;Agreement&quot;) is a legal contract between you (&quot;User&quot;) and Ecocee Technologies
   (&quot;Company&quot;) for the use of the Niti software and services.

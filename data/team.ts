@@ -31,7 +31,7 @@ export const teamData: TeamMember[] = [
       "Startup Leadership"
     ],
     experience: "4+ years in Embedded Systems, 3+ years in Entrepreneurship",
-    avatar: "👨🏻‍💻",
+    avatar: "SV",
     linkedin: "https://linkedin.com/in/sreerajvrajesh",
     github: "https://github.com/cyberkutti-iedc",
     email: "cyberkutti@gmail.com",
@@ -52,7 +52,7 @@ export const teamData: TeamMember[] = [
       "Startup Mentoring"
     ],
     experience: "Entrepreneurship mentor with 4+ years of experience guiding startups.",
-    avatar: "👩🏻‍🎓",
+    avatar: "CR",
     linkedin: "https://linkedin.com/in/chaithanyaraj-teacher",
     github: "https://github.com/chaithanyaraj",
     email: "#",
@@ -89,7 +89,7 @@ export const teamData: TeamMember[] = [
       "Finance Technology"
     ],
     experience: "5+ years of professional experience in core electronics and finance areas.",
-    avatar: "👨‍🔬",
+    avatar: "AK",
     linkedin: "https://linkedin.com/in/example-amalkrishna",
     github: "https://github.com/example-amalkrishna",
     email: "amal@gmail.com",

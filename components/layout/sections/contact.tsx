@@ -41,9 +41,22 @@ export const ContactSection = () => {
     e.preventDefault();
     setIsSubmitting(true);
     try {
-      console.log("Form submitted:", formData);
-      setSubmitted(true);
-      setFormData({ name: "", phone: "", email: "", businessType: "", message: "" });
+      const response = await fetch("https://formsubmit.co/ajax/info@ecocee.in", {
+        method: "POST",
+        headers: { "Content-Type": "application/json", Accept: "application/json" },
+        body: JSON.stringify({
+          name: formData.name,
+          phone: formData.phone,
+          email: formData.email,
+          interest: formData.businessType,
+          message: formData.message,
+          _subject: `New inquiry from ${formData.name}`,
+        }),
+      });
+      if (response.ok) {
+        setSubmitted(true);
+        setFormData({ name: "", phone: "", email: "", businessType: "", message: "" });
+      }
     } catch (error) {
       console.error("Submission error:", error);
     } finally {

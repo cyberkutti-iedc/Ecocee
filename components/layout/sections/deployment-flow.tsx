@@ -41,8 +41,8 @@ const steps = [
     timeframe: "Phase 4",
     icon: Rocket,
     description: "We test, integrate and deploy the solution into the target environment.",
-    color: "from-emerald-500/20 to-emerald-500/0",
-    iconColor: "text-emerald-500",
+    color: "from-blue-500/20 to-blue-500/0",
+    iconColor: "text-blue-500",
     details: ["Integration Testing", "User Acceptance", "Environment Deployment"],
   },
   {

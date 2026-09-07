@@ -20,7 +20,7 @@ const PrivacyPolicy = () => {
         initial={{ opacity: 0, y: 30 }}
         animate={{ opacity: 1, y: 0 }}
       >
-        <h1 className="text-3xl font-semibold mb-4 text-center">Privacy Policy 🔒</h1>
+        <h1 className="text-3xl font-semibold mb-4 text-center">Privacy Policy</h1>
         <p className="text-gray-600 text-center mb-6">
           This Privacy Policy describes how Ecocee Technologies collects, uses, and protects your data.
         </p>

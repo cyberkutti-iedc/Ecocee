@@ -98,7 +98,7 @@
 // //         throw new Error(data.message || "Verification failed.");
 // //       }
   
-// //       setToastMessage("License verified successfully! 🎉");
+// //       setToastMessage("License verified successfully!");
   
 // //       setTimeout(() => {
 // //         setShowToast(false);
@@ -397,7 +397,7 @@
 
 // //       {/* Happy Hacking Message */}
 // //       <div className="mt-6 text-center">
-// //         <p className="text-lg font-semibold text-gray-800">🚀 Enjoy & Happy Hacking with Niti HDK! 🎉</p>
+// //         <p className="text-lg font-semibold text-gray-800">Enjoy & Happy Hacking with Niti HDK!</p>
 // //         <p className="text-sm text-gray-600">If you need help, check our documentation or community forums.</p>
 // //       </div>
 
@@ -1029,7 +1029,7 @@
 //         throw new Error(data.message || "Verification failed.");
 //       }
   
-//       setToastMessage("License verified successfully! 🎉");
+//       setToastMessage("License verified successfully!");
   
 //       setTimeout(() => {
 //         setShowToast(false);
@@ -1319,7 +1319,7 @@
 
 //                     {/* Happy Hacking Message */}
 //                     <div className="mt-6 text-center">
-//                       <p className={`text-lg font-semibold ${darkMode ? 'text-gray-200' : 'text-gray-800'}`}>🚀 Enjoy & Happy Hacking with Niti HDK! 🎉</p>
+//                       <p className={`text-lg font-semibold ${darkMode ? 'text-gray-200' : 'text-gray-800'}`}>Enjoy & Happy Hacking with Niti HDK!</p>
 //                       <p className={`text-sm ${darkMode ? 'text-gray-400' : 'text-gray-600'}`}>If you need help, check our documentation or community forums.</p>
 //                     </div>
 
@@ -2035,7 +2035,7 @@ export default function NitiLandingPage() {
         throw new Error(data.message || "Verification failed.");
       }
   
-      setToastMessage("License verified successfully! 🎉");
+      setToastMessage("License verified successfully!");
   
       setTimeout(() => {
         setShowToast(false);
@@ -2360,7 +2360,7 @@ export default function NitiLandingPage() {
 
                     {/* Happy Hacking Message */}
                     <div className="mt-6 text-center">
-                      <p className={`text-lg font-semibold ${darkMode ? 'text-gray-200' : 'text-gray-800'}`}>🚀 Enjoy & Happy Hacking with Niti HDK! 🎉</p>
+                      <p className={`text-lg font-semibold ${darkMode ? 'text-gray-200' : 'text-gray-800'}`}>Enjoy & Happy Hacking with Niti HDK!</p>
                       <p className={`text-sm ${darkMode ? 'text-gray-400' : 'text-gray-600'}`}>If you need help, check our documentation or community forums.</p>
                     </div>
 
