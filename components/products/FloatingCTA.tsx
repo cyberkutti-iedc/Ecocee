@@ -97,8 +97,8 @@ export default function FloatingCTA({ onClose }: FloatingCTAProps) {
                 key={i}
                 className="absolute w-1 h-1 bg-green-400 rounded-full"
                 initial={{
-                  x: Math.random() * 200,
-                  y: Math.random() * 200,
+                  x: (i * 83) % 200,
+                  y: (i * 47) % 200,
                   opacity: 0
                 }}
                 animate={{

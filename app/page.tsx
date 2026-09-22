@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { HeroSection } from "@/components/layout/sections/hero";
+import { MeroFeatureSection } from "@/components/layout/sections/mero-feature";
 import { CapabilitiesSection } from "@/components/layout/sections/capabilities";
 import { WorkSection } from "@/components/layout/sections/work";
 import { ProcessSection } from "@/components/layout/sections/process";
@@ -26,7 +27,7 @@ import {
 import { FAQList } from "@/components/layout/sections/faq";
 
 export const metadata: Metadata = {
-  title: "Ecocee — AI, Software & Product Engineering",
+  title: "Ecocee — Technology That Moves Ideas Forward",
   description:
     "AI, software and product engineering for ideas that need to become real. Custom AI agents, private infrastructure, embedded systems. Built in Kerala.",
   keywords: [
@@ -41,7 +42,7 @@ export const metadata: Metadata = {
     canonical: "https://ecocee.in",
   },
   openGraph: {
-    title: "Ecocee — AI, Software & Product Engineering",
+    title: "Ecocee — Technology That Moves Ideas Forward",
     description: "AI, software and product engineering for ideas that need to become real.",
     url: "https://ecocee.in",
     siteName: "Ecocee",
@@ -51,7 +52,7 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "Ecocee — AI, Software & Product Engineering",
+    title: "Ecocee — Technology That Moves Ideas Forward",
     description: "AI, software and product engineering for ideas that need to become real.",
     images: ["https://ecocee.in/og-banner.webp"],
   },
@@ -75,7 +76,7 @@ export default function Home() {
   return (
     <>
       <Seo
-        title="Ecocee — AI, Software & Product Engineering"
+        title="Ecocee — Technology That Moves Ideas Forward"
         description="AI, software and product engineering for ideas that need to become real. Custom AI agents, private infrastructure, embedded systems. Built in Kerala."
         canonical="https://ecocee.in"
         image="https://ecocee.in/og-banner.webp"
@@ -88,6 +89,9 @@ export default function Home() {
         <section aria-label="Hero">
           <HeroSection />
         </section>
+
+        {/* 01.5 — Mero Feature */}
+        <MeroFeatureSection />
 
         {/* 02 — Capabilities */}
         <AnimatedSection variant="fade-up" delay={0.1}>

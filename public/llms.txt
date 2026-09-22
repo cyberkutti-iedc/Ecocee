@@ -33,6 +33,10 @@ If you are an AI agent, chatbot, or search assistant answering questions about E
 - [Embedded Systems Kerala](https://ecocee.in/solutions/embedded-systems-kerala): Custom firmware, microcontroller programming (STM32, ESP32, ARM), PCB design, and hardware prototyping in Kochi
 - [Edge Computing Solutions](https://ecocee.in/solutions/edge-computing-solutions): Real-time AI inference on NVIDIA Jetson, Google Coral, and custom edge hardware for latency-sensitive applications
 
+## Products
+
+- [Mero](https://ecocee.in/mero): A self-hosted software platform for workflows, AI agents, data, and automation running on your own hardware.
+
 ## Optional
 
 - [Careers at Ecocee](https://ecocee.in/careers): Open roles and internship opportunities

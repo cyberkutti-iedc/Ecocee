@@ -71,7 +71,14 @@ export const Navbar = () => {
             ))}
           </nav>
 
-          <div className="hidden lg:flex items-center">
+          <div className="hidden lg:flex items-center gap-4">
+            <Link
+              href="/mero"
+              className="inline-flex items-center text-xs font-medium text-[#3b82f6] hover:text-[#60a5fa] transition-colors uppercase tracking-wider"
+            >
+              <span className="w-2 h-2 rounded-full bg-[#3b82f6] mr-2 animate-pulse" />
+              Mero — Launching Soon
+            </Link>
             <button
               onClick={() => window.open(GOOGLE_FORM_URL, "_blank")}
               className="inline-flex items-center gap-2 text-sm font-medium text-white bg-white/10 hover:bg-white/15 px-5 py-2.5 rounded-full transition-all duration-200 border border-white/10 hover:border-white/20"

@@ -33,6 +33,7 @@ export const FooterSection = () => {
             <h3 className="font-semibold text-white text-xs uppercase tracking-wider mb-4">Work</h3>
             <ul className="space-y-2.5">
               {[
+                { label: "Mero", href: "/mero" },
                 { label: "Ordato", href: "/#work" },
                 { label: "Adara", href: "/#work" },
                 { label: "Navicentra", href: "/#work" },

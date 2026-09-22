@@ -24,6 +24,8 @@ const ParticleSystem = () => {
         y: Math.random() * 100,
         size: Math.random() * 3 + 1,
         opacity: Math.random() * 0.4 + 0.1,
+        duration: 3 + Math.random() * 4,
+        delay: Math.random() * 2,
       });
     }
     setParticles(newParticles);
@@ -31,7 +33,7 @@ const ParticleSystem = () => {
 
   return (
     <div className="fixed inset-0 overflow-hidden pointer-events-none z-0">
-      {particles.map((particle) => (
+      {particles.map((particle: any) => (
         <div
           key={particle.id}
           className="absolute rounded-full bg-emerald-400/20 animate-pulse"
@@ -41,9 +43,7 @@ const ParticleSystem = () => {
             width: `${particle.size}px`,
             height: `${particle.size}px`,
             opacity: particle.opacity,
-            animation: `float ${3 + Math.random() * 4}s ease-in-out infinite ${
-              Math.random() * 2
-            }s`,
+            animation: `float ${particle.duration}s ease-in-out infinite ${particle.delay}s`,
           }}
         />
       ))}
