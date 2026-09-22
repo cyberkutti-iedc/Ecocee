@@ -43,7 +43,7 @@ export const MeroIntro = () => {
           >
             <div className="relative aspect-[16/10] w-full overflow-hidden bg-slate-50">
               <Image
-                src="/mero/m1.png"
+                src="/mero/m2.png"
                 alt="Mero edge computing appliance"
                 fill
                 className="object-contain object-center"

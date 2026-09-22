@@ -54,7 +54,7 @@ export const MeroFeatureSection = () => {
             className="relative aspect-square lg:aspect-[4/5] rounded-lg overflow-hidden border border-white/5 shadow-2xl"
           >
             <Image
-              src="/mero/m1.png"
+              src="/mero/m4.png"
               alt="Mero Platform"
               fill
               className="object-cover"

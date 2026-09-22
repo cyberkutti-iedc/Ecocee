@@ -65,7 +65,7 @@ export const MeroHardware = () => {
         >
           <div className="relative aspect-[16/8.5] w-full">
             <Image
-              src="/mero/m1.png"
+              src="/mero/m3.png"
               alt="Mero edge computing appliance"
               fill
               priority={false}
