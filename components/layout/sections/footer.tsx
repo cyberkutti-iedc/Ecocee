@@ -91,7 +91,7 @@ export const FooterSection = () => {
         {/* Bottom */}
         <div className="border-t border-white/5 py-6 flex flex-col sm:flex-row justify-between items-center gap-3">
           <p className="text-xs text-gray-600">
-            &copy; {currentYear} Ecocee Technologies.
+            &copy; {currentYear} Ecocee.
           </p>
           <div className="flex gap-4">
             <a href="https://www.linkedin.com/company/ecocee" target="_blank" rel="noopener noreferrer" className="text-xs text-gray-600 hover:text-white transition-colors">
