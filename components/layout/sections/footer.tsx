@@ -34,9 +34,10 @@ export const FooterSection = () => {
             <ul className="space-y-2.5">
               {[
                 { label: "Mero", href: "/mero" },
-                { label: "Ordato", href: "/#work" },
-                { label: "Adara", href: "/#work" },
-                { label: "Navicentra", href: "/#work" },
+                { label: "Dotpaper", href: "/dotpaper" }
+                // { label: "Ordato", href: "/#work" },
+                // { label: "Adara", href: "/#work" },
+                // { label: "Navicentra", href: "/#work" },
               ].map(({ label, href }) => (
                 <li key={label}>
                   <Link href={href} className="text-sm text-gray-500 hover:text-white transition-colors">
