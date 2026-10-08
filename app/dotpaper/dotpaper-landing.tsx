@@ -30,11 +30,13 @@ import {
 } from "lucide-react";
 import type { LucideIcon } from "lucide-react";
 
+import { GOOGLE_FORM_URL } from "@/lib/config";
+
 /* ------------------------------------------------------------------ */
 /* Config                                                             */
 /* ------------------------------------------------------------------ */
 
-const CONTACT_HREF = "/contact";
+const CONTACT_HREF = GOOGLE_FORM_URL;
 const EASE: [number, number, number, number] = [0.21, 0.47, 0.32, 0.98];
 
 /* ------------------------------------------------------------------ */
@@ -797,6 +799,8 @@ export default function DotpaperLanding() {
             <div className="mt-10 flex flex-wrap items-center justify-center gap-3">
               <a
                 href={CONTACT_HREF}
+                target="_blank"
+                rel="noopener noreferrer"
                 className="group inline-flex items-center gap-2 rounded-full bg-slate-900 px-7 py-3.5 text-base font-semibold text-white transition duration-200 hover:scale-[1.03] hover:bg-slate-800 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
               >
                 Request Executive Access
@@ -971,6 +975,8 @@ export default function DotpaperLanding() {
               </h2>
               <a
                 href={CONTACT_HREF}
+                target="_blank"
+                rel="noopener noreferrer"
                 className="group mt-10 inline-flex items-center gap-2 rounded-full bg-white px-8 py-4 text-base font-semibold text-slate-900 transition duration-200 hover:scale-[1.03] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white"
               >
                 Request Executive Access

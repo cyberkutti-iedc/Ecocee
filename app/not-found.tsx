@@ -81,31 +81,7 @@ const GlitchText = ({
   </div>
 );
 
-// Audio visualizer
-const AudioVisualizer = () => {
-  const [bars, setBars] = useState<number[]>([]);
-
-  useEffect(() => {
-    const generateBars = () => {
-      setBars(Array.from({ length: 15 }, () => Math.random() * 100 + 10));
-    };
-    generateBars();
-    const interval = setInterval(generateBars, 150);
-    return () => clearInterval(interval);
-  }, []);
-
-  return (
-    <div className="flex items-end justify-center space-x-1 h-12 sm:h-16 mb-6 sm:mb-8">
-      {bars.map((height, i) => (
-        <div
-          key={i}
-          className="w-1 bg-gradient-to-t from-green-500 to-emerald-300 rounded-t transition-all duration-150 ease-out"
-          style={{ height: `${height}%` }}
-        />
-      ))}
-    </div>
-  );
-};
+// Removed AudioVisualizer
 
 export default function NotFound() {
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
@@ -135,14 +111,11 @@ export default function NotFound() {
               <GlitchText>404</GlitchText>
             </h1>
             <h2 className="text-xl sm:text-2xl md:text-4xl font-bold text-emerald-300">
-              Track Not Found
+              Page Not Found
             </h2>
             <p className="text-base sm:text-lg md:text-xl text-emerald-200/70 max-w-md mx-auto lg:mx-0 leading-relaxed">
-              Looks like this melody got lost in the mix. Let’s get you back to
-              the main stage.
+              Looks like you've ventured into uncharted territory. Let's get you back to base.
             </p>
-
-            <AudioVisualizer />
 
             {/* Buttons */}
             <div className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start">
@@ -154,11 +127,11 @@ export default function NotFound() {
                   Return Home
                 </span>
               </Link>
-              <button className="group px-6 sm:px-8 py-3 sm:py-4 border-2 border-emerald-400/30 rounded-xl font-semibold text-lg hover:border-emerald-400/70 hover:bg-emerald-400/10 transition-all duration-300 hover:scale-105">
+              <Link href="mailto:info@ecocee.in" className="group px-6 sm:px-8 py-3 sm:py-4 border-2 border-emerald-400/30 rounded-xl font-semibold text-lg hover:border-emerald-400/70 hover:bg-emerald-400/10 transition-all duration-300 hover:scale-105 flex items-center justify-center">
                 <span className="bg-gradient-to-r from-emerald-300 to-green-400 bg-clip-text text-transparent group-hover:from-green-400 group-hover:to-white">
-                  Discover Music
+                  Contact Support
                 </span>
-              </button>
+              </Link>
             </div>
           </div>
 
