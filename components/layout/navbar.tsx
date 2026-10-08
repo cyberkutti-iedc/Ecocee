@@ -5,6 +5,7 @@ import { Menu, ArrowRight, X, ChevronRight } from "lucide-react";
 import Link from "next/link";
 import Image from "next/image";
 import { motion, AnimatePresence } from "framer-motion";
+import { usePathname } from "next/navigation";
 import { GOOGLE_FORM_URL } from "@/lib/config";
 
 interface NavItem {
@@ -13,13 +14,15 @@ interface NavItem {
 }
 
 const navItems: NavItem[] = [
-  { href: "/#work", label: "Work" },
+  { href: "/#products", label: "Products" },
   { href: "/#capabilities", label: "Capabilities" },
   { href: "/about", label: "About" },
   { href: "/#insights", label: "Insights" },
 ];
 
 export const Navbar = () => {
+  const pathname = usePathname() || "";
+  const isLight = pathname.startsWith("/dotpaper");
   const [isOpen, setIsOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
 
@@ -43,7 +46,9 @@ export const Navbar = () => {
       <header
         className={`fixed top-0 inset-x-0 z-50 transition-all duration-500 ${
           scrolled
-            ? "bg-black/80 backdrop-blur-xl border-b border-white/5"
+            ? isLight
+              ? "bg-white/80 backdrop-blur-xl border-b border-slate-200"
+              : "bg-black/80 backdrop-blur-xl border-b border-white/5"
             : "bg-transparent"
         }`}
       >
@@ -54,7 +59,7 @@ export const Navbar = () => {
               alt="Ecocee"
               width={160}
               height={40}
-              className="h-20 lg:h-24 w-auto"
+              className={`h-20 lg:h-24 w-auto ${isLight ? "brightness-0 opacity-80" : ""}`}
               priority
             />
           </Link>
@@ -64,7 +69,11 @@ export const Navbar = () => {
               <Link
                 key={item.label}
                 href={item.href}
-                className="text-sm font-medium text-gray-400 hover:text-white transition-colors duration-200"
+                className={`text-sm font-medium transition-colors duration-200 ${
+                  isLight
+                    ? "text-slate-500 hover:text-slate-900"
+                    : "text-gray-400 hover:text-white"
+                }`}
               >
                 {item.label}
               </Link>
@@ -74,14 +83,20 @@ export const Navbar = () => {
           <div className="hidden lg:flex items-center gap-4">
             <Link
               href="/mero"
-              className="inline-flex items-center text-xs font-medium text-[#3b82f6] hover:text-[#60a5fa] transition-colors uppercase tracking-wider"
+              className={`inline-flex items-center text-xs font-medium transition-colors uppercase tracking-wider ${
+                isLight ? "text-[#2563EB] hover:text-[#1d4ed8]" : "text-[#3b82f6] hover:text-[#60a5fa]"
+              }`}
             >
-              <span className="w-2 h-2 rounded-full bg-[#3b82f6] mr-2 animate-pulse" />
+              <span className={`w-2 h-2 rounded-full mr-2 animate-pulse ${isLight ? "bg-[#2563EB]" : "bg-[#3b82f6]"}`} />
               Mero — Launching Soon
             </Link>
             <button
               onClick={() => window.open(GOOGLE_FORM_URL, "_blank")}
-              className="inline-flex items-center gap-2 text-sm font-medium text-white bg-white/10 hover:bg-white/15 px-5 py-2.5 rounded-full transition-all duration-200 border border-white/10 hover:border-white/20"
+              className={`inline-flex items-center gap-2 text-sm font-medium px-5 py-2.5 rounded-full transition-all duration-200 border ${
+                isLight
+                  ? "text-slate-900 bg-slate-900/5 hover:bg-slate-900/10 border-slate-900/10 hover:border-slate-900/20"
+                  : "text-white bg-white/10 hover:bg-white/15 border-white/10 hover:border-white/20"
+              }`}
             >
               Start a project
               <ArrowRight className="w-4 h-4" />
@@ -90,7 +105,7 @@ export const Navbar = () => {
 
           <button
             onClick={() => setIsOpen(true)}
-            className="lg:hidden p-2 -mr-2 text-white"
+            className={`lg:hidden p-2 -mr-2 ${isLight ? "text-slate-900" : "text-white"}`}
             aria-label="Open menu"
           >
             <Menu className="w-6 h-6" />

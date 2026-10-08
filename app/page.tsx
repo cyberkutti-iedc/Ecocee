@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { HeroSection } from "@/components/layout/sections/hero";
 import { MeroFeatureSection } from "@/components/layout/sections/mero-feature";
+import { DotpaperFeatureSection } from "@/components/layout/sections/dotpaper-feature";
 import { CapabilitiesSection } from "@/components/layout/sections/capabilities";
 import { WorkSection } from "@/components/layout/sections/work";
 import { ProcessSection } from "@/components/layout/sections/process";
@@ -91,7 +92,10 @@ export default function Home() {
         </section>
 
         {/* 01.5 — Mero Feature */}
-        <MeroFeatureSection />
+        <div id="products">
+          <MeroFeatureSection />
+          <DotpaperFeatureSection />
+        </div>
 
         {/* 02 — Capabilities */}
         <AnimatedSection variant="fade-up" delay={0.1}>

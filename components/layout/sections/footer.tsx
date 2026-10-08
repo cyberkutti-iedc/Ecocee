@@ -28,9 +28,9 @@ export const FooterSection = () => {
             </p>
           </div>
 
-          {/* Work */}
+          {/* Products */}
           <div className="lg:col-span-2">
-            <h3 className="font-semibold text-white text-xs uppercase tracking-wider mb-4">Work</h3>
+            <h3 className="font-semibold text-white text-xs uppercase tracking-wider mb-4">Products</h3>
             <ul className="space-y-2.5">
               {[
                 { label: "Mero", href: "/mero" },
