@@ -6,6 +6,7 @@ import { cn } from "@/lib/utils";
 import { ThemeProvider } from "@/components/layout/theme-provider";
 import { Toaster } from "react-hot-toast";
 import { NavbarWrapper } from "@/components/layout/NavbarWrapper";
+import Script from "next/script";
 
 const inter = Inter({ 
   subsets: ["latin"], 
@@ -133,6 +134,20 @@ export default function RootLayout({
             inter.className
           )}
         >
+          <Script
+  src="https://www.googletagmanager.com/gtag/js?id=G-MYLZ8LF7ZM"
+  strategy="afterInteractive"
+/>
+
+<Script id="google-analytics" strategy="afterInteractive">
+  {`
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){window.dataLayer.push(arguments);}
+    window.gtag = gtag;
+    window.gtag('js', new Date());
+    window.gtag('config', 'G-MYLZ8LF7ZM');
+  `}
+</Script>
           <ThemeProvider attribute="class" defaultTheme="dark" forcedTheme="dark">
             {/* Navbar */}
             <React.Suspense fallback={null}>
