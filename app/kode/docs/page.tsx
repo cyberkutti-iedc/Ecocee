@@ -1,343 +1,617 @@
-import { Metadata } from 'next';
-import Link from 'next/link';
-import { ArrowRight, Github, BookOpen, Code2, Rocket, Terminal } from 'lucide-react';
-import { Badge } from '@/components/ui/badge';
-import { Card, CardContent } from '@/components/ui/card';
-import { Button } from '@/components/ui/button';
+
+import type { Metadata } from "next";
+import Link from "next/link";
+import {
+  ArrowRight,
+  ArrowUpRight,
+  BookOpen,
+  Check,
+  Code2,
+  Github,
+  Layers3,
+  Package,
+  Rocket,
+  Terminal,
+  Workflow,
+  Zap,
+} from "lucide-react";
+
+import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
 
 export const metadata: Metadata = {
-  title: 'Kode Documentation - Modern Systems Programming Language',
-  description: 'Official documentation for Kode - a modern, statically-typed systems programming language with stack-based VM execution, complete module system, and production-ready server stdlib.',
+  title: "Kode Documentation — Modern Systems Programming Language",
+  description:
+    "Learn Kode, a modern statically typed programming language. Explore installation, language syntax, modules, concurrency, server development and practical examples.",
 };
 
-export default function DocsPage() {
-  return (
-    <div className="space-y-12">
-      {/* Hero Section */}
-      <div className="text-center space-y-6">
-        <Badge variant="outline" className="border-violet-400 text-violet-600 dark:text-violet-400 mb-4">
-          v0.3.3 • March 2026
-        </Badge>
-        <h1 className="text-5xl md:text-6xl font-bold tracking-tight bg-gradient-to-r from-violet-600 via-purple-600 to-fuchsia-600 dark:from-violet-400 dark:via-purple-400 dark:to-fuchsia-400 bg-clip-text text-transparent">
-          Kode Documentation
-        </h1>
-        <p className="text-xl text-slate-600 dark:text-slate-400 max-w-3xl mx-auto leading-relaxed">
-          A modern, statically-typed systems programming language designed for performance, safety, and productivity. 
-          Features stack-based VM execution, complete module system, and concurrency-first design.
-        </p>
-        <div className="flex flex-col sm:flex-row gap-4 justify-center pt-4">
-          <Link href="/kode/docs/quick-start">
-            <Button size="lg" className="bg-gradient-to-r from-violet-500 to-purple-500 hover:from-violet-600 hover:to-purple-600 text-white shadow-lg shadow-violet-500/50">
-              <Rocket className="w-4 h-4 mr-2" />
-              Quick Start
-              <ArrowRight className="w-4 h-4 ml-2" />
-            </Button>
-          </Link>
-          <a href="https://github.com/ecocee/kode-go" target="_blank" rel="noopener noreferrer">
-            <Button size="lg" variant="outline" className="border-violet-300 dark:border-violet-700 hover:bg-violet-50 dark:hover:bg-violet-950/30">
-              <Github className="w-4 h-4 mr-2" />
-              View on GitHub
-            </Button>
-          </a>
-        </div>
-      </div>
+const documentation = [
+  {
+    number: "01",
+    title: "Installation",
+    description:
+      "Set up Kode on your machine and run your first program.",
+    href: "/kode/docs/installation",
+    icon: Terminal,
+    tag: "Getting started",
+  },
+  {
+    number: "02",
+    title: "Language Syntax",
+    description:
+      "Learn variables, types, operators, functions and control flow.",
+    href: "/kode/docs/language-syntax",
+    icon: Code2,
+    tag: "Language",
+  },
+  {
+    number: "03",
+    title: "Module System",
+    description:
+      "Organise your code with imports, exports and reusable modules.",
+    href: "/kode/docs/module-system",
+    icon: Layers3,
+    tag: "Language",
+  },
+  {
+    number: "04",
+    title: "CLI Commands",
+    description:
+      "Run, build, check and format your Kode projects.",
+    href: "/kode/docs/cli-commands",
+    icon: Terminal,
+    tag: "Tooling",
+  },
+  {
+    number: "05",
+    title: "Server Module",
+    description:
+      "Build HTTP services with Kode's server standard library.",
+    href: "/kode/docs/server-module",
+    icon: Workflow,
+    tag: "Development",
+  },
+  {
+    number: "06",
+    title: "Code Examples",
+    description:
+      "Explore practical examples covering functions, patterns and concurrency.",
+    href: "/kode/docs/examples",
+    icon: BookOpen,
+    tag: "Reference",
+  },
+];
 
-      {/* Key Features */}
-      <div>
-        <h2 className="text-2xl font-semibold mb-4 text-slate-900 dark:text-slate-100">What Makes Kode Special?</h2>
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-8">
-          <Card className="border-violet-200 dark:border-violet-800 bg-gradient-to-br from-violet-50/50 to-purple-50/50 dark:from-violet-950/20 dark:to-purple-950/20">
-            <CardContent className="p-4">
-              <h3 className="font-semibold mb-2 text-slate-900 dark:text-slate-100">⚡ Multiple Backends</h3>
-              <p className="text-sm text-slate-600 dark:text-slate-400">
-                Stack-based VM execution for portability, optional Go code generation for native performance
-              </p>
-            </CardContent>
-          </Card>
-          <Card className="border-violet-200 dark:border-violet-800 bg-gradient-to-br from-violet-50/50 to-purple-50/50 dark:from-violet-950/20 dark:to-purple-950/20">
-            <CardContent className="p-4">
-              <h3 className="font-semibold mb-2 text-slate-900 dark:text-slate-100">Modern Type System</h3>
-              <p className="text-sm text-slate-600 dark:text-slate-400">
-                Static typing with full inference, generics, traits/interfaces, and pattern matching
-              </p>
-            </CardContent>
-          </Card>
-          <Card className="border-violet-200 dark:border-violet-800 bg-gradient-to-br from-violet-50/50 to-purple-50/50 dark:from-violet-950/20 dark:to-purple-950/20">
-            <CardContent className="p-4">
-              <h3 className="font-semibold mb-2 text-slate-900 dark:text-slate-100">Concurrency-First</h3>
-              <p className="text-sm text-slate-600 dark:text-slate-400">
-                Lightweight goroutines, channels, select statements, and built-in synchronization primitives
-              </p>
-            </CardContent>
-          </Card>
-        </div>
-      </div>
-
-      {/* Quick Links */}
-      <div>
-        <h2 className="text-2xl font-semibold mb-6 text-slate-900 dark:text-slate-100">Start Learning</h2>
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          <Link href="/kode/docs/installation">
-            <Card className="group border-violet-200 dark:border-violet-800 bg-gradient-to-br from-violet-50 to-purple-50 dark:from-violet-950/30 dark:to-purple-950/30 hover:shadow-xl hover:shadow-violet-500/20 transition-all h-full">
-              <CardContent className="p-6">
-                <div className="flex items-start gap-4">
-                  <div className="p-3 bg-gradient-to-br from-violet-500 to-purple-500 rounded-lg group-hover:scale-110 transition-transform">
-                    <Terminal className="w-6 h-6 text-white" />
-                  </div>
-                  <div className="flex-1">
-                    <h3 className="font-semibold text-lg mb-2 text-slate-900 dark:text-slate-100 group-hover:text-violet-600 dark:group-hover:text-violet-400 transition-colors">
-                      Installation
-                    </h3>
-                    <p className="text-sm text-slate-600 dark:text-slate-400">
-                      Quick install via Go or build from source. Requires Go 1.18+.
-                    </p>
-                  </div>
-                  <ArrowRight className="w-5 h-5 text-violet-400 opacity-0 group-hover:opacity-100 -translate-x-2 group-hover:translate-x-0 transition-all" />
-                </div>
-              </CardContent>
-            </Card>
-          </Link>
-
-          <Link href="/kode/docs/language-syntax">
-            <Card className="group border-violet-200 dark:border-violet-800 bg-gradient-to-br from-violet-50 to-purple-50 dark:from-violet-950/30 dark:to-purple-950/30 hover:shadow-xl hover:shadow-violet-500/20 transition-all h-full">
-              <CardContent className="p-6">
-                <div className="flex items-start gap-4">
-                  <div className="p-3 bg-gradient-to-br from-violet-500 to-purple-500 rounded-lg group-hover:scale-110 transition-transform">
-                    <Code2 className="w-6 h-6 text-white" />
-                  </div>
-                  <div className="flex-1">
-                    <h3 className="font-semibold text-lg mb-2 text-slate-900 dark:text-slate-100 group-hover:text-violet-600 dark:group-hover:text-violet-400 transition-colors">
-                      Language Syntax
-                    </h3>
-                    <p className="text-sm text-slate-600 dark:text-slate-400">
-                      Complete syntax reference: operators, control flow, functions, and more.
-                    </p>
-                  </div>
-                  <ArrowRight className="w-5 h-5 text-violet-400 opacity-0 group-hover:opacity-100 -translate-x-2 group-hover:translate-x-0 transition-all" />
-                </div>
-              </CardContent>
-            </Card>
-          </Link>
-
-          <Link href="/kode/docs/module-system">
-            <Card className="group border-violet-200 dark:border-violet-800 bg-gradient-to-br from-violet-50 to-purple-50 dark:from-violet-950/30 dark:to-purple-950/30 hover:shadow-xl hover:shadow-violet-500/20 transition-all h-full">
-              <CardContent className="p-6">
-                <div className="flex items-start gap-4">
-                  <div className="p-3 bg-gradient-to-br from-violet-500 to-purple-500 rounded-lg group-hover:scale-110 transition-transform">
-                    <BookOpen className="w-6 h-6 text-white" />
-                  </div>
-                  <div className="flex-1">
-                    <h3 className="font-semibold text-lg mb-2 text-slate-900 dark:text-slate-100 group-hover:text-violet-600 dark:group-hover:text-violet-400 transition-colors">
-                      Module System
-                    </h3>
-                    <p className="text-sm text-slate-600 dark:text-slate-400">
-                      Powerful imports/exports system for code organization and reusability.
-                    </p>
-                  </div>
-                  <ArrowRight className="w-5 h-5 text-violet-400 opacity-0 group-hover:opacity-100 -translate-x-2 group-hover:translate-x-0 transition-all" />
-                </div>
-              </CardContent>
-            </Card>
-          </Link>
-
-          <Link href="/kode/docs/cli-commands">
-            <Card className="group border-violet-200 dark:border-violet-800 bg-gradient-to-br from-violet-50 to-purple-50 dark:from-violet-950/30 dark:to-purple-950/30 hover:shadow-xl hover:shadow-violet-500/20 transition-all h-full">
-              <CardContent className="p-6">
-                <div className="flex items-start gap-4">
-                  <div className="p-3 bg-gradient-to-br from-violet-500 to-purple-500 rounded-lg group-hover:scale-110 transition-transform">
-                    <Terminal className="w-6 h-6 text-white" />
-                  </div>
-                  <div className="flex-1">
-                    <h3 className="font-semibold text-lg mb-2 text-slate-900 dark:text-slate-100 group-hover:text-violet-600 dark:group-hover:text-violet-400 transition-colors">
-                      CLI Commands
-                    </h3>
-                    <p className="text-sm text-slate-600 dark:text-slate-400">
-                      Run, build, type-check, format, and manage Kode projects efficiently.
-                    </p>
-                  </div>
-                  <ArrowRight className="w-5 h-5 text-violet-400 opacity-0 group-hover:opacity-100 -translate-x-2 group-hover:translate-x-0 transition-all" />
-                </div>
-              </CardContent>
-            </Card>
-          </Link>
-
-          <Link href="/kode/docs/server-module">
-            <Card className="group border-violet-200 dark:border-violet-800 bg-gradient-to-br from-violet-50 to-purple-50 dark:from-violet-950/30 dark:to-purple-950/30 hover:shadow-xl hover:shadow-violet-500/20 transition-all h-full">
-              <CardContent className="p-6">
-                <div className="flex items-start gap-4">
-                  <div className="p-3 bg-gradient-to-br from-violet-500 to-purple-500 rounded-lg group-hover:scale-110 transition-transform">
-                    <Rocket className="w-6 h-6 text-white" />
-                  </div>
-                  <div className="flex-1">
-                    <h3 className="font-semibold text-lg mb-2 text-slate-900 dark:text-slate-100 group-hover:text-violet-600 dark:group-hover:text-violet-400 transition-colors">
-                      Server Module
-                    </h3>
-                    <p className="text-sm text-slate-600 dark:text-slate-400">
-                      Production-ready HTTP server stdlib backed by Go's net/http.
-                    </p>
-                  </div>
-                  <ArrowRight className="w-5 h-5 text-violet-400 opacity-0 group-hover:opacity-100 -translate-x-2 group-hover:translate-x-0 transition-all" />
-                </div>
-              </CardContent>
-            </Card>
-          </Link>
-
-          <Link href="/kode/docs/examples">
-            <Card className="group border-violet-200 dark:border-violet-800 bg-gradient-to-br from-violet-50 to-purple-50 dark:from-violet-950/30 dark:to-purple-950/30 hover:shadow-xl hover:shadow-violet-500/20 transition-all h-full">
-              <CardContent className="p-6">
-                <div className="flex items-start gap-4">
-                  <div className="p-3 bg-gradient-to-br from-violet-500 to-purple-500 rounded-lg group-hover:scale-110 transition-transform">
-                    <Code2 className="w-6 h-6 text-white" />
-                  </div>
-                  <div className="flex-1">
-                    <h3 className="font-semibold text-lg mb-2 text-slate-900 dark:text-slate-100 group-hover:text-violet-600 dark:group-hover:text-violet-400 transition-colors">
-                      Code Examples
-                    </h3>
-                    <p className="text-sm text-slate-600 dark:text-slate-400">
-                      Practical examples: recursion, closures, pattern matching, and concurrency.
-                    </p>
-                  </div>
-                  <ArrowRight className="w-5 h-5 text-violet-400 opacity-0 group-hover:opacity-100 -translate-x-2 group-hover:translate-x-0 transition-all" />
-                </div>
-              </CardContent>
-            </Card>
-          </Link>
-        </div>
-      </div>
-
-      {/* Code Examples */}
-      <div>
-        <h2 className="text-2xl font-semibold mb-4 text-slate-900 dark:text-slate-100">Quick Examples</h2>
-        
-        {/* Hello World */}
-        <div className="mb-6">
-          <h3 className="text-lg font-medium mb-2 text-slate-800 dark:text-slate-200">Hello Kode</h3>
-          <div className="rounded-lg border-2 border-violet-300 dark:border-violet-700 overflow-hidden">
-            <div className="bg-gradient-to-r from-violet-500 to-purple-500 px-4 py-2">
-              <Badge variant="secondary" className="bg-white/20 text-white border-0 font-mono text-xs">
-                hello.kode
-              </Badge>
-            </div>
-            <div className="bg-slate-950 p-6 font-mono text-sm">
-              <pre className="text-gray-100">
-{`fn main() {
+const examples = [
+  {
+    title: "Hello, Kode",
+    file: "hello.kode",
+    description: "A first look at a Kode program.",
+    code: `fn main() {
     let name = "Kode"
     let version = 3.3
-    
+
     print("Hello from \${name} v\${version}!")
 }
 
-// Run with: kode hello.kode`}
-              </pre>
-            </div>
-          </div>
-        </div>
-
-        {/* HTTP Server Example */}
-        <div className="mb-6">
-          <h3 className="text-lg font-medium mb-2 text-slate-800 dark:text-slate-200">Production HTTP Server</h3>
-          <div className="rounded-lg border-2 border-violet-300 dark:border-violet-700 overflow-hidden">
-            <div className="bg-gradient-to-r from-violet-500 to-purple-500 px-4 py-2">
-              <Badge variant="secondary" className="bg-white/20 text-white border-0 font-mono text-xs">
-                server.kode
-              </Badge>
-            </div>
-            <div className="bg-slate-950 p-6 font-mono text-sm">
-              <pre className="text-gray-100">
-{`import { newServer, start, get, post, okJSON } from "server"
+// Run with: kode hello.kode`,
+  },
+  {
+    title: "HTTP Server",
+    file: "server.kode",
+    description: "Create a simple HTTP server with routes.",
+    code: `import { newServer, start, get, post, okJSON } from "server"
 
 fn main() {
     let srv = newServer(8080)
-    
+
     get(srv, "/api/hello", fn(req) {
         return okJSON("{\\"message\\": \\"Hello, World!\\"}")
     })
-    
+
     post(srv, "/api/users", fn(req) {
         let data = body(req)
-        // Process user data
         return created("{\\"id\\": 1, \\"status\\": \\"created\\"}")
     })
-    
-    start(srv)  // Server running on :8080
-}`}
-              </pre>
-            </div>
-          </div>
-        </div>
 
-        {/* Concurrency Example */}
-        <div>
-          <h3 className="text-lg font-medium mb-2 text-slate-800 dark:text-slate-200">Concurrency with Channels</h3>
-          <div className="rounded-lg border-2 border-violet-300 dark:border-violet-700 overflow-hidden">
-            <div className="bg-gradient-to-r from-violet-500 to-purple-500 px-4 py-2">
-              <Badge variant="secondary" className="bg-white/20 text-white border-0 font-mono text-xs">
-                concurrent.kode
-              </Badge>
-            </div>
-            <div className="bg-slate-950 p-6 font-mono text-sm">
-              <pre className="text-gray-100">
-{`fn main() {
+    start(srv)
+}`,
+  },
+  {
+    title: "Concurrency",
+    file: "concurrent.kode",
+    description: "Use channels to exchange messages between workers.",
+    code: `fn main() {
     let messages = make(Channel<string>)
-    
-    // Spawn lightweight threads
+
     spawn {
         send(messages, "Hello from worker 1")
     }
-    
+
     spawn {
         send(messages, "Hello from worker 2")
     }
-    
-    // Receive messages
+
     print(receive(messages))
     print(receive(messages))
-}`}
-              </pre>
+}`,
+  },
+];
+
+const implemented = [
+  "Type system with inference",
+  "Arithmetic, bitwise and logical operators",
+  "Structs, enums, traits and generics",
+  "Pattern matching and destructuring",
+  "Module imports and exports",
+  "Concurrency primitives and channels",
+  "Bytecode VM and Go code generation",
+  "HTTP server standard library",
+];
+
+const inDevelopment = [
+  "File I/O operations",
+  "String manipulation utilities",
+  "Math library functions",
+  "Kode package manager",
+];
+
+const planned = [
+  "Async/await syntax",
+  "LLVM backend",
+  "WebAssembly target",
+  "Foreign Function Interface",
+];
+
+function SectionHeading({
+  eyebrow,
+  title,
+  description,
+}: {
+  eyebrow: string;
+  title: string;
+  description?: string;
+}) {
+  return (
+    <div className="max-w-2xl">
+      <p className="mb-3 text-xs font-semibold uppercase tracking-[0.16em] text-blue-700">
+        {eyebrow}
+      </p>
+      <h2 className="text-2xl font-semibold tracking-tight text-slate-950 sm:text-3xl">
+        {title}
+      </h2>
+      {description && (
+        <p className="mt-3 text-sm leading-7 text-slate-600 sm:text-base">
+          {description}
+        </p>
+      )}
+    </div>
+  );
+}
+
+function CodeExample({
+  title,
+  file,
+  description,
+  code,
+}: {
+  title: string;
+  file: string;
+  description: string;
+  code: string;
+}) {
+  return (
+    <article className="overflow-hidden rounded-xl border border-slate-200 bg-white">
+      <div className="flex flex-wrap items-center justify-between gap-3 border-b border-slate-200 px-5 py-4">
+        <div>
+          <h3 className="text-sm font-semibold text-slate-950">{title}</h3>
+          <p className="mt-1 text-xs text-slate-500">{description}</p>
+        </div>
+        <span className="rounded-md bg-slate-100 px-3 py-1.5 font-mono text-xs text-slate-600">
+          {file}
+        </span>
+      </div>
+
+      <pre className="overflow-x-auto bg-[#101820] p-5 text-[13px] leading-7 text-slate-100 sm:p-6">
+        <code>{code}</code>
+      </pre>
+    </article>
+  );
+}
+
+function StatusList({
+  title,
+  items,
+  variant,
+}: {
+  title: string;
+  items: string[];
+  variant: "complete" | "progress" | "planned";
+}) {
+  const styles = {
+    complete: {
+      dot: "bg-emerald-500",
+      text: "text-emerald-700",
+      label: "Implemented",
+    },
+    progress: {
+      dot: "bg-amber-500",
+      text: "text-amber-700",
+      label: "In development",
+    },
+    planned: {
+      dot: "bg-slate-400",
+      text: "text-slate-600",
+      label: "Planned",
+    },
+  };
+
+  const style = styles[variant];
+
+  return (
+    <div>
+      <div className="mb-4 flex items-center gap-2">
+        <span className={`h-2 w-2 rounded-full ${style.dot}`} />
+        <h3 className="text-sm font-semibold text-slate-950">{title}</h3>
+        <span className={`ml-auto text-xs ${style.text}`}>
+          {items.length} features
+        </span>
+      </div>
+
+      <ul className="space-y-3">
+        {items.map((item) => (
+          <li key={item} className="flex items-start gap-3 text-sm leading-6 text-slate-600">
+            {variant === "complete" ? (
+              <Check className="mt-1 h-4 w-4 shrink-0 text-emerald-600" />
+            ) : (
+              <span className={`mt-2 h-1.5 w-1.5 shrink-0 rounded-full ${style.dot}`} />
+            )}
+            {item}
+          </li>
+        ))}
+      </ul>
+    </div>
+  );
+}
+
+export default function DocsPage() {
+  return (
+    <main className="mx-auto w-full max-w-7xl px-5 pb-24 pt-10 sm:px-8 lg:px-12">
+      {/* Intro */}
+      <section className="border-b border-slate-200 pb-14 pt-6 sm:pb-20">
+        <div className="mb-8 flex flex-wrap items-center gap-3">
+          <Badge
+            variant="outline"
+            className="rounded-full border-blue-200 bg-blue-50 px-3 py-1 text-blue-700"
+          >
+            Kode v0.3.3
+          </Badge>
+          <span className="text-xs text-slate-500">March 2026 release</span>
+          <span className="h-1 w-1 rounded-full bg-slate-300" />
+          <span className="text-xs text-slate-500">Official documentation</span>
+        </div>
+
+        <div className="grid gap-12 lg:grid-cols-[1.3fr_0.7fr] lg:items-end">
+          <div>
+            <p className="mb-4 text-sm font-medium text-blue-700">
+              The Kode programming language
+            </p>
+
+            <h1 className="max-w-3xl text-5xl font-semibold tracking-[-0.055em] text-slate-950 sm:text-6xl lg:text-7xl">
+              Build with
+              <br />
+              <span className="text-blue-700">Kode.</span>
+            </h1>
+
+            <p className="mt-7 max-w-2xl text-base leading-8 text-slate-600 sm:text-lg">
+              A modern, statically typed systems programming language
+              designed for performance, safety and developer productivity.
+              Explore the language, understand its features and start
+              building with Kode.
+            </p>
+
+            <div className="mt-9 flex flex-wrap gap-3">
+              <Button
+                asChild
+                size="lg"
+                className="h-12 rounded-full bg-blue-700 px-6 text-sm font-medium text-white hover:bg-blue-800"
+              >
+                <Link href="/kode/docs/quick-start">
+                  <Rocket className="mr-2 h-4 w-4" />
+                  Get started
+                  <ArrowRight className="ml-2 h-4 w-4" />
+                </Link>
+              </Button>
+
+              <Button
+                asChild
+                size="lg"
+                variant="outline"
+                className="h-12 rounded-full border-slate-300 bg-white px-6 text-sm text-slate-800 hover:bg-slate-50"
+              >
+                <a
+                  href="https://github.com/ecocee/kode-go"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  <Github className="mr-2 h-4 w-4" />
+                  View source
+                  <ArrowUpRight className="ml-2 h-4 w-4" />
+                </a>
+              </Button>
+            </div>
+          </div>
+
+          {/* Product information panel */}
+          <div className="relative overflow-hidden rounded-2xl bg-[#101820] p-6 text-white sm:p-8">
+            <div className="absolute right-0 top-0 h-40 w-40 translate-x-1/3 -translate-y-1/3 rounded-full bg-blue-500/15 blur-3xl" />
+
+            <div className="relative">
+              <div className="flex items-center justify-between border-b border-white/10 pb-5">
+                <span className="text-xs font-medium uppercase tracking-[0.15em] text-slate-400">
+                  Language overview
+                </span>
+                <Code2 className="h-5 w-5 text-blue-400" />
+              </div>
+
+              <div className="grid grid-cols-2 gap-x-6 gap-y-8 pt-7">
+                <div>
+                  <p className="text-3xl font-semibold tracking-tight">0.3.3</p>
+                  <p className="mt-2 text-xs text-slate-400">Current version</p>
+                </div>
+                <div>
+                  <p className="text-3xl font-semibold tracking-tight">Static</p>
+                  <p className="mt-2 text-xs text-slate-400">Type system</p>
+                </div>
+                <div>
+                  <p className="text-3xl font-semibold tracking-tight">VM</p>
+                  <p className="mt-2 text-xs text-slate-400">Execution model</p>
+                </div>
+                <div>
+                  <p className="text-3xl font-semibold tracking-tight">Go</p>
+                  <p className="mt-2 text-xs text-slate-400">Code generation</p>
+                </div>
+              </div>
+
+              <div className="mt-8 border-t border-white/10 pt-5">
+                <p className="text-xs leading-6 text-slate-400">
+                  Explore the language reference, standard library and
+                  development tools in the documentation.
+                </p>
+              </div>
             </div>
           </div>
         </div>
-      </div>
+      </section>
 
-      {/* Feature Status */}
-      <div>
-        <h2 className="text-2xl font-semibold mb-4 text-slate-900 dark:text-slate-100">Feature Status (v0.3.3)</h2>
-        <Card className="border-violet-200 dark:border-violet-800">
-          <CardContent className="p-6">
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-              <div>
-                <h3 className="font-semibold text-green-600 dark:text-green-400 mb-3">✅ Fully Implemented</h3>
-                <ul className="space-y-2 text-sm text-slate-600 dark:text-slate-400">
-                  <li>✅ Complete type system with inference</li>
-                  <li>✅ All operators (arithmetic, bitwise, logical)</li>
-                  <li>✅ Structs, enums, traits, and generics</li>
-                  <li>✅ Pattern matching & destructuring</li>
-                  <li>✅ Module system with imports/exports</li>
-                  <li>✅ Concurrency primitives (spawn, channels)</li>
-                  <li>✅ Bytecode VM + Go code generation</li>
-                  <li>✅ Production server stdlib</li>
-                </ul>
-              </div>
-              <div>
-                <h3 className="font-semibold text-amber-600 dark:text-amber-400 mb-3">⏳ In Development</h3>
-                <ul className="space-y-2 text-sm text-slate-600 dark:text-slate-400">
-                  <li>⏳ File I/O operations</li>
-                  <li>⏳ String manipulation utilities</li>
-                  <li>⏳ Math library functions</li>
-                  <li>⏳ Package manager (Kodepm)</li>
-                </ul>
-                <h3 className="font-semibold text-blue-600 dark:text-blue-400 mb-3 mt-6">Planned</h3>
-                <ul className="space-y-2 text-sm text-slate-600 dark:text-slate-400">
-                  <li>Async/await syntax sugar</li>
-                  <li>LLVM backend option</li>
-                  <li>WebAssembly target</li>
-                  <li>FFI (Foreign Function Interface)</li>
-                </ul>
-              </div>
+      {/* Core capabilities */}
+      <section className="py-16 sm:py-20">
+        <SectionHeading
+          eyebrow="Language capabilities"
+          title="Designed around the way systems are built."
+          description="Kode combines a modern type system, flexible execution and built-in concurrency features."
+        />
+
+        <div className="mt-10 grid gap-0 border-y border-slate-200 md:grid-cols-3 md:divide-x md:divide-slate-200">
+          <div className="py-7 md:pr-8">
+            <div className="mb-5 flex h-10 w-10 items-center justify-center rounded-lg bg-blue-50 text-blue-700">
+              <Zap className="h-5 w-5" />
             </div>
-          </CardContent>
-        </Card>
-      </div>
-    </div>
+            <h3 className="text-lg font-semibold text-slate-950">
+              Multiple backends
+            </h3>
+            <p className="mt-3 text-sm leading-7 text-slate-600">
+              Stack-based VM execution for portability, with optional Go
+              code generation for native performance.
+            </p>
+          </div>
+
+          <div className="border-t border-slate-200 py-7 md:border-t-0 md:px-8">
+            <div className="mb-5 flex h-10 w-10 items-center justify-center rounded-lg bg-blue-50 text-blue-700">
+              <Code2 className="h-5 w-5" />
+            </div>
+            <h3 className="text-lg font-semibold text-slate-950">
+              Modern type system
+            </h3>
+            <p className="mt-3 text-sm leading-7 text-slate-600">
+              Static typing, type inference, generics, traits, interfaces
+              and pattern matching.
+            </p>
+          </div>
+
+          <div className="border-t border-slate-200 py-7 md:border-t-0 md:pl-8">
+            <div className="mb-5 flex h-10 w-10 items-center justify-center rounded-lg bg-blue-50 text-blue-700">
+              <Workflow className="h-5 w-5" />
+            </div>
+            <h3 className="text-lg font-semibold text-slate-950">
+              Built-in concurrency
+            </h3>
+            <p className="mt-3 text-sm leading-7 text-slate-600">
+              Lightweight goroutines, channels, select statements and
+              synchronization primitives.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      {/* Documentation navigation */}
+      <section className="border-t border-slate-200 py-16 sm:py-20">
+        <div className="flex flex-col justify-between gap-5 sm:flex-row sm:items-end">
+          <SectionHeading
+            eyebrow="Documentation"
+            title="Everything you need to get started."
+            description="Follow the learning path or jump directly to the topic you need."
+          />
+
+          <Link
+            href="/kode/docs/quick-start"
+            className="inline-flex items-center gap-2 text-sm font-medium text-blue-700 hover:text-blue-900"
+          >
+            Quick start guide
+            <ArrowRight className="h-4 w-4" />
+          </Link>
+        </div>
+
+        <div className="mt-10 divide-y divide-slate-200 border-y border-slate-200">
+          {documentation.map((item) => {
+            const Icon = item.icon;
+
+            return (
+              <Link
+                key={item.href}
+                href={item.href}
+                className="group grid gap-4 py-6 transition-colors hover:bg-slate-50 sm:grid-cols-[60px_1fr_auto] sm:items-center sm:px-4"
+              >
+                <span className="font-mono text-xs text-slate-400">
+                  {item.number}
+                </span>
+
+                <div className="flex items-start gap-4">
+                  <div className="mt-0.5 flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-slate-100 text-slate-600 transition-colors group-hover:bg-blue-50 group-hover:text-blue-700">
+                    <Icon className="h-5 w-5" />
+                  </div>
+
+                  <div>
+                    <div className="flex flex-wrap items-center gap-3">
+                      <h3 className="font-semibold text-slate-950 transition-colors group-hover:text-blue-700">
+                        {item.title}
+                      </h3>
+                      <span className="rounded-full bg-slate-100 px-2.5 py-1 text-[10px] font-medium uppercase tracking-wide text-slate-500">
+                        {item.tag}
+                      </span>
+                    </div>
+                    <p className="mt-1.5 text-sm leading-6 text-slate-600">
+                      {item.description}
+                    </p>
+                  </div>
+                </div>
+
+                <ArrowRight className="hidden h-5 w-5 text-slate-400 transition-all group-hover:translate-x-1 group-hover:text-blue-700 sm:block" />
+              </Link>
+            );
+          })}
+        </div>
+      </section>
+
+      {/* Code examples */}
+      <section className="border-t border-slate-200 py-16 sm:py-20">
+        <SectionHeading
+          eyebrow="Learn by example"
+          title="See Kode in action."
+          description="Start with a simple program, explore server development and learn how concurrent tasks communicate."
+        />
+
+        <div className="mt-10 grid gap-6">
+          {examples.map((example) => (
+            <CodeExample key={example.file} {...example} />
+          ))}
+        </div>
+
+        <div className="mt-6">
+          <Link
+            href="/kode/docs/examples"
+            className="inline-flex items-center gap-2 text-sm font-medium text-blue-700 hover:text-blue-900"
+          >
+            Explore all examples
+            <ArrowRight className="h-4 w-4" />
+          </Link>
+        </div>
+      </section>
+
+      {/* Feature status */}
+      <section className="border-t border-slate-200 py-16 sm:py-20">
+        <SectionHeading
+          eyebrow="Development progress"
+          title="Where Kode stands today."
+          description="A snapshot of the language roadmap for version 0.3.3."
+        />
+
+        <div className="mt-10 grid gap-10 rounded-2xl border border-slate-200 bg-white p-6 sm:p-8 lg:grid-cols-3">
+          <StatusList
+            title="Fully implemented"
+            items={implemented}
+            variant="complete"
+          />
+
+          <div className="border-t border-slate-200 pt-8 lg:border-l lg:border-t-0 lg:pl-8 lg:pt-0">
+            <StatusList
+              title="In development"
+              items={inDevelopment}
+              variant="progress"
+            />
+          </div>
+
+          <div className="border-t border-slate-200 pt-8 lg:border-l lg:border-t-0 lg:pl-8 lg:pt-0">
+            <StatusList
+              title="Planned"
+              items={planned}
+              variant="planned"
+            />
+          </div>
+        </div>
+      </section>
+
+      {/* Closing CTA */}
+      <section className="overflow-hidden rounded-2xl bg-[#101820] px-6 py-12 text-white sm:px-10 sm:py-16">
+        <div className="grid gap-8 lg:grid-cols-[1fr_auto] lg:items-center">
+          <div className="max-w-2xl">
+            <p className="text-xs font-semibold uppercase tracking-[0.16em] text-blue-400">
+              Start building
+            </p>
+            <h2 className="mt-4 text-3xl font-semibold tracking-tight sm:text-4xl">
+              Your next project starts with Kode.
+            </h2>
+            <p className="mt-4 text-sm leading-7 text-slate-400 sm:text-base">
+              Read the quick start guide, explore the language and build
+              your first Kode application.
+            </p>
+          </div>
+
+          <div className="flex flex-wrap gap-3">
+            <Button
+              asChild
+              size="lg"
+              className="h-12 rounded-full bg-white px-6 text-slate-950 hover:bg-slate-100"
+            >
+              <Link href="/kode/docs/quick-start">
+                Get started
+                <ArrowRight className="ml-2 h-4 w-4" />
+              </Link>
+            </Button>
+
+            <Button
+              asChild
+              size="lg"
+              variant="outline"
+              className="h-12 rounded-full border-white/25 bg-transparent px-6 text-white hover:bg-white/10 hover:text-white"
+            >
+              <a
+                href="https://github.com/ecocee/kode-go"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                <Github className="mr-2 h-4 w-4" />
+                GitHub
+              </a>
+            </Button>
+          </div>
+        </div>
+      </section>
+
+      <footer className="flex flex-col gap-3 border-t border-slate-200 pt-7 text-xs text-slate-500 sm:flex-row sm:items-center sm:justify-between">
+        <p>Kode documentation · Version 0.3.3</p>
+        <p>
+          Built by{" "}
+          <a
+            href="https://ecocee.in"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="font-medium text-slate-700 hover:text-blue-700"
+          >
+            ECOCEE
+          </a>
+        </p>
+      </footer>
+    </main>
   );
 }

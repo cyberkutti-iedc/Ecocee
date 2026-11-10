@@ -1,991 +1,1110 @@
 "use client";
 
-import { useEffect, useState } from "react";
-import type { KeyboardEvent, MouseEvent, ReactNode } from "react";
+import { useState } from "react";
 import {
   AnimatePresence,
   motion,
-  useMotionValue,
   useReducedMotion,
-  useSpring,
-  useTransform,
 } from "framer-motion";
 import {
+  ArrowDown,
   ArrowRight,
+  ArrowUpRight,
   Boxes,
-  CheckCircle2,
-  Code,
-  Cpu,
-  Database,
+  BriefcaseBusiness,
+  Check,
+  ChevronRight,
+  CircleHelp,
+  ClipboardList,
+  CreditCard,
+  FileText,
   LayoutDashboard,
-  Monitor,
+  Menu,
   Package,
-  Play,
   Receipt,
-  RefreshCw,
   ShieldCheck,
+  ShoppingBag,
   Users,
+  Wallet,
   Wrench,
+  X,
   Zap,
 } from "lucide-react";
 import type { LucideIcon } from "lucide-react";
 
 import { GOOGLE_FORM_URL } from "@/lib/config";
 
-/* ------------------------------------------------------------------ */
-/* Config                                                             */
-/* ------------------------------------------------------------------ */
-
 const CONTACT_HREF = GOOGLE_FORM_URL;
-const EASE: [number, number, number, number] = [0.21, 0.47, 0.32, 0.98];
 
-/* ------------------------------------------------------------------ */
-/* Data                                                               */
-/* ------------------------------------------------------------------ */
+const EASE = [0.22, 1, 0.36, 1] as const;
 
-type Tone = "indigo" | "emerald" | "amber" | "slate" | "red";
-
-const TONES: Record<Tone, string> = {
-  indigo: "bg-indigo-50 text-indigo-700 ring-indigo-600/20",
-  emerald: "bg-emerald-50 text-emerald-700 ring-emerald-600/20",
-  amber: "bg-amber-50 text-amber-700 ring-amber-600/20",
-  slate: "bg-slate-100 text-slate-600 ring-slate-500/20",
-  red: "bg-red-50 text-red-700 ring-red-600/20",
-};
-
-type Preview = {
-  id: string;
-  label: string;
-  Icon: LucideIcon;
-  metrics: { label: string; value: string; note: string }[];
-  rows: { title: string; sub: string; status: string; tone: Tone }[];
-  spark?: { title: string; bars: number[] };
-};
-
-const PREVIEWS: Preview[] = [
+const applications = [
   {
     id: "service",
-    label: "Service Desk",
-    Icon: Wrench,
+    name: "Service Desk",
+    short: "Service",
+    icon: Wrench,
+    color: "bg-[#DCE8FF]",
+    accent: "text-[#244FAD]",
+    description:
+      "Keep every job moving. Manage requests, work orders, approvals and service history in one place.",
     metrics: [
-      { label: "Active work orders", value: "24", note: "7 awaiting approval" },
-      { label: "Finished this month", value: "38", note: "Closed with full history" },
-      { label: "Awaiting payment", value: "6", note: "Linked to invoices" },
+      ["Open work orders", "24"],
+      ["Awaiting approval", "07"],
+      ["Completed this month", "38"],
     ],
-    rows: [
-      { title: "WO-1048 Compressor repair", sub: "Al Noor Trading", status: "Diagnosing", tone: "amber" },
-      { title: "WO-1047 Engine service", sub: "Kochi Marine Services", status: "Approved", tone: "indigo" },
-      { title: "WO-1046 Pump replacement", sub: "Nair Traders", status: "Completed", tone: "emerald" },
+    records: [
+      ["WO-1048", "Compressor repair", "Al Noor Trading", "In progress", "blue"],
+      ["WO-1047", "Engine service", "Kochi Marine Services", "Approved", "purple"],
+      ["WO-1046", "Pump replacement", "Nair Traders", "Completed", "green"],
     ],
-    spark: { title: "Jobs finished per week", bars: [40, 56, 48, 70, 64, 82, 76, 96] },
   },
   {
-    id: "accounting",
-    label: "Financials",
-    Icon: Receipt,
+    id: "finance",
+    name: "Financials",
+    short: "Finance",
+    icon: Receipt,
+    color: "bg-[#FCE7C8]",
+    accent: "text-[#98500D]",
+    description:
+      "Understand the money coming in and going out. Keep estimates, invoices and payments connected.",
     metrics: [
-      { label: "Invoiced this month", value: "482k", note: "Across 63 invoices" },
-      { label: "Collected", value: "391k", note: "81% of invoiced" },
-      { label: "Outstanding", value: "91k", note: "6 invoices open" },
+      ["Invoiced this month", "482k"],
+      ["Payments received", "391k"],
+      ["Outstanding", "91k"],
     ],
-    rows: [
-      { title: "INV-2089 Gulf Star Workshop", sub: "Draft", status: "Draft", tone: "slate" },
-      { title: "INV-2088 Kochi Marine", sub: "Sent", status: "Sent", tone: "indigo" },
-      { title: "INV-2087 Al Noor Trading", sub: "Payment recorded", status: "Paid", tone: "emerald" },
+    records: [
+      ["INV-2089", "Gulf Star Workshop", "AED 1,850", "Draft", "gray"],
+      ["INV-2088", "Kochi Marine", "INR 48,500", "Sent", "blue"],
+      ["INV-2087", "Al Noor Trading", "AED 4,200", "Paid", "green"],
     ],
-    spark: { title: "Revenue, last 8 weeks", bars: [52, 64, 58, 76, 88, 80, 96, 104] },
   },
   {
-    id: "crm",
-    label: "CRM",
-    Icon: Users,
+    id: "customers",
+    name: "Customers",
+    short: "Customers",
+    icon: Users,
+    color: "bg-[#D9F0E5]",
+    accent: "text-[#176B4B]",
+    description:
+      "Keep customer details, conversations, enquiries and follow-ups together. Give your team the full picture.",
     metrics: [
-      { label: "Customers", value: "212", note: "One shared record" },
-      { label: "Open enquiries", value: "12", note: "4 follow-ups today" },
-      { label: "Quotes out", value: "9", note: "Awaiting reply" },
+      ["Customers", "212"],
+      ["Open enquiries", "12"],
+      ["Follow-ups today", "04"],
     ],
-    rows: [
-      { title: "Al Noor Trading", sub: "Annual service enquiry", status: "Follow up", tone: "amber" },
-      { title: "Malabar Auto Care", sub: "New enquiry", status: "New", tone: "indigo" },
-      { title: "Nair Traders", sub: "Repeat customer", status: "Active", tone: "emerald" },
+    records: [
+      ["CUS-0212", "Al Noor Trading", "Annual service enquiry", "Follow up", "orange"],
+      ["CUS-0211", "Malabar Auto Care", "New enquiry", "New", "blue"],
+      ["CUS-0210", "Nair Traders", "Repeat customer", "Active", "green"],
     ],
   },
   {
     id: "inventory",
-    label: "Inventory",
-    Icon: Package,
+    name: "Inventory",
+    short: "Inventory",
+    icon: Package,
+    color: "bg-[#E8E0FA]",
+    accent: "text-[#6840A6]",
+    description:
+      "Know what you have, where it is and what needs attention. Connect stock movements to everyday work.",
     metrics: [
-      { label: "Items tracked", value: "640", note: "Across locations" },
-      { label: "Low stock", value: "7", note: "Reorder suggested" },
-      { label: "On order", value: "3", note: "Purchase orders open" },
+      ["Items tracked", "640"],
+      ["Low stock", "07"],
+      ["Orders in progress", "03"],
     ],
-    rows: [
-      { title: "Air filters", sub: "8 in stock", status: "Reorder", tone: "amber" },
-      { title: "Brake pads", sub: "42 in stock", status: "Healthy", tone: "emerald" },
-      { title: "Battery 70Ah", sub: "14 in stock", status: "Healthy", tone: "emerald" },
-    ],
-  },
-];
-
-const LAYERS: {
-  Icon: LucideIcon;
-  tag: string;
-  title: string;
-  points: string[];
-}[] = [
-  {
-    Icon: Code,
-    tag: "Business logic",
-    title: "Python SDK",
-    points: [
-      "Define your specific business rules",
-      "No messy front-end code required",
-      "Easy to update and maintain",
+    records: [
+      ["ITM-0142", "Air filters", "Main warehouse", "Reorder", "orange"],
+      ["ITM-0118", "Brake pads", "42 in stock", "Healthy", "green"],
+      ["ITM-0084", "Battery 70Ah", "14 in stock", "Healthy", "green"],
     ],
   },
-  {
-    Icon: Cpu,
-    tag: "Core system",
-    title: "Rust runtime",
-    points: [
-      "Secure sign-in and user permissions",
-      "Fast data processing and background tasks",
-      "Keeps your business data safe",
-    ],
-  },
-  {
-    Icon: Monitor,
-    tag: "User interface",
-    title: "React interface",
-    points: [
-      "Clean, modern look across all apps",
-      "Easy for your team to learn and use",
-      "Maintained automatically by Dotpaper",
-    ],
-  },
-];
-
-const FEATURES: { Icon: LucideIcon; title: string; text: string }[] = [
-  {
-    Icon: Database,
-    title: "Organized data",
-    text: "Store text, numbers, dates, and files securely. Easily link records together, like connecting invoices to customers.",
-  },
-  {
-    Icon: LayoutDashboard,
-    title: "Consistent design",
-    text: "Tables, forms, and charts that always look great and work the exact same way in every part of the system.",
-  },
-  {
-    Icon: Zap,
-    title: "Automated workflows",
-    text: "Run business processes automatically. Catch errors early and guide your team with helpful, clear prompts.",
-  },
-  {
-    Icon: ShieldCheck,
-    title: "Strong security",
-    text: "Your data is kept completely private. Give each team member exactly the access they need, and nothing more.",
-  },
-  {
-    Icon: RefreshCw,
-    title: "Safe updates",
-    text: "Preview changes before they go live. Update your applications smoothly without disrupting your business.",
-  },
-  {
-    Icon: Boxes,
-    title: "Built for any business",
-    text: "Whether you need a Service Desk, CRM, Accounting, or Inventory system—it all runs on one reliable foundation.",
-  },
-];
-
-const TABS = [
-  { id: "service", label: "Service Desk", Icon: Wrench },
-  { id: "finance", label: "Financials", Icon: Receipt },
-  { id: "ops", label: "Custom Operations", Icon: Package },
 ] as const;
 
-type TabId = (typeof TABS)[number]["id"];
+type ApplicationId = (typeof applications)[number]["id"];
 
-const STATUS_FLOW = ["Draft", "Diagnosing", "Approved", "Work started", "Ready", "Completed"];
-
-const ACTION_CODE = `@app.action
-def receive_stock(ctx, payload):
-    record = payload.get("record") or {}
-    qty = int(payload.get("quantity", 0))
-    if qty <= 0:
-        raise ValueError("Quantity must be positive")
-    return Item.objects.update(
-        str(record["id"]),
-        {"stock": record["stock"] + qty},
-    )`;
-
-const COMPARE = [
+const benefits = [
   {
-    row: "Applications",
-    legacy: "Many separate tools, each with its own login",
-    dotpaper: "One platform running all your business applications",
+    number: "01",
+    title: "Everything connected",
+    description:
+      "A customer, their service history, estimates, invoices and payments belong together. Your team doesn't have to piece the story together from different tools.",
+    icon: Boxes,
+    background: "bg-[#E8E2FA]",
+    foreground: "text-[#55349B]",
   },
   {
-    row: "Interface",
-    legacy: "A different design to learn for every tool",
-    dotpaper: "One consistent design across every application",
+    number: "02",
+    title: "Made around your work",
+    description:
+      "Every business has its own way of working. Dotpaper can be shaped around your processes, records, teams and day-to-day requirements.",
+    icon: BriefcaseBusiness,
+    background: "bg-[#DDEAFF]",
+    foreground: "text-[#2456A6]",
   },
   {
-    row: "Security",
-    legacy: "Different rules and passwords to manage for each vendor",
-    dotpaper: "One secure login and permission system for everything",
+    number: "03",
+    title: "A clearer way to work",
+    description:
+      "Your team gets a familiar experience across every application. Less switching between tools, less repeated work and fewer things to chase.",
+    icon: LayoutDashboard,
+    background: "bg-[#FBE8CF]",
+    foreground: "text-[#9A5516]",
   },
   {
-    row: "Data layer",
-    legacy: "Separate databases, glued together with integrations",
-    dotpaper: "One central database where everything is connected",
-  },
-  {
-    row: "Custom needs",
-    legacy: "Wait for the vendor, or work around the product",
-    dotpaper: "Easily customized exactly to your business rules",
-  },
-  {
-    row: "Maintenance",
-    legacy: "Updates and breakages handled tool by tool",
-    dotpaper: "The entire platform is maintained and updated centrally",
+    number: "04",
+    title: "Your business stays in control",
+    description:
+      "Manage who can see information and perform actions. Keep important activity organised and make changes with confidence.",
+    icon: ShieldCheck,
+    background: "bg-[#DDF1E7]",
+    foreground: "text-[#176B4B]",
   },
 ];
 
-/* ------------------------------------------------------------------ */
-/* Helpers                                                            */
-/* ------------------------------------------------------------------ */
+const comparison = [
+  {
+    label: "Daily work",
+    old: "Move between different tools",
+    dotpaper: "Work from one familiar place",
+  },
+  {
+    label: "Business records",
+    old: "Information spread across systems",
+    dotpaper: "Connected records in one workspace",
+  },
+  {
+    label: "Team access",
+    old: "Manage access in multiple places",
+    dotpaper: "One organised access system",
+  },
+  {
+    label: "Changing needs",
+    old: "Adapt your process to the software",
+    dotpaper: "Adapt the software to your process",
+  },
+];
 
-function Reveal({ children, className = "", delay = 0 }: { children: ReactNode; className?: string; delay?: number }) {
+function Reveal({
+  children,
+  className = "",
+  delay = 0,
+}: {
+  children: React.ReactNode;
+  className?: string;
+  delay?: number;
+}) {
   const reduce = useReducedMotion();
-  if (reduce) return <div className={className}>{children}</div>;
+
   return (
     <motion.div
       className={className}
-      initial={{ opacity: 0, y: 24 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true, margin: "-80px" }}
-      transition={{ duration: 0.6, ease: EASE, delay }}
+      initial={reduce ? false : { opacity: 0, y: 22 }}
+      whileInView={reduce ? undefined : { opacity: 1, y: 0 }}
+      viewport={{ once: true, margin: "-60px" }}
+      transition={{ duration: 0.65, ease: EASE, delay }}
     >
       {children}
     </motion.div>
   );
 }
 
-function Pill({ tone, children }: { tone: Tone; children: ReactNode }) {
+function Status({
+  children,
+  tone,
+}: {
+  children: React.ReactNode;
+  tone: string;
+}) {
+  const styles: Record<string, string> = {
+    blue: "bg-blue-50 text-blue-700",
+    purple: "bg-violet-50 text-violet-700",
+    green: "bg-emerald-50 text-emerald-700",
+    orange: "bg-orange-50 text-orange-700",
+    gray: "bg-slate-100 text-slate-600",
+  };
+
   return (
-    <span className={`inline-flex shrink-0 items-center rounded-full px-2.5 py-0.5 text-xs font-medium ring-1 ring-inset ${TONES[tone]}`}>
+    <span
+      className={`inline-flex shrink-0 rounded-full px-2.5 py-1 text-[11px] font-semibold ${
+        styles[tone] ?? styles.gray
+      }`}
+    >
       {children}
     </span>
   );
 }
 
-function highlight(line: string): ReactNode {
-  const parts = line.split(/("[^"]*"|\b(?:from|import|class|def|return|raise|if)\b|@[\w.]+)/g);
-  return parts.map((part, i) => {
-    if (!part) return null;
-    if (part.startsWith('"')) return <span key={i} className="text-emerald-300">{part}</span>;
-    if (/^(from|import|class|def|return|raise|if)$/.test(part)) return <span key={i} className="text-indigo-300">{part}</span>;
-    if (part.startsWith("@")) return <span key={i} className="text-amber-300">{part}</span>;
-    return <span key={i}>{part}</span>;
-  });
-}
-
-function CodeWindow({ file, code }: { file: string; code: string }) {
+function Brand() {
   return (
-    <div className="overflow-hidden rounded-2xl bg-slate-900">
-      <div className="flex items-center gap-2 border-b border-white/10 px-4 py-3">
-        <span className="h-2.5 w-2.5 rounded-full bg-white/20" />
-        <span className="h-2.5 w-2.5 rounded-full bg-white/20" />
-        <span className="h-2.5 w-2.5 rounded-full bg-white/20" />
-        <span className="ml-3 text-xs text-slate-400">{file}</span>
-      </div>
-      <pre className="overflow-x-auto p-5 text-[13px] leading-6 text-slate-200">
-        <code>
-          {code.split("\n").map((line, i) => (
-            <div key={i}>{highlight(line) || "\u00a0"}</div>
-          ))}
-        </code>
-      </pre>
-    </div>
+    <a
+      href="#top"
+      aria-label="Dotpaper home"
+      className="inline-flex items-center gap-2.5"
+    >
+      <span className="flex h-9 w-9 items-center justify-center rounded-xl bg-[#24204A] text-white">
+        <span className="text-[19px] font-bold tracking-[-0.08em]">d.</span>
+      </span>
+      <span className="text-[19px] font-semibold tracking-[-0.055em] text-[#22213A]">
+        dotpaper
+      </span>
+    </a>
   );
 }
 
-/* ------------------------------------------------------------------ */
-/* Hero workspace                                                     */
-/* ------------------------------------------------------------------ */
+function Header() {
+  const [menuOpen, setMenuOpen] = useState(false);
 
-function Workspace() {
-  const reduce = useReducedMotion();
-  const [active, setActive] = useState(0);
-  const [auto, setAuto] = useState(true);
-  const [isMounted, setIsMounted] = useState(false);
-
-  useEffect(() => {
-    setIsMounted(true);
-  }, []);
-
-  const mx = useMotionValue(0);
-  const my = useMotionValue(0);
-  const rotateX = useSpring(useTransform(my, [-0.5, 0.5], [5, -5]), { stiffness: 120, damping: 20 });
-  const rotateY = useSpring(useTransform(mx, [-0.5, 0.5], [-7, 7]), { stiffness: 120, damping: 20 });
-
-  useEffect(() => {
-    if (reduce || !auto) return;
-    const id = window.setInterval(() => setActive((i) => (i + 1) % PREVIEWS.length), 4500);
-    return () => window.clearInterval(id);
-  }, [reduce, auto]);
-
-  const onMove = (e: MouseEvent<HTMLDivElement>) => {
-    if (reduce) return;
-    const r = e.currentTarget.getBoundingClientRect();
-    mx.set((e.clientX - r.left) / r.width - 0.5);
-    my.set((e.clientY - r.top) / r.height - 0.5);
-  };
-  const onLeave = () => {
-    mx.set(0);
-    my.set(0);
-  };
-
-  if (!isMounted) {
-    return <div className="relative mx-auto mt-16 max-w-5xl md:mt-20 min-h-[400px]" />;
-  }
-
-  const app = PREVIEWS[active];
+  const links = [
+    ["Applications", "#applications"],
+    ["How it works", "#how-it-works"],
+    ["Why Dotpaper", "#why-dotpaper"],
+  ];
 
   return (
-    <div className="relative mx-auto mt-16 max-w-5xl md:mt-20" style={{ perspective: 1400 }} onMouseMove={onMove} onMouseLeave={onLeave}>
-      <motion.div style={reduce ? undefined : { rotateX, rotateY, transformStyle: "preserve-3d" }}>
-        <div className="overflow-hidden rounded-3xl border border-white/70 bg-white/70 text-left shadow-[0_40px_100px_-30px_rgba(15,23,42,0.35)] backdrop-blur-xl">
-          <div className="flex items-center gap-2 border-b border-slate-200/60 px-4 py-3">
-            <span className="h-2.5 w-2.5 rounded-full bg-slate-300" />
-            <span className="h-2.5 w-2.5 rounded-full bg-slate-300" />
-            <span className="h-2.5 w-2.5 rounded-full bg-slate-300" />
-            <span className="ml-3 text-xs font-medium text-slate-500">Dotpaper workspace</span>
-            <span className="ml-auto inline-flex items-center gap-1.5 text-xs text-slate-500">
-              <span className="h-1.5 w-1.5 rounded-full bg-emerald-500" />
-              Sample data
+    <header className="relative z-50 border-b border-[#EAE8EF] bg-[#FBFAF8]">
+      <div className="mx-auto flex h-[76px] max-w-[1440px] items-center justify-between px-5 sm:px-8 lg:px-14">
+        <Brand />
+
+        <nav className="hidden items-center gap-9 md:flex" aria-label="Main navigation">
+          {links.map(([label, href]) => (
+            <a
+              key={label}
+              href={href}
+              className="text-[13px] font-medium text-[#5E5C6D] transition-colors hover:text-[#29234D]"
+            >
+              {label}
+            </a>
+          ))}
+        </nav>
+
+        <div className="hidden items-center gap-5 md:flex">
+          <a
+            href="#applications"
+            className="text-[13px] font-medium text-[#5E5C6D] transition-colors hover:text-[#29234D]"
+          >
+            Explore Dotpaper
+          </a>
+          <a
+            href={CONTACT_HREF}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-flex h-10 items-center gap-2 rounded-full bg-[#29234D] px-5 text-[13px] font-semibold text-white transition hover:bg-[#40396B]"
+          >
+            Talk to our team
+            <ArrowUpRight className="h-3.5 w-3.5" />
+          </a>
+        </div>
+
+        <button
+          type="button"
+          aria-label={menuOpen ? "Close menu" : "Open menu"}
+          aria-expanded={menuOpen}
+          onClick={() => setMenuOpen((value) => !value)}
+          className="flex h-10 w-10 items-center justify-center rounded-full border border-[#E6E3EC] text-[#29234D] md:hidden"
+        >
+          {menuOpen ? <X size={19} /> : <Menu size={19} />}
+        </button>
+      </div>
+
+      <AnimatePresence>
+        {menuOpen && (
+          <motion.nav
+            initial={{ opacity: 0, height: 0 }}
+            animate={{ opacity: 1, height: "auto" }}
+            exit={{ opacity: 0, height: 0 }}
+            className="overflow-hidden border-t border-[#EAE8EF] bg-[#FBFAF8] md:hidden"
+          >
+            <div className="flex flex-col gap-1 px-5 py-4">
+              {links.map(([label, href]) => (
+                <a
+                  key={label}
+                  href={href}
+                  onClick={() => setMenuOpen(false)}
+                  className="rounded-xl px-3 py-3 text-sm font-medium text-[#4E4A60] hover:bg-[#F0EDF6]"
+                >
+                  {label}
+                </a>
+              ))}
+              <a
+                href={CONTACT_HREF}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="mt-2 inline-flex items-center justify-center gap-2 rounded-full bg-[#29234D] px-5 py-3 text-sm font-semibold text-white"
+              >
+                Talk to our team <ArrowUpRight size={15} />
+              </a>
+            </div>
+          </motion.nav>
+        )}
+      </AnimatePresence>
+    </header>
+  );
+}
+
+function WorkspacePreview() {
+  const [active, setActive] = useState<ApplicationId>("service");
+  const current = applications.find((app) => app.id === active)!;
+
+  return (
+    <div className="relative mx-auto w-full max-w-[760px]">
+      <div className="absolute -inset-5 rounded-[2.5rem] bg-[#DCD6F0]/50 blur-2xl" />
+
+      <div className="relative overflow-hidden rounded-[22px] border border-[#E5E2EA] bg-white shadow-[0_30px_90px_-38px_rgba(36,29,70,0.32)]">
+        <div className="flex h-[58px] items-center justify-between border-b border-[#EEEAF2] px-5 sm:px-6">
+          <div className="flex items-center gap-2.5">
+            <span className="flex h-7 w-7 items-center justify-center rounded-lg bg-[#29234D] text-[13px] font-bold text-white">
+              d.
+            </span>
+            <span className="text-[13px] font-semibold tracking-tight text-[#302D42]">
+              Dotpaper workspace
             </span>
           </div>
+          <div className="flex items-center gap-2 text-[11px] font-medium text-[#8B8998]">
+            <span className="h-1.5 w-1.5 rounded-full bg-[#37A77A]" />
+            Sample workspace
+          </div>
+        </div>
 
-          <div className="flex min-h-[27rem]">
-            <nav className="hidden w-52 shrink-0 border-r border-slate-200/60 p-3 sm:block" aria-label="Applications">
-              {PREVIEWS.map((p, i) => (
-                <button
-                  key={p.id}
-                  type="button"
-                  onClick={() => {
-                    setActive(i);
-                    setAuto(false);
-                  }}
-                  aria-current={i === active ? "true" : undefined}
-                  className={`mb-1 flex w-full items-center gap-3 rounded-xl px-3 py-2.5 text-sm font-medium transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-indigo-600 ${
-                    i === active ? "bg-indigo-600 text-white" : "text-slate-600 hover:bg-slate-100"
-                  }`}
-                >
-                  <p.Icon className="h-4 w-4" aria-hidden="true" />
-                  {p.label}
-                </button>
-              ))}
-            </nav>
+        <div className="grid min-h-[390px] grid-cols-1 sm:grid-cols-[180px_1fr]">
+          <aside className="border-b border-[#EEEAF2] bg-[#FBFAFC] p-3 sm:border-b-0 sm:border-r">
+            <p className="px-3 pb-2 pt-1 text-[10px] font-bold uppercase tracking-[0.12em] text-[#A09CAB]">
+              Your applications
+            </p>
+            <div className="grid grid-cols-2 gap-1 sm:grid-cols-1">
+              {applications.map((app) => {
+                const Icon = app.icon;
+                const selected = active === app.id;
 
-            <div className="min-w-0 flex-1 p-5 sm:p-7">
-              <AnimatePresence mode="wait">
-                <motion.div
-                  key={app.id}
-                  initial={reduce ? false : { opacity: 0, y: 10 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  exit={reduce ? undefined : { opacity: 0, y: -10 }}
-                  transition={{ duration: 0.3, ease: EASE }}
-                >
-                  <p className="text-lg font-semibold tracking-tight text-slate-900 sm:text-2xl">{app.label}</p>
-
-                  <div className="mt-5 grid grid-cols-1 gap-3 sm:grid-cols-3">
-                    {app.metrics.map((m) => (
-                      <div key={m.label} className="rounded-2xl border border-slate-200/60 bg-white/80 p-4">
-                        <p className="text-xs text-slate-500">{m.label}</p>
-                        <p className="mt-1 text-3xl font-semibold tracking-tight text-slate-900">{m.value}</p>
-                        <p className="mt-1 text-xs text-slate-500">{m.note}</p>
-                      </div>
-                    ))}
-                  </div>
-
-                  <div className={`mt-5 grid gap-4 ${app.spark ? "lg:grid-cols-[1.4fr_1fr]" : ""}`}>
-                    <ul className="divide-y divide-slate-200/60 rounded-2xl border border-slate-200/60 bg-white/80">
-                      {app.rows.map((r) => (
-                        <li key={r.title} className="flex items-center justify-between gap-3 px-4 py-3">
-                          <div className="min-w-0">
-                            <p className="truncate text-sm font-medium text-slate-900">{r.title}</p>
-                            <p className="truncate text-xs text-slate-500">{r.sub}</p>
-                          </div>
-                          <Pill tone={r.tone}>{r.status}</Pill>
-                        </li>
-                      ))}
-                    </ul>
-
-                    {app.spark && (
-                      <div className="hidden rounded-2xl border border-slate-200/60 bg-white/80 p-4 lg:block">
-                        <p className="text-xs text-slate-500">{app.spark.title}</p>
-                        <div className="mt-3 flex h-24 items-end gap-1.5" aria-hidden="true">
-                          {app.spark.bars.map((h, i) => (
-                            <span
-                              key={i}
-                              className={`flex-1 rounded-t-md ${i === app.spark!.bars.length - 1 ? "bg-emerald-500" : "bg-indigo-500"}`}
-                              style={{ height: `${h}%` }}
-                            />
-                          ))}
-                        </div>
-                      </div>
-                    )}
-                  </div>
-                </motion.div>
-              </AnimatePresence>
+                return (
+                  <button
+                    key={app.id}
+                    type="button"
+                    onClick={() => setActive(app.id)}
+                    aria-pressed={selected}
+                    className={`flex items-center gap-2.5 rounded-xl px-3 py-2.5 text-left text-[12px] font-medium transition ${
+                      selected
+                        ? "bg-[#29234D] text-white shadow-sm"
+                        : "text-[#696678] hover:bg-[#F0EDF5]"
+                    }`}
+                  >
+                    <Icon size={15} strokeWidth={1.8} />
+                    <span>{app.short}</span>
+                  </button>
+                );
+              })}
             </div>
-          </div>
-        </div>
 
-        <motion.div
-          className="absolute -left-2 top-24 hidden items-center gap-3 rounded-2xl border border-white/70 bg-white/80 px-4 py-3 shadow-xl backdrop-blur-xl md:flex lg:-left-10"
-          animate={reduce ? undefined : { y: [0, -8, 0] }}
-          transition={{ duration: 5, repeat: Infinity, ease: "easeInOut" }}
-          style={{ transform: "translateZ(60px)" }}
-        >
-          <CheckCircle2 className="h-5 w-5 text-emerald-500" aria-hidden="true" />
-          <div>
-            <p className="text-sm font-semibold text-slate-900">Estimate approved</p>
-            <p className="text-xs text-slate-500">WO-1047 moved to Work started</p>
-          </div>
-        </motion.div>
-
-        <motion.div
-          className="absolute -right-2 bottom-16 hidden items-center gap-3 rounded-2xl border border-white/70 bg-white/80 px-4 py-3 shadow-xl backdrop-blur-xl md:flex lg:-right-10"
-          animate={reduce ? undefined : { y: [0, 8, 0] }}
-          transition={{ duration: 6, repeat: Infinity, ease: "easeInOut" }}
-          style={{ transform: "translateZ(80px)" }}
-        >
-          <Receipt className="h-5 w-5 text-indigo-600" aria-hidden="true" />
-          <div>
-            <p className="text-sm font-semibold text-slate-900">Invoice created</p>
-            <p className="text-xs text-slate-500">From the approved estimate</p>
-          </div>
-        </motion.div>
-      </motion.div>
-    </div>
-  );
-}
-
-/* ------------------------------------------------------------------ */
-/* Showcase panels                                                    */
-/* ------------------------------------------------------------------ */
-
-function ServicePanel() {
-  const orders = [
-    { id: "WO-1048", job: "Compressor repair", who: "Al Noor Trading", priority: "High", pTone: "red" as Tone, status: "Diagnosing", sTone: "amber" as Tone },
-    { id: "WO-1047", job: "Engine service", who: "Kochi Marine Services", priority: "Medium", pTone: "amber" as Tone, status: "Approved", sTone: "indigo" as Tone },
-    { id: "WO-1046", job: "Pump replacement", who: "Nair Traders", priority: "Low", pTone: "slate" as Tone, status: "Completed", sTone: "emerald" as Tone },
-    { id: "WO-1045", job: "Generator inspection", who: "Gulf Star Workshop", priority: "Medium", pTone: "amber" as Tone, status: "Ready", sTone: "emerald" as Tone },
-  ];
-  const techs = [
-    { name: "Anand K.", note: "Assigned, on site", dot: "bg-emerald-500" },
-    { name: "Rahul M.", note: "Available", dot: "bg-emerald-500" },
-    { name: "Fatima S.", note: "On another job", dot: "bg-amber-400" },
-  ];
-  const current = STATUS_FLOW.indexOf("Diagnosing");
-
-  return (
-    <div className="grid gap-6 lg:grid-cols-[1.2fr_1fr]">
-      <div className="rounded-2xl border border-slate-200/60 bg-white">
-        <div className="flex items-center justify-between border-b border-slate-200/60 px-5 py-4">
-          <p className="font-semibold text-slate-900">Work orders</p>
-          <p className="text-xs text-slate-500">Priority and status at a glance</p>
-        </div>
-        <ul className="divide-y divide-slate-200/60">
-          {orders.map((o) => (
-            <li key={o.id} className="flex items-center justify-between gap-3 px-5 py-4">
-              <div className="min-w-0">
-                <p className="truncate text-sm font-medium text-slate-900">{o.id} {o.job}</p>
-                <p className="truncate text-xs text-slate-500">{o.who}</p>
+            <div className="mt-5 hidden rounded-xl bg-[#F0EDF7] p-3 sm:block">
+              <div className="flex items-center gap-2 text-[11px] font-semibold text-[#514875]">
+                <ShieldCheck size={14} />
+                Your workspace
               </div>
-              <div className="flex shrink-0 flex-col items-end gap-1.5 sm:flex-row sm:items-center">
-                <Pill tone={o.pTone}>{o.priority}</Pill>
-                <Pill tone={o.sTone}>{o.status}</Pill>
-              </div>
-            </li>
-          ))}
-        </ul>
-      </div>
+              <p className="mt-1.5 text-[10px] leading-4 text-[#89839C]">
+                One place for your team's everyday work.
+              </p>
+            </div>
+          </aside>
 
-      <div className="rounded-2xl border border-slate-200/60 bg-white p-5">
-        <div className="flex items-start justify-between gap-3">
-          <div>
-            <p className="font-semibold text-slate-900">WO-1048 Compressor repair</p>
-            <p className="text-xs text-slate-500">Al Noor Trading</p>
-          </div>
-          <Pill tone="red">High</Pill>
-        </div>
-
-        <ol className="mt-4 flex flex-wrap gap-1.5" aria-label="Job status workflow">
-          {STATUS_FLOW.map((s, i) => (
-            <li
-              key={s}
-              aria-current={i === current ? "step" : undefined}
-              className={`rounded-md px-2 py-1 text-[11px] font-medium ${
-                i < current
-                  ? "bg-emerald-50 text-emerald-700"
-                  : i === current
-                    ? "bg-indigo-600 text-white"
-                    : "bg-slate-100 text-slate-400"
-              }`}
-            >
-              {s}
-            </li>
-          ))}
-        </ol>
-
-        <div className="mt-5">
-          <p className="text-xs font-semibold text-slate-500">Diagnosis</p>
-          <p className="mt-1 text-sm text-slate-700">
-            Compressor not reaching pressure. Possible valve wear. Estimate to follow once the unit is opened.
-          </p>
-        </div>
-
-        <div className="mt-5">
-          <p className="text-xs font-semibold text-slate-500">Technician dispatch</p>
-          <ul className="mt-2 space-y-2">
-            {techs.map((t) => (
-              <li key={t.name} className="flex items-center justify-between rounded-xl border border-slate-200/60 px-3 py-2">
-                <span className="text-sm font-medium text-slate-900">{t.name}</span>
-                <span className="inline-flex items-center gap-2 text-xs text-slate-500">
-                  <span className={`h-2 w-2 rounded-full ${t.dot}`} />
-                  {t.note}
-                </span>
-              </li>
-            ))}
-          </ul>
-        </div>
-      </div>
-    </div>
-  );
-}
-
-function FinancePanel() {
-  const actual = [52, 64, 58, 76, 88, 96];
-  const projected = [102, 110, 118];
-  const months = ["May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec", "Jan"];
-  const invoices = [
-    { id: "INV-2092", who: "Al Noor Trading", amount: "AED 4,200", status: "Paid", tone: "emerald" as Tone },
-    { id: "INV-2091", who: "Kochi Marine Services", amount: "INR 48,500", status: "Sent", tone: "indigo" as Tone },
-    { id: "INV-2090", who: "Riyadh Fleet Care", amount: "SAR 3,900", status: "Overdue", tone: "red" as Tone },
-    { id: "INV-2089", who: "Gulf Star Workshop", amount: "AED 1,850", status: "Draft", tone: "slate" as Tone },
-  ];
-
-  return (
-    <div className="space-y-6">
-      <div className="grid gap-4 sm:grid-cols-3">
-        {[
-          ["Cash in", "391k", "This month"],
-          ["Cash out", "244k", "This month"],
-          ["Net cash flow", "147k", "Projected to rise"],
-        ].map(([l, v, n]) => (
-          <div key={l} className="rounded-2xl border border-slate-200/60 bg-white p-4">
-            <p className="text-xs text-slate-500">{l}</p>
-            <p className="mt-1 text-3xl font-semibold tracking-tight text-slate-900">{v}</p>
-            <p className="mt-1 text-xs text-slate-500">{n}</p>
-          </div>
-        ))}
-      </div>
-
-      <div className="grid gap-6 lg:grid-cols-[1.2fr_1fr]">
-        <div className="rounded-2xl border border-slate-200/60 bg-white p-5">
-          <p className="font-semibold text-slate-900">Cash flow and projection</p>
-          <svg viewBox="0 0 480 200" className="mt-4 h-auto w-full" role="img" aria-label="Bar chart: six months of actual cash flow followed by three months of projection.">
-            <line x1="0" y1="170" x2="480" y2="170" stroke="#e2e8f0" strokeWidth="1.5" />
-            {[...actual, ...projected].map((h, i) => {
-              const isProjected = i >= actual.length;
-              return (
-                <rect
-                  key={i}
-                  x={10 + i * 52}
-                  y={170 - h * 1.35}
-                  width="34"
-                  height={h * 1.35}
-                  rx="6"
-                  fill={isProjected ? "#d1fae5" : "#4f46e5"}
-                  stroke={isProjected ? "#10b981" : "none"}
-                  strokeDasharray={isProjected ? "4 3" : undefined}
-                  strokeWidth={isProjected ? 1.5 : 0}
-                />
-              );
-            })}
-            {months.map((m, i) => (
-              <text key={m} x={27 + i * 52} y="190" textAnchor="middle" fontSize="11" fill="#64748b">{m}</text>
-            ))}
-          </svg>
-          <div className="mt-3 flex flex-wrap gap-5 text-xs text-slate-500">
-            <span className="inline-flex items-center gap-2"><span className="h-2.5 w-2.5 rounded-sm bg-indigo-600" /> Actual</span>
-            <span className="inline-flex items-center gap-2"><span className="h-2.5 w-2.5 rounded-sm border border-dashed border-emerald-500 bg-emerald-100" /> Projected</span>
-          </div>
-        </div>
-
-        <div className="rounded-2xl border border-slate-200/60 bg-white">
-          <div className="flex items-center justify-between border-b border-slate-200/60 px-5 py-4">
-            <p className="font-semibold text-slate-900">Invoices</p>
-            <p className="text-xs text-slate-500">Multiple currencies</p>
-          </div>
-          <ul className="divide-y divide-slate-200/60">
-            {invoices.map((inv) => (
-              <li key={inv.id} className="flex items-center justify-between gap-3 px-5 py-3.5">
-                <div className="min-w-0">
-                  <p className="truncate text-sm font-medium text-slate-900">{inv.id} {inv.who}</p>
-                  <p className="text-xs tabular-nums text-slate-500">{inv.amount}</p>
+          <div className="min-w-0 p-4 sm:p-6">
+            <AnimatePresence mode="wait">
+              <motion.div
+                key={active}
+                initial={{ opacity: 0, y: 9 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -7 }}
+                transition={{ duration: 0.22, ease: EASE }}
+              >
+                <div className="flex flex-wrap items-start justify-between gap-3">
+                  <div>
+                    <p className="text-[10px] font-semibold uppercase tracking-[0.12em] text-[#9692A2]">
+                      Overview
+                    </p>
+                    <h3 className="mt-1 text-[21px] font-semibold tracking-[-0.05em] text-[#28253C]">
+                      {current.name}
+                    </h3>
+                  </div>
+                  <span
+                    className={`flex h-10 w-10 items-center justify-center rounded-xl ${current.color} ${current.accent}`}
+                  >
+                    <current.icon size={19} strokeWidth={1.8} />
+                  </span>
                 </div>
-                <Pill tone={inv.tone}>{inv.status}</Pill>
-              </li>
-            ))}
-          </ul>
-        </div>
-      </div>
-    </div>
-  );
-}
 
-function OpsPanel() {
-  const moves = [
-    { item: "Air filters", kind: "Received", qty: "+40", where: "Main warehouse", tone: "emerald" as Tone },
-    { item: "Brake pads", kind: "Issued", qty: "-6", where: "Job WO-1047", tone: "indigo" as Tone },
-    { item: "Battery 70Ah", kind: "Transfer", qty: "12", where: "Main to Branch", tone: "slate" as Tone },
-    { item: "Engine oil 5L", kind: "Reorder", qty: "20", where: "Supplier order", tone: "amber" as Tone },
-  ];
-  return (
-    <div className="grid gap-6 lg:grid-cols-2">
-      <CodeWindow file="actions/stock.py" code={ACTION_CODE} />
+                <div className="mt-5 grid grid-cols-3 gap-2.5">
+                  {current.metrics.map(([label, value]) => (
+                    <div
+                      key={label}
+                      className="min-w-0 rounded-xl border border-[#EEEAF2] bg-[#FEFDFE] p-3"
+                    >
+                      <p className="min-h-7 text-[10px] leading-4 text-[#8D8999]">
+                        {label}
+                      </p>
+                      <p className="mt-1 text-[22px] font-semibold tracking-[-0.055em] text-[#302D42]">
+                        {value}
+                      </p>
+                    </div>
+                  ))}
+                </div>
 
-      <div className="rounded-2xl border border-slate-200/60 bg-white">
-        <div className="flex flex-wrap items-center justify-between gap-2 border-b border-slate-200/60 px-5 py-4">
-          <p className="font-semibold text-slate-900">Stock movements</p>
-          <div className="flex gap-2">
-            <span className="rounded-lg bg-indigo-600 px-3 py-1.5 text-xs font-semibold text-white">Receive stock</span>
-            <span className="rounded-lg border border-slate-200 px-3 py-1.5 text-xs font-semibold text-slate-700">Transfer</span>
+                <div className="mt-5 overflow-hidden rounded-xl border border-[#EEEAF2]">
+                  <div className="flex items-center justify-between border-b border-[#EEEAF2] px-3.5 py-3">
+                    <p className="text-[11px] font-semibold text-[#454154]">
+                      Recent activity
+                    </p>
+                    <span className="text-[10px] font-medium text-[#9692A2]">
+                      View all
+                    </span>
+                  </div>
+
+                  {current.records.map((record) => (
+                    <div
+                      key={record[0]}
+                      className="flex items-center justify-between gap-2 border-b border-[#F1EEF4] px-3.5 py-3 last:border-0"
+                    >
+                      <div className="min-w-0">
+                        <p className="truncate text-[11px] font-semibold text-[#454154]">
+                          {record[1]}
+                        </p>
+                        <p className="mt-0.5 truncate text-[10px] text-[#9692A2]">
+                          {record[0]} · {record[2]}
+                        </p>
+                      </div>
+                      <Status tone={record[4]}>{record[3]}</Status>
+                    </div>
+                  ))}
+                </div>
+              </motion.div>
+            </AnimatePresence>
           </div>
         </div>
-        <ul className="divide-y divide-slate-200/60">
-          {moves.map((m) => (
-            <li key={m.item} className="flex items-center justify-between gap-3 px-5 py-3.5">
-              <div className="min-w-0">
-                <p className="truncate text-sm font-medium text-slate-900">{m.item}</p>
-                <p className="truncate text-xs text-slate-500">{m.where}</p>
-              </div>
-              <div className="flex shrink-0 items-center gap-3">
-                <span className="text-sm font-semibold tabular-nums text-slate-900">{m.qty}</span>
-                <Pill tone={m.tone}>{m.kind}</Pill>
-              </div>
-            </li>
-          ))}
-        </ul>
-        <p className="border-t border-slate-200/60 px-5 py-3 text-xs text-slate-500">
-          Buttons call Python actions. The runtime applies the change inside your tenant.
-        </p>
-      </div>
-    </div>
-  );
-}
-
-function Showcase() {
-  const reduce = useReducedMotion();
-  const [tab, setTab] = useState<TabId>("service");
-  const [isMounted, setIsMounted] = useState(false);
-
-  useEffect(() => {
-    setIsMounted(true);
-  }, []);
-
-  const onKey = (e: KeyboardEvent<HTMLDivElement>) => {
-    const i = TABS.findIndex((t) => t.id === tab);
-    let next = i;
-    if (e.key === "ArrowRight") next = (i + 1) % TABS.length;
-    else if (e.key === "ArrowLeft") next = (i - 1 + TABS.length) % TABS.length;
-    else return;
-    e.preventDefault();
-    setTab(TABS[next].id);
-    document.getElementById(`tab-${TABS[next].id}`)?.focus();
-  };
-
-  if (!isMounted) {
-    return <div className="min-h-[600px]" />;
-  }
-
-  return (
-    <div>
-      <div
-        role="tablist"
-        aria-label="Dotpaper application previews"
-        onKeyDown={onKey}
-        className="mx-auto flex w-full max-w-full flex-wrap justify-center gap-1 rounded-2xl border border-slate-200/60 bg-white/70 p-1.5 backdrop-blur sm:w-fit"
-      >
-        {TABS.map((t) => (
-          <button
-            key={t.id}
-            id={`tab-${t.id}`}
-            role="tab"
-            type="button"
-            aria-selected={tab === t.id}
-            aria-controls={`panel-${t.id}`}
-            tabIndex={tab === t.id ? 0 : -1}
-            onClick={() => setTab(t.id)}
-            className={`inline-flex items-center gap-2 rounded-xl px-4 py-2.5 text-sm font-medium transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-indigo-600 ${
-              tab === t.id ? "bg-slate-900 text-white" : "text-slate-600 hover:bg-slate-100"
-            }`}
-          >
-            <t.Icon className="h-4 w-4" aria-hidden="true" />
-            {t.label}
-          </button>
-        ))}
       </div>
 
-      <div className="mt-8 rounded-3xl border border-slate-200/60 bg-slate-50/80 p-4 sm:p-6">
-        <AnimatePresence mode="wait">
-          <motion.div
-            key={tab}
-            id={`panel-${tab}`}
-            role="tabpanel"
-            aria-labelledby={`tab-${tab}`}
-            initial={reduce ? false : { opacity: 0, y: 12 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={reduce ? undefined : { opacity: 0, y: -8 }}
-            transition={{ duration: 0.3, ease: EASE }}
-          >
-            {tab === "service" && <ServicePanel />}
-            {tab === "finance" && <FinancePanel />}
-            {tab === "ops" && <OpsPanel />}
-          </motion.div>
-        </AnimatePresence>
-      </div>
-      <p className="mt-3 text-center text-xs text-slate-500">Sample screens with sample data.</p>
-    </div>
-  );
-}
-
-/* ------------------------------------------------------------------ */
-/* Page                                                               */
-/* ------------------------------------------------------------------ */
-
-export default function DotpaperLanding() {
-  return (
-    <main className="relative overflow-x-clip bg-slate-50 text-slate-900 antialiased">
-      {/* 1. Hero */}
-      <section className="relative">
-        <div aria-hidden="true" className="pointer-events-none absolute inset-x-0 top-0 h-[40rem] overflow-hidden">
-          <div className="absolute -top-40 left-1/2 h-[28rem] w-[56rem] -translate-x-1/2 rounded-full bg-indigo-200/50 blur-3xl" />
-          <div className="absolute right-0 top-40 h-72 w-72 rounded-full bg-emerald-200/40 blur-3xl" />
+      <div className="absolute -bottom-7 -left-5 hidden items-center gap-3 rounded-2xl border border-[#EAE6F0] bg-white px-4 py-3 shadow-[0_14px_35px_-18px_rgba(36,29,70,0.25)] sm:flex">
+        <span className="flex h-8 w-8 items-center justify-center rounded-full bg-[#DDF1E7] text-[#176B4B]">
+          <Check size={16} />
+        </span>
+        <div>
+          <p className="text-[11px] font-semibold text-[#353145]">Work stays connected</p>
+          <p className="mt-0.5 text-[10px] text-[#8D8999]">One shared workspace</p>
         </div>
+      </div>
+    </div>
+  );
+}
 
-        <div className="relative mx-auto max-w-7xl px-5 pb-24 pt-20 text-center sm:px-8 md:pt-28">
-          
+function Hero() {
+  return (
+    <section id="top" className="relative overflow-hidden bg-[#FBFAF8]">
+      <div
+        aria-hidden="true"
+        className="pointer-events-none absolute -right-44 top-10 h-[560px] w-[560px] rounded-full bg-[#E8E2F6] opacity-70 blur-[100px]"
+      />
+      <div
+        aria-hidden="true"
+        className="pointer-events-none absolute -left-48 bottom-0 h-[360px] w-[360px] rounded-full bg-[#F8E9D8] opacity-60 blur-[90px]"
+      />
+
+      <div className="relative mx-auto grid max-w-[1440px] items-center gap-14 px-5 pb-24 pt-20 sm:px-8 md:pb-32 md:pt-28 lg:grid-cols-[0.9fr_1.1fr] lg:gap-12 lg:px-14">
+        <div className="relative z-10">
+          <Reveal>
+            <div className="inline-flex items-center gap-2 rounded-full border border-[#E8E3EF] bg-white/75 px-3.5 py-2 text-[11px] font-semibold text-[#615A78]">
+              <span className="h-1.5 w-1.5 rounded-full bg-[#7961B4]" />
+              BUSINESS SOFTWARE BY ECOCEE
+            </div>
+          </Reveal>
 
           <Reveal delay={0.08}>
-            <h1 className="mx-auto mt-8 max-w-4xl text-5xl font-semibold tracking-tight text-slate-900 [text-wrap:balance] md:text-7xl">
-              One platform. Many business applications.
+            <h1 className="mt-8 max-w-[650px] text-[clamp(3.3rem,6.1vw,6.4rem)] font-semibold leading-[0.99] tracking-[-0.075em] text-[#26233C] [text-wrap:balance]">
+              Your business.
+              <br />
+              <span className="text-[#7862B2]">All in one place.</span>
             </h1>
           </Reveal>
 
           <Reveal delay={0.16}>
-            <p className="mx-auto mt-6 max-w-2xl text-lg text-slate-600 md:text-xl">
-              Dotpaper powers your entire business. Run your Service Desk, Financials, and
-              custom internal tools all from the exact same place, built entirely around your business needs.
+            <p className="mt-7 max-w-[490px] text-[16px] leading-[1.85] text-[#706C7D] sm:text-[18px]">
+              Bring your daily work together with one connected business
+              workspace. Manage services, money, customers and stock without
+              juggling separate tools.
             </p>
           </Reveal>
 
           <Reveal delay={0.24}>
-            <div className="mt-10 flex flex-wrap items-center justify-center gap-3">
+            <div className="mt-9 flex flex-wrap items-center gap-3">
               <a
                 href={CONTACT_HREF}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="group inline-flex items-center gap-2 rounded-full bg-slate-900 px-7 py-3.5 text-base font-semibold text-white transition duration-200 hover:scale-[1.03] hover:bg-slate-800 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+                className="group inline-flex h-[52px] items-center gap-3 rounded-full bg-[#29234D] px-6 text-[13px] font-semibold text-white transition hover:bg-[#40396B]"
               >
-                Request Executive Access
-                <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-0.5" aria-hidden="true" />
+                Talk to our team
+                <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
               </a>
               <a
-                href="#architecture"
-                className="inline-flex items-center gap-2 rounded-full border border-slate-200/60 bg-white/60 px-7 py-3.5 text-base font-semibold text-slate-800 backdrop-blur transition duration-200 hover:bg-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+                href="#applications"
+                className="inline-flex h-[52px] items-center gap-2 rounded-full border border-[#E4DFEA] bg-white/70 px-6 text-[13px] font-semibold text-[#454158] transition hover:border-[#C8BDDC] hover:bg-white"
               >
-                <Play className="h-4 w-4" aria-hidden="true" />
-                Explore the Architecture
+                Explore applications
+                <ArrowDown className="h-3.5 w-3.5" />
               </a>
             </div>
           </Reveal>
 
-          <Workspace />
+          <Reveal delay={0.32}>
+            <div className="mt-12 flex items-center gap-4 border-t border-[#EAE6ED] pt-6">
+              <div className="flex -space-x-2">
+                {["bg-[#DCE8FF]", "bg-[#FCE7C8]", "bg-[#D9F0E5]"].map(
+                  (color, index) => (
+                    <span
+                      key={index}
+                      className={`flex h-8 w-8 items-center justify-center rounded-full border-2 border-[#FBFAF8] ${color}`}
+                    >
+                      {index === 0 ? (
+                        <BriefcaseBusiness size={13} className="text-[#315A9E]" />
+                      ) : index === 1 ? (
+                        <Wallet size={13} className="text-[#98500D]" />
+                      ) : (
+                        <Users size={13} className="text-[#176B4B]" />
+                      )}
+                    </span>
+                  ),
+                )}
+              </div>
+              <p className="text-[11px] leading-5 text-[#858191]">
+                One workspace for the work
+                <br />
+                that keeps your business moving.
+              </p>
+            </div>
+          </Reveal>
         </div>
-      </section>
 
-      {/* 2. Architecture */}
-      <section id="architecture" className="scroll-mt-6 border-y border-slate-200/60 bg-white">
-        <div className="mx-auto max-w-7xl px-5 py-24 sm:px-8 md:py-32">
-          <Reveal className="mx-auto max-w-3xl text-center">
-            <h2 className="text-4xl font-semibold tracking-tight [text-wrap:balance] md:text-6xl">
-              Built for speed and reliability.
+        <Reveal delay={0.18} className="relative lg:pl-2">
+          <WorkspacePreview />
+        </Reveal>
+      </div>
+    </section>
+  );
+}
+
+function ApplicationSection() {
+  return (
+    <section id="applications" className="scroll-mt-10 bg-white">
+      <div className="mx-auto max-w-[1440px] px-5 py-24 sm:px-8 md:py-32 lg:px-14">
+        <div className="grid gap-8 md:grid-cols-[0.8fr_1.2fr] md:items-end">
+          <Reveal>
+            <p className="text-[11px] font-bold uppercase tracking-[0.16em] text-[#7862B2]">
+              One workspace, many possibilities
+            </p>
+            <h2 className="mt-5 max-w-[540px] text-[clamp(2.7rem,5vw,5rem)] font-semibold leading-[1.02] tracking-[-0.07em] text-[#29263D]">
+              Everything your team needs to get work done.
             </h2>
-            <p className="mt-5 text-lg text-slate-600">
-              Dotpaper handles the complicated parts like databases and secure logins for you. 
-              We write clean code, and the platform turns it into working business software instantly.
+          </Reveal>
+          <Reveal delay={0.1}>
+            <p className="max-w-[470px] pb-1 text-[15px] leading-8 text-[#777384] md:ml-auto">
+              Start with the applications your business needs today. Bring
+              more of your operations into the same workspace as you grow.
             </p>
           </Reveal>
+        </div>
 
-          <div className="mt-16 grid items-stretch gap-4 lg:grid-cols-[1fr_auto_1fr_auto_1fr]">
-            {LAYERS.map((l, i) => (
-              <div key={l.title} className="contents">
-                <Reveal delay={i * 0.1} className="h-full">
-                  <div className="h-full rounded-3xl border border-slate-200/60 bg-slate-50/70 p-7">
-                    <span className="flex h-11 w-11 items-center justify-center rounded-xl bg-slate-900 text-white">
-                      <l.Icon className="h-5 w-5" aria-hidden="true" />
+        <div className="mt-14 grid gap-4 sm:grid-cols-2">
+          {applications.map((app, index) => {
+            const Icon = app.icon;
+
+            return (
+              <Reveal key={app.id} delay={index * 0.07}>
+                <a
+                  href="#showcase"
+                  className={`group relative flex min-h-[300px] flex-col justify-between overflow-hidden rounded-[24px] p-7 transition duration-300 hover:-translate-y-1 sm:min-h-[340px] sm:p-9 ${app.color}`}
+                >
+                  <div className="flex items-start justify-between">
+                    <span
+                      className={`flex h-12 w-12 items-center justify-center rounded-2xl bg-white/70 ${app.accent}`}
+                    >
+                      <Icon size={22} strokeWidth={1.7} />
                     </span>
-                    <p className="mt-6 text-xs font-semibold text-indigo-600">{l.tag}</p>
-                    <h3 className="mt-1 text-2xl font-semibold tracking-tight">{l.title}</h3>
-                    <ul className="mt-5 space-y-3">
-                      {l.points.map((p) => (
-                        <li key={p} className="flex gap-3 text-slate-600">
-                          <CheckCircle2 className="mt-1 h-4 w-4 shrink-0 text-emerald-500" aria-hidden="true" />
-                          {p}
-                        </li>
+                    <span className="flex h-9 w-9 items-center justify-center rounded-full bg-white/60 text-[#514B64] transition group-hover:translate-x-1 group-hover:-translate-y-1">
+                      <ArrowUpRight size={17} />
+                    </span>
+                  </div>
+
+                  <div className="relative z-10 mt-10 max-w-[390px]">
+                    <p className={`text-[11px] font-bold uppercase tracking-[0.14em] ${app.accent}`}>
+                      APPLICATION 0{index + 1}
+                    </p>
+                    <h3 className="mt-3 text-[32px] font-semibold tracking-[-0.06em] text-[#29263D] sm:text-[39px]">
+                      {app.name}
+                    </h3>
+                    <p className="mt-3 max-w-[370px] text-[14px] leading-7 text-[#59566A]">
+                      {app.description}
+                    </p>
+                  </div>
+
+                  <div
+                    aria-hidden="true"
+                    className={`pointer-events-none absolute -bottom-20 -right-10 h-56 w-56 rounded-full border-[34px] border-white/25 transition duration-500 group-hover:scale-110 ${app.accent}`}
+                  />
+                </a>
+              </Reveal>
+            );
+          })}
+        </div>
+      </div>
+    </section>
+  );
+}
+
+function ConnectedSection() {
+  return (
+    <section id="how-it-works" className="scroll-mt-10 bg-[#F3F0F8]">
+      <div className="mx-auto max-w-[1440px] px-5 py-24 sm:px-8 md:py-32 lg:px-14">
+        <div className="grid gap-14 lg:grid-cols-[0.85fr_1.15fr] lg:items-center">
+          <Reveal>
+            <p className="text-[11px] font-bold uppercase tracking-[0.16em] text-[#7862B2]">
+              A better way to work
+            </p>
+            <h2 className="mt-5 max-w-[510px] text-[clamp(2.8rem,5vw,5rem)] font-semibold leading-[1.02] tracking-[-0.07em] text-[#29263D]">
+              Your work is connected. Your team stays in sync.
+            </h2>
+            <p className="mt-6 max-w-[460px] text-[15px] leading-8 text-[#777384]">
+              When your applications share the same workspace, information
+              doesn't have to be entered again and again. Your team can see
+              what matters and move work forward with more clarity.
+            </p>
+            <a
+              href="#showcase"
+              className="mt-8 inline-flex items-center gap-2 text-[13px] font-semibold text-[#5D4798] transition hover:gap-3"
+            >
+              See how it comes together <ArrowRight size={16} />
+            </a>
+          </Reveal>
+
+          <Reveal delay={0.12}>
+            <div className="rounded-[26px] bg-white p-5 shadow-[0_25px_80px_-45px_rgba(40,30,70,0.25)] sm:p-8">
+              <div className="flex items-center justify-between border-b border-[#EEEAF2] pb-5">
+                <div>
+                  <p className="text-[11px] font-semibold uppercase tracking-[0.12em] text-[#9692A2]">
+                    One customer record
+                  </p>
+                  <h3 className="mt-1 text-[20px] font-semibold tracking-[-0.04em] text-[#302D42]">
+                    Al Noor Trading
+                  </h3>
+                </div>
+                <span className="rounded-full bg-[#DDF1E7] px-3 py-1.5 text-[10px] font-semibold text-[#176B4B]">
+                  Active customer
+                </span>
+              </div>
+
+              <div className="mt-6 grid gap-3 sm:grid-cols-2">
+                {[
+                  {
+                    icon: ClipboardList,
+                    label: "Service history",
+                    detail: "4 work orders",
+                    color: "bg-[#DCE8FF] text-[#2456A6]",
+                  },
+                  {
+                    icon: Receipt,
+                    label: "Invoices",
+                    detail: "2 recent invoices",
+                    color: "bg-[#FCE7C8] text-[#98500D]",
+                  },
+                  {
+                    icon: Users,
+                    label: "Contacts",
+                    detail: "3 team contacts",
+                    color: "bg-[#D9F0E5] text-[#176B4B]",
+                  },
+                  {
+                    icon: Package,
+                    label: "Parts & items",
+                    detail: "6 linked items",
+                    color: "bg-[#E8E0FA] text-[#6840A6]",
+                  },
+                ].map((item) => {
+                  const Icon = item.icon;
+
+                  return (
+                    <div
+                      key={item.label}
+                      className="flex items-center gap-3 rounded-2xl border border-[#EEEAF2] p-4"
+                    >
+                      <span className={`flex h-10 w-10 shrink-0 items-center justify-center rounded-xl ${item.color}`}>
+                        <Icon size={18} />
+                      </span>
+                      <div className="min-w-0">
+                        <p className="text-[12px] font-semibold text-[#454154]">
+                          {item.label}
+                        </p>
+                        <p className="mt-1 text-[11px] text-[#9692A2]">
+                          {item.detail}
+                        </p>
+                      </div>
+                      <ChevronRight className="ml-auto h-4 w-4 shrink-0 text-[#B1ADBA]" />
+                    </div>
+                  );
+                })}
+              </div>
+
+              <div className="mt-5 rounded-2xl bg-[#F7F5FA] p-4">
+                <div className="flex items-center gap-2 text-[11px] font-semibold text-[#5B5470]">
+                  <Zap size={14} className="text-[#8A70C3]" />
+                  Connected activity
+                </div>
+                <div className="mt-4 space-y-3">
+                  {[
+                    ["09:42", "Work order updated", "Service Desk"],
+                    ["10:15", "Estimate sent to customer", "Financials"],
+                    ["11:08", "Payment recorded", "Financials"],
+                  ].map(([time, event, source]) => (
+                    <div key={event} className="flex items-center gap-3">
+                      <span className="w-10 shrink-0 text-[10px] tabular-nums text-[#A19CAB]">
+                        {time}
+                      </span>
+                      <span className="h-1.5 w-1.5 shrink-0 rounded-full bg-[#8A70C3]" />
+                      <p className="min-w-0 flex-1 text-[11px] font-medium text-[#5A5668]">
+                        {event}
+                      </p>
+                      <span className="text-[10px] text-[#A19CAB]">{source}</span>
+                    </div>
+                  ))}
+                </div>
+              </div>
+              <p className="mt-3 text-center text-[10px] text-[#A19CAB]">
+                Illustrative example using sample information.
+              </p>
+            </div>
+          </Reveal>
+        </div>
+      </div>
+    </section>
+  );
+}
+
+function Showcase() {
+  const [active, setActive] = useState<ApplicationId>("service");
+  const current = applications.find((app) => app.id === active)!;
+
+  return (
+    <section id="showcase" className="scroll-mt-10 bg-white">
+      <div className="mx-auto max-w-[1440px] px-5 py-24 sm:px-8 md:py-32 lg:px-14">
+        <Reveal className="mx-auto max-w-[720px] text-center">
+          <p className="text-[11px] font-bold uppercase tracking-[0.16em] text-[#7862B2]">
+            Take a closer look
+          </p>
+          <h2 className="mt-5 text-[clamp(2.8rem,5vw,5rem)] font-semibold leading-[1.02] tracking-[-0.07em] text-[#29263D]">
+            Familiar from the first day.
+          </h2>
+          <p className="mx-auto mt-5 max-w-[550px] text-[15px] leading-8 text-[#777384]">
+            Each application has a clear purpose, while keeping the same
+            familiar experience for your entire team.
+          </p>
+        </Reveal>
+
+        <Reveal delay={0.12} className="mt-12">
+          <div className="flex flex-wrap justify-center gap-2">
+            {applications.map((app) => {
+              const Icon = app.icon;
+              const selected = active === app.id;
+
+              return (
+                <button
+                  key={app.id}
+                  type="button"
+                  onClick={() => setActive(app.id)}
+                  aria-pressed={selected}
+                  className={`inline-flex h-11 items-center gap-2 rounded-full px-4 text-[12px] font-semibold transition ${
+                    selected
+                      ? "bg-[#29234D] text-white"
+                      : "border border-[#E9E5EE] bg-white text-[#696678] hover:bg-[#F7F5FA]"
+                  }`}
+                >
+                  <Icon size={15} />
+                  {app.name}
+                </button>
+              );
+            })}
+          </div>
+
+          <div className="mt-6 overflow-hidden rounded-[26px] border border-[#E9E5EE] bg-[#F8F7FA] p-3 sm:p-6">
+            <AnimatePresence mode="wait">
+              <motion.div
+                key={active}
+                initial={{ opacity: 0, y: 12 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -8 }}
+                transition={{ duration: 0.25, ease: EASE }}
+                className="overflow-hidden rounded-[18px] border border-[#EAE6EF] bg-white"
+              >
+                <div className="flex flex-wrap items-center justify-between gap-3 border-b border-[#EEEAF2] px-5 py-4">
+                  <div className="flex items-center gap-3">
+                    <span className={`flex h-9 w-9 items-center justify-center rounded-xl ${current.color} ${current.accent}`}>
+                      <current.icon size={17} />
+                    </span>
+                    <div>
+                      <p className="text-[13px] font-semibold text-[#393548]">
+                        {current.name}
+                      </p>
+                      <p className="mt-0.5 text-[10px] text-[#9995A3]">
+                        Business overview
+                      </p>
+                    </div>
+                  </div>
+                  <span className="rounded-full bg-[#F0EDF6] px-3 py-1.5 text-[10px] font-semibold text-[#6C5A9D]">
+                    Sample workspace
+                  </span>
+                </div>
+
+                <div className="p-4 sm:p-6">
+                  <div className="grid gap-3 sm:grid-cols-3">
+                    {current.metrics.map(([label, value]) => (
+                      <div key={label} className="rounded-2xl bg-[#FAF9FB] p-4">
+                        <p className="text-[11px] text-[#8E899A]">{label}</p>
+                        <p className="mt-2 text-[29px] font-semibold tracking-[-0.06em] text-[#302D42]">
+                          {value}
+                        </p>
+                      </div>
+                    ))}
+                  </div>
+
+                  <div className="mt-5 overflow-hidden rounded-2xl border border-[#EEEAF2]">
+                    <div className="hidden grid-cols-[1fr_1.4fr_1.2fr_auto] gap-3 bg-[#FAF9FB] px-4 py-3 sm:grid">
+                      {["Reference", "Name", "Details", "Status"].map((label) => (
+                        <span key={label} className="text-[10px] font-semibold uppercase tracking-[0.08em] text-[#A09CAB]">
+                          {label}
+                        </span>
                       ))}
-                    </ul>
+                    </div>
+                    {current.records.map((record) => (
+                      <div
+                        key={record[0]}
+                        className="grid gap-2 border-t border-[#F0EDF3] px-4 py-4 sm:grid-cols-[1fr_1.4fr_1.2fr_auto] sm:items-center sm:gap-3"
+                      >
+                        <span className="text-[10px] font-medium text-[#9995A3]">
+                          {record[0]}
+                        </span>
+                        <span className="text-[12px] font-semibold text-[#494557]">
+                          {record[1]}
+                        </span>
+                        <span className="text-[11px] text-[#8E899A]">
+                          {record[2]}
+                        </span>
+                        <span>
+                          <Status tone={record[4]}>{record[3]}</Status>
+                        </span>
+                      </div>
+                    ))}
                   </div>
-                </Reveal>
+                </div>
+              </motion.div>
+            </AnimatePresence>
+          </div>
+          <p className="mt-3 text-center text-[10px] text-[#A09CAB]">
+            Product illustration with sample records. Screens and figures are examples.
+          </p>
+        </Reveal>
+      </div>
+    </section>
+  );
+}
 
-                {i < LAYERS.length - 1 && (
-                  <div className="flex flex-col items-center justify-center gap-1 py-1 text-slate-400 lg:py-0" aria-hidden="true">
-                    <ArrowRight className="h-5 w-5 rotate-90 lg:rotate-0" />
-                    <span className="text-center text-[11px] font-medium leading-tight text-slate-500">
-                      {i === 0 ? "JSON manifest" : "Versioned UI schema"}
-                    </span>
+function Benefits() {
+  return (
+    <section id="why-dotpaper" className="scroll-mt-10 bg-[#FBFAF8]">
+      <div className="mx-auto max-w-[1440px] px-5 py-24 sm:px-8 md:py-32 lg:px-14">
+        <Reveal>
+          <p className="text-[11px] font-bold uppercase tracking-[0.16em] text-[#7862B2]">
+            Why Dotpaper
+          </p>
+          <div className="mt-5 grid gap-8 lg:grid-cols-[1fr_0.8fr] lg:items-end">
+            <h2 className="max-w-[650px] text-[clamp(2.8rem,5vw,5rem)] font-semibold leading-[1.02] tracking-[-0.07em] text-[#29263D]">
+              Less time managing tools. More time moving forward.
+            </h2>
+            <p className="max-w-[420px] text-[15px] leading-8 text-[#777384] lg:ml-auto">
+              Your business deserves software that fits the way you work.
+              Dotpaper brings the essentials together and gives you room to
+              grow.
+            </p>
+          </div>
+        </Reveal>
+
+        <div className="mt-14 grid gap-4 sm:grid-cols-2">
+          {benefits.map((benefit, index) => {
+            const Icon = benefit.icon;
+
+            return (
+              <Reveal key={benefit.number} delay={index * 0.06}>
+                <div className="flex h-full gap-5 rounded-[22px] border border-[#ECE8EF] bg-white p-6 sm:p-8">
+                  <div className={`flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl ${benefit.background} ${benefit.foreground}`}>
+                    <Icon size={21} strokeWidth={1.7} />
                   </div>
-                )}
+                  <div>
+                    <p className="text-[10px] font-bold tracking-[0.14em] text-[#A09CAB]">
+                      {benefit.number}
+                    </p>
+                    <h3 className="mt-2 text-[20px] font-semibold tracking-[-0.045em] text-[#302D42]">
+                      {benefit.title}
+                    </h3>
+                    <p className="mt-3 max-w-[430px] text-[13px] leading-7 text-[#777384]">
+                      {benefit.description}
+                    </p>
+                  </div>
+                </div>
+              </Reveal>
+            );
+          })}
+        </div>
+      </div>
+    </section>
+  );
+}
+
+function Comparison() {
+  return (
+    <section className="bg-[#F3F0F8]">
+      <div className="mx-auto max-w-[1200px] px-5 py-24 sm:px-8 md:py-32">
+        <Reveal className="mx-auto max-w-[700px] text-center">
+          <p className="text-[11px] font-bold uppercase tracking-[0.16em] text-[#7862B2]">
+            A simpler way forward
+          </p>
+          <h2 className="mt-5 text-[clamp(2.8rem,5vw,4.7rem)] font-semibold leading-[1.03] tracking-[-0.07em] text-[#29263D]">
+            One place makes a difference.
+          </h2>
+        </Reveal>
+
+        <Reveal delay={0.1} className="mt-12">
+          <div className="overflow-hidden rounded-[22px] border border-[#E5DFED] bg-white">
+            <div className="grid grid-cols-[0.7fr_1fr_1fr] border-b border-[#EEEAF2] bg-[#FAF9FB]">
+              <div className="p-4 sm:p-6" />
+              <div className="p-4 text-[11px] font-semibold text-[#9995A3] sm:p-6 sm:text-[12px]">
+                Separate tools
+              </div>
+              <div className="bg-[#EAE4F5] p-4 text-[11px] font-semibold text-[#5C478F] sm:p-6 sm:text-[12px]">
+                Dotpaper
+              </div>
+            </div>
+
+            {comparison.map((item) => (
+              <div
+                key={item.label}
+                className="grid grid-cols-[0.7fr_1fr_1fr] border-b border-[#F0EDF3] last:border-0"
+              >
+                <div className="flex items-center p-4 text-[11px] font-semibold text-[#494557] sm:p-6 sm:text-[13px]">
+                  {item.label}
+                </div>
+                <div className="flex items-center p-4 text-[11px] leading-5 text-[#8E899A] sm:p-6 sm:text-[13px] sm:leading-6">
+                  {item.old}
+                </div>
+                <div className="flex items-center gap-2 bg-[#F7F4FB] p-4 text-[11px] font-medium leading-5 text-[#49415E] sm:gap-3 sm:p-6 sm:text-[13px] sm:leading-6">
+                  <Check className="h-3.5 w-3.5 shrink-0 text-[#7961B4]" />
+                  {item.dotpaper}
+                </div>
               </div>
             ))}
           </div>
-
-          <p className="mx-auto mt-12 max-w-2xl text-center text-lg font-medium text-slate-900">
-            You focus on your business rules. Dotpaper handles the rest.
-          </p>
-        </div>
-      </section>
-
-      {/* 3. Feature grid */}
-      <section className="mx-auto max-w-7xl px-5 py-24 sm:px-8 md:py-32">
-        <Reveal className="mx-auto max-w-3xl text-center">
-          <h2 className="text-4xl font-semibold tracking-tight [text-wrap:balance] md:text-6xl">
-            Everything your business needs.
-          </h2>
-          <p className="mt-5 text-lg text-slate-600">
-            The strong foundations are built once in the platform, so every application you use is secure, fast, and reliable.
-          </p>
         </Reveal>
+      </div>
+    </section>
+  );
+}
 
-        <div className="mt-14 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-          {FEATURES.map((f, i) => (
-            <Reveal key={f.title} delay={(i % 3) * 0.07} className="h-full">
-              <div className="h-full rounded-3xl border border-slate-200/60 bg-white p-7 transition-shadow duration-300 hover:shadow-[0_20px_50px_-25px_rgba(79,70,229,0.35)]">
-                <span className="flex h-11 w-11 items-center justify-center rounded-xl bg-indigo-600 text-white">
-                  <f.Icon className="h-5 w-5" aria-hidden="true" />
-                </span>
-                <h3 className="mt-6 text-xl font-semibold tracking-tight">{f.title}</h3>
-                <p className="mt-3 text-slate-600">{f.text}</p>
-              </div>
-            </Reveal>
-          ))}
-        </div>
-      </section>
+function FinalCTA() {
+  return (
+    <section className="bg-white px-5 py-20 sm:px-8 md:py-28">
+      <Reveal>
+        <div className="relative mx-auto max-w-[1350px] overflow-hidden rounded-[28px] bg-[#29234D] px-6 py-20 text-center sm:px-12 md:py-28">
+          <div
+            aria-hidden="true"
+            className="pointer-events-none absolute -right-24 -top-48 h-[480px] w-[480px] rounded-full border-[70px] border-white/[0.045]"
+          />
+          <div
+            aria-hidden="true"
+            className="pointer-events-none absolute -bottom-64 -left-20 h-[480px] w-[480px] rounded-full bg-[#7961B4]/30 blur-3xl"
+          />
 
-      {/* 4. Showcase */}
-      <section id="showcase" className="scroll-mt-6 border-y border-slate-200/60 bg-white">
-        <div className="mx-auto max-w-7xl px-5 py-24 sm:px-8 md:py-32">
-          <Reveal className="mx-auto max-w-3xl text-center">
-            <h2 className="text-4xl font-semibold tracking-tight [text-wrap:balance] md:text-6xl">
-              See real applications work.
-            </h2>
-            <p className="mt-5 text-lg text-slate-600">
-              Switch between applications. Same interface, same records, same sign-in.
+          <div className="relative mx-auto max-w-[760px]">
+            <p className="text-[11px] font-bold uppercase tracking-[0.17em] text-[#C8B9E8]">
+              A better way to run your business
             </p>
-          </Reveal>
-          <Reveal className="mt-12" delay={0.08}>
-            <Showcase />
-          </Reveal>
+            <h2 className="mt-6 text-[clamp(2.8rem,6vw,5.8rem)] font-semibold leading-[1.02] tracking-[-0.075em] text-white [text-wrap:balance]">
+              Bring your business together.
+            </h2>
+            <p className="mx-auto mt-6 max-w-[490px] text-[14px] leading-7 text-[#D0C9E0] sm:text-[16px]">
+              Tell us how your business works. Let's explore how Dotpaper can
+              bring your everyday operations into one place.
+            </p>
+            <a
+              href={CONTACT_HREF}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="group mt-9 inline-flex h-[54px] items-center gap-3 rounded-full bg-white px-7 text-[13px] font-semibold text-[#29234D] transition hover:bg-[#F0ECF7]"
+            >
+              Talk to our team
+              <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
+            </a>
+          </div>
         </div>
-      </section>
+      </Reveal>
+    </section>
+  );
+}
 
-      {/* 5. Comparison */}
-      <section className="mx-auto max-w-5xl px-5 py-24 sm:px-8 md:py-32">
-        <Reveal className="mx-auto max-w-3xl text-center">
-          <h2 className="text-4xl font-semibold tracking-tight [text-wrap:balance] md:text-6xl">
-            One platform instead of many tools.
-          </h2>
-        </Reveal>
-
-        <Reveal className="mt-14" delay={0.08}>
-          <div className="overflow-hidden rounded-3xl border border-slate-200/60 bg-white">
-            <table className="block w-full text-left md:table">
-              <caption className="sr-only">Separate SaaS tools compared with the ECOCEE Dotpaper platform</caption>
-              <thead className="hidden md:table-header-group">
-                <tr className="border-b border-slate-200/60">
-                  <th scope="col" className="w-1/4 px-7 py-5"><span className="sr-only">Topic</span></th>
-                  <th scope="col" className="px-7 py-5 text-sm font-semibold text-slate-500">Separate SaaS tools</th>
-                  <th scope="col" className="bg-indigo-50/60 px-7 py-5 text-sm font-semibold text-indigo-700">ECOCEE Dotpaper platform</th>
-                </tr>
-              </thead>
-              <tbody className="block md:table-row-group">
-                {COMPARE.map((c) => (
-                  <tr key={c.row} className="block border-b border-slate-200/60 last:border-b-0 md:table-row">
-                    <th scope="row" className="block px-7 pb-1 pt-6 text-base font-semibold text-slate-900 md:table-cell md:py-6 md:align-top">
-                      {c.row}
-                    </th>
-                    <td
-                      data-label="Separate SaaS tools"
-                      className="block px-7 py-2 text-slate-500 before:mb-0.5 before:block before:text-xs before:font-semibold before:text-slate-400 before:content-[attr(data-label)] md:table-cell md:py-6 md:align-top md:before:hidden"
-                    >
-                      {c.legacy}
-                    </td>
-                    <td
-                      data-label="ECOCEE Dotpaper platform"
-                      className="block bg-indigo-50/40 px-7 py-3 font-medium text-slate-900 before:mb-0.5 before:block before:text-xs before:font-semibold before:text-indigo-600 before:content-[attr(data-label)] md:table-cell md:bg-indigo-50/60 md:py-6 md:align-top md:before:hidden"
-                    >
-                      {c.dotpaper}
-                    </td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
+function Footer() {
+  return (
+    <footer className="border-t border-[#ECE8EF] bg-[#FBFAF8]">
+      <div className="mx-auto max-w-[1440px] px-5 py-10 sm:px-8 lg:px-14">
+        <div className="flex flex-col justify-between gap-8 sm:flex-row sm:items-center">
+          <div>
+            <Brand />
+            <p className="mt-3 text-[11px] text-[#9995A3]">
+              Business software, built around you.
+            </p>
           </div>
-        </Reveal>
 
-        <p className="mx-auto mt-8 max-w-2xl text-center text-sm text-slate-500">
-          Security also depends on how each deployment is run: access, updates, backups and network setup.
-        </p>
-      </section>
-
-      {/* 6. Footer CTA */}
-      <section className="px-5 pb-24 sm:px-8 md:pb-32">
-        <Reveal>
-          <div className="relative mx-auto max-w-6xl overflow-hidden rounded-[2rem] bg-slate-900 px-6 py-20 text-center sm:px-12 md:py-28">
-            <div aria-hidden="true" className="pointer-events-none absolute -top-32 left-1/2 h-72 w-[40rem] -translate-x-1/2 rounded-full bg-indigo-500/30 blur-3xl" />
-            <div className="relative">
-              <h2 className="mx-auto max-w-3xl text-4xl font-semibold tracking-tight text-white [text-wrap:balance] md:text-6xl">
-                Run your business on Dotpaper.
-              </h2>
-              <a
-                href={CONTACT_HREF}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="group mt-10 inline-flex items-center gap-2 rounded-full bg-white px-8 py-4 text-base font-semibold text-slate-900 transition duration-200 hover:scale-[1.03] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white"
-              >
-                Request Executive Access
-                <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-0.5" aria-hidden="true" />
-              </a>
-            </div>
+          <div className="flex flex-wrap items-center gap-x-7 gap-y-3">
+            <a href="#applications" className="text-[12px] font-medium text-[#777384] hover:text-[#29234D]">
+              Applications
+            </a>
+            <a href="#how-it-works" className="text-[12px] font-medium text-[#777384] hover:text-[#29234D]">
+              How it works
+            </a>
+            <a href="#why-dotpaper" className="text-[12px] font-medium text-[#777384] hover:text-[#29234D]">
+              Why Dotpaper
+            </a>
+            <a
+              href={CONTACT_HREF}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-1 text-[12px] font-semibold text-[#5D4798] hover:text-[#29234D]"
+            >
+              Contact <ArrowUpRight size={13} />
+            </a>
           </div>
-        </Reveal>
-      </section>
+        </div>
+
+        <div className="mt-9 flex flex-col gap-2 border-t border-[#ECE8EF] pt-5 text-[10px] text-[#A09CAB] sm:flex-row sm:items-center sm:justify-between">
+          <p>© {new Date().getFullYear()} ECOCEE. All rights reserved.</p>
+          <p>Designed and built by ECOCEE.</p>
+        </div>
+      </div>
+    </footer>
+  );
+}
+
+export default function DotpaperLanding() {
+  return (
+    <main className="min-h-screen overflow-x-clip bg-[#FBFAF8] text-[#29263D] antialiased">
+      <Header />
+      <Hero />
+      <ApplicationSection />
+      <ConnectedSection />
+      <Showcase />
+      <Benefits />
+      <Comparison />
+      <FinalCTA />
+      <Footer />
     </main>
   );
 }
