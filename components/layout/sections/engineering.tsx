@@ -1,131 +1,300 @@
+
 "use client";
 
-import { motion, AnimatePresence } from "framer-motion";
 import { useState } from "react";
-import { ChevronDown } from "lucide-react";
+import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
+import { ArrowUpRight, Plus } from "lucide-react";
 
 const domains = [
   {
     id: "ai",
+    number: "01",
     title: "AI & Intelligence",
-    description: "Custom AI agents, machine learning systems, natural language processing, computer vision and intelligent automation.",
-    details: ["LLM Integration", "RAG Systems", "Computer Vision", "NLP", "MLOps"],
+    description:
+      "We engineer intelligent systems that understand information, automate complex workflows and turn data into useful decisions.",
+    details: [
+      "Large Language Models",
+      "AI Agents",
+      "Retrieval-Augmented Generation",
+      "Computer Vision",
+      "Natural Language Processing",
+      "Model Integration & Deployment",
+    ],
+    technologies: "Python · PyTorch · OpenAI · Gemini",
   },
   {
     id: "software",
+    number: "02",
     title: "Software Engineering",
-    description: "Full-stack web applications, APIs, mobile apps and enterprise systems built with modern frameworks.",
-    details: ["React / Next.js", "Node.js / Python", "APIs & Microservices", "Databases", "DevOps"],
+    description:
+      "From digital products to complex enterprise platforms, we build reliable software designed around real operational requirements.",
+    details: [
+      "Web Applications",
+      "Mobile Applications",
+      "Backend Systems & APIs",
+      "Enterprise Software",
+      "Microservices Architecture",
+      "Database Engineering",
+    ],
+    technologies: "TypeScript · React · Next.js · Node.js · Python",
   },
   {
     id: "cloud",
+    number: "03",
     title: "Cloud & Infrastructure",
-    description: "Private, public and hybrid cloud architectures designed for security, performance and scalability.",
-    details: ["AWS / Azure / GCP", "Docker / Kubernetes", "CI/CD Pipelines", "Monitoring", "Security"],
+    description:
+      "We design and operate secure infrastructure that supports demanding applications, distributed systems and growing workloads.",
+    details: [
+      "Cloud Architecture",
+      "Containerised Applications",
+      "Distributed Systems",
+      "CI/CD & Automation",
+      "Infrastructure Monitoring",
+      "Security & Performance",
+    ],
+    technologies: "Azure · AWS · GCP · Docker · Kubernetes",
   },
   {
     id: "embedded",
+    number: "04",
     title: "Embedded Systems",
-    description: "Custom firmware, PCB design, microcontroller programming and hardware prototyping.",
-    details: ["STM32 / ESP32 / ARM", "Firmware (C/C++)", "RTOS", "PCB Design", "Prototyping"],
+    description:
+      "We bring hardware to life through firmware, electronics engineering and low-level software built for dependable operation.",
+    details: [
+      "Microcontroller Programming",
+      "Custom Firmware",
+      "PCB Design & Prototyping",
+      "Real-Time Operating Systems",
+      "Hardware Integration",
+      "Device-Level Optimisation",
+    ],
+    technologies: "C · C++ · STM32 · ESP32 · ARM",
   },
   {
     id: "iot",
+    number: "05",
     title: "IoT & Connected Devices",
-    description: "End-to-end IoT systems from sensors and edge devices to cloud dashboards and analytics.",
-    details: ["Sensor Networks", "Edge Computing", "MQTT / CoAP", "Device Management", "Analytics"],
+    description:
+      "We connect physical devices, edge computing and cloud platforms to create complete connected systems.",
+    details: [
+      "Sensor Networks",
+      "Industrial IoT",
+      "Edge Computing",
+      "Device Communication",
+      "Remote Device Management",
+      "Real-Time Monitoring",
+    ],
+    technologies: "MQTT · CoAP · ESP32 · Cloud Platforms",
   },
   {
     id: "design",
+    number: "06",
     title: "Product Design",
-    description: "User experience design, interface design and design systems for digital products.",
-    details: ["UX Research", "UI Design", "Design Systems", "Prototyping", "User Testing"],
+    description:
+      "We shape digital experiences through research-led design, clear interfaces and thoughtful interaction systems.",
+    details: [
+      "User Experience Research",
+      "Interface Design",
+      "Interaction Design",
+      "Design Systems",
+      "Rapid Prototyping",
+      "Usability Testing",
+    ],
+    technologies: "Figma · Prototyping · Design Systems",
   },
 ];
 
 export const EngineeringSection = () => {
   const [expandedId, setExpandedId] = useState<string | null>(null);
+  const prefersReducedMotion = useReducedMotion();
 
   return (
-    <section className="py-32 md:py-40 bg-[#050505]" aria-label="Engineering Capabilities">
-      <div className="max-w-7xl mx-auto px-6 lg:px-8">
-        {/* Header */}
+    <section
+      id="engineering"
+      aria-label="Engineering capabilities"
+      className="relative overflow-hidden bg-white py-28 text-black md:py-36 lg:py-44"
+    >
+      <div className="mx-auto max-w-[1440px] px-6 sm:px-10 lg:px-16 xl:px-24">
+
+        {/* Section introduction */}
+        <div className="mb-20 grid gap-10 lg:mb-28 lg:grid-cols-[1.15fr_.85fr] lg:items-end">
+          <motion.div
+            initial={prefersReducedMotion ? false : { opacity: 0, y: 25 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, amount: 0.3 }}
+            transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
+          >
+            <div className="mb-8 flex items-center gap-3">
+              <span className="h-px w-8 bg-black" />
+              <span className="text-[10px] font-medium uppercase tracking-[.25em] text-black/45">
+                What we engineer
+              </span>
+            </div>
+
+            <h2 className="max-w-[850px] text-[clamp(3rem,6.5vw,6.5rem)] font-medium leading-[.94] tracking-[-.07em]">
+              Deep expertise.
+              <br />
+              <span className="text-black/35">
+                Connected thinking.
+              </span>
+            </h2>
+          </motion.div>
+
+          <motion.div
+            initial={prefersReducedMotion ? false : { opacity: 0, y: 25 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, amount: 0.3 }}
+            transition={{
+              duration: 0.8,
+              delay: 0.12,
+              ease: [0.22, 1, 0.36, 1],
+            }}
+            className="max-w-[430px] lg:justify-self-end lg:pb-2"
+          >
+            <p className="text-base leading-[1.9] text-black/55 md:text-lg">
+              Technology rarely exists in isolation. We bring software,
+              intelligence, infrastructure and hardware together to engineer
+              complete solutions.
+            </p>
+          </motion.div>
+        </div>
+
+        {/* Capabilities list */}
+        <div className="border-t border-black/20">
+          {domains.map((domain, index) => {
+            const isExpanded = expandedId === domain.id;
+
+            return (
+              <motion.article
+                key={domain.id}
+                initial={prefersReducedMotion ? false : { opacity: 0, y: 18 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, amount: 0.15 }}
+                transition={{
+                  duration: 0.65,
+                  delay: prefersReducedMotion ? 0 : index * 0.045,
+                  ease: [0.22, 1, 0.36, 1],
+                }}
+                className="border-b border-black/15"
+              >
+                <button
+                  type="button"
+                  aria-expanded={isExpanded}
+                  aria-controls={`engineering-panel-${domain.id}`}
+                  onClick={() =>
+                    setExpandedId(isExpanded ? null : domain.id)
+                  }
+                  className="group grid w-full grid-cols-[42px_1fr_30px] items-center gap-4 py-7 text-left sm:grid-cols-[65px_1fr_40px] sm:py-9 lg:grid-cols-[90px_1fr_50px] lg:py-10"
+                >
+                  <span className="self-start pt-2 text-[11px] font-medium tracking-[.12em] text-black/35">
+                    {domain.number}
+                  </span>
+
+                  <span className="block">
+                    <span className="block text-[clamp(1.65rem,3.5vw,3.5rem)] font-medium leading-[1.1] tracking-[-.055em] text-black transition-colors duration-300 group-hover:text-black/55">
+                      {domain.title}
+                    </span>
+
+                    <span className="mt-2 block text-xs text-black/40 sm:text-sm">
+                      {domain.details.length} engineering disciplines
+                    </span>
+                  </span>
+
+                  <span className="flex h-9 w-9 items-center justify-center rounded-full border border-black/15 transition-all duration-300 group-hover:border-black group-hover:bg-black group-hover:text-white sm:h-11 sm:w-11">
+                    <motion.span
+                      animate={{ rotate: isExpanded ? 45 : 0 }}
+                      transition={{ duration: 0.25 }}
+                      className="flex items-center justify-center"
+                    >
+                      <Plus size={19} strokeWidth={1.4} />
+                    </motion.span>
+                  </span>
+                </button>
+
+                <AnimatePresence initial={false}>
+                  {isExpanded && (
+                    <motion.div
+                      id={`engineering-panel-${domain.id}`}
+                      initial={{ height: 0, opacity: 0 }}
+                      animate={{ height: "auto", opacity: 1 }}
+                      exit={{ height: 0, opacity: 0 }}
+                      transition={{
+                        duration: prefersReducedMotion ? 0 : 0.4,
+                        ease: [0.22, 1, 0.36, 1],
+                      }}
+                      className="overflow-hidden"
+                    >
+                      <div className="grid gap-8 pb-9 pl-[58px] sm:grid-cols-[1fr_1fr] sm:pb-12 sm:pl-[81px] lg:grid-cols-[1fr_1fr] lg:gap-20 lg:pb-14 lg:pl-[114px]">
+                        <div>
+                          <p className="max-w-[550px] text-sm leading-[1.9] text-black/60 sm:text-base">
+                            {domain.description}
+                          </p>
+
+                          <p className="mt-7 text-[10px] font-medium uppercase tracking-[.18em] text-black/40">
+                            Technologies & tools
+                          </p>
+
+                          <p className="mt-3 text-xs leading-7 text-black/65 sm:text-sm">
+                            {domain.technologies}
+                          </p>
+                        </div>
+
+                        <div>
+                          <p className="mb-5 text-[10px] font-medium uppercase tracking-[.18em] text-black/40">
+                            Areas of engineering
+                          </p>
+
+                          <div className="grid grid-cols-1 gap-x-6 sm:grid-cols-2">
+                            {domain.details.map((detail, detailIndex) => (
+                              <div
+                                key={detail}
+                                className="flex items-center gap-3 border-b border-black/[0.08] py-3"
+                              >
+                                <span className="text-[10px] text-black/30">
+                                  {String(detailIndex + 1).padStart(2, "0")}
+                                </span>
+
+                                <span className="text-xs text-black/70 sm:text-sm">
+                                  {detail}
+                                </span>
+                              </div>
+                            ))}
+                          </div>
+                        </div>
+                      </div>
+                    </motion.div>
+                  )}
+                </AnimatePresence>
+              </motion.article>
+            );
+          })}
+        </div>
+
+        {/* Section footer */}
         <motion.div
-          initial={{ opacity: 0, y: 20 }}
+          initial={prefersReducedMotion ? false : { opacity: 0, y: 15 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          className="mb-16"
+          transition={{ duration: 0.7 }}
+          className="mt-10 flex flex-col justify-between gap-5 sm:flex-row sm:items-center"
         >
-          <span className="text-xs font-medium text-gray-500 uppercase tracking-[0.2em] mb-4 block">
-            Engineering
-          </span>
-          <h2
-            className="text-4xl md:text-5xl lg:text-6xl font-bold text-white leading-tight"
-            style={{ fontFamily: "var(--font-display)" }}
-          >
-            Deep expertise.
-            <br />
-            Full-stack delivery.
-          </h2>
-        </motion.div>
+          <p className="max-w-md text-xs leading-6 text-black/45">
+            Different disciplines. One engineering mindset. Built around
+            the problem, not the technology trend.
+          </p>
 
-        {/* Accordion */}
-        <div className="border-t border-white/10">
-          {domains.map((domain, i) => (
-            <motion.div
-              key={domain.id}
-              initial={{ opacity: 0, y: 10 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ delay: i * 0.05 }}
-              className="border-b border-white/10"
-            >
-              <button
-                onClick={() => setExpandedId(expandedId === domain.id ? null : domain.id)}
-                className="w-full flex items-center justify-between py-6 md:py-8 text-left group"
-              >
-                <h3
-                  className="text-2xl md:text-3xl font-bold text-white group-hover:text-primary transition-colors duration-300"
-                  style={{ fontFamily: "var(--font-display)" }}
-                >
-                  {domain.title}
-                </h3>
-                <ChevronDown
-                  className={`w-5 h-5 text-gray-500 transition-transform duration-300 ${
-                    expandedId === domain.id ? "rotate-180" : ""
-                  }`}
-                />
-              </button>
-              <AnimatePresence>
-                {expandedId === domain.id && (
-                  <motion.div
-                    initial={{ height: 0, opacity: 0 }}
-                    animate={{ height: "auto", opacity: 1 }}
-                    exit={{ height: 0, opacity: 0 }}
-                    transition={{ duration: 0.3 }}
-                    className="overflow-hidden"
-                  >
-                    <div className="pb-8 md:pb-10">
-                      <p className="text-gray-400 text-sm md:text-base max-w-2xl mb-6 leading-relaxed">
-                        {domain.description}
-                      </p>
-                      <div className="flex flex-wrap gap-2">
-                        {domain.details.map((detail) => (
-                          <span
-                            key={detail}
-                            className="px-3 py-1.5 text-xs text-gray-400 bg-white/5 rounded-full border border-white/5"
-                          >
-                            {detail}
-                          </span>
-                        ))}
-                      </div>
-                    </div>
-                  </motion.div>
-                )}
-              </AnimatePresence>
-            </motion.div>
-          ))}
-        </div>
+          <a
+            href="/#work"
+            className="group inline-flex items-center gap-3 text-xs font-medium text-black transition-colors hover:text-black/50"
+          >
+            Explore selected work
+
+            <ArrowUpRight
+              size={16}
+              className="transition-transform duration-300 group-hover:-translate-y-1 group-hover:translate-x-1"
+            />
+          </a>
+        </motion.div>
       </div>
     </section>
   );

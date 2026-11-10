@@ -1,115 +1,209 @@
+
 "use client";
 
-import { Button } from "@/components/ui/button";
-import { ArrowRight } from "lucide-react";
-import { motion } from "framer-motion";
+import Image from "next/image";
+import { motion, useReducedMotion } from "framer-motion";
+import { ArrowUpRight } from "lucide-react";
 import { GOOGLE_FORM_URL } from "@/lib/config";
-import { FlipWords } from "@/components/ui/flip-words";
 
-export const HeroSection = () => {
+export default function HeroSection() {
+  const prefersReducedMotion = useReducedMotion();
+
+  const ease = [0.22, 1, 0.36, 1] as const;
+
+  const reveal = {
+    initial: prefersReducedMotion
+      ? false
+      : { opacity: 0, y: 22 },
+    animate: { opacity: 1, y: 0 },
+    transition: {
+      duration: prefersReducedMotion ? 0 : 0.8,
+      ease,
+    },
+  };
+
   return (
-    <section className="relative w-full min-h-screen flex items-center overflow-hidden bg-background" aria-label="Hero">
-      {/* Dark background */}
-      <div className="absolute inset-0 z-0 bg-[#050505]" />
-      
-      <div className="relative z-10 max-w-7xl mx-auto px-6 lg:px-8 py-32 md:py-40 w-full flex flex-col justify-center">
-        <div className="max-w-4xl lg:max-w-3xl xl:max-w-4xl">
-          {/* Headline */}
-          <motion.h1
-            initial={{ opacity: 0, y: 24 }}
+    <section
+      className="relative overflow-hidden bg-[#faf9f6] text-[#171717]"
+      aria-labelledby="hero-heading"
+    >
+      <div className="mx-auto max-w-[1600px] px-6 pb-8 pt-32 sm:px-10 sm:pt-36 lg:px-16 lg:pt-40 xl:px-24">
+
+        {/* Intro */}
+        <div className="grid grid-cols-1 items-end gap-12 lg:grid-cols-12 lg:gap-8">
+
+          {/* Main headline */}
+          <div className="lg:col-span-8">
+            <motion.div
+              {...reveal}
+              className="mb-9 flex items-center gap-3"
+            >
+              <span className="h-px w-7 bg-black/70" />
+
+              <span className="text-[10px] font-medium uppercase tracking-[0.22em] text-black/50">
+                ECOCEE
+                <span className="mx-2 text-black/20">/</span>
+                Engineering & Technology
+              </span>
+            </motion.div>
+
+            <motion.h1
+              id="hero-heading"
+              initial={
+                prefersReducedMotion
+                  ? false
+                  : { opacity: 0, y: 28 }
+              }
+              animate={{ opacity: 1, y: 0 }}
+              transition={{
+                duration: prefersReducedMotion ? 0 : 1,
+                delay: 0.08,
+                ease,
+              }}
+              className="max-w-[1050px] text-[clamp(3.8rem,8.8vw,9.2rem)] font-medium leading-[0.91] tracking-[-0.078em]"
+              style={{ fontFamily: "var(--font-display)" }}
+            >
+              Engineering
+              <br />
+
+              <span className="text-black/35">
+                the next
+              </span>
+
+              <br />
+
+              reality.
+            </motion.h1>
+          </div>
+
+          {/* Supporting content */}
+          <motion.div
+            initial={
+              prefersReducedMotion
+                ? false
+                : { opacity: 0, y: 20 }
+            }
             animate={{ opacity: 1, y: 0 }}
             transition={{
-              duration: 0.9,
-              ease: [0.16, 1, 0.3, 1],
+              duration: prefersReducedMotion ? 0 : 0.8,
+              delay: 0.22,
+              ease,
             }}
-            className="
-              mb-8
-              text-[3rem]
-              leading-[1.05]
-              tracking-[-0.04em]
-              font-bold
-              text-white
-              sm:text-6xl
-              sm:leading-[1]
-              md:text-7xl
-              lg:text-[6rem]
-              xl:text-[7rem]
-            "
+            className="max-w-[390px] pb-2 lg:col-span-4 lg:justify-self-end"
           >
-            Technology
-            <br />
-            <motion.span
-              initial={{ opacity: 0, y: 18 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{
-                delay: 0.12,
-                duration: 0.8,
-                ease: [0.16, 1, 0.3, 1],
-              }}
-              className="inline-block text-white"
-            >
-              That Moves
-            </motion.span>
-            <br />
-            <motion.span
-              initial={{ opacity: 0, y: 18 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{
-                delay: 0.24,
-                duration: 0.8,
-                ease: [0.16, 1, 0.3, 1],
-              }}
-              className="inline-block text-white"
-            >
-              <FlipWords words={["Ideas", "Products", "Startups", "Visions"]} className="text-white dark:text-white px-0" /> Forward.
-            </motion.span>
-          </motion.h1>
+            <p className="text-[15px] leading-[1.9] text-black/60 sm:text-base">
+              We build intelligent software, connected hardware
+              and engineered systems that turn ambitious ideas
+              into real-world solutions.
+            </p>
 
-          {/* Subheadline */}
-          <motion.p
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.3 }}
-            className="text-lg md:text-xl text-gray-400 max-w-2xl leading-relaxed mb-12 font-light"
-          >
-            AI, software and product engineering for ideas that need to become real.
-          </motion.p>
+            <div className="mt-8 flex flex-wrap items-center gap-x-7 gap-y-4">
+              <a
+                href="#work"
+                className="group inline-flex items-center gap-3 border-b border-black pb-2.5 text-sm font-medium text-black transition-colors hover:border-black/40 hover:text-black/60"
+              >
+                Explore our work
 
-          {/* CTAs */}
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.4 }}
-            className="flex flex-wrap gap-4 items-center"
+                <ArrowUpRight
+                  aria-hidden="true"
+                  className="h-4 w-4 transition-transform duration-300 group-hover:translate-x-1 group-hover:-translate-y-1"
+                />
+              </a>
+
+              <a
+                href={GOOGLE_FORM_URL}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="group inline-flex items-center gap-2 text-sm text-black/50 transition-colors hover:text-black"
+              >
+                Start a project
+
+                <ArrowUpRight
+                  aria-hidden="true"
+                  className="h-3.5 w-3.5 transition-transform duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5"
+                />
+              </a>
+            </div>
+          </motion.div>hero
+        </div>
+
+        {/* Video canvas */}
+        <motion.div
+          initial={
+            prefersReducedMotion
+              ? false
+              : { opacity: 0, y: 24 }
+          }
+          animate={{ opacity: 1, y: 0 }}
+          transition={{
+            duration: prefersReducedMotion ? 0 : 1,
+            delay: 0.32,
+            ease,
+          }}
+          className="mt-16 sm:mt-20 lg:mt-24"
+        >
+          <div className="relative aspect-video w-full overflow-hidden bg-[#f1eee7]">
+
+            {prefersReducedMotion ? (
+              <Image
+                src="/poster.png"
+                alt="Abstract visual representing Ecocee's engineering work"
+                fill
+                priority
+                sizes="(max-width: 768px) 100vw, 90vw"
+                className="object-cover"
+              />
+            ) : (
+              <video
+                className="absolute inset-0 h-full w-full object-cover"
+                autoPlay
+                muted
+                loop
+                playsInline
+                preload="metadata"
+                poster="/poster.png"
+                aria-hidden="true"
+                tabIndex={-1}
+              >
+                <source
+                  src="/video.mp4"
+                  type="video/mp4"
+                />
+              </video>
+            )}
+          </div>
+
+          {/* Video caption */}
+          <div className="flex flex-col justify-between gap-4 border-b border-black/15 py-5 sm:flex-row sm:items-center">
+            <p className="text-xs font-medium text-black/65">
+              Ideas, engineered into reality.
+            </p>
+
+            <p className="text-[10px] uppercase tracking-[0.17em] text-black/40">
+              Intelligence · Software · Hardware
+            </p>
+          </div>
+        </motion.div>
+
+        {/* Bottom information */}
+        <div className="mt-7 flex flex-col justify-between gap-3 sm:flex-row sm:items-center">
+          <p className="text-[10px] uppercase tracking-[0.17em] text-black/40">
+            Built in Kerala. Engineering for the world.
+          </p>
+
+          <a
+            href="#work"
+            className="group inline-flex items-center gap-2 text-[10px] uppercase tracking-[0.17em] text-black/45 transition-colors hover:text-black"
           >
-            <Button
-              size="lg"
-              onClick={() => document.getElementById("work")?.scrollIntoView({ behavior: "smooth" })}
-              className="h-14 px-8 bg-white text-black hover:bg-gray-200 font-semibold text-base transition-all duration-200 group rounded-none"
-            >
-              Explore our work
-              <ArrowRight className="w-5 h-5 ml-2 group-hover:translate-x-1 transition-transform" />
-            </Button>
-            <Button
-              variant="outline"
-              size="lg"
-              onClick={() => window.open(GOOGLE_FORM_URL, "_blank")}
-              className="h-14 px-8 border-white/20 text-white hover:bg-white/10 font-semibold text-base transition-all duration-200 rounded-none"
-            >
-              Start a project
-              <ArrowRight className="w-5 h-5 ml-2 group-hover:translate-x-1 transition-transform" />
-            </Button>
-          </motion.div>
+            Discover Ecocee
+
+            <ArrowUpRight
+              aria-hidden="true"
+              className="h-3.5 w-3.5 transition-transform duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5"
+            />
+          </a>
         </div>
       </div>
-
-      {/* Decorative vertical line */}
-      <motion.div
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ delay: 0.8 }}
-        className="hidden lg:block absolute right-24 top-0 bottom-0 w-px bg-white/5"
-      />
     </section>
   );
-};
+}

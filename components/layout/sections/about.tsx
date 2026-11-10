@@ -1,64 +1,100 @@
+
 "use client";
 
-import { motion } from "framer-motion";
+import { motion, useReducedMotion } from "framer-motion";
 import Link from "next/link";
-import { ArrowRight } from "lucide-react";
+import { ArrowUpRight } from "lucide-react";
+
+const facts = [
+  { label: "Founded", value: "2023" },
+  { label: "Based in", value: "Kerala, India" },
+  { label: "Focus", value: "AI, Software & Hardware" },
+  { label: "Approach", value: "Research to production" },
+];
 
 export const AboutSection = () => {
+  const prefersReducedMotion = useReducedMotion();
+
   return (
-    <section className="py-32 md:py-40 bg-[#050505]" aria-label="About Ecocee">
-      <div className="max-w-7xl mx-auto px-6 lg:px-8">
-        <div className="grid lg:grid-cols-2 gap-16 items-center">
+    <section
+      id="about-ecocee"
+      className="bg-white py-24 text-black md:py-32 lg:py-40"
+      aria-labelledby="about-heading"
+    >
+      <div className="mx-auto max-w-[1440px] px-6 lg:px-12">
+        <div className="grid grid-cols-1 gap-16 lg:grid-cols-12 lg:gap-12">
+          {/* Main introduction */}
           <motion.div
-            initial={{ opacity: 0, y: 20 }}
+            initial={prefersReducedMotion ? false : { opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
+            viewport={{ once: true, amount: 0.3 }}
+            transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
+            className="lg:col-span-7"
           >
-            <span className="text-xs font-medium text-gray-500 uppercase tracking-[0.2em] mb-4 block">
-              About
-            </span>
+            <p className="mb-8 text-[11px] font-medium uppercase tracking-[0.2em] text-black/45">
+              About Ecocee
+            </p>
+
             <h2
-              className="text-4xl md:text-5xl lg:text-6xl font-bold text-white leading-tight mb-8"
+              id="about-heading"
+              className="mb-9 text-[clamp(3.2rem,7vw,6.8rem)] font-medium leading-[0.93] tracking-[-0.07em]"
               style={{ fontFamily: "var(--font-display)" }}
             >
               Built in Kerala.
               <br />
-              Engineering for the world.
+              <span className="text-black/30">
+                Engineering for the world.
+              </span>
             </h2>
-            <p className="text-lg text-gray-400 leading-relaxed mb-8 max-w-lg">
-              Ecocee is a technology company building intelligent products across AI, software and connected systems. We take ideas from concept to production.
+
+            <p className="mb-9 max-w-xl text-base leading-8 text-black/55 md:text-lg">
+              Ecocee is an engineering and technology company building
+              intelligent products across AI, software and connected systems.
+              We bring ideas from concept to production through research,
+              design and engineering.
             </p>
+
             <Link
               href="/about"
-              className="inline-flex items-center gap-2 text-white font-medium hover:text-primary transition-colors group"
+              className="group inline-flex items-center gap-3 border-b border-black/25 pb-2 text-sm font-medium text-black transition-colors hover:border-black"
             >
-              More about Ecocee
-              <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+              Discover Ecocee
+              <ArrowUpRight className="h-4 w-4 transition-transform duration-300 group-hover:translate-x-1 group-hover:-translate-y-1" />
             </Link>
           </motion.div>
 
+          {/* Company information */}
           <motion.div
-            initial={{ opacity: 0, y: 20 }}
+            initial={prefersReducedMotion ? false : { opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ delay: 0.1 }}
-            className="grid grid-cols-2 gap-4"
+            viewport={{ once: true, amount: 0.3 }}
+            transition={{
+              duration: 0.7,
+              delay: 0.12,
+              ease: [0.22, 1, 0.36, 1],
+            }}
+            className="flex flex-col justify-end lg:col-span-4 lg:col-start-9"
           >
-            {[
-              { label: "Founded", value: "2023" },
-              { label: "Location", value: "Kerala, India" },
-              { label: "Focus", value: "AI + Hardware" },
-              { label: "Approach", value: "Full-Stack" },
-            ].map((item) => (
-              <div key={item.label} className="bg-white/[0.02] border border-white/5 p-6 rounded-xl">
-                <span className="text-xs text-gray-500 uppercase tracking-wider block mb-2">
-                  {item.label}
-                </span>
-                <span className="text-lg font-semibold text-white">
-                  {item.value}
-                </span>
-              </div>
-            ))}
+            <p className="mb-6 text-[11px] font-medium uppercase tracking-[0.18em] text-black/40">
+              Company profile
+            </p>
+
+            <dl>
+              {facts.map((fact) => (
+                <div
+                  key={fact.label}
+                  className="grid grid-cols-2 gap-4 border-t border-black/15 py-5"
+                >
+                  <dt className="text-sm text-black/45">
+                    {fact.label}
+                  </dt>
+
+                  <dd className="text-right text-sm font-medium text-black">
+                    {fact.value}
+                  </dd>
+                </div>
+              ))}
+            </dl>
           </motion.div>
         </div>
       </div>

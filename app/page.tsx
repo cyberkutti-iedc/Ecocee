@@ -1,5 +1,7 @@
+
 import type { Metadata } from "next";
-import { HeroSection } from "@/components/layout/sections/hero";
+
+import  HeroSection  from "@/components/layout/sections/hero";
 import { MeroFeatureSection } from "@/components/layout/sections/mero-feature";
 import { DotpaperFeatureSection } from "@/components/layout/sections/dotpaper-feature";
 import { CapabilitiesSection } from "@/components/layout/sections/capabilities";
@@ -14,8 +16,10 @@ import { AboutSection } from "@/components/layout/sections/about";
 import { ClientsSection } from "@/components/layout/sections/clients";
 import { CTASection } from "@/components/layout/sections/cta";
 import { FooterSection } from "@/components/layout/sections/footer";
+
 import { AnimatedSection } from "@/components/ui/animated-section";
 import Seo from "@/components/seo/Seo";
+
 import {
   organizationSchema,
   localBusinessSchema,
@@ -23,9 +27,7 @@ import {
   serviceSchema,
   aiAgentSchemas,
   speakableSchema,
-  faqSchema,
 } from "@/lib/seo/schemas";
-import { FAQList } from "@/components/layout/sections/faq";
 
 export const metadata: Metadata = {
   title: "Ecocee — Technology That Moves Ideas Forward",
@@ -44,23 +46,37 @@ export const metadata: Metadata = {
   },
   openGraph: {
     title: "Ecocee — Technology That Moves Ideas Forward",
-    description: "AI, software and product engineering for ideas that need to become real.",
+    description:
+      "AI, software and product engineering for ideas that need to become real.",
     url: "https://ecocee.in",
     siteName: "Ecocee",
-    images: [{ url: "https://ecocee.in/og-banner.webp", width: 1200, height: 630, alt: "Ecocee" }],
+    images: [
+      {
+        url: "https://ecocee.in/og-banner.webp",
+        width: 1200,
+        height: 630,
+        alt: "Ecocee",
+      },
+    ],
     locale: "en_IN",
     type: "website",
   },
   twitter: {
     card: "summary_large_image",
     title: "Ecocee — Technology That Moves Ideas Forward",
-    description: "AI, software and product engineering for ideas that need to become real.",
+    description:
+      "AI, software and product engineering for ideas that need to become real.",
     images: ["https://ecocee.in/og-banner.webp"],
   },
   robots: {
     index: true,
     follow: true,
-    googleBot: { index: true, follow: true, "max-snippet": -1, "max-image-preview": "large" },
+    googleBot: {
+      index: true,
+      follow: true,
+      "max-snippet": -1,
+      "max-image-preview": "large",
+    },
   },
 };
 
@@ -85,64 +101,70 @@ export default function Home() {
         siteName="Ecocee"
         structuredData={structuredData}
       />
-      <main className="bg-background min-h-screen">
-        {/* 01 — Hero */}
-        <section aria-label="Hero">
-          <HeroSection />
-        </section>
 
-        {/* 01.5 — Mero Feature */}
-        <div id="products">
+      <main className="min-h-screen bg-[#f7f8f4] text-[#17251b]">
+        {/* 01 — Editorial hero */}
+        <HeroSection />
+
+        {/* 02 — Products */}
+        {/* <section id="products">
           <MeroFeatureSection />
           <DotpaperFeatureSection />
-        </div>
+        </section> */}
 
-        {/* 02 — Capabilities */}
-        <AnimatedSection variant="fade-up" delay={0.1}>
+        {/* 03 — Capabilities */}
+        <AnimatedSection variant="fade-up">
           <CapabilitiesSection />
         </AnimatedSection>
 
-        {/* 03 — Clients */}
-        <AnimatedSection variant="fade-up" delay={0.1}>
+        {/* 04 — Selected work */}
+        {/* <div id="work">
+          <AnimatedSection variant="fade-up">
+            <WorkSection />
+          </AnimatedSection>
+        </div> */}
+
+        {/* 05 — Trusted by */}
+        <AnimatedSection variant="fade-up">
           <ClientsSection />
         </AnimatedSection>
 
-        {/* 04 — From Idea to Reality */}
-        <AnimatedSection variant="fade-up" delay={0.05}>
-          <ProcessSection />
-        </AnimatedSection>
-
-        {/* 05 — Why Ecocee */}
-        <AnimatedSection variant="fade-up" delay={0.1}>
-          <PositioningSection />
-        </AnimatedSection>
-
-        {/* 06 — Why Now */}
-        <AnimatedSection variant="fade-up" delay={0.1}>
-          <WhyNowSection />
-        </AnimatedSection>
-
-        {/* 07 — Engineering Capabilities */}
-        <AnimatedSection variant="fade-up" delay={0.1}>
+        {/* 06 — Engineering approach */}
+        <AnimatedSection variant="fade-up">
           <EngineeringSection />
         </AnimatedSection>
 
-        {/* 08 — Ecocee Labs */}
-        <AnimatedSection variant="fade-up" delay={0.1}>
+        {/* 07 — How we work */}
+        <AnimatedSection variant="fade-up">
+          <ProcessSection />
+        </AnimatedSection>
+
+        {/* 08 — Why Ecocee */}
+        <AnimatedSection variant="fade-up">
+          <PositioningSection />
+        </AnimatedSection>
+
+        {/* 09 — Technology perspective */}
+        <AnimatedSection variant="fade-up">
+          <WhyNowSection />
+        </AnimatedSection>
+
+        {/* 10 — Research and experiments */}
+        <AnimatedSection variant="fade-up">
           <LabsSection />
         </AnimatedSection>
 
-        {/* 09 — Technology Stack */}
-        <AnimatedSection variant="fade-up" delay={0.1}>
+        {/* 11 — Technology stack */}
+        <AnimatedSection variant="fade-up">
           <StackSection />
         </AnimatedSection>
 
-        {/* 10 — About */}
-        <AnimatedSection variant="fade-up" delay={0.1}>
+        {/* 12 — About */}
+        <AnimatedSection variant="fade-up">
           <AboutSection />
         </AnimatedSection>
 
-        {/* 11 — Final CTA */}
+        {/* 13 — Contact */}
         <CTASection />
       </main>
 

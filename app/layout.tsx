@@ -1,4 +1,5 @@
-import React from 'react';
+
+import React from "react";
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
@@ -8,18 +9,18 @@ import { Toaster } from "react-hot-toast";
 import { NavbarWrapper } from "@/components/layout/NavbarWrapper";
 import Script from "next/script";
 
-const inter = Inter({ 
-  subsets: ["latin"], 
-  display: "swap", 
+const inter = Inter({
+  subsets: ["latin"],
+  display: "swap",
   variable: "--font-body",
-  weight: ["300", "400", "500", "600", "700", "800", "900"]
+  weight: ["300", "400", "500", "600", "700", "800", "900"],
 });
 
 export const metadata: Metadata = {
   title: "Ecocee | Custom AI Agents & Edge Computing",
   description:
     "Custom AI agents, private AI infrastructure, and embedded systems. Built in Kerala for businesses across India.",
-  manifest: '/site.webmanifest',
+  manifest: "/site.webmanifest",
   keywords: [
     "custom AI agents",
     "private AI infrastructure",
@@ -97,78 +98,93 @@ export default function RootLayout({
   children,
 }: Readonly<{ children: React.ReactNode }>) {
   return (
-    <html lang="en-IN" className="dark" suppressHydrationWarning>
+    <html lang="en-IN" suppressHydrationWarning>
       <head>
-          <meta
-            name="viewport"
-            content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes"
-          />
-          <meta name="format-detection" content="telephone=no" />
-          <meta name="mobile-web-app-capable" content="yes" />
-          <meta name="apple-mobile-web-app-capable" content="yes" />
-          <meta name="apple-mobile-web-app-status-bar-style" content="default" />
-          <meta name="theme-color" content="#0a0f1a" />
-          <meta name="msapplication-TileColor" content="#0a0f1a" />
-          <meta name="msapplication-config" content="/browserconfig.xml" />
-          <link rel="manifest" href="/site.webmanifest" />
-          {/* llms.txt — LLM-friendly site overview for AI agents */}
-          <link rel="describedby" href="/llms.txt" />
-          <link rel="preconnect" href="https://fonts.googleapis.com" />
-          <link
-            rel="preconnect"
-            href="https://fonts.gstatic.com"
-            crossOrigin="anonymous"
-          />
-          <link
-            rel="preload"
-            href="/fonts/inter.woff2"
-            as="font"
-            type="font/woff2"
-            crossOrigin="anonymous"
-          />
-        </head>
+        <meta
+          name="viewport"
+          content="width=device-width, initial-scale=1, maximum-scale=5"
+        />
+        <meta name="format-detection" content="telephone=no" />
+        <meta name="mobile-web-app-capable" content="yes" />
+        <meta name="apple-mobile-web-app-capable" content="yes" />
+        <meta name="apple-mobile-web-app-status-bar-style" content="default" />
 
-        <body className={cn(
-            "min-h-screen w-full flex flex-col overflow-x-hidden bg-background text-foreground selection:bg-primary/30 antialiased",
-            inter.variable,
-            inter.className
-          )}
+        <meta name="theme-color" content="#f7f8f4" />
+        <meta name="msapplication-TileColor" content="#f7f8f4" />
+        <meta name="msapplication-config" content="/browserconfig.xml" />
+
+        <link rel="manifest" href="/site.webmanifest" />
+        <link rel="describedby" href="/llms.txt" />
+
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link
+          rel="preconnect"
+          href="https://fonts.gstatic.com"
+          crossOrigin="anonymous"
+        />
+
+        <link
+          rel="preload"
+          href="/fonts/inter.woff2"
+          as="font"
+          type="font/woff2"
+          crossOrigin="anonymous"
+        />
+      </head>
+
+      <body
+        className={cn(
+          "min-h-screen w-full flex flex-col overflow-x-hidden bg-background text-foreground antialiased",
+          inter.variable,
+          inter.className
+        )}
+      >
+        <Script
+          src="https://www.googletagmanager.com/gtag/js?id=G-MYLZ8LF7ZM"
+          strategy="afterInteractive"
+        />
+
+        <Script id="google-analytics" strategy="afterInteractive">
+          {`
+            window.dataLayer = window.dataLayer || [];
+            function gtag(){window.dataLayer.push(arguments);}
+            window.gtag = gtag;
+            window.gtag('js', new Date());
+            window.gtag('config', 'G-MYLZ8LF7ZM');
+          `}
+        </Script>
+
+        <ThemeProvider
+          attribute="class"
+          defaultTheme="light"
+          forcedTheme="light"
         >
-          <Script
-  src="https://www.googletagmanager.com/gtag/js?id=G-MYLZ8LF7ZM"
-  strategy="afterInteractive"
-/>
+          <React.Suspense fallback={null}>
+            <NavbarWrapper />
+          </React.Suspense>
 
-<Script id="google-analytics" strategy="afterInteractive">
-  {`
-    window.dataLayer = window.dataLayer || [];
-    function gtag(){window.dataLayer.push(arguments);}
-    window.gtag = gtag;
-    window.gtag('js', new Date());
-    window.gtag('config', 'G-MYLZ8LF7ZM');
-  `}
-</Script>
-          <ThemeProvider attribute="class" defaultTheme="dark" forcedTheme="dark">
-            {/* Navbar */}
-            <React.Suspense fallback={null}>
-              <NavbarWrapper />
-            </React.Suspense>
+          <main
+            className="flex-1 w-full overflow-x-hidden"
+            id="main-content"
+          >
+            {children}
+          </main>
 
-            {/* Main content */}
-            <main className="flex-1 w-full overflow-x-hidden" id="main-content">{children}</main>
-
-            <Toaster
-              position="top-right"
-              toastOptions={{
-                style: {
-                  fontSize: "14px",
-                  maxWidth: "85vw",
-                  wordBreak: "break-word",
-                },
-              }}
-            />
-          </ThemeProvider>
-        </body>
+          <Toaster
+            position="top-right"
+            toastOptions={{
+              style: {
+                fontSize: "14px",
+                maxWidth: "85vw",
+                wordBreak: "break-word",
+                background: "#ffffff",
+                color: "#17251b",
+                border: "1px solid #dce2d8",
+              },
+            }}
+          />
+        </ThemeProvider>
+      </body>
     </html>
   );
 }

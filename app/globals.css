@@ -1,173 +1,284 @@
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
+/* ============================================================
+   ECOCEE — EDITORIAL ENGINEERING DESIGN SYSTEM
+   Direction: Google Research inspired, original Ecocee identity
+   ============================================================ */
+
 html {
   scroll-behavior: smooth;
+  scroll-padding-top: 90px;
 }
 
-body, html {
-  overflow-x: hidden;
+html,
+body {
+  overflow-x: clip;
 }
 
-img, video, canvas, svg {
+body {
+  min-height: 100vh;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+}
+
+img,
+video,
+canvas,
+svg {
   max-width: 100%;
 }
 
+::selection {
+  color: #ffffff;
+  background: #34764a;
+}
+
 /* ============================================================
-   DESIGN SYSTEM — Sophisticated Black & White
+   DESIGN TOKENS
    ============================================================ */
 
 @layer base {
   :root {
-    --background: 220 15% 6%;
-    --foreground: 0 0% 90%;
+    /* Main surfaces */
+    --background: 80 20% 97%;
+    --foreground: 145 22% 13%;
 
-    --card: 220 12% 9%;
-    --card-foreground: 0 0% 90%;
+    --card: 0 0% 100%;
+    --card-foreground: 145 22% 13%;
 
-    --popover: 220 12% 9%;
-    --popover-foreground: 0 0% 90%;
+    --popover: 0 0% 100%;
+    --popover-foreground: 145 22% 13%;
 
-    --primary: 0 0% 90%;
-    --primary-foreground: 220 15% 6%;
+    /* Ecocee green */
+    --primary: 140 37% 34%;
+    --primary-foreground: 0 0% 100%;
 
-    --secondary: 220 10% 12%;
-    --secondary-foreground: 0 0% 70%;
+    /* Secondary surfaces */
+    --secondary: 100 12% 92%;
+    --secondary-foreground: 145 22% 20%;
 
-    --muted: 220 10% 12%;
-    --muted-foreground: 0 0% 45%;
+    --muted: 100 12% 93%;
+    --muted-foreground: 140 7% 42%;
 
-    --accent: 0 0% 90%;
-    --accent-foreground: 220 15% 6%;
+    --accent: 140 24% 91%;
+    --accent-foreground: 145 30% 22%;
 
+    /* Status */
     --destructive: 0 72% 51%;
     --destructive-foreground: 0 0% 100%;
 
-    --border: 220 10% 15%;
-    --input: 220 10% 15%;
-    --ring: 0 0% 90%;
+    /* Borders and controls */
+    --border: 100 10% 86%;
+    --input: 100 10% 86%;
+    --ring: 140 37% 34%;
 
     --radius: 0.5rem;
+
+    /* Custom Ecocee palette */
+    --eco-green: #39834c;
+    --eco-green-dark: #1e3927;
+    --eco-green-light: #e9f0e7;
+
+    --eco-background: #f7f8f4;
+    --eco-surface: #ffffff;
+    --eco-foreground: #17251b;
+    --eco-muted: #626c63;
+    --eco-border: #dce2d8;
+
+    --eco-dark: #142219;
+    --eco-dark-surface: #1d3023;
   }
 
+  /* Dark theme for intentional dark sections */
   .dark {
-    --background: 220 15% 6%;
-    --foreground: 0 0% 90%;
+    --background: 145 22% 8%;
+    --foreground: 80 20% 95%;
 
-    --card: 220 12% 9%;
-    --card-foreground: 0 0% 90%;
+    --card: 145 18% 11%;
+    --card-foreground: 80 20% 95%;
 
-    --popover: 220 12% 9%;
-    --popover-foreground: 0 0% 90%;
+    --popover: 145 18% 11%;
+    --popover-foreground: 80 20% 95%;
 
-    --primary: 0 0% 90%;
-    --primary-foreground: 220 15% 6%;
+    --primary: 140 37% 55%;
+    --primary-foreground: 145 22% 8%;
 
-    --secondary: 220 10% 12%;
-    --secondary-foreground: 0 0% 70%;
+    --secondary: 145 14% 16%;
+    --secondary-foreground: 80 15% 85%;
 
-    --muted: 220 10% 12%;
-    --muted-foreground: 0 0% 45%;
+    --muted: 145 14% 16%;
+    --muted-foreground: 120 7% 62%;
 
-    --accent: 0 0% 90%;
-    --accent-foreground: 220 15% 6%;
+    --accent: 145 14% 19%;
+    --accent-foreground: 80 20% 95%;
 
-    --destructive: 0 72% 51%;
+    --destructive: 0 62% 40%;
     --destructive-foreground: 0 0% 100%;
 
-    --border: 220 10% 15%;
-    --input: 220 10% 15%;
-    --ring: 0 0% 90%;
+    --border: 145 12% 21%;
+    --input: 145 12% 21%;
+    --ring: 140 37% 55%;
   }
-}
 
-@layer base {
   * {
     @apply border-border;
   }
+
   body {
     @apply bg-background text-foreground;
   }
-}
 
-:focus-visible {
-  outline: 2px solid hsl(var(--ring));
-  outline-offset: 2px;
-  border-radius: var(--radius);
+  button,
+  a {
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  button {
+    cursor: pointer;
+  }
 }
 
 /* ============================================================
-   MICRO ANIMATIONS
+   EDITORIAL TYPOGRAPHY
+   ============================================================ */
+
+@layer components {
+  .eco-container {
+    @apply mx-auto w-full max-w-[1440px] px-6 sm:px-10 lg:px-16 xl:px-24;
+  }
+
+  .eco-section {
+    @apply py-24 sm:py-28 lg:py-36;
+  }
+
+  .eco-eyebrow {
+    @apply text-xs font-semibold uppercase tracking-[0.18em] text-[#63806a];
+  }
+
+  .eco-heading {
+    @apply font-semibold leading-[1.02] tracking-[-0.055em] text-[#17251b];
+  }
+
+  .eco-description {
+    @apply text-base leading-[1.85] text-[#626c63] sm:text-lg;
+  }
+
+  .eco-divider {
+    @apply border-t border-[#dce2d8];
+  }
+
+  .eco-link {
+    @apply inline-flex items-center gap-2 font-medium text-[#285d38] transition-colors duration-200 hover:text-[#39834c];
+  }
+
+  .eco-card {
+    @apply border border-[#e1e6df] bg-white transition-colors duration-300 hover:border-[#b7cbb9];
+  }
+}
+
+/* ============================================================
+   INTERACTION ANIMATIONS
    ============================================================ */
 
 .hover-lift {
-  transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.3s ease;
+  transition:
+    transform 0.3s cubic-bezier(0.2, 0.7, 0.3, 1),
+    border-color 0.3s ease;
 }
+
 .hover-lift:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 8px 30px rgba(255, 255, 255, 0.08);
+  transform: translateY(-3px);
 }
 
 .hover-scale {
-  transition: transform 0.2s ease;
+  transition: transform 0.25s ease;
 }
+
 .hover-scale:hover {
-  transform: scale(1.02);
+  transform: scale(1.015);
 }
 
+/* Editorial border interaction */
 .border-glow {
-  transition: border-color 0.3s ease, box-shadow 0.3s ease;
-}
-.border-glow:hover {
-  border-color: rgba(255, 255, 255, 0.15);
-  box-shadow: 0 0 30px rgba(255, 255, 255, 0.04);
+  transition: border-color 0.3s ease;
 }
 
+.border-glow:hover {
+  border-color: rgba(57, 131, 76, 0.4);
+}
+
+/* Underline animation */
 .underline-smooth {
   position: relative;
+  text-decoration: none;
 }
+
 .underline-smooth::after {
-  content: '';
+  content: "";
   position: absolute;
-  bottom: -2px;
+  bottom: -3px;
   left: 0;
   width: 0;
   height: 1px;
-  background: rgba(255, 255, 255, 0.8);
+  background: var(--eco-green);
   transition: width 0.3s ease;
 }
+
 .underline-smooth:hover::after {
   width: 100%;
 }
 
+/* ============================================================
+   MOTION
+   ============================================================ */
+
 @keyframes dotPulse {
-  0%, 100% { transform: scale(1); opacity: 1; }
-  50% { transform: scale(1.5); opacity: 0.5; }
+  0%, 100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+
+  50% {
+    transform: scale(1.4);
+    opacity: 0.45;
+  }
 }
 
 .dot-pulse {
-  animation: dotPulse 2s ease-in-out infinite;
+  animation: dotPulse 2.5s ease-in-out infinite;
 }
 
 @keyframes fadeInUp {
-  from { opacity: 0; transform: translateY(20px); }
-  to { opacity: 1; transform: translateY(0); }
+  from {
+    opacity: 0;
+    transform: translateY(18px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 .animate-fade-in-up {
-  animation: fadeInUp 0.6s ease-out forwards;
+  animation: fadeInUp 0.7s cubic-bezier(0.2, 0.7, 0.3, 1) forwards;
 }
 
 /* ============================================================
-   MERO SPECIFIC UTILITIES
+   MERO — PRODUCT IDENTITY
+   Keep its own visual identity inside the Ecocee website.
    ============================================================ */
+
 .mero-bg {
-  background-color: #050a14; /* Deep dark blue */
+  background-color: #050a14;
 }
 
 .mero-accent {
-  color: #3b82f6; /* Blue accent */
+  color: #3b82f6;
 }
 
 .mero-accent-bg {
@@ -177,6 +288,26 @@ img, video, canvas, svg {
 .text-mero-gradient {
   background: linear-gradient(to right, #3b82f6, #60a5fa);
   -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
   background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+/* ============================================================
+   ACCESSIBILITY
+   ============================================================ */
+
+:focus-visible {
+  outline: 2px solid var(--eco-green);
+  outline-offset: 4px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    scroll-behavior: auto !important;
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
 }
