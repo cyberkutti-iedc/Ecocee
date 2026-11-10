@@ -124,7 +124,7 @@ export default function HeroSection() {
                 />
               </a>
             </div>
-          </motion.div>hero
+          </motion.div>
         </div>
 
         {/* Video canvas */}
