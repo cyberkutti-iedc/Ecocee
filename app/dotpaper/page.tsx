@@ -1,10 +1,8 @@
 "use client";
-
-import { useState } from "react";
+import { Suspense, useEffect, useState } from "react";
 import {
   AnimatePresence,
   motion,
-  useReducedMotion,
 } from "framer-motion";
 import {
   ArrowDown,
@@ -30,7 +28,6 @@ import {
   X,
   Zap,
 } from "lucide-react";
-import type { LucideIcon } from "lucide-react";
 
 import { GOOGLE_FORM_URL } from "@/lib/config";
 
@@ -194,15 +191,46 @@ function Reveal({
   className?: string;
   delay?: number;
 }) {
-  const reduce = useReducedMotion();
+  const [mounted, setMounted] = useState(false);
+  const [reduceMotion, setReduceMotion] = useState(false);
+
+  useEffect(() => {
+    setMounted(true);
+
+    const mediaQuery = window.matchMedia(
+      "(prefers-reduced-motion: reduce)"
+    );
+
+    const updatePreference = () => {
+      setReduceMotion(mediaQuery.matches);
+    };
+
+    updatePreference();
+
+    mediaQuery.addEventListener("change", updatePreference);
+
+    return () => {
+      mediaQuery.removeEventListener("change", updatePreference);
+    };
+  }, []);
+
+  const shouldAnimate = mounted && !reduceMotion;
 
   return (
     <motion.div
       className={className}
-      initial={reduce ? false : { opacity: 0, y: 22 }}
-      whileInView={reduce ? undefined : { opacity: 1, y: 0 }}
+      initial={false}
+      whileInView={
+        shouldAnimate
+          ? { opacity: 1, y: 0 }
+          : { opacity: 1, y: 0 }
+      }
       viewport={{ once: true, margin: "-60px" }}
-      transition={{ duration: 0.65, ease: EASE, delay }}
+      transition={{
+        duration: shouldAnimate ? 0.65 : 0,
+        ease: EASE,
+        delay: shouldAnimate ? delay : 0,
+      }}
     >
       {children}
     </motion.div>
@@ -1097,16 +1125,28 @@ function Footer() {
 
 export default function DotpaperLanding() {
   return (
-    <main className="min-h-screen overflow-x-clip bg-[#FBFAF8] text-[#29263D] antialiased">
-      <Header />
-      <Hero />
-      <ApplicationSection />
-      <ConnectedSection />
-      <Showcase />
-      <Benefits />
-      <Comparison />
-      <FinalCTA />
-      <Footer />
-    </main>
+    <Suspense
+      fallback={
+        <main className="min-h-screen bg-[#FBFAF8]">
+          <div className="mx-auto max-w-[1440px] px-5 py-32 sm:px-8 lg:px-14">
+            <div className="h-8 w-36 animate-pulse rounded-lg bg-[#EAE6EF]" />
+            <div className="mt-10 h-16 max-w-xl animate-pulse rounded-xl bg-[#EAE6EF]" />
+            <div className="mt-4 h-6 max-w-md animate-pulse rounded-lg bg-[#F0EDF3]" />
+          </div>
+        </main>
+      }
+    >
+      <main className="min-h-screen overflow-x-clip bg-[#FBFAF8] text-[#29263D] antialiased">
+        <Header />
+        <Hero />
+        <ApplicationSection />
+        <ConnectedSection />
+        <Showcase />
+        <Benefits />
+        <Comparison />
+        <FinalCTA />
+        <Footer />
+      </main>
+    </Suspense>
   );
 }
