@@ -1,20 +1,33 @@
 import Image from "next/image";
 import Link from "next/link";
+import type { ReactNode } from "react";
+import { Figtree, JetBrains_Mono } from "next/font/google";
 
 /**
- * Kode landing page, hero only.
+ * Kode landing page, hero + feature section.
  * Next.js 16 App Router, Server Component, Tailwind CSS.
  * Logo: /public/kode/logo.png
  *
- * Colors come from the owl logo.
- *   Light:  page #FBF8FF, text #2B0F47, muted #5B4378, brand #7B2FBE
- *   Dark:   page #12081F, text #F4ECFC, muted #BBA6D4, brand #C58BF2
- *   Both:   amber #F5A623 (beak and feet), orchid and indigo as card accents
+ * Reference feel
+ *   Google Labs        centered oversized headline, one big organic shape behind it,
+ *                      headline changes color where the shape crosses it, tilted white cards.
+ *   Android Developers left intro column + 2x2 grid of flat-color panels, black pill button,
+ *                      big friendly sans, generous whitespace.
+ *
+ * No SVG, no icons, no emoji. Every shape is plain CSS (borders, radius, clip by overflow).
+ *
+ * Palette (from the owl logo)
+ *   Light  page #F4F0F7  ink #1E0A33  muted #5B4378  brand #7B2FBE
+ *   Dark   page #12081F  ink #F4ECFC  muted #BBA6D4  brand #C58BF2
+ *   Both   amber #F5A623 (beak and feet), indigo #5B4BD6, orchid #C58BF2
  *
  * Dark mode follows the system setting (Tailwind default).
  * For a manual .dark class toggle, add to globals.css:
  *   @custom-variant dark (&:where(.dark, .dark *));
  */
+
+const sans = Figtree({ subsets: ["latin"], display: "swap" });
+const mono = JetBrains_Mono({ subsets: ["latin"], display: "swap" });
 
 const NAV = [
   { label: "Why Kode", href: "#why" },
@@ -23,207 +36,234 @@ const NAV = [
   { label: "Community", href: "https://github.com/ecocee/Kode/discussions" },
 ];
 
-const FEATURES = [
-  {
-    title: "Backend",
-    body: "Typed services with a built-in web server, JSON and PostgreSQL client.",
-    href: "#why",
-    border: "border-[#7B2FBE] dark:border-[#C58BF2]",
-    text: "text-[#7B2FBE] dark:text-[#C58BF2]",
-    icon: <path d="M4 6h16v9H4zM9 19h6M12 15v4" />,
-  },
-  {
-    title: "Cloud",
-    body: "Small native binaries and a leak-checked runtime keep hosting cheap.",
-    href: "#footprint",
-    border: "border-[#5B4BD6] dark:border-[#8F84FF]",
-    text: "text-[#4B3BC4] dark:text-[#A79EFF]",
-    icon: (
-      <path d="M7 18a4 4 0 0 1-.6-7.96A5.5 5.5 0 0 1 17 8.5a4.75 4.75 0 0 1 0 9.5H7z" />
-    ),
-  },
-  {
-    title: "Concurrency",
-    body: "Tasks with spawn and await, plus typed channels.",
-    href: "#code",
-    border: "border-[#E09100] dark:border-[#F5A623]",
-    text: "text-[#A86500] dark:text-[#F5A623]",
-    icon: (
-      <path d="M5 5h6v6H5zM13 13h6v6h-6zM11 8h4a2 2 0 0 1 2 2v3M13 16H9a2 2 0 0 1-2-2v-3" />
-    ),
-  },
-  {
-    title: "AI agents",
-    body: "JSON diagnostics and error codes with hints, made for agents.",
-    href: "#agents",
-    border: "border-[#B64FD8] dark:border-[#D882F0]",
-    text: "text-[#A33BC6] dark:text-[#E29BF5]",
-    icon: (
-      <path d="M12 3l1.8 5.2L19 10l-5.2 1.8L12 17l-1.8-5.2L5 10l5.2-1.8zM18.5 16l.8 2.2 2.2.8-2.2.8-.8 2.2-.8-2.2-2.2-.8 2.2-.8z" />
-    ),
-  },
-];
-
 const focus =
   "focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#7B2FBE] dark:focus-visible:outline-[#C58BF2]";
 
-/** Layered isometric illustration: infrastructure, services, code, and the owl. */
-function HeroIllustration() {
-  const iso = "matrix(0.866 0.5 -0.866 0.5 0 0)";
-  const mono = "ui-monospace, SFMono-Regular, Menlo, monospace";
+const pillDark =
+  "rounded-full bg-[#1E0A33] text-white transition-colors hover:bg-[#3A1C66] dark:bg-[#F4ECFC] dark:text-[#12081F] dark:hover:bg-white";
 
+const pillLine =
+  "rounded-full border border-[#1E0A33]/30 text-[#1E0A33] transition-colors hover:bg-[#1E0A33]/8 dark:border-[#F4ECFC]/35 dark:text-[#F4ECFC] dark:hover:bg-[#F4ECFC]/10";
+
+const wrap = "mx-auto max-w-[1320px] px-6 lg:px-10";
+
+/* ------------------------------------------------------------------ */
+/* Small building blocks                                               */
+/* ------------------------------------------------------------------ */
+
+const CODE = `// fib.kode
+fn fib(n: int) -> int {
+  if n < 2 { return n }
+  return fib(n - 1) + fib(n - 2)
+}
+
+print("fib(30) =", fib(30))`;
+
+function Code() {
+  const parts = CODE.split(/(\/\/.*|"[^"]*"|\bfn\b|\bif\b|\breturn\b)/g);
   return (
-    <svg
-      viewBox="0 0 560 560"
-      className="h-auto w-full"
-      role="img"
-      aria-label="Three stacked layers: Kode code on top, running services in the middle, a small server underneath, with the Kode owl perched on top"
+    <pre
+      className={`${mono.className} overflow-x-auto text-[12.5px] leading-6 text-[#F4ECFC] sm:text-[13.5px]`}
     >
-      <ellipse cx="280" cy="520" rx="190" ry="22" className="fill-[#2B0F47]/20 dark:fill-black/40" />
-
-      {/* bottom slab: the small machine */}
-      <g transform="translate(280 270)">
-        <g transform={iso}>
-          <rect width="260" height="260" rx="14" className="fill-[#EBDDFB] dark:fill-[#2A1245]" />
-          <rect
-            x="1" y="1" width="258" height="258" rx="13" fill="none" strokeWidth="1.5" strokeOpacity="0.6"
-            className="stroke-[#7B2FBE] dark:stroke-[#C58BF2]"
-          />
-          {[52, 104, 156, 208].map((p) => (
-            <g key={p} strokeOpacity="0.25" strokeWidth="1" className="stroke-[#7B2FBE] dark:stroke-[#C58BF2]">
-              <line x1={p} y1="14" x2={p} y2="246" />
-              <line x1="14" y1={p} x2="246" y2={p} />
-            </g>
-          ))}
-          <rect x="30" y="30" width="46" height="46" rx="8" strokeOpacity="0.7" className="fill-[#FBF8FF] stroke-[#7B2FBE] dark:fill-[#12081F] dark:stroke-[#C58BF2]" />
-          <rect x="184" y="184" width="46" height="46" rx="8" strokeOpacity="0.7" className="fill-[#FBF8FF] stroke-[#7B2FBE] dark:fill-[#12081F] dark:stroke-[#C58BF2]" />
-          <text x="38" y="58" fontSize="10" fontFamily={mono} className="fill-[#7B2FBE] dark:fill-[#C58BF2]">1 vCPU</text>
-          <text x="190" y="212" fontSize="10" fontFamily={mono} className="fill-[#7B2FBE] dark:fill-[#C58BF2]">1 GB</text>
-        </g>
-      </g>
-
-      {/* middle slab: services */}
-      <g transform="translate(280 175)">
-        <g transform={iso}>
-          <rect width="260" height="260" rx="14" className="fill-[#7B2FBE] dark:fill-[#5A22A0]" />
-          <rect x="1" y="1" width="258" height="258" rx="13" fill="none" stroke="#fff" strokeOpacity="0.28" strokeWidth="1.5" />
-          <rect x="28" y="34" width="92" height="40" rx="8" fill="#C58BF2" />
-          <rect x="140" y="34" width="92" height="40" rx="8" fill="#2B0F47" />
-          <rect x="28" y="96" width="92" height="40" rx="8" fill="#2B0F47" />
-          <rect x="140" y="96" width="92" height="40" rx="8" fill="#F5A623" />
-          <rect x="28" y="158" width="204" height="40" rx="8" fill="#1B0B2E" fillOpacity="0.9" />
-          {Array.from({ length: 12 }).map((_, i) => {
-            const h = ((i * 7) % 5) * 4 + 6;
-            return <rect key={i} x={40 + i * 15.5} y={180 - h} width="9" height={h} rx="2" fill="#C58BF2" />;
-          })}
-        </g>
-      </g>
-
-      {/* top slab: code */}
-      <g transform="translate(280 80)">
-        <g transform={iso}>
-          <rect width="260" height="260" rx="14" fill="#1B0B2E" />
-          <rect x="1" y="1" width="258" height="258" rx="13" fill="none" stroke="#F4ECFC" strokeOpacity="0.45" strokeWidth="1.5" />
-          <circle cx="22" cy="22" r="4" fill="#F5A623" />
-          <circle cx="36" cy="22" r="4" fill="#C58BF2" />
-          <circle cx="50" cy="22" r="4" fill="#F4ECFC" fillOpacity="0.55" />
-          <text x="76" y="26" fontSize="10" fill="#F4ECFC" fillOpacity="0.55" fontFamily={mono}>fib.kode</text>
-          <g fontFamily={mono} fontSize="11" fill="#F4ECFC">
-            <text x="20" y="64" fillOpacity="0.45">{"// fib.kode"}</text>
-            <text x="20" y="90"><tspan fill="#F5A623">fn</tspan> fib(n: int) -&gt; int {"{"}</text>
-            <text x="34" y="110"><tspan fill="#F5A623">if</tspan> n &lt; 2 {"{"} <tspan fill="#F5A623">return</tspan> n {"}"}</text>
-            <text x="34" y="130"><tspan fill="#F5A623">return</tspan> fib(n - 1) + fib(n - 2)</text>
-            <text x="20" y="150">{"}"}</text>
-            <text x="20" y="188">print(<tspan fill="#C58BF2">"fib(30) ="</tspan>, fib(30))</text>
-          </g>
-        </g>
-      </g>
-
-      {/* the owl, perched on the back corner of the top slab */}
-      <ellipse cx="432" cy="190" rx="34" ry="8" fill="#000" opacity="0.3" />
-     {/* <image className="kode-float" href="/kode/logo.png" x="342" y="58" width="180" height="180" /> */}
-
-      {/* loose pieces */}
-      <circle cx="96" cy="150" r="11" fill="#F5A623" />
-      <circle cx="476" cy="360" r="6" className="fill-[#2B0F47] dark:fill-[#F4ECFC]" />
-      <rect x="62" y="372" width="26" height="26" rx="6" fill="#C58BF2" transform="rotate(-14 75 385)" />
-      <rect x="452" y="418" width="28" height="28" rx="7" className="fill-[#5B4BD6] dark:fill-[#8F84FF]" transform="rotate(18 466 432)" />
-    </svg>
+      <code>
+        {parts.map((p, i) => {
+          if (/^(fn|if|return)$/.test(p))
+            return (
+              <span key={i} className="text-[#F5A623]">
+                {p}
+              </span>
+            );
+          if (p.startsWith('"'))
+            return (
+              <span key={i} className="text-[#C58BF2]">
+                {p}
+              </span>
+            );
+          if (p.startsWith("//"))
+            return (
+              <span key={i} className="text-[#F4ECFC]/50">
+                {p}
+              </span>
+            );
+          return <span key={i}>{p}</span>;
+        })}
+      </code>
+    </pre>
   );
 }
 
-/** Big flat planes behind the hero. */
-function Backdrop() {
+function Chip({ className, children }: { className: string; children: ReactNode }) {
   return (
-    <svg
-      aria-hidden="true"
-      className="pointer-events-none absolute inset-0 -z-10 h-full w-full"
-      viewBox="0 0 1440 900"
-      preserveAspectRatio="xMidYMid slice"
+    <span
+      className={`absolute whitespace-nowrap rounded-full px-5 py-2.5 text-lg font-medium sm:text-xl ${className}`}
     >
-      <polygon points="560,0 1440,0 1440,520 980,380" className="fill-[#F1E6FC] dark:fill-[#220F3A]" />
-      <polygon points="760,0 1440,0 1440,300" className="fill-[#E4CFF8] dark:fill-[#2E1650]" />
-      <polygon points="1100,900 1440,420 1440,900" className="fill-[#D6B6F3] dark:fill-[#3A1C66]" />
-      <polygon points="0,900 420,900 0,620" className="fill-[#F4ECFD] dark:fill-[#190A2B]" />
-    </svg>
+      {children}
+    </span>
   );
 }
+
+/* Hero cards: white frame, colored panel inside, copy underneath (Google Labs). */
+function HeroCard({
+  title,
+  body,
+  href,
+  tilt,
+  panel,
+  children,
+}: {
+  title: string;
+  body: string;
+  href: string;
+  tilt: string;
+  panel: string;
+  children: ReactNode;
+}) {
+  return (
+    <li className={`${tilt} motion-safe:transition-transform motion-safe:duration-300 lg:hover:rotate-0`}>
+      <Link
+        href={href}
+        className={`group flex h-full flex-col rounded-[2.5rem] bg-white p-3 dark:bg-[#1F1034] ${focus}`}
+      >
+        <div className={`relative overflow-hidden rounded-[1.9rem] ${panel}`}>{children}</div>
+        <div className="px-4 pb-4 pt-5">
+          <h3 className="text-2xl font-medium tracking-tight">{title}</h3>
+          <p className="mt-1.5 text-base leading-relaxed text-[#5B4378] dark:text-[#BBA6D4]">{body}</p>
+        </div>
+      </Link>
+    </li>
+  );
+}
+
+/* Feature cards: flat panel + big title + body (Android Developers). */
+function FeatureCard({
+  title,
+  body,
+  href,
+  bg,
+  blob,
+  children,
+}: {
+  title: string;
+  body: string;
+  href: string;
+  bg: string;
+  blob: string;
+  children: ReactNode;
+}) {
+  return (
+    <li>
+      <Link href={href} className={`group block rounded-[2rem] ${focus}`}>
+        <div className={`relative aspect-[4/3] overflow-hidden rounded-[2rem] ${bg}`}>
+          <div className={`absolute -bottom-[38%] -right-[14%] aspect-square w-[78%] rounded-full ${blob}`} />
+          <div className={`absolute -left-[10%] -top-[30%] aspect-square w-[46%] rounded-full ${blob} opacity-60`} />
+          {children}
+        </div>
+        <h3 className="mt-6 text-3xl font-medium tracking-tight group-hover:underline group-hover:decoration-2 group-hover:underline-offset-8">
+          {title}
+        </h3>
+        <p className="mt-3 max-w-md text-lg leading-relaxed text-[#5B4378] dark:text-[#BBA6D4]">{body}</p>
+      </Link>
+    </li>
+  );
+}
+
+/* The headline, rendered twice: ink version on the page, tinted version clipped by the blob. */
+function Headline({ tone, hidden }: { tone: string; hidden?: boolean }) {
+  return (
+    <div className={`${wrap} pt-12 text-center lg:pt-16`} aria-hidden={hidden || undefined}>
+      {hidden ? (
+        <div
+          className={`text-[clamp(3rem,8.4vw,8.75rem)] font-medium leading-[0.98] tracking-[-0.045em] ${tone}`}
+        >
+          Write. Compile. Ship.
+        </div>
+      ) : (
+        <h1
+          className={`text-[clamp(3rem,8.4vw,8.75rem)] font-medium leading-[0.98] tracking-[-0.045em] ${tone}`}
+        >
+          Write. Compile. Ship.
+        </h1>
+      )}
+    </div>
+  );
+}
+
+/* ------------------------------------------------------------------ */
+/* Page section                                                        */
+/* ------------------------------------------------------------------ */
 
 export function Hero() {
   return (
-    <>
+    <div className={`${sans.className} bg-[#F4F0F7] text-[#1E0A33] dark:bg-[#12081F] dark:text-[#F4ECFC]`}>
+      {/* ============================ HERO ============================ */}
       <section className="relative isolate overflow-hidden">
-        <Backdrop />
+        {/* The one big shape. It clips a second copy of the headline so the
+            letters change color exactly where the shape passes behind them. */}
+        <div
+          aria-hidden="true"
+          className="pointer-events-none absolute right-0 top-0 -z-0 h-[74%] w-[70%] overflow-hidden bg-[#F5A623] dark:bg-[#7B2FBE] lg:w-[56%]"
+          style={{ borderRadius: "46% 0 0 62% / 34% 0 0 66%" }}
+        >
+          <div className="absolute right-0 top-0 w-[142.857%] lg:w-[178.571%]">
+            <div className="h-20" />
+            <Headline hidden tone="text-[#3B0F66] dark:text-[#FFC857]" />
+          </div>
+        </div>
 
-        <header className="mx-auto flex max-w-[1320px] items-center justify-between px-6 py-4 lg:px-10">
-          <Link href="/" className={`flex items-center gap-2 rounded-md ${focus}`}>
-            <Image src="/kode/logo.png" alt="" width={44} height={44} className="h-11 w-11 scale-125" />
+        <header className={`${wrap} relative z-10 grid h-20 grid-cols-[1fr_auto] items-center lg:grid-cols-[1fr_auto_1fr]`}>
+          <Link href="/" className={`flex w-fit items-center gap-2.5 rounded-md ${focus}`}>
+            <Image src="/kode/logo.png" alt="" width={44} height={44} className="h-11 w-11 scale-125" priority />
             <span className="text-[26px] font-semibold tracking-tight">Kode</span>
             <span className="mt-1 text-xs font-medium text-[#5B4378] dark:text-[#BBA6D4]">v0.3</span>
           </Link>
 
-          <nav aria-label="Primary" className="hidden items-center gap-8 text-[15px] text-[#5B4378] dark:text-[#BBA6D4] lg:flex">
+          <nav aria-label="Primary" className="hidden items-center gap-9 text-[17px] lg:flex">
             {NAV.map((item) => (
               <Link
                 key={item.label}
                 href={item.href}
-                className={`rounded-sm transition-colors hover:text-[#2B0F47] dark:hover:text-white ${focus}`}
+                className={`rounded-sm transition-opacity hover:opacity-60 ${focus}`}
               >
                 {item.label}
               </Link>
             ))}
           </nav>
 
-          <Link
-            href="/docs/get-started"
-            className={`rounded-full bg-[#7B2FBE] px-6 py-2.5 text-[15px] font-semibold text-white transition-colors hover:bg-[#6A22A8] dark:bg-[#C58BF2] dark:text-[#12081F] dark:hover:bg-[#D5A3F7] ${focus}`}
-          >
-            Get started
-          </Link>
+          <div className="flex items-center justify-end gap-3">
+            <a
+              href="https://github.com/ecocee/Kode"
+              className={`hidden px-5 py-2.5 text-[15px] font-medium sm:inline-block ${pillLine} ${focus}`}
+            >
+              GitHub
+            </a>
+            <Link
+              href="/docs/get-started"
+              className={`px-5 py-2.5 text-[15px] font-medium ${pillDark} ${focus}`}
+            >
+              Get started
+            </Link>
+          </div>
         </header>
 
-        <div className="mx-auto grid max-w-[1320px] items-center gap-6 px-6 pb-24 pt-10 lg:grid-cols-[1.05fr_0.95fr] lg:gap-4 lg:px-10 lg:pb-36 lg:pt-16">
-          <div>
-            <h1 className="text-[clamp(2.75rem,7vw,5.5rem)] font-semibold leading-[1.02] tracking-[-0.035em]">
-              Write. Compile.
-              <br />
-              Ship.
-            </h1>
+        <div className="relative z-10">
+          <Headline tone="text-[#1E0A33] dark:text-[#F4ECFC]" />
 
-            <p className="mt-7 max-w-xl text-xl leading-relaxed text-[#4A3266] dark:text-[#D9C8EE] sm:text-2xl sm:leading-relaxed">
-             A modern, statically typed language that combines expressive syntax with native performance. Built for cloud software, backend systems and AI-assisted development.
+          <div className={`${wrap} text-center`}>
+            <p className="mx-auto mt-8 max-w-[34rem] text-xl leading-relaxed text-[#3B2459] dark:text-[#D9C8EE] sm:text-[22px] sm:leading-[1.55]">
+              A modern, statically typed language that combines expressive syntax with native performance.
+              Built for cloud software, backend systems and AI-assisted development.
             </p>
 
-            <div className="mt-10 flex flex-wrap items-center gap-4">
+            <div className="mt-9 flex flex-wrap items-center justify-center gap-3">
               <Link
                 href="/docs/get-started"
-                className={`rounded-full bg-[#7B2FBE] px-8 py-4 text-lg font-semibold text-white transition-colors hover:bg-[#6A22A8] dark:bg-[#C58BF2] dark:text-[#12081F] dark:hover:bg-[#D5A3F7] ${focus}`}
+                className={`px-8 py-4 text-lg font-medium ${pillDark} ${focus}`}
               >
                 Get started
               </Link>
               <a
                 href="https://github.com/ecocee/Kode"
-                className={`rounded-full border-2 border-[#7B2FBE] px-8 py-[14px] text-lg font-semibold text-[#7B2FBE] transition-colors hover:bg-[#7B2FBE]/10 dark:border-[#C58BF2] dark:text-[#C58BF2] dark:hover:bg-[#C58BF2]/10 ${focus}`}
+                className={`px-8 py-[15px] text-lg font-medium ${pillLine} ${focus}`}
               >
                 View on GitHub
               </a>
@@ -234,42 +274,153 @@ export function Hero() {
             </p>
           </div>
 
-          <div className="mx-auto w-full max-w-[560px] lg:max-w-none">
-            <HeroIllustration />
+          {/* Three cards that follow the headline: Write, Compile, Ship */}
+          <div className={`${wrap} pb-24 pt-16 lg:pb-32 lg:pt-24`}>
+            <ul className="grid items-end gap-6 lg:grid-cols-3 lg:gap-8">
+              <HeroCard
+                title="Write"
+                body="Expressive, statically typed syntax that reads the way you think."
+                href="/docs"
+                tilt="lg:-rotate-[4deg] lg:origin-bottom-right"
+                panel="bg-[#DCCBF7] dark:bg-[#3A1C66]"
+              >
+                <div className="flex aspect-[4/3.3] items-center p-5 sm:p-7">
+                  <div className="w-full rounded-2xl bg-[#1B0B2E] p-5">
+                    <Code />
+                  </div>
+                </div>
+              </HeroCard>
+
+              <HeroCard
+                title="Compile"
+                body="One command produces a small native binary with a leak-checked runtime."
+                href="#why"
+                tilt="lg:-translate-y-6"
+                panel="bg-[#7B2FBE]"
+              >
+                <div className="relative flex aspect-[4/4.6] flex-col items-center justify-center">
+                  <div className="absolute left-1/2 top-[46%] aspect-square w-[78%] -translate-x-1/2 -translate-y-1/2 rounded-full bg-[#C58BF2]" />
+                  <Image
+                    src="/kode/logo.png"
+                    alt="The Kode owl"
+                    width={320}
+                    height={320}
+                    className="relative w-[62%] -translate-y-3"
+                  />
+                  <p
+                    className={`${mono.className} absolute bottom-6 rounded-full bg-[#FBF8FF] px-5 py-2.5 text-sm font-medium text-[#1E0A33] sm:text-base`}
+                  >
+                    fib(30) = 832040
+                  </p>
+                </div>
+              </HeroCard>
+
+              <HeroCard
+                title="Ship"
+                body="Runs comfortably on a single small server, so hosting stays cheap."
+                href="#footprint"
+                tilt="lg:rotate-[4deg] lg:origin-bottom-left"
+                panel="bg-[#5B4BD6]"
+              >
+                <div className="relative aspect-[4/3.3]">
+                  <div className="absolute -right-[12%] -top-[28%] aspect-square w-[62%] rounded-full bg-[#8F84FF]" />
+                  <p className="absolute left-[8%] top-[16%] -rotate-3 rounded-3xl bg-[#FBF8FF] px-6 py-4 text-4xl font-semibold tracking-tight text-[#1E0A33] sm:text-5xl">
+                    1 vCPU
+                  </p>
+                  <p className="absolute bottom-[14%] right-[8%] rotate-3 rounded-3xl bg-[#F5A623] px-6 py-4 text-4xl font-semibold tracking-tight text-[#1E0A33] sm:text-5xl">
+                    1 GB
+                  </p>
+                </div>
+              </HeroCard>
+            </ul>
           </div>
         </div>
       </section>
 
-      {/* Feature row overlapping the hero edge */}
-      <section
-        aria-labelledby="build-heading"
-        className="relative z-10 mx-auto -mt-12 max-w-[1320px] px-6 pb-24 lg:-mt-24 lg:px-10"
-      >
-        <h2 id="build-heading" className="sr-only">Build it with Kode</h2>
+      {/* ======================= FEATURE SECTION ======================= */}
+      <section id="why" aria-labelledby="build-heading" className="pb-28 pt-4 lg:pb-36">
+        <div className={`${wrap} grid gap-14 lg:grid-cols-[0.72fr_1.6fr] lg:gap-20`}>
+          <div className="lg:sticky lg:top-12 lg:self-start">
+            <h2
+              id="build-heading"
+              className="text-[clamp(2.5rem,5vw,4.25rem)] font-medium leading-[1.04] tracking-[-0.035em]"
+            >
+              Build it with Kode
+            </h2>
+            <p className="mt-6 max-w-sm text-xl leading-relaxed text-[#3B2459] dark:text-[#D9C8EE]">
+              Backend services, cloud hosting, concurrency and AI tooling, in one small language.
+            </p>
+            <Link
+              href="/docs"
+              className={`mt-9 inline-block px-8 py-4 text-lg font-medium ${pillDark} ${focus}`}
+            >
+              Go to the docs
+            </Link>
+          </div>
 
-        <ul className="grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
-          {FEATURES.map((f) => (
-            <li key={f.title}>
-              <Link
-                href={f.href}
-                className={`group flex h-full flex-col rounded-3xl border-2 bg-[#FBF8FF] p-6 transition-colors hover:bg-[#F1E6FC] dark:bg-[#12081F] dark:hover:bg-[#1C0D31] ${f.border} ${focus}`}
-              >
-                <svg viewBox="0 0 24 24" className={`h-7 w-7 ${f.text}`} fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-                  {f.icon}
-                </svg>
-                <span className={`mt-4 text-2xl font-semibold ${f.text}`}>{f.title}</span>
-                <span className="mt-2 text-base leading-relaxed text-[#4A3266] dark:text-[#D9C8EE]">{f.body}</span>
-                <span className="mt-auto pt-6">
-                  <svg viewBox="0 0 24 24" className={`h-6 w-6 transition-transform duration-200 group-hover:translate-x-1 ${f.text}`} fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-                    <path d="M5 12h14M13 6l6 6-6 6" />
-                  </svg>
-                  <span className="sr-only">Read more about {f.title}</span>
-                </span>
-              </Link>
-            </li>
-          ))}
-        </ul>
+          <ul className="grid gap-x-8 gap-y-16 sm:grid-cols-2">
+            <FeatureCard
+              title="Backend"
+              body="Typed services with a built-in web server, JSON and PostgreSQL client."
+              href="#why"
+              bg="bg-[#2B0F47]"
+              blob="bg-[#7B2FBE]"
+            >
+              <Chip className={`${mono.className} left-[7%] top-[16%] -rotate-6 bg-[#F5A623] text-[#1E0A33]`}>
+                web server
+              </Chip>
+              <Chip className={`${mono.className} right-[9%] top-[40%] rotate-3 bg-[#FBF8FF] text-[#1E0A33]`}>
+                JSON
+              </Chip>
+              <Chip className={`${mono.className} bottom-[14%] left-[12%] -rotate-2 bg-[#C58BF2] text-[#1E0A33]`}>
+                PostgreSQL
+              </Chip>
+            </FeatureCard>
+
+            <FeatureCard
+              title="Cloud"
+              body="Small native binaries and a leak-checked runtime keep hosting cheap."
+              href="#footprint"
+              bg="bg-[#B8B0F7]"
+              blob="bg-[#8F84FF]"
+            >
+              <Chip className="left-[8%] top-[14%] rotate-3 bg-[#1E0A33] text-white">small binaries</Chip>
+              <Chip className="right-[7%] top-[42%] -rotate-3 bg-[#FBF8FF] text-[#1E0A33]">leak-checked runtime</Chip>
+              <Chip className="bottom-[13%] left-[10%] rotate-2 bg-[#F5A623] text-[#1E0A33]">cheap hosting</Chip>
+            </FeatureCard>
+
+            <FeatureCard
+              title="Concurrency"
+              body="Tasks with spawn and await, plus typed channels."
+              href="#code"
+              bg="bg-[#F5A623]"
+              blob="bg-[#FFC857]"
+            >
+              <Chip className={`${mono.className} left-[9%] top-[15%] -rotate-3 bg-[#1E0A33] text-[#F5A623]`}>
+                spawn
+              </Chip>
+              <Chip className={`${mono.className} right-[10%] top-[40%] rotate-4 bg-[#FBF8FF] text-[#1E0A33]`}>
+                await
+              </Chip>
+              <Chip className={`${mono.className} bottom-[14%] left-[14%] -rotate-2 bg-[#7B2FBE] text-white`}>
+                channel&lt;T&gt;
+              </Chip>
+            </FeatureCard>
+
+            <FeatureCard
+              title="AI agents"
+              body="JSON diagnostics and error codes with hints, made for agents."
+              href="#agents"
+              bg="bg-[#1B0B2E]"
+              blob="bg-[#5A22A0]"
+            >
+              <Chip className="left-[7%] top-[15%] rotate-2 bg-[#C58BF2] text-[#1E0A33]">JSON diagnostics</Chip>
+              <Chip className="right-[8%] top-[40%] -rotate-3 bg-[#FBF8FF] text-[#1E0A33]">error codes</Chip>
+              <Chip className="bottom-[14%] left-[12%] rotate-2 bg-[#F5A623] text-[#1E0A33]">hints</Chip>
+            </FeatureCard>
+          </ul>
+        </div>
       </section>
-    </>
+    </div>
   );
 }
