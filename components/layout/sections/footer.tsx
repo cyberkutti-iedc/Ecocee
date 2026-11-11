@@ -8,6 +8,7 @@ const footerGroups = [
     links: [
       { label: "Mero", href: "/mero" },
       { label: "Dotpaper", href: "/dotpaper" },
+      { label: "Kode", href: "/kode" },
     ],
   },
   {
