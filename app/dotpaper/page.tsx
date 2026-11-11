@@ -90,7 +90,7 @@ function Brand() {
 function Header() {
   return (
     <header className="relative z-50 bg-[var(--paper)]">
-      <div className={`${wrap} flex h-[72px] items-center justify-between`}>
+      <div className={`${wrap} flex h-[92px] items-center justify-between`}>
         <div className="flex items-center gap-12">
           <Brand />
           <nav aria-label="Main navigation" className="hidden items-center gap-8 md:flex">
