@@ -1,26 +1,116 @@
+
 import type { Metadata } from "next";
 import Link from "next/link";
-import { 
-  MapPin, Calendar, Users, Target, ArrowRight, Bot, Cpu, 
-  Server, Zap, MonitorSmartphone, Settings, Workflow, 
-  ShieldCheck, BrainCircuit, Linkedin, Mail
+import {
+  ArrowDown,
+  ArrowRight,
+  ArrowUpRight,
+  Linkedin,
+  Mail,
+  MapPin,
 } from "lucide-react";
-import { Card, CardContent, CardHeader } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
-import { Button } from "@/components/ui/button";
-import { Avatar } from "@/components/ui/avatar";
-import { AnimatedSection } from "@/components/ui/animated-section";
+
 import { FooterSection } from "@/components/layout/sections/footer";
 import { EcoceeLabsSection } from "@/components/layout/sections/ecocee-labs";
 import Seo from "@/components/seo/Seo";
-import { organizationSchema, breadcrumbSchema, webPageSchema } from "@/lib/seo/schemas";
+import {
+  organizationSchema,
+  breadcrumbSchema,
+  webPageSchema,
+} from "@/lib/seo/schemas";
 import { teamData } from "@/data/team";
 import { GOOGLE_FORM_URL } from "@/lib/config";
 
 export const metadata: Metadata = {
-  title: "About Ecocee — AI & Electronics Technology Company | Kerala, India",
-  description: "Ecocee builds custom AI agents, private AI infrastructure, IoT solutions, and embedded systems for businesses in Kerala. Based in Kodungallur, serving India.",
+  title: "About Ecocee — Technology & Product Engineering Company",
+  description:
+    "Discover Ecocee, an Indian technology company engineering AI software, developer technology, embedded systems and intelligent hardware.",
 };
+
+const capabilities = [
+  {
+    number: "01",
+    name: "Artificial Intelligence",
+    description:
+      "AI agents, retrieval systems, intelligent automation and applications connected to real business workflows.",
+    tags: ["AI Agents", "RAG", "Machine Learning"],
+  },
+  {
+    number: "02",
+    name: "Software & Infrastructure",
+    description:
+      "Custom software, backend systems, developer tools and scalable infrastructure built for demanding applications.",
+    tags: ["Software Engineering", "Cloud", "Developer Tools"],
+  },
+  {
+    number: "03",
+    name: "Embedded Engineering",
+    description:
+      "Firmware, electronics, connected devices and software that bridges digital systems with the physical world.",
+    tags: ["Embedded Systems", "Electronics", "IoT"],
+  },
+  {
+    number: "04",
+    name: "Edge Intelligence",
+    description:
+      "Computing and AI systems deployed closer to devices, data sources and real-world operations.",
+    tags: ["Edge Computing", "Private AI", "Automation"],
+  },
+];
+
+const principles = [
+  {
+    number: "01",
+    title: "Understand the problem",
+    description:
+      "We begin with the engineering and operational challenge. Technology is selected only after the problem is understood.",
+  },
+  {
+    number: "02",
+    title: "Build the complete system",
+    description:
+      "A useful product requires more than a working prototype. We consider architecture, interfaces, infrastructure and deployment together.",
+  },
+  {
+    number: "03",
+    title: "Choose technology with purpose",
+    description:
+      "Cloud, on-premise infrastructure, edge devices or hybrid systems — the right approach depends on the requirements.",
+  },
+  {
+    number: "04",
+    title: "Keep improving",
+    description:
+      "We build with maintainability, reliability and future development in mind, rather than treating delivery as the end of engineering.",
+  },
+];
+
+const milestones = [
+  {
+    year: "2023",
+    title: "The beginning",
+    description:
+      "Ecocee started in Kerala with an interest in electronics, embedded engineering and building technology.",
+  },
+  {
+    year: "2024",
+    title: "Expanding engineering",
+    description:
+      "Work expanded across software development, connected systems and practical product engineering.",
+  },
+  {
+    year: "2025",
+    title: "Building software systems",
+    description:
+      "A broader focus on AI applications, business software, infrastructure and technology products.",
+  },
+  {
+    year: "Today",
+    title: "Engineering across disciplines",
+    description:
+      "Developing software, AI systems, developer technology and intelligent hardware for real-world applications.",
+  },
+];
 
 export default function AboutPage() {
   const structuredData = [
@@ -48,361 +138,499 @@ export default function AboutPage() {
         structuredData={structuredData}
       />
 
-      <main className="bg-background min-h-screen">
-        {/* 1. Hero Section */}
-        <section className="py-20 md:py-28 pt-32">
-          <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-            <Badge className="bg-primary/10 text-primary text-xs px-3 py-1.5 rounded-full border border-primary/20 mb-6 font-medium">
-              About Ecocee
-            </Badge>
-            <h1 className="text-4xl md:text-5xl lg:text-6xl font-extrabold text-foreground tracking-tight mb-6 leading-tight" style={{ fontFamily: "var(--font-display)" }}>
-              We Engineer Intelligence
-              <br />
-              <span className="text-primary">for the Real World</span>
-            </h1>
-            <p className="text-lg md:text-xl text-muted-foreground leading-relaxed max-w-2xl mx-auto mb-4">
-              Ecocee is an AI + Electronics technology company building intelligent systems that connect AI, private infrastructure, edge computing and physical devices.
-            </p>
-            <p className="text-sm font-semibold text-foreground mb-8">
-              Built in Kerala. Serving businesses worldwide.
-            </p>
-            <div className="flex flex-wrap justify-center gap-4">
-              <Button className="bg-primary text-primary-foreground font-semibold h-11 px-6 group" asChild>
-                <Link href={GOOGLE_FORM_URL} target="_blank" rel="noopener noreferrer">
-                  Talk to an Ecocee Architect
-                  <ArrowRight className="w-4 h-4 ml-2 group-hover:translate-x-1 transition-transform" />
-                </Link>
-              </Button>
-              <Button variant="outline" className="h-11 px-6" asChild>
-                <Link href="/#solutions">Explore Our Capabilities</Link>
-              </Button>
-            </div>
-          </div>
-        </section>
+      <main className="min-h-screen overflow-hidden bg-white text-[#171717]">
 
-        {/* 2. Company Facts */}
-        <section className="py-8 border-y border-border/30 bg-secondary/5">
-          <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-6 text-center md:divide-x divide-border/50">
-              <div className="px-4">
-                <Calendar className="w-5 h-5 text-primary mx-auto mb-2 opacity-80" />
-                <p className="text-xs text-muted-foreground uppercase tracking-wider mb-1">Founded</p>
-                <p className="font-semibold text-foreground">2023</p>
-              </div>
-              <div className="px-4 border-l border-border/50 md:border-none">
-                <MapPin className="w-5 h-5 text-primary mx-auto mb-2 opacity-80" />
-                <p className="text-xs text-muted-foreground uppercase tracking-wider mb-1">Headquarters</p>
-                <p className="font-semibold text-foreground">Kodungallur, Kerala, India</p>
-              </div>
-              <div className="px-4 pt-6 md:pt-0 border-t border-border/50 md:border-t-0">
-                <Users className="w-5 h-5 text-primary mx-auto mb-2 opacity-80" />
-                <p className="text-xs text-muted-foreground uppercase tracking-wider mb-1">Team</p>
-                <p className="font-semibold text-foreground">Engineers & Researchers</p>
-              </div>
-              <div className="px-4 pt-6 md:pt-0 border-t border-border/50 md:border-t-0 border-l border-border/50 md:border-l-0">
-                <Target className="w-5 h-5 text-primary mx-auto mb-2 opacity-80" />
-                <p className="text-xs text-muted-foreground uppercase tracking-wider mb-1">Focus</p>
-                <p className="font-semibold text-foreground">AI + Electronics</p>
-              </div>
-            </div>
-          </div>
-        </section>
+        {/* 01 — Introduction */}
+        <section className="relative border-b border-[#e8e8e8]">
+          <div className="mx-auto max-w-[1440px] px-6 pb-20 pt-32 sm:px-10 sm:pb-28 lg:px-16 lg:pb-36 lg:pt-40">
+            <div className="grid gap-14 lg:grid-cols-[1.35fr_0.65fr] lg:items-end lg:gap-20">
 
-        {/* 3. Why Ecocee Exists */}
-        <AnimatedSection variant="fade-up" delay={0.1}>
-          <section className="py-24">
-            <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-              <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-8" style={{ fontFamily: "var(--font-display)" }}>
-                Why Ecocee Exists
-              </h2>
-              <div className="space-y-6 text-lg text-muted-foreground leading-relaxed">
-                <p>
-                  AI is becoming increasingly powerful, but putting that intelligence into real business operations is still a difficult engineering problem.
+              <div>
+                <div className="mb-10 flex items-center gap-3">
+                  <span className="h-px w-9 bg-[#25845A]" />
+                  <span className="text-[11px] font-semibold uppercase tracking-[0.2em] text-[#25845A]">
+                    About Ecocee
+                  </span>
+                </div>
+
+                <h1 className="max-w-[900px] text-[clamp(3.6rem,8.5vw,8rem)] font-semibold leading-[0.94] tracking-[-0.085em]">
+                  Engineering
+                  <br />
+                  <span className="text-[#25845A]">
+                    what comes next.
+                  </span>
+                </h1>
+              </div>
+
+              <div className="max-w-[430px] lg:pb-3">
+                <p className="text-[17px] leading-[1.9] text-[#626262] sm:text-[19px]">
+                  Ecocee is an Indian technology company building
+                  software, artificial intelligence systems,
+                  developer technology and intelligent hardware.
                 </p>
-                <p>
-                  Businesses need more than an AI model. They need systems that can understand their data, connect with existing software, operate within their security requirements, and interact with the physical world.
+
+                <p className="mt-5 text-[14px] leading-[1.9] text-[#888]">
+                  We bring software engineering and electronics
+                  together to turn complex ideas into practical
+                  technology.
                 </p>
-                <p className="font-medium text-foreground text-xl">
-                  Ecocee was founded to engineer those systems.
-                </p>
-                <p>
-                  We bring together AI, software, embedded systems, edge computing and IoT to build practical technology around real operational problems.
-                </p>
-              </div>
-            </div>
-          </section>
-        </AnimatedSection>
 
-        {/* 4. What We Engineer */}
-        <AnimatedSection variant="fade-up" delay={0.1}>
-          <section className="py-24 bg-secondary/10 border-y border-border/50">
-            <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-              <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-12 text-center" style={{ fontFamily: "var(--font-display)" }}>
-                What We Engineer
-              </h2>
-              <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-                {[
-                  {
-                    title: "AI Agents",
-                    desc: "AI agents connected to business data, tools and workflows to automate operational tasks.",
-                    icon: Bot
-                  },
-                  {
-                    title: "Private AI Infrastructure",
-                    desc: "AI deployments designed around requirements for privacy, control, security and performance.",
-                    icon: Server
-                  },
-                  {
-                    title: "Edge AI",
-                    desc: "Intelligence running closer to where data is generated for responsive real-world applications.",
-                    icon: Zap
-                  },
-                  {
-                    title: "Embedded & IoT Systems",
-                    desc: "Custom firmware, electronics, sensors and connected devices.",
-                    icon: Cpu
-                  },
-                  {
-                    title: "AI + Hardware",
-                    desc: "Systems where software intelligence meets the physical world.",
-                    icon: MonitorSmartphone
-                  }
-                ].map((item, idx) => (
-                  <Card key={idx} className="bg-card border-border hover:shadow-lg transition-shadow duration-300">
-                    <CardContent className="p-6">
-                      <div className="w-12 h-12 rounded-lg bg-primary/10 flex items-center justify-center mb-6">
-                        <item.icon className="w-6 h-6 text-primary" />
-                      </div>
-                      <h3 className="text-xl font-bold text-foreground mb-3">{item.title}</h3>
-                      <p className="text-muted-foreground leading-relaxed">{item.desc}</p>
-                    </CardContent>
-                  </Card>
-                ))}
-              </div>
-            </div>
-          </section>
-        </AnimatedSection>
+                <div className="mt-9 flex flex-wrap items-center gap-5">
+                  <Link
+                    href={GOOGLE_FORM_URL}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex h-12 items-center gap-3 bg-[#171717] px-6 text-[13px] font-semibold text-white transition-colors hover:bg-[#25845A]"
+                  >
+                    Start a conversation
+                    <ArrowUpRight size={16} />
+                  </Link>
 
-        {/* 5. How We Think */}
-        <AnimatedSection variant="fade-up" delay={0.1}>
-          <section className="py-24">
-            <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-              <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-12 text-center" style={{ fontFamily: "var(--font-display)" }}>
-                How We Think
-              </h2>
-              <div className="space-y-4 max-w-4xl mx-auto">
-                {[
-                  {
-                    num: "01",
-                    title: "Problem First",
-                    desc: "We start by understanding the real problem—not by choosing a technology."
-                  },
-                  {
-                    num: "02",
-                    title: "Built for Reality",
-                    desc: "Our systems are designed around real environments, constraints and operations."
-                  },
-                  {
-                    num: "03",
-                    title: "Intelligence Where It Matters",
-                    desc: "Cloud, private infrastructure or edge—we choose the appropriate deployment for the problem."
-                  },
-                  {
-                    num: "04",
-                    title: "Privacy by Design",
-                    desc: "Security and data handling are considered throughout architecture and deployment."
-                  },
-                  {
-                    num: "05",
-                    title: "Built to Evolve",
-                    desc: "We design systems that can improve as the business and technology evolve."
-                  }
-                ].map((item, idx) => (
-                  <div key={idx} className="flex flex-col sm:flex-row items-start sm:items-center gap-4 sm:gap-6 p-6 rounded-2xl bg-card border border-border/50 hover:border-primary/30 transition-colors">
-                    <div className="text-2xl font-light text-primary font-mono shrink-0">{item.num}</div>
-                    <div>
-                      <h3 className="text-lg font-bold text-foreground mb-1">{item.title}</h3>
-                      <p className="text-muted-foreground text-sm sm:text-base">{item.desc}</p>
-                    </div>
-                  </div>
-                ))}
-              </div>
-            </div>
-          </section>
-        </AnimatedSection>
-
-        {/* 6. Why Ecocee */}
-        <AnimatedSection variant="fade-up" delay={0.1}>
-          <section className="py-24 bg-secondary/5 border-y border-border/50">
-            <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-              <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-12 text-center" style={{ fontFamily: "var(--font-display)" }}>
-                Why Ecocee
-              </h2>
-              <div className="grid md:grid-cols-2 gap-6 max-w-4xl mx-auto">
-                {[
-                  {
-                    title: "AI + Electronics",
-                    desc: "We work across software intelligence and physical systems.",
-                    icon: BrainCircuit
-                  },
-                  {
-                    title: "End-to-End Engineering",
-                    desc: "From architecture and software to embedded hardware and deployment.",
-                    icon: Settings
-                  },
-                  {
-                    title: "Private & Edge-Ready",
-                    desc: "Solutions can be designed for cloud, private, on-premise or hybrid environments.",
-                    icon: ShieldCheck
-                  },
-                  {
-                    title: "Technology Partnership",
-                    desc: "We work beyond initial development through deployment, support and continuous improvement.",
-                    icon: Workflow
-                  }
-                ].map((item, idx) => (
-                  <Card key={idx} className="bg-card border-border hover:border-primary/20 transition-colors">
-                    <CardContent className="p-6 flex items-start gap-4">
-                      <div className="w-10 h-10 rounded-lg bg-primary/10 flex items-center justify-center shrink-0">
-                        <item.icon className="w-5 h-5 text-primary" />
-                      </div>
-                      <div>
-                        <h3 className="text-lg font-bold text-foreground mb-2">{item.title}</h3>
-                        <p className="text-sm text-muted-foreground leading-relaxed">{item.desc}</p>
-                      </div>
-                    </CardContent>
-                  </Card>
-                ))}
-              </div>
-            </div>
-          </section>
-        </AnimatedSection>
-
-        {/* 7. Our Journey */}
-        <AnimatedSection variant="fade-up" delay={0.1}>
-          <section className="py-24">
-            <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
-              <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-16 text-center" style={{ fontFamily: "var(--font-display)" }}>
-                Our Journey
-              </h2>
-              <div className="relative">
-                {/* Desktop line */}
-                <div className="hidden md:block absolute top-[22px] left-8 right-8 h-0.5 bg-border/80" />
-                
-                <div className="flex flex-col md:flex-row justify-between gap-12 md:gap-4 relative z-10">
-                  {[
-                    { title: "2023", desc: "Ecocee founded in Kerala." },
-                    { title: "Engineering", desc: "Embedded systems and electronics." },
-                    { title: "AI Systems", desc: "Expansion into AI and intelligent automation." },
-                    { title: "Edge Intelligence", desc: "Combining AI with embedded and edge computing." },
-                    { title: "Today", desc: "Building intelligent technology systems for businesses." },
-                  ].map((item, idx) => (
-                    <div key={idx} className="flex md:flex-col items-center md:items-start text-left md:text-center gap-4 md:gap-0 w-full md:flex-1">
-                      {/* Mobile line segment */}
-                      <div className="md:hidden absolute left-[15px] top-6 bottom-0 w-0.5 bg-border/80 -z-10" />
-                      
-                      <div className="w-8 h-8 rounded-full bg-background border-4 border-primary flex items-center justify-center shrink-0 md:mx-auto md:mb-6 shadow-sm z-10">
-                        <div className="w-2 h-2 rounded-full bg-primary" />
-                      </div>
-                      <div>
-                        <h3 className="text-base font-bold text-foreground mb-1">{item.title}</h3>
-                        <p className="text-sm text-muted-foreground leading-relaxed">{item.desc}</p>
-                      </div>
-                    </div>
-                  ))}
+                  <Link
+                    href="/#products"
+                    className="inline-flex items-center gap-2 text-[13px] font-semibold text-[#555] transition-colors hover:text-[#25845A]"
+                  >
+                    Explore our work
+                    <ArrowRight size={15} />
+                  </Link>
                 </div>
               </div>
             </div>
-          </section>
-        </AnimatedSection>
 
-        {/* 8. Ecocee Labs */}
-        <AnimatedSection variant="fade-up" delay={0.1}>
-          <EcoceeLabsSection />
-        </AnimatedSection>
+            <div className="mt-20 flex flex-col justify-between gap-5 border-t border-[#e8e8e8] pt-6 sm:flex-row sm:items-center">
+              <p className="text-[11px] font-medium uppercase tracking-[0.16em] text-[#999]">
+                Independent technology company
+              </p>
 
-        {/* 9. Meet the Team */}
-        <AnimatedSection variant="fade-up" delay={0.1}>
-          <section className="py-24 border-t border-border/50" id="team">
-            <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-              <div className="text-center mb-16">
-                <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-4" style={{ fontFamily: "var(--font-display)" }}>
-                  Meet the Team
+              <div className="flex items-center gap-2 text-[12px] text-[#777]">
+                <MapPin size={14} className="text-[#25845A]" />
+                Kerala, India
+                <span className="mx-2 text-[#ccc]">/</span>
+                Working beyond boundaries
+              </div>
+            </div>
+          </div>
+        </section>
+
+        {/* 02 — Company introduction */}
+        <section className="border-b border-[#e8e8e8]">
+          <div className="mx-auto grid max-w-[1440px] gap-12 px-6 py-20 sm:px-10 lg:grid-cols-[0.65fr_1.35fr] lg:gap-24 lg:px-16 lg:py-32">
+            <div>
+              <p className="text-[11px] font-semibold uppercase tracking-[0.18em] text-[#25845A]">
+                01 / The company
+              </p>
+
+              <h2 className="mt-6 max-w-[360px] text-[36px] font-semibold leading-[1.12] tracking-[-0.055em] sm:text-[46px]">
+                Technology should solve something real.
+              </h2>
+            </div>
+
+            <div className="max-w-[760px]">
+              <p className="text-[19px] leading-[1.8] tracking-[-0.02em] text-[#333] sm:text-[23px]">
+                Powerful technology is only useful when it works
+                outside a demonstration. It must connect with
+                existing systems, operate under real constraints
+                and deliver measurable value.
+              </p>
+
+              <div className="mt-9 grid gap-8 border-t border-[#e8e8e8] pt-8 sm:grid-cols-2 sm:gap-12">
+                <div>
+                  <p className="text-[14px] leading-[1.9] text-[#777]">
+                    We work across artificial intelligence,
+                    software architecture, embedded systems
+                    and computing infrastructure.
+                  </p>
+                </div>
+
+                <div>
+                  <p className="text-[14px] leading-[1.9] text-[#777]">
+                    Our approach is to understand the complete
+                    problem, engineer the right solution and
+                    continue improving it as requirements evolve.
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        {/* 03 — Engineering capabilities */}
+        <section
+          id="capabilities"
+          className="scroll-mt-20 border-b border-[#e8e8e8]"
+        >
+          <div className="mx-auto max-w-[1440px] px-6 py-20 sm:px-10 lg:px-16 lg:py-32">
+            <div className="mb-16 flex flex-col justify-between gap-6 lg:flex-row lg:items-end">
+              <div>
+                <p className="text-[11px] font-semibold uppercase tracking-[0.18em] text-[#25845A]">
+                  02 / Engineering capabilities
+                </p>
+                <h2 className="mt-6 max-w-[650px] text-[42px] font-semibold leading-[1.05] tracking-[-0.065em] sm:text-[58px]">
+                  Different disciplines.
+                  <br />
+                  One engineering approach.
                 </h2>
-                <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-                  Engineers, researchers and builders working across AI, electronics and intelligent systems.
+              </div>
+
+              <p className="max-w-[350px] text-[14px] leading-[1.9] text-[#888]">
+                Our work spans the software layer, computing
+                infrastructure and physical devices.
+              </p>
+            </div>
+
+            <div className="border-t border-[#dedede]">
+              {capabilities.map((item) => (
+                <article
+                  key={item.number}
+                  className="grid gap-5 border-b border-[#e8e8e8] py-9 sm:grid-cols-[65px_0.8fr_1.2fr] sm:gap-8 sm:py-11"
+                >
+                  <span className="font-mono text-[12px] text-[#25845A]">
+                    {item.number}
+                  </span>
+
+                  <h3 className="text-[23px] font-semibold tracking-[-0.8px] sm:text-[25px]">
+                    {item.name}
+                  </h3>
+
+                  <div>
+                    <p className="max-w-[570px] text-[14px] leading-[1.9] text-[#777] sm:text-[15px]">
+                      {item.description}
+                    </p>
+
+                    <div className="mt-5 flex flex-wrap gap-x-5 gap-y-2">
+                      {item.tags.map((tag) => (
+                        <span
+                          key={tag}
+                          className="text-[11px] font-medium uppercase tracking-[0.08em] text-[#999]"
+                        >
+                          {tag}
+                        </span>
+                      ))}
+                    </div>
+                  </div>
+                </article>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        {/* 04 — Engineering approach */}
+        <section className="border-b border-[#e8e8e8] bg-[#f8f9f7]">
+          <div className="mx-auto grid max-w-[1440px] gap-14 px-6 py-20 sm:px-10 lg:grid-cols-[0.8fr_1.2fr] lg:gap-24 lg:px-16 lg:py-32">
+            <div>
+              <p className="text-[11px] font-semibold uppercase tracking-[0.18em] text-[#25845A]">
+                03 / How we work
+              </p>
+
+              <h2 className="mt-6 max-w-[450px] text-[42px] font-semibold leading-[1.06] tracking-[-0.065em] sm:text-[56px]">
+                Engineering is a way of thinking.
+              </h2>
+
+              <p className="mt-7 max-w-[400px] text-[14px] leading-[1.9] text-[#777]">
+                We value clear reasoning, practical decisions
+                and systems that continue to work after
+                they are delivered.
+              </p>
+            </div>
+
+            <div className="border-t border-[#dedede]">
+              {principles.map((item) => (
+                <article
+                  key={item.number}
+                  className="grid grid-cols-[42px_1fr] gap-5 border-b border-[#dedede] py-7 sm:grid-cols-[55px_1fr] sm:gap-7"
+                >
+                  <span className="pt-1 font-mono text-[12px] text-[#25845A]">
+                    {item.number}
+                  </span>
+
+                  <div>
+                    <h3 className="text-[18px] font-semibold tracking-[-0.4px]">
+                      {item.title}
+                    </h3>
+                    <p className="mt-3 max-w-[570px] text-[14px] leading-[1.9] text-[#777]">
+                      {item.description}
+                    </p>
+                  </div>
+                </article>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        {/* 05 — Product engineering */}
+        <section className="border-b border-[#e8e8e8]">
+          <div className="mx-auto max-w-[1440px] px-6 py-20 sm:px-10 lg:px-16 lg:py-32">
+            <div className="grid gap-12 lg:grid-cols-[0.8fr_1.2fr] lg:gap-24">
+              <div>
+                <p className="text-[11px] font-semibold uppercase tracking-[0.18em] text-[#25845A]">
+                  04 / Product engineering
+                </p>
+
+                <h2 className="mt-6 text-[42px] font-semibold leading-[1.06] tracking-[-0.065em] sm:text-[56px]">
+                  We build beyond client projects.
+                </h2>
+
+                <p className="mt-7 max-w-[420px] text-[14px] leading-[1.9] text-[#777]">
+                  Alongside engineering solutions for businesses,
+                  we explore and develop our own technology
+                  products, tools and platforms.
+                </p>
+
+                <Link
+                  href="/#products"
+                  className="mt-8 inline-flex items-center gap-2 text-[13px] font-semibold text-[#25845A] hover:underline"
+                >
+                  Discover our products
+                  <ArrowUpRight size={15} />
+                </Link>
+              </div>
+
+              <div className="grid grid-cols-1 gap-0 border-t border-[#dedede] sm:grid-cols-2">
+                <article className="border-b border-[#e8e8e8] py-8 sm:border-r sm:pr-8">
+                  <p className="font-mono text-[11px] text-[#25845A]">
+                    PRODUCT / 01
+                  </p>
+                  <h3 className="mt-5 text-[28px] font-semibold tracking-[-1px]">
+                    Mero
+                  </h3>
+                  <p className="mt-3 text-[13px] leading-[1.9] text-[#777]">
+                    Edge computing hardware for applications
+                    that bring computation closer to devices
+                    and operations.
+                  </p>
+                </article>
+
+                <article className="border-b border-[#e8e8e8] py-8 sm:pl-8">
+                  <p className="font-mono text-[11px] text-[#25845A]">
+                    PRODUCT / 02
+                  </p>
+                  <h3 className="mt-5 text-[28px] font-semibold tracking-[-1px]">
+                    Dotpaper
+                  </h3>
+                  <p className="mt-3 text-[13px] leading-[1.9] text-[#777]">
+                    A business applications platform for
+                    operational workflows and internal tools.
+                  </p>
+                </article>
+
+                <article className="border-b border-[#e8e8e8] py-8 sm:border-r sm:pr-8">
+                  <p className="font-mono text-[11px] text-[#25845A]">
+                    TECHNOLOGY / 03
+                  </p>
+                  <h3 className="mt-5 text-[28px] font-semibold tracking-[-1px]">
+                    Kode
+                  </h3>
+                  <p className="mt-3 text-[13px] leading-[1.9] text-[#777]">
+                    An independent programming-language
+                    project exploring developer technology
+                    and systems programming.
+                  </p>
+                </article>
+
+                <article className="border-b border-[#e8e8e8] py-8 sm:pl-8">
+                  <p className="font-mono text-[11px] text-[#25845A]">
+                    TECHNOLOGY / 04
+                  </p>
+                  <h3 className="mt-5 text-[28px] font-semibold tracking-[-1px]">
+                    TIVA
+                  </h3>
+                  <p className="mt-3 text-[13px] leading-[1.9] text-[#777]">
+                    A developer-agent initiative focused on
+                    terminal-based development workflows.
+                  </p>
+                </article>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        {/* 06 — Ecocee Labs */}
+        <section
+          id="labs"
+          className="border-b border-[#e8e8e8]"
+        >
+          <EcoceeLabsSection />
+        </section>
+
+        {/* 07 — Journey */}
+        <section className="border-b border-[#e8e8e8]">
+          <div className="mx-auto max-w-[1440px] px-6 py-20 sm:px-10 lg:px-16 lg:py-32">
+            <div className="grid gap-12 lg:grid-cols-[0.8fr_1.2fr] lg:gap-24">
+              <div>
+                <p className="text-[11px] font-semibold uppercase tracking-[0.18em] text-[#25845A]">
+                  05 / Our journey
+                </p>
+
+                <h2 className="mt-6 text-[42px] font-semibold leading-[1.06] tracking-[-0.065em] sm:text-[56px]">
+                  Still building.
+                  <br />
+                  Still learning.
+                </h2>
+
+                <p className="mt-7 max-w-[380px] text-[14px] leading-[1.9] text-[#777]">
+                  From early engineering experiments to
+                  building software and intelligent systems,
+                  our journey continues through practical work.
                 </p>
               </div>
 
-              <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-5xl mx-auto">
-                {teamData.slice(0, 3).map((member) => (
-                  <Card key={member.id} className="bg-card border-border overflow-hidden hover:shadow-lg transition-all duration-300">
-                    <CardHeader className="p-6 pb-0 flex flex-col items-center text-center">
-                      <Avatar className="w-24 h-24 mb-5 bg-secondary/10 border border-border/50 text-4xl flex items-center justify-center shadow-sm">
-                        <span aria-hidden>{member.avatar}</span>
-                      </Avatar>
-                      <h3 className="text-xl font-bold text-foreground">{member.name}</h3>
-                      <p className="text-primary font-medium text-sm mt-1 mb-5">{member.role}</p>
-                    </CardHeader>
-                    <CardContent className="p-6 pt-0 text-center flex flex-col h-full">
-                      <p className="text-sm text-muted-foreground leading-relaxed mb-6 flex-grow">
-                        {member.bio}
-                      </p>
-                      
-                      {/* Skills */}
-                      <div className="flex flex-wrap justify-center gap-2 mb-8">
-                        {member.skills.slice(0, 4).map((skill, i) => (
-                          <span key={i} className="px-2.5 py-1 bg-secondary/40 text-secondary-foreground text-xs font-medium rounded-md border border-border/50">
-                            {skill}
-                          </span>
-                        ))}
-                      </div>
+              <div className="border-t border-[#dedede]">
+                {milestones.map((item, index) => (
+                  <article
+                    key={item.year}
+                    className="grid grid-cols-[90px_1fr] gap-5 border-b border-[#e8e8e8] py-7 sm:grid-cols-[115px_1fr] sm:gap-8"
+                  >
+                    <span className="font-mono text-[12px] text-[#25845A]">
+                      {item.year}
+                    </span>
 
-                      {/* Social Links */}
-                      <div className="flex items-center justify-center gap-3 mt-auto border-t border-border/50 pt-5">
-                        {member.linkedin && (
-                          <a href={member.linkedin} target="_blank" rel="noopener noreferrer" className="w-8 h-8 flex items-center justify-center rounded-md bg-secondary/50 text-muted-foreground hover:bg-primary hover:text-primary-foreground transition-colors" aria-label={`LinkedIn ${member.name}`}>
-                            <Linkedin className="w-4 h-4" />
-                          </a>
-                        )}
-                        {member.email && member.email !== "#" && (
-                          <a href={`mailto:${member.email}`} className="w-8 h-8 flex items-center justify-center rounded-md bg-secondary/50 text-muted-foreground hover:bg-primary hover:text-primary-foreground transition-colors" aria-label={`Email ${member.name}`}>
-                            <Mail className="w-4 h-4" />
-                          </a>
-                        )}
-                      </div>
-                    </CardContent>
-                  </Card>
+                    <div>
+                      <h3 className="text-[18px] font-semibold tracking-[-0.4px]">
+                        {item.title}
+                      </h3>
+                      <p className="mt-3 max-w-[540px] text-[14px] leading-[1.9] text-[#777]">
+                        {item.description}
+                      </p>
+                    </div>
+                  </article>
                 ))}
               </div>
             </div>
-          </section>
-        </AnimatedSection>
+          </div>
+        </section>
 
-        {/* 10. Final CTA */}
-        <AnimatedSection variant="fade-up" delay={0.1}>
-          <section className="py-24 bg-secondary/5 border-t border-border/50">
-            <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-              <h2 className="text-3xl md:text-5xl font-extrabold text-foreground mb-6" style={{ fontFamily: "var(--font-display)" }}>
-                Have a Problem Worth Engineering?
-              </h2>
-              <p className="text-lg text-muted-foreground mb-10 leading-relaxed max-w-2xl mx-auto">
-                Tell us what you're trying to solve. We'll explore whether AI, edge computing, embedded systems or automation can turn it into a practical solution.
+        {/* 08 — People */}
+        <section
+          id="team"
+          className="border-b border-[#e8e8e8]"
+        >
+          <div className="mx-auto max-w-[1440px] px-6 py-20 sm:px-10 lg:px-16 lg:py-32">
+            <div className="mb-16 grid gap-8 lg:grid-cols-[0.8fr_1.2fr] lg:gap-24">
+              <div>
+                <p className="text-[11px] font-semibold uppercase tracking-[0.18em] text-[#25845A]">
+                  06 / The people
+                </p>
+                <h2 className="mt-6 text-[42px] font-semibold leading-[1.06] tracking-[-0.065em] sm:text-[56px]">
+                  People behind the engineering.
+                </h2>
+              </div>
+
+              <p className="max-w-[460px] self-end text-[14px] leading-[1.9] text-[#777]">
+                A team bringing together engineering,
+                technology and different perspectives
+                to build practical solutions.
               </p>
-              <div className="flex flex-col items-center">
-                <Button className="bg-primary text-primary-foreground font-semibold h-12 px-8 mb-4 group shadow-md" asChild>
-                  <Link href={GOOGLE_FORM_URL} target="_blank" rel="noopener noreferrer">
-                    Talk to an Ecocee Architect
-                    <ArrowRight className="w-4 h-4 ml-2 group-hover:translate-x-1 transition-transform" />
-                  </Link>
-                </Button>
-                <p className="text-sm text-muted-foreground font-medium">
-                  30-minute discovery call · No commitment
+            </div>
+
+            <div className="border-t border-[#dedede]">
+              {teamData.slice(0, 3).map((member, index) => (
+                <article
+                  key={member.id}
+                  className="grid gap-6 border-b border-[#e8e8e8] py-8 sm:grid-cols-[70px_1fr_auto] sm:items-center sm:gap-8"
+                >
+                  <div className="flex h-[58px] w-[58px] items-center justify-center border border-[#e8e8e8] bg-[#f8f9f7] text-[25px]">
+                    <span aria-hidden>{member.avatar}</span>
+                  </div>
+
+                  <div>
+                    <h3 className="text-[20px] font-semibold tracking-[-0.5px]">
+                      {member.name}
+                    </h3>
+
+                    <p className="mt-1 text-[13px] font-medium text-[#25845A]">
+                      {member.role}
+                    </p>
+
+                    <p className="mt-4 max-w-[600px] text-[13px] leading-[1.9] text-[#777]">
+                      {member.bio}
+                    </p>
+
+                    <div className="mt-4 flex flex-wrap gap-x-4 gap-y-2">
+                      {member.skills.slice(0, 4).map((skill) => (
+                        <span
+                          key={skill}
+                          className="text-[10px] font-medium uppercase tracking-[0.09em] text-[#999]"
+                        >
+                          {skill}
+                        </span>
+                      ))}
+                    </div>
+                  </div>
+
+                  <div className="flex items-center gap-3">
+                    {member.linkedin && (
+                      <a
+                        href={member.linkedin}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        aria-label={`LinkedIn profile of ${member.name}`}
+                        className="flex h-9 w-9 items-center justify-center border border-[#e8e8e8] text-[#777] transition-colors hover:border-[#25845A] hover:text-[#25845A]"
+                      >
+                        <Linkedin size={16} />
+                      </a>
+                    )}
+
+                    {member.email && member.email !== "#" && (
+                      <a
+                        href={`mailto:${member.email}`}
+                        aria-label={`Email ${member.name}`}
+                        className="flex h-9 w-9 items-center justify-center border border-[#e8e8e8] text-[#777] transition-colors hover:border-[#25845A] hover:text-[#25845A]"
+                      >
+                        <Mail size={16} />
+                      </a>
+                    )}
+                  </div>
+                </article>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        {/* 09 — Contact */}
+        <section className="bg-[#f8f9f7]">
+          <div className="mx-auto max-w-[1440px] px-6 py-24 sm:px-10 lg:px-16 lg:py-36">
+            <div className="grid gap-12 lg:grid-cols-[1.3fr_0.7fr] lg:items-end">
+              <div>
+                <p className="text-[11px] font-semibold uppercase tracking-[0.18em] text-[#25845A]">
+                  Work with Ecocee
+                </p>
+
+                <h2 className="mt-7 max-w-[850px] text-[clamp(3rem,7vw,6.5rem)] font-semibold leading-[0.98] tracking-[-0.075em]">
+                  Have something
+                  <br />
+                  worth building?
+                </h2>
+
+                <p className="mt-8 max-w-[540px] text-[15px] leading-[1.9] text-[#777]">
+                  Tell us about the challenge, the idea or the
+                  system you want to build. Let's explore the
+                  engineering behind it.
+                </p>
+              </div>
+
+              <div className="lg:justify-self-end">
+                <Link
+                  href={GOOGLE_FORM_URL}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex h-14 items-center gap-4 bg-[#171717] px-7 text-[14px] font-semibold text-white transition-colors hover:bg-[#25845A]"
+                >
+                  Talk to our team
+                  <ArrowUpRight size={17} />
+                </Link>
+
+                <p className="mt-5 text-[12px] text-[#999]">
+                  <a
+                    href="mailto:info@ecocee.in"
+                    className="transition-colors hover:text-[#25845A]"
+                  >
+                    info@ecocee.in
+                  </a>
                 </p>
               </div>
             </div>
-          </section>
-        </AnimatedSection>
+          </div>
+        </section>
       </main>
 
       <FooterSection />
