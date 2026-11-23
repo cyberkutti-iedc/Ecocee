@@ -316,7 +316,7 @@ const STAGES: [string, string, string][] = [
 
 export function Compiler() {
   return (
-    <Sec label="comp-t">
+    <Sec id="compiler" label="comp-t">
       <div className={`${wrap} grid items-center gap-14 lg:grid-cols-[1fr_1.1fr] lg:gap-20`}>
         <div>
           <h2 id="comp-t" className={h2}>
@@ -590,7 +590,7 @@ export function Roadmap() {
   ];
 
   return (
-    <Sec label="rm-t" className="!bg-[#EBDDFB] dark:!bg-[#190A2B]">
+    <Sec id="roadmap" label="rm-t" className="!bg-[#EBDDFB] dark:!bg-[#190A2B]">
       <div className={wrap}>
         <div className="max-w-3xl">
           <h2 id="rm-t" className={h2}>
