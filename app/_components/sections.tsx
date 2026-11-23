@@ -102,28 +102,28 @@ export function Why() {
             Why Kode?
           </h2>
           <p className={lead}>
-            A language that reads like Python, feels like JavaScript and builds like C.
+            A compiled language designed for clarity, safety, and minimal resource overhead.
           </p>
         </div>
 
         <ul className="grid gap-5 sm:grid-cols-2">
           <Tile
-            title="Python-readable"
-            body="Plain syntax. Variables need no keyword, strings interpolate with ${name}, and blocks use braces."
+            title="Clean, readable syntax"
+            body="Type inference where you want it, explicit types where you need them. Variables need no boilerplate and string interpolation stays simple."
             bg="bg-[#7B2FBE] text-white"
             blob="bg-[#9B57DB]"
             className="min-h-[22rem]"
           />
           <Tile
-            title="JavaScript-familiar"
-            body="Closures, optionals with ?. and ??, and try / catch feel like home. Static types catch the rest."
+            title="Modern & safe"
+            body="First-class closures, safe optionals with ?. and ??, expressive pattern matching, and compile-time type verification that catches errors early."
             bg="bg-[#F5A623] text-[#1E0A33]"
             blob="bg-[#FFC857]"
             className="min-h-[22rem] sm:mt-12"
           />
           <Tile
             title="Small native binaries"
-            body="A hello world builds to about 450 KB, or 373 KB stripped. No VM and nothing to install on the server."
+            body="A hello world builds to ~302 KB stripped. Plaintext programs link only the runtime parts they use, with no VM and zero dependencies."
             bg="bg-[#DCCBF7] text-[#1E0A33] dark:bg-[#3A1C66] dark:text-[#F4ECFC]"
             blob="bg-[#C58BF2]/70 dark:bg-[#5A22A0]"
             className="min-h-[22rem] sm:-mt-0"
@@ -179,53 +179,110 @@ export function Code() {
 }
 
 /* ------------------------------------------------------------------ */
-/* Speed: the bars are the visual                                      */
+/* Speed: verified benchmarks, memory, and runtime size split         */
 /* ------------------------------------------------------------------ */
 
 export function Speed() {
-  const rows: [string, string, number, string][] = [
-    ["Python", "4,658 ms", 100, "bg-[#8F84FF]"],
-    ["Kode", "93 ms", 2.6, "bg-[#F5A623]"],
-    ["C", "58 ms", 1.6, "bg-[#C58BF2]"],
+  const benchmarks = [
+    { name: "loop_mod", kode: "11 ms", c: "11 ms", go: "29 ms", node: "49 ms", py: "3,026 ms", ratio: "1.01× C" },
+    { name: "mandel", kode: "13 ms", c: "11 ms", go: "13 ms", node: "30 ms", py: "1,155 ms", ratio: "1.16× C" },
+    { name: "collatz", kode: "200 ms", c: "150 ms", go: "228 ms", node: "1,799 ms", py: "14,166 ms", ratio: "1.33× C" },
+    { name: "sieve", kode: "30 ms", c: "12 ms", go: "21 ms", node: "151 ms", py: "2,231 ms", ratio: "2.58× C" },
+    { name: "fib(38)", kode: "4 ms", c: "57 ms", go: "91 ms", node: "194 ms", py: "4,815 ms", ratio: "0.07× C ¹" },
   ];
+
+  const runtimeSizes = [
+    { target: "hello (core runtime only)", size: "~302 KB", raw: "302,032 B stripped" },
+    { target: "plaintext HTTP server", size: "454 KB", raw: "454,328 B stripped" },
+    { target: "TLS server (serve_tls)", size: "2.78 MB", raw: "2,786,472 B stripped" },
+    { target: "PostgreSQL client", size: "2.96 MB", raw: "2,967,752 B stripped" },
+  ];
+
   return (
     <Sec id="footprint" label="speed-t" className="!bg-[#EBDDFB] dark:!bg-[#190A2B]">
-      <div className={`${wrap} grid items-center gap-12 lg:grid-cols-2 lg:gap-20`}>
-        <div>
+      <div className={`${wrap} space-y-16`}>
+        {/* Header */}
+        <div className="max-w-3xl">
           <h2 id="speed-t" className={h2}>
-            Fast where it counts
+            Measured performance
           </h2>
           <p className={lead}>
-            Time to compute fib(35), measured on one development machine: macOS arm64, Apple silicon.
-          </p>
-          <p className={`mt-6 max-w-xl text-lg leading-relaxed ${muted}`}>
-            Binary size: 450,696 bytes for hello world, 373,336 after <M>strip -x</M>. The numbers, targets and
-            the rows that still miss are in{" "}
-            <a className={link} href={`${GH}/blob/main/benchmarks/report.md`}>
-              benchmarks/report.md
-            </a>
-            . HTTP benchmarks are still preliminary.
+            Median wall-clock time measured with hyperfine on Apple silicon (macOS arm64, 10 cores).
+            Kode release vs <M>cc -O2</M>, plain <M>go build</M>, Node, and Python source.
           </p>
         </div>
 
-        <div className="rounded-[2.5rem] bg-[#1B0B2E] p-8 text-[#F4ECFC] sm:p-12">
-          <ul className="space-y-8">
-            {rows.map(([name, time, w, color]) => (
-              <li key={name}>
-                <div className="flex items-baseline justify-between">
-                  <span className="text-2xl font-medium">{name}</span>
-                  <span className={`${mono.className} text-base`}>{time}</span>
-                </div>
-                <div className="mt-3 h-6 rounded-full bg-[#2E1650]">
-                  <div
-                    className={`h-6 rounded-full ${color}`}
-                    style={{ width: `${Math.max(w, 2.5)}%` }}
-                  />
-                </div>
-              </li>
-            ))}
-          </ul>
-          <p className="mt-8 text-sm text-[#BBA6D4]">Shorter is faster. Bars are to scale.</p>
+        {/* Benchmarks Grid */}
+        <div className="grid gap-8 lg:grid-cols-[1.4fr_1fr]">
+          {/* Benchmarks Table */}
+          <div className="rounded-[2.5rem] bg-[#1B0B2E] p-6 text-[#F4ECFC] sm:p-8">
+            <h3 className="text-xl font-medium text-white mb-6">Wall Clock (median, lower is better)</h3>
+            <div className="overflow-x-auto">
+              <table className="w-full text-left text-sm">
+                <thead>
+                  <tr className="border-b border-white/10 text-xs uppercase tracking-wider text-[#BBA6D4]">
+                    <th className="pb-3 font-semibold">Program</th>
+                    <th className="pb-3 font-semibold text-[#F5A623]">Kode</th>
+                    <th className="pb-3 font-semibold">C (-O2)</th>
+                    <th className="pb-3 font-semibold">Go</th>
+                    <th className="pb-3 font-semibold">Node</th>
+                    <th className="pb-3 font-semibold">Python</th>
+                  </tr>
+                </thead>
+                <tbody className={`${mono.className} divide-y divide-white/5`}>
+                  {benchmarks.map((b) => (
+                    <tr key={b.name} className="hover:bg-white/[0.02]">
+                      <td className="py-3 font-medium text-white">{b.name}</td>
+                      <td className="py-3 font-bold text-[#F5A623]">{b.kode}</td>
+                      <td className="py-3 text-[#C58BF2]">{b.c}</td>
+                      <td className="py-3 text-white/80">{b.go}</td>
+                      <td className="py-3 text-white/60">{b.node}</td>
+                      <td className="py-3 text-white/40">{b.py}</td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+
+            <p className="mt-6 text-xs leading-relaxed text-[#BBA6D4]">
+              ¹ Optimizer artifact, not a language comparison: Kode's MIR inliner inlines the recursion once before clang sees it (5 <M>bl</M> sites in the Kode binary vs 2 in C).
+            </p>
+            <p className="mt-2 text-xs text-[#BBA6D4]">
+              On tight loops and mandelbrot, Kode performs within 1.01×–1.16× of optimized C.
+            </p>
+          </div>
+
+          {/* Size & Memory Cards */}
+          <div className="flex flex-col gap-5">
+            {/* Runtime Size Split */}
+            <div className="rounded-[2rem] bg-white p-7 dark:bg-[#1F1034] text-[#1E0A33] dark:text-[#F4ECFC]">
+              <h3 className="text-xl font-semibold tracking-tight">Modular runtime size</h3>
+              <p className={`mt-2 text-sm leading-relaxed ${muted}`}>
+                Plaintext programs link only the core runtime (~302 KB). TLS and PostgreSQL code are included only when imported and used.
+              </p>
+              <ul className="mt-5 space-y-3">
+                {runtimeSizes.map((s) => (
+                  <li key={s.target} className="flex items-baseline justify-between border-b border-black/5 dark:border-white/5 pb-2 text-sm">
+                    <span className="font-medium">{s.target}</span>
+                    <span className={`${mono.className} font-semibold text-[#7B2FBE] dark:text-[#C58BF2]`}>{s.size}</span>
+                  </li>
+                ))}
+              </ul>
+            </div>
+
+            {/* Peak RSS Memory */}
+            <div className="rounded-[2rem] bg-white p-7 dark:bg-[#1F1034] text-[#1E0A33] dark:text-[#F4ECFC]">
+              <h3 className="text-xl font-semibold tracking-tight">Lean memory footprint</h3>
+              <p className={`mt-2 text-sm leading-relaxed ${muted}`}>
+                Peak RSS on loop and collatz benchmarks: <strong className="text-[#1E0A33] dark:text-white">1.7 MB</strong> for Kode (comparable to C at 1.7 MB, vs 4.3 MB for Go, 47 MB for Node, and 9 MB for Python).
+              </p>
+              <div className="mt-4 pt-3 border-t border-black/5 dark:border-white/5 text-xs text-[#5B4378] dark:text-[#BBA6D4]">
+                <span>String building: </span>
+                <span className={`${mono.className} font-semibold text-[#7B2FBE] dark:text-[#C58BF2]`}>StringBuilder 2.3 ms</span>
+                <span> vs 188.4 ms for repeated concatenation (0.01×).</span>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </Sec>
@@ -233,17 +290,18 @@ export function Speed() {
 }
 
 /* ------------------------------------------------------------------ */
-/* Compiler: a real sequence, so it is a staircase                     */
+/* Compiler: real pipeline from source to binary                      */
 /* ------------------------------------------------------------------ */
 
 const STAGES: [string, string, string][] = [
-  ["Lexer", "", "bg-[#DCCBF7] text-[#1E0A33]"],
-  ["Parser", "", "bg-[#C9A8F2] text-[#1E0A33]"],
-  ["AST", "", "bg-[#B58BEA] text-[#1E0A33]"],
-  ["Type check", "", "bg-[#9B57DB] text-white"],
-  ["MIR", "retain and release included", "bg-[#7B2FBE] text-white"],
-  ["Cranelift", "writes an object file", "bg-[#5A22A0] text-white"],
-  ["Linker", "makes the binary", "bg-[#2B0F47] text-white"],
+  ["Lexer", "token stream", "bg-[#DCCBF7] text-[#1E0A33]"],
+  ["Parser", "syntax validation", "bg-[#C9A8F2] text-[#1E0A33]"],
+  ["AST", "abstract syntax tree", "bg-[#B58BEA] text-[#1E0A33]"],
+  ["Type check", "sound type verification", "bg-[#9B57DB] text-white"],
+  ["MIR", "retain/release elimination (KODE_RC_ELIM)", "bg-[#7B2FBE] text-white"],
+  ["LLVM IR", "lowered directly from MIR", "bg-[#6824A8] text-white"],
+  ["Clang", "native object emission", "bg-[#5A22A0] text-white"],
+  ["Linker", "self-contained binary (~302 KB)", "bg-[#2B0F47] text-white"],
 ];
 
 export function Compiler() {
@@ -255,28 +313,29 @@ export function Compiler() {
             One compiler, written in Rust
           </h2>
           <p className={lead}>
-            Source goes through the lexer, parser, AST, type check and MIR, then Cranelift writes an object file
-            and the linker makes the binary. Each stage is its own crate.
+            Pipeline: <M>source → lexer → parser → AST → type check → MIR → LLVM IR → clang → object → linker → binary</M>.
           </p>
           <p className={`mt-5 max-w-xl text-lg leading-relaxed ${muted}`}>
-            Run <M>kode mir file.kode</M> to see the MIR, including retain and release, and <M>kode doctor</M> to
-            see the target, linker and runtime ABI.
+            Written in Rust with an LLVM backend and reference-counted memory. Every program compiles to a single self-contained binary containing only the runtime parts it actually uses. Built with version <strong>0.3.6</strong> and runtime <strong>ABI 0006</strong>.
+          </p>
+          <p className={`mt-4 max-w-xl text-sm leading-relaxed ${muted}`}>
+            Run <M>kode mir file.kode</M> to view the MIR, <M>kode doctor</M> to inspect your toolchain and runtime ABI, and <M>kode check --format=json</M> for machine-readable diagnostics.
           </p>
         </div>
 
-        <ol className="space-y-3">
+        <ol className="space-y-2.5">
           {STAGES.map(([name, note, tone], i) => (
             <li
               key={name}
-              className={`flex w-[72%] items-center gap-4 rounded-full px-5 py-3.5 sm:w-[66%] ${tone}`}
-              style={{ marginLeft: `${i * 4.5}%` }}
+              className={`flex w-[82%] items-center gap-4 rounded-full px-5 py-3 sm:w-[75%] ${tone}`}
+              style={{ marginLeft: `${i * 3.5}%` }}
             >
-              <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-black/15 text-sm font-semibold">
+              <span className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-black/15 text-xs font-semibold">
                 {i + 1}
               </span>
               <span className="min-w-0">
-                <span className="block text-lg font-medium leading-tight">{name}</span>
-                {note && <span className="block truncate text-sm opacity-85">{note}</span>}
+                <span className="block text-base font-medium leading-tight">{name}</span>
+                {note && <span className="block truncate text-xs opacity-85">{note}</span>}
               </span>
             </li>
           ))}
@@ -287,7 +346,7 @@ export function Compiler() {
 }
 
 /* ------------------------------------------------------------------ */
-/* What is in v0.3                                                     */
+/* What is in v0.3.6                                                  */
 /* ------------------------------------------------------------------ */
 
 export function Inside() {
@@ -298,25 +357,22 @@ export function Inside() {
     <Sec id="inside" label="in-t" className="!bg-[#EBDDFB] dark:!bg-[#190A2B]">
       <div className={wrap}>
         <h2 id="in-t" className={h2}>
-          What is in v0.3
+          What is in v0.3.6
         </h2>
         <p className={lead}>
-          A working compiler and an active standard library. Known gaps are tracked in{" "}
-          <a className={link} href={`${DOC}/STATUS.md`}>
-            docs/STATUS.md
-          </a>
-          .
+          A working native compiler (runtime ABI 0006) and an active standard library.
+          Every program links only the runtime parts it actually uses.
         </p>
 
         <div className="mt-14 grid gap-5 lg:grid-cols-3">
           <div className="rounded-[2.5rem] bg-[#7B2FBE] p-8 text-white sm:p-10 lg:col-span-2">
             <h3 className="text-3xl font-medium tracking-tight">PostgreSQL, built in</h3>
             <p className="mt-3 max-w-xl text-lg leading-relaxed opacity-90">
-              A client in the runtime with SCRAM-SHA-256 authentication and JSON results. It speaks plain TCP
-              today. TLS is planned in ADR 0033.
+              A native client in the runtime with SCRAM-SHA-256 authentication, <M>sslmode=prefer</M>,
+              connection pooling (<M>pg.pool</M>), and JSON query results. Speaks plain TCP and connects cleanly with zero external driver dependencies.
             </p>
             <p className={`${mono.className} mt-6 flex flex-wrap gap-2 text-sm`}>
-              {["pg.connect", "pg.exec", "pg.query", "pg.close"].map((x) => (
+              {["pg.connect", "pg.exec", "pg.query", "pg.close", "pg.pool"].map((x) => (
                 <span key={x} className="rounded-full border border-white/40 px-4 py-1.5">
                   {x}
                 </span>
@@ -333,41 +389,39 @@ export function Inside() {
           <div className={card}>
             <h3 className={h3}>Memory</h3>
             <p className={`mt-3 text-lg leading-relaxed ${muted}`}>
-              Reference counted, with a leak checker. The test runner fails a program that leaks.
+              Reference counted with atomic counts, MIR retain/release elimination (<M>KODE_RC_ELIM</M>), and a built-in leak checker (<M>KODE_LEAK_CHECK=1</M>).
             </p>
           </div>
           <div className={card}>
             <h3 className={h3}>Language</h3>
             <p className={`mt-3 text-lg leading-relaxed ${muted}`}>
-              int, float, bool, string. if, while, for, match. Named arguments, closures, generics, interfaces,
-              classes and enums.
+              <M>int</M>, <M>float</M>, <M>bool</M>, <M>string</M>; bitwise <M>&amp; | ^ ~ &lt;&lt; &gt;&gt;</M>; <M>if</M>, <M>while</M>, <M>for</M>, <M>match</M> with payload bindings and <M>is</M> narrowing. Closures and generic functions.
             </p>
           </div>
           <div className={card}>
             <h3 className={h3}>Data and errors</h3>
             <p className={`mt-3 text-lg leading-relaxed ${muted}`}>
-              Lists, maps, optionals <M>T?</M>, and errors with throw, try / catch and{" "}
-              <M>expr catch e {"{ }"}</M>.
+              Lists <M>[T]</M>, maps <M>{"{string: T}"}</M>, generic classes with methods and defaults, enums with payloads, optionals <M>T?</M> with <M>?.</M>, <M>??</M>, <M>!</M>, and <M>expr catch e {"{ }"}</M>.
             </p>
           </div>
           <div className={card}>
             <h3 className={h3}>Concurrency and I/O</h3>
             <p className={`mt-3 text-lg leading-relaxed ${muted}`}>
-              spawn and await, <M>Channel&lt;T&gt;</M>, a web server with Router, JSON, an HTTP client and files.
+              Tasks with <M>spawn</M> and <M>await</M>, typed <M>Channel&lt;T&gt;</M>, a web server with <M>serve</M>, <M>serve_tls</M> and <M>Router</M>, JSON, an HTTP client, and files.
             </p>
           </div>
 
           <div className={`${card} lg:col-span-2`}>
-            <h3 className={h3}>Tested the way you would want</h3>
+            <h3 className={h3}>Tested and verified: 223 passed, 0 failed</h3>
             <div className={`mt-4 grid gap-4 text-lg leading-relaxed sm:grid-cols-3 ${muted}`}>
               <p>
-                <M>test</M> blocks live in the language, run by <M>kode test</M>.
+                <M>223 passed, 0 failed</M> under <M>KODE_LEAK_CHECK=1 cargo test --workspace</M>.
               </p>
               <p>
-                <M>tests/run-pass</M> programs must run and are checked for leaks.
+                Full CLI tooling: <M>kode run</M>, <M>build</M>, <M>check --format=json</M>, <M>fmt</M>, <M>test</M>, <M>mir</M>, <M>doc</M>, <M>lsp</M>, <M>doctor</M>, and <M>explain</M>.
               </p>
               <p>
-                <M>tests/compile-fail</M> programs must fail with the right error code.
+                Self-contained native output: plaintext programs link only the core runtime (~302 KB).
               </p>
             </div>
           </div>
@@ -403,8 +457,8 @@ export function Agents() {
             <a href={`${GH}/blob/main/AGENTS.md`} className={pillDark}>
               Read AGENTS.md
             </a>
-            <a href={`${DOC}/ROADMAP.md`} className={pillLine}>
-              See the roadmap
+            <a href={`${GH}/tree/main/docs`} className={pillLine}>
+              See the docs
             </a>
           </div>
         </div>
@@ -433,48 +487,127 @@ export function Agents() {
 }
 
 /* ------------------------------------------------------------------ */
-/* Roadmap: a real timeline                                            */
+/* Roadmap & Journey: From v0.0.1 to today and beyond                */
 /* ------------------------------------------------------------------ */
 
 export function Roadmap() {
-  const s: [string, string, string, string][] = [
-    ["Shipped", "v0.3", "Working compiler, standard library, PostgreSQL client, Linux x86-64 and macOS arm64 releases.", "bg-[#7B2FBE] dark:bg-[#C58BF2]"],
-    ["Next", "M9 production track", "TLS, cycle-safe memory, byte buffers and enum payloads.", "bg-[#F5A623]"],
-    ["Planned", "Windows", "Builds with the GNU toolchain today. Not a release target yet.", "bg-[#5B4BD6] dark:bg-[#8F84FF]"],
-    ["Goal", "v1", "The plan is in docs/PLAN-v1.md.", "bg-[#1E0A33] dark:bg-[#F4ECFC]"],
+  const journey = [
+    {
+      phase: "Genesis",
+      tag: "Shipped",
+      version: "v0.0.1",
+      body: "The initial proof-of-concept: basic lexer, hand-written recursive-descent parser, AST, and compiling trivial expressions directly to machine instructions.",
+      current: false,
+    },
+    {
+      phase: "Architecture",
+      tag: "Shipped",
+      version: "v0.1.0",
+      body: "Introduced the Mid-level Intermediate Representation (MIR), type checking, structured functions, loops, and first-class closures.",
+      current: false,
+    },
+    {
+      phase: "Memory & Concurrency",
+      tag: "Shipped",
+      version: "v0.2.0",
+      body: "Reference-counted memory model, leak detection (KODE_LEAK_CHECK=1), lightweight concurrent tasks (spawn/await), and typed channels.",
+      current: false,
+    },
+    {
+      phase: "Current Toolchain",
+      tag: "Current Release",
+      version: "v0.3.6 (ABI 0006)",
+      body: "LLVM/Clang backend, ~302 KB stripped binaries, native PostgreSQL client, HTTP server (serve/serve_tls), CLI suite, and 223 passed tests.",
+      current: true,
+    },
+    {
+      phase: "Runtime Expansion",
+      tag: "Next",
+      version: "M9 Track",
+      body: "Cycle-safe memory, byte buffers, full enum payload pattern matching, and generalized asynchronous I/O.",
+      current: false,
+    },
+    {
+      phase: "Horizon",
+      tag: "Planned",
+      version: "v1.0 & Self-Hosting",
+      body: "Branch next/selfhost compiler byte-parity with the Rust compiler; native backend, Windows MSVC target, and formal v1.0 specifications.",
+      current: false,
+    },
   ];
+
   return (
     <Sec label="rm-t" className="!bg-[#EBDDFB] dark:!bg-[#190A2B]">
       <div className={wrap}>
-        <h2 id="rm-t" className={h2}>
-          Where Kode is going
-        </h2>
-        <p className={lead}>
-          See{" "}
-          <a className={link} href={`${DOC}/ROADMAP.md`}>
-            docs/ROADMAP.md
-          </a>{" "}
-          and{" "}
-          <a className={link} href={`${DOC}/PLAN-v1.md`}>
-            docs/PLAN-v1.md
+        <div className="max-w-3xl">
+          <h2 id="rm-t" className={h2}>
+            The journey: From v0.0.1 to today and beyond
+          </h2>
+          <p className={lead}>
+            How an experimental compiler evolved into a native language for cloud backends, and where we are heading next.
+          </p>
+        </div>
+
+        <div className="mt-14 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+          {journey.map((item, idx) => (
+            <div
+              key={item.version}
+              className={`relative flex flex-col justify-between rounded-[2rem] p-7 sm:p-8 transition-shadow ${
+                item.current
+                  ? "bg-[#1B0B2E] text-white shadow-xl ring-2 ring-[#F5A623]"
+                  : "bg-white text-[#1E0A33] dark:bg-[#1F1034] dark:text-[#F4ECFC]"
+              }`}
+            >
+              <div>
+                <div className="flex items-center justify-between gap-2">
+                  <span className="text-xs font-semibold uppercase tracking-wider text-[#7B2FBE] dark:text-[#C58BF2]">
+                    {String(idx + 1).padStart(2, "0")} · {item.phase}
+                  </span>
+                  <span
+                    className={`rounded-full px-3 py-1 text-xs font-medium ${
+                      item.current
+                        ? "bg-[#F5A623] text-[#1E0A33]"
+                        : "bg-black/5 text-[#5B4378] dark:bg-white/10 dark:text-[#BBA6D4]"
+                    }`}
+                  >
+                    {item.tag}
+                  </span>
+                </div>
+
+                <h3 className="mt-4 text-2xl font-bold tracking-tight">
+                  {item.version}
+                </h3>
+
+                <p
+                  className={`mt-3 text-base leading-relaxed ${
+                    item.current
+                      ? "text-[#F4ECFC]/80"
+                      : "text-[#5B4378] dark:text-[#BBA6D4]"
+                  }`}
+                >
+                  {item.body}
+                </p>
+              </div>
+
+              <div className="mt-6 pt-4 border-t border-black/5 dark:border-white/5 flex items-center justify-between text-xs">
+                <span className="opacity-70">
+                  {item.current ? "Active toolchain" : item.tag === "Shipped" ? "Milestone complete" : "In development"}
+                </span>
+                <span className="font-mono opacity-50">
+                  {item.version.split(" ")[0]}
+                </span>
+              </div>
+            </div>
+          ))}
+        </div>
+
+        <p className="mt-12 text-center text-sm text-[#5B4378] dark:text-[#BBA6D4]">
+          Follow specifications, milestones, and development in{" "}
+          <a className={link} href={`${GH}/tree/main/docs`}>
+            github.com/ecocee/Kode/docs
           </a>
           .
         </p>
-
-        <ol className="relative mt-16 grid gap-12 md:grid-cols-4 md:gap-8">
-          <span
-            aria-hidden="true"
-            className="absolute left-0 right-0 top-[11px] hidden h-0.5 bg-[#1E0A33]/20 dark:bg-[#F4ECFC]/25 md:block"
-          />
-          {s.map(([when, title, body, dot]) => (
-            <li key={title} className="relative">
-              <span className={`block h-6 w-6 rounded-full ring-8 ring-[#EBDDFB] dark:ring-[#190A2B] ${dot}`} />
-              <p className="mt-5 text-base font-medium text-[#7B2FBE] dark:text-[#C58BF2]">{when}</p>
-              <h3 className="mt-1 text-2xl font-medium tracking-tight">{title}</h3>
-              <p className={`mt-2 text-lg leading-relaxed ${muted}`}>{body}</p>
-            </li>
-          ))}
-        </ol>
       </div>
     </Sec>
   );

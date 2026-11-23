@@ -13,12 +13,15 @@ Contact: info@ecocee.in | Website: https://ecocee.in
 
 ## Kode: The Programming Language
 
-Kode is an open source compiled programming language created by Ecocee. It combines expressive, Python-readable and JavaScript-familiar syntax with Cranelift native compilation to produce small, fast native binaries. It is built for cloud backends, systems programming, and AI-assisted development.
+Kode is an open source compiled programming language created by Ecocee. It combines clean, expressive syntax with static typing and an LLVM backend to produce small, fast native binaries (~302 KB stripped). It is built for cloud backends, systems programming, and AI agents.
 
-- Version: 0.3 (early development)
+- Version: 0.3.6 (ABI 0006)
+- Compiler: Written in Rust, LLVM backend, reference-counted memory with leak detection
+- Pipeline: source → lexer → parser → AST → type check → MIR → LLVM IR → clang → object → linker → binary
+- Quality: 223 passed, 0 failed (cargo test --workspace)
 - License: Apache-2.0
 - Build Requirements: Rust 1.91+ and a C compiler (on macOS: xcode-select --install)
-- Platform Support: Linux (x86-64), macOS (ARM64/Intel). Windows support is currently available as a preview.
+- Platform Support: Linux (x86-64), macOS (ARM64). Windows support is currently available as a preview.
 - Repository: https://github.com/ecocee/Kode
 - README: https://github.com/ecocee/Kode/blob/main/README.md
 - Documentation: https://github.com/ecocee/Kode/tree/main/docs
@@ -38,5 +41,5 @@ Kode is an open source compiled programming language created by Ecocee. It combi
 - Solutions: https://ecocee.in/solutions
 - Technology: https://ecocee.in/technology
 - About: https://ecocee.in/about
-- Privacy Policy: https://ecocee.in/privacy-policy
-- Terms and Conditions: https://ecocee.in/terms-and-conditions
+- Privacy Policy: https://ecocee.in/privacy
+- Terms of Use: https://ecocee.in/terms

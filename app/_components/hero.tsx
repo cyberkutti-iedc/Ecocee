@@ -217,7 +217,7 @@ export function Hero() {
           <Link href="/" className={`flex w-fit items-center gap-2.5 rounded-md ${focus}`}>
             <Image src="/kode/logo.png" alt="Kode logo" width={44} height={44} className="h-11 w-11 scale-125" priority />
             <span className="text-[26px] font-semibold tracking-tight">Kode</span>
-            <span className="mt-1 text-xs font-medium text-[#5B4378] dark:text-[#BBA6D4]">v0.3</span>
+            <span className="mt-1 text-xs font-medium text-[#5B4378] dark:text-[#BBA6D4]">v0.3.6</span>
           </Link>
 
           <nav aria-label="Primary" className="hidden items-center gap-9 text-[17px] lg:flex">
@@ -254,9 +254,8 @@ export function Hero() {
           <Headline tone="text-[#1E0A33] dark:text-[#F4ECFC]" />
 
           <div className={`${wrap} text-center`}>
-            <p className="mx-auto mt-8 max-w-[34rem] text-xl leading-relaxed text-[#3B2459] dark:text-[#D9C8EE] sm:text-[22px] sm:leading-[1.55]">
-              A modern, statically typed language that combines expressive syntax with native performance.
-              Built for cloud software, backend systems and AI-assisted development.
+            <p className="mx-auto mt-8 max-w-[36rem] text-xl leading-relaxed text-[#3B2459] dark:text-[#D9C8EE] sm:text-[22px] sm:leading-[1.55]">
+              A compiled language engineered for clarity, speed, and minimal memory footprint. Clean syntax, static typing, and small native binaries built for cloud backends and AI agents.
             </p>
 
             <div className="mt-9 flex flex-wrap items-center justify-center gap-3">

@@ -10,7 +10,7 @@ const DESC = "An open source compiled programming language with clean syntax, na
 export const metadata: Metadata = {
   title: { absolute: TITLE },
   description: DESC,
-  keywords: ["Kode", "programming language", "compiled language", "native binaries", "Cranelift", "Rust compiler", "backend language", "AI agents", "Ecocee"],
+  keywords: ["Kode", "programming language", "compiled language", "native binaries", "LLVM", "Rust compiler", "backend language", "AI agents", "Ecocee"],
   authors: [{ name: "Ecocee", url: "https://ecocee.in" }],
   alternates: { canonical: URL },
   openGraph: {
