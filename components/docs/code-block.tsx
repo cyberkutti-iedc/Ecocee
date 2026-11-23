@@ -4,6 +4,7 @@ import { useState } from 'react';
 import { Check, Copy } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
+import { trackInstallCopy } from '@/lib/analytics';
 
 interface CodeBlockProps {
   language: string;
@@ -17,6 +18,9 @@ export function CodeBlock({ language, children }: CodeBlockProps) {
     await navigator.clipboard.writeText(children);
     setCopied(true);
     setTimeout(() => setCopied(false), 2000);
+    if (/cargo|go build|go install|git clone|kode/i.test(children)) {
+      trackInstallCopy();
+    }
   };
 
   return (

@@ -2,9 +2,10 @@
 "use client";
 
 import Image from "next/image";
+import Link from "next/link";
 import { motion, useReducedMotion } from "framer-motion";
 import { ArrowUpRight } from "lucide-react";
-import { GOOGLE_FORM_URL } from "@/lib/config";
+import { trackContactClick } from "@/lib/analytics";
 
 export default function HeroSection() {
   const prefersReducedMotion = useReducedMotion();
@@ -98,25 +99,24 @@ export default function HeroSection() {
             </p>
 
             <div className="mt-8 flex flex-wrap items-center gap-x-7 gap-y-4">
-              <a
-                href="#work"
+              <Link
+                href="/kode"
                 className="group inline-flex items-center gap-3 border-b border-black pb-2.5 text-sm font-medium text-black transition-colors hover:border-black/40 hover:text-black/60"
               >
-                Explore our work
+                See Kode
 
                 <ArrowUpRight
                   aria-hidden="true"
                   className="h-4 w-4 transition-transform duration-300 group-hover:translate-x-1 group-hover:-translate-y-1"
                 />
-              </a>
+              </Link>
 
               <a
-                href={GOOGLE_FORM_URL}
-                target="_blank"
-                rel="noopener noreferrer"
+                href="#contact"
+                onClick={() => trackContactClick("home")}
                 className="group inline-flex items-center gap-2 text-sm text-black/50 transition-colors hover:text-black"
               >
-                Start a project
+                Contact
 
                 <ArrowUpRight
                   aria-hidden="true"
@@ -192,7 +192,7 @@ export default function HeroSection() {
           </p>
 
           <a
-            href="#work"
+            href="#capabilities"
             className="group inline-flex items-center gap-2 text-[10px] uppercase tracking-[0.17em] text-black/45 transition-colors hover:text-black"
           >
             Discover Ecocee

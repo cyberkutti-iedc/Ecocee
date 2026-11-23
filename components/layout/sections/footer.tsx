@@ -1,6 +1,9 @@
 
+"use client";
+
 import Link from "next/link";
 import Image from "next/image";
+import { trackContactClick } from "@/lib/analytics";
 
 const footerGroups = [
   {
@@ -80,6 +83,11 @@ export const FooterSection = () => {
                   <li key={link.label}>
                     <Link
                       href={link.href}
+                      onClick={() => {
+                        if (link.href.startsWith("mailto:")) {
+                          trackContactClick("footer");
+                        }
+                      }}
                       className="text-sm text-white/65 transition-colors duration-200 hover:text-white"
                     >
                       {link.label}
@@ -98,6 +106,7 @@ export const FooterSection = () => {
 
             <a
               href="mailto:info@ecocee.in"
+              onClick={() => trackContactClick("footer")}
               className="text-sm text-white/65 transition-colors hover:text-white"
             >
               info@ecocee.in
@@ -127,6 +136,7 @@ export const FooterSection = () => {
 
             <a
               href="mailto:info@ecocee.in"
+              onClick={() => trackContactClick("footer")}
               className="text-xs text-white/45 transition-colors hover:text-white"
             >
               Email

@@ -1,7 +1,10 @@
+"use client";
+
 import Image from "next/image";
 import Link from "next/link";
 import type { ReactNode } from "react";
 import { Figtree, JetBrains_Mono } from "next/font/google";
+import { trackGithubClick } from "@/lib/analytics";
 
 /**
  * Kode landing page, hero + feature section.
@@ -31,7 +34,7 @@ const mono = JetBrains_Mono({ subsets: ["latin"], display: "swap" });
 
 const NAV = [
   { label: "Why Kode", href: "#why" },
-  { label: "Docs", href: "/docs" },
+  { label: "Docs", href: "https://github.com/ecocee/Kode/tree/main/docs" },
   { label: "Benchmarks", href: "#footprint" },
   { label: "Community", href: "https://github.com/ecocee/Kode/discussions" },
 ];
@@ -232,16 +235,18 @@ export function Hero() {
           <div className="flex items-center justify-end gap-3">
             <a
               href="https://github.com/ecocee/Kode"
+              onClick={() => trackGithubClick("kode")}
               className={`hidden px-5 py-2.5 text-[15px] font-medium sm:inline-block ${pillLine} ${focus}`}
             >
               GitHub
             </a>
-            <Link
-              href="/docs/get-started"
+            <a
+              href="https://github.com/ecocee/Kode/tree/main/docs"
+              onClick={() => trackGithubClick("kode")}
               className={`px-5 py-2.5 text-[15px] font-medium ${pillDark} ${focus}`}
             >
-              Get started
-            </Link>
+              Docs
+            </a>
           </div>
         </header>
 
@@ -255,22 +260,17 @@ export function Hero() {
             </p>
 
             <div className="mt-9 flex flex-wrap items-center justify-center gap-3">
-              <Link
-                href="/docs/get-started"
-                className={`px-8 py-4 text-lg font-medium ${pillDark} ${focus}`}
-              >
-                Get started
-              </Link>
               <a
                 href="https://github.com/ecocee/Kode"
-                className={`px-8 py-[15px] text-lg font-medium ${pillLine} ${focus}`}
+                onClick={() => trackGithubClick("kode")}
+                className={`px-8 py-4 text-lg font-medium ${pillDark} ${focus}`}
               >
-                View on GitHub
+                Try Kode
               </a>
             </div>
 
             <p className="mt-5 text-sm text-[#5B4378] dark:text-[#BBA6D4]">
-              Free and open source under the Apache-2.0 license. Developed by Ecocee.
+              Free and open source (Apache-2.0). Needs Rust 1.91+ to build. Windows support is a preview.
             </p>
           </div>
 
@@ -280,7 +280,7 @@ export function Hero() {
               <HeroCard
                 title="Write"
                 body="Expressive, statically typed syntax that reads the way you think."
-                href="/docs"
+                href="https://github.com/ecocee/Kode/tree/main/docs"
                 tilt="lg:-rotate-[4deg] lg:origin-bottom-right"
                 panel="bg-[#DCCBF7] dark:bg-[#3A1C66]"
               >
@@ -350,12 +350,13 @@ export function Hero() {
             <p className="mt-6 max-w-sm text-xl leading-relaxed text-[#3B2459] dark:text-[#D9C8EE]">
               Backend services, cloud hosting, concurrency and AI tooling, in one small language.
             </p>
-            <Link
-              href="/docs"
+            <a
+              href="https://github.com/ecocee/Kode/tree/main/docs"
+              onClick={() => trackGithubClick("kode")}
               className={`mt-9 inline-block px-8 py-4 text-lg font-medium ${pillDark} ${focus}`}
             >
               Go to the docs
-            </Link>
+            </a>
           </div>
 
           <ul className="grid gap-x-8 gap-y-16 sm:grid-cols-2">

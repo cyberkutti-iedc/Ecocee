@@ -23,6 +23,7 @@ import { useTheme } from "next-themes";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { ScrollArea } from "@/components/ui/scroll-area";
+import { trackGithubClick } from "@/lib/analytics";
 
 const navigation = [
   { name: "Introduction", href: "/docs/introduction" },
@@ -175,9 +176,10 @@ export function DocsLayout({ children }: { children: ReactNode }) {
             </Link>
 
             <a
-              href="https://github.com/ecocee/kode-go"
+              href="https://github.com/ecocee/kode"
               target="_blank"
               rel="noopener noreferrer"
+              onClick={() => trackGithubClick("docs")}
               className="inline-flex items-center gap-1.5 text-sm text-slate-600 transition-colors hover:text-slate-950 dark:text-slate-300 dark:hover:text-white"
             >
               <Github className="h-4 w-4" />
@@ -255,9 +257,10 @@ export function DocsLayout({ children }: { children: ReactNode }) {
 
               <div className="flex items-center gap-4">
                 <a
-                  href="https://github.com/ecocee/kode-go"
+                  href="https://github.com/ecocee/kode"
                   target="_blank"
                   rel="noopener noreferrer"
+                  onClick={() => trackGithubClick("docs")}
                   className="transition-colors hover:text-blue-700 dark:hover:text-blue-400"
                 >
                   GitHub
@@ -412,9 +415,10 @@ function SidebarContent({
       {/* Sidebar bottom */}
       <div className="border-t border-slate-200 px-5 py-4 dark:border-white/10">
         <a
-          href="https://github.com/ecocee/kode-go"
+          href="https://github.com/ecocee/kode"
           target="_blank"
           rel="noopener noreferrer"
+          onClick={() => trackGithubClick("docs")}
           className="flex items-center justify-between text-xs text-slate-500 transition-colors hover:text-blue-700 dark:text-slate-400 dark:hover:text-blue-400"
         >
           <span>Contribute on GitHub</span>

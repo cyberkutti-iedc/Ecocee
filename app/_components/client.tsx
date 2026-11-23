@@ -1,5 +1,6 @@
 "use client";
 import { useEffect, useRef, useState, type ReactNode } from "react";
+import { trackInstallCopy } from "@/lib/analytics";
 
 export function Reveal({ children, className = "" }: { children: ReactNode; className?: string }) {
   const ref = useRef<HTMLDivElement>(null);
@@ -56,10 +57,26 @@ export function CodeTabs() {
 
 export function Copy({ text }: { text: string }) {
   const [ok, setOk] = useState(false);
+
+  const handleCopy = () => {
+    navigator.clipboard.writeText(text).then(() => {
+      setOk(true);
+      setTimeout(() => setOk(false), 1500);
+    });
+    trackInstallCopy();
+  };
+
   return (
     <div className="mono flex items-center justify-between gap-4 rounded-xl px-5 py-4 text-[15px] text-[#F4ECFC]" style={{ background: "var(--code)" }}>
       <code className="overflow-x-auto whitespace-nowrap"><span className="text-[#FFAE2B]">$ </span>{text}</code>
-      <button onClick={() => navigator.clipboard.writeText(text).then(() => (setOk(true), setTimeout(() => setOk(false), 1500)))} className="shrink-0 rounded-lg border border-white/30 px-3 py-1 text-sm hover:bg-white/10">{ok ? "Copied" : "Copy"}</button>
+      <button
+        type="button"
+        onClick={handleCopy}
+        aria-label={`Copy command: ${text}`}
+        className="shrink-0 rounded-lg border border-white/30 px-3 py-1 text-sm hover:bg-white/10"
+      >
+        {ok ? "Copied" : "Copy"}
+      </button>
     </div>
   );
 }

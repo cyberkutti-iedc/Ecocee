@@ -13,6 +13,7 @@ import Image from "next/image";
 import { motion, AnimatePresence } from "framer-motion";
 import { usePathname } from "next/navigation";
 import { GOOGLE_FORM_URL } from "@/lib/config";
+import { trackContactClick } from "@/lib/analytics";
 
 interface NavItem {
   href: string;
@@ -175,6 +176,7 @@ export const Navbar = () => {
               href={GOOGLE_FORM_URL}
               target="_blank"
               rel="noopener noreferrer"
+              onClick={() => trackContactClick("navbar")}
               className="group inline-flex h-10 items-center gap-3 rounded-full bg-black px-5 text-[12px] font-medium text-white transition-all duration-300 hover:bg-black/75"
             >
               Start a project
@@ -316,7 +318,10 @@ export const Navbar = () => {
                 href={GOOGLE_FORM_URL}
                 target="_blank"
                 rel="noopener noreferrer"
-                onClick={closeMenu}
+                onClick={() => {
+                  closeMenu();
+                  trackContactClick("navbar");
+                }}
                 className="group flex w-full items-center justify-between rounded-full bg-black px-6 py-4 text-sm font-medium text-white transition-colors hover:bg-black/75"
               >
                 Start a project

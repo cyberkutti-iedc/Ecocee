@@ -22,11 +22,17 @@ const nextConfig: NextConfig = {
   env: {
     GOOGLE_SITE_VERIFICATION: process.env.GOOGLE_SITE_VERIFICATION,
   },
-  async rewrites() {
+  async redirects() {
     return [
       {
         source: '/docs/:path*',
-        destination: '/public/docs/:path*', // Ensure static files in public/docs are accessible
+        destination: 'https://github.com/ecocee/Kode/tree/main/docs',
+        permanent: false,
+      },
+      {
+        source: '/kode/docs/:path*',
+        destination: 'https://github.com/ecocee/Kode/tree/main/docs',
+        permanent: false,
       },
     ];
   },

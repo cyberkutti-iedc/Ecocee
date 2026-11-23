@@ -1,8 +1,11 @@
+"use client";
+
 import Image from "next/image";
 import type { ReactNode } from "react";
 import { Figtree, JetBrains_Mono } from "next/font/google";
 import { CodeTabs, Copy } from "./client";
 import Link from "next/link";
+import { trackGithubClick } from "@/lib/analytics";
 
 /**
  * Kode landing page, everything below the hero.
@@ -510,12 +513,14 @@ export function Start() {
               <div className="mt-9 flex flex-wrap gap-3">
                 <a
                   href={GH}
+                  onClick={() => trackGithubClick("kode")}
                   className="rounded-full bg-white px-8 py-4 text-lg font-medium text-[#7B2FBE] transition-colors hover:bg-[#F4ECFC] focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-white"
                 >
                   Star on GitHub
                 </a>
                 <a
                   href={`${GH}/blob/main/CONTRIBUTING.md`}
+                  onClick={() => trackGithubClick("kode")}
                   className="rounded-full border border-white/70 px-8 py-[15px] text-lg font-medium transition-colors hover:bg-white/10 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-white"
                 >
                   Contribute
@@ -551,8 +556,8 @@ export function Footer() {
     [
       "Learn Kode",
       [
-        ["Documentation", "/docs"],
-        ["Get started", "/docs/get-started"],
+        ["Documentation", `${GH}/tree/main/docs`],
+        ["Get started", `${GH}/tree/main/docs`],
         ["Cheat sheet", `${DOC}/cheatsheet.md`],
         ["Language specification", `${GH}/tree/main/docs/spec`],
         ["Examples", `${GH}/tree/main/examples`],
@@ -642,6 +647,11 @@ export function Footer() {
                       <li key={label}>
                         <a
                           href={url}
+                          onClick={() => {
+                            if (url.includes("github.com/ecocee/Kode")) {
+                              trackGithubClick("kode");
+                            }
+                          }}
                           className={`group inline-flex items-center gap-1.5 text-sm text-[#BBA6D4] transition-colors hover:text-white ${focus}`}
                         >
                           <span>{label}</span>

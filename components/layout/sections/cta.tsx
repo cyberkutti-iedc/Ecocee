@@ -5,6 +5,7 @@ import { motion, useReducedMotion } from "framer-motion";
 import Link from "next/link";
 import { ArrowUpRight } from "lucide-react";
 import { GOOGLE_FORM_URL } from "@/lib/config";
+import { trackContactClick } from "@/lib/analytics";
 
 export const CTASection = () => {
   const prefersReducedMotion = useReducedMotion();
@@ -75,6 +76,7 @@ export const CTASection = () => {
             href={GOOGLE_FORM_URL}
             target="_blank"
             rel="noopener noreferrer"
+            onClick={() => trackContactClick("home")}
             className="group inline-flex h-14 items-center gap-8 bg-black px-7 text-sm font-semibold text-white transition-colors hover:bg-black/80"
           >
             Start a project
@@ -83,6 +85,7 @@ export const CTASection = () => {
 
           <Link
             href="mailto:info@ecocee.in"
+            onClick={() => trackContactClick("home")}
             className="group inline-flex h-14 items-center gap-3 border border-black/25 px-7 text-sm font-medium text-black transition-colors hover:border-black hover:bg-black/[0.03]"
           >
             Talk to Ecocee

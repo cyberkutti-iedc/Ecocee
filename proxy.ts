@@ -7,6 +7,10 @@ export function proxy(req: NextRequest) {
   const pathname = url.pathname;
   const hostname = req.headers.get("host") || "";
 
+  if (pathname.startsWith("/docs") || pathname.startsWith("/kode/docs")) {
+    return NextResponse.redirect(new URL("https://github.com/ecocee/Kode/tree/main/docs"));
+  }
+
   if (hostname.startsWith("niti.")) {
     url.pathname = `/niti${pathname === "/" ? "" : pathname}`;
     return NextResponse.rewrite(url);

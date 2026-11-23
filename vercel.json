@@ -1,6 +1,13 @@
 {
-    "routes": [
-      { "src": "/docs/(.*)", "dest": "/public/docs/$1" }
-    ]
-  }
+  "redirects": [
+    {
+      "source": "/docs/(.*)",
+      "destination": "https://github.com/ecocee/Kode/tree/main/docs"
+    },
+    {
+      "source": "/kode/docs/(.*)",
+      "destination": "https://github.com/ecocee/Kode/tree/main/docs"
+    }
+  ]
+}
   
