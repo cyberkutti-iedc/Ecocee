@@ -3,17 +3,17 @@
 import { motion } from "framer-motion";
 
 const clients = [
-  { name: "ORDATO", tagline: "AI Hospitality" },
-  { name: "ADARA SCREENS", tagline: "Digital Signage" },
-  { name: "NAVICENTRA", tagline: "Fleet Intelligence" },
-  { name: "MOVI", tagline: "Smart Mobility" },
-  {name : "RALLYBOX", tagline: "Rally Management Devices"},
-  {name : "RAllY FLASHER", tagline: "Rally Management Devices"},
+  { name: "ORDATO", tagline: "AI Hospitality Systems" },
+  { name: "ADARA SCREENS", tagline: "Digital Signage Architectures" },
+  { name: "NAVICENTRA", tagline: "Fleet Intelligence Systems" },
+  { name: "G-POWER", tagline: "Energy & Power Systems" },
+  { name: "RALLYBOX", tagline: "Rally Management Hardware" },
+  { name: "RALLY FLASHER", tagline: "Telemetry & Signal Hardware" },
 ];
 
 export const ClientsSection = () => {
   return (
-    <section className="py-32 md:py-40 bg-background" aria-label="Clients">
+    <section className="py-32 md:py-40 bg-background" aria-label="Clients and Completed Projects">
       <div className="max-w-7xl mx-auto px-6 lg:px-8">
         {/* Header */}
         <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-6 mb-20">
@@ -23,7 +23,7 @@ export const ClientsSection = () => {
             viewport={{ once: true }}
             className="text-5xl md:text-6xl lg:text-7xl font-bold text-foreground"
           >
-            Clients
+            Completed Projects
           </motion.h2>
           <motion.p
             initial={{ opacity: 0, x: 20 }}
@@ -31,12 +31,12 @@ export const ClientsSection = () => {
             viewport={{ once: true }}
             className="text-lg md:text-xl text-muted-foreground max-w-md"
           >
-            Our clients are everything to us; so are we to them.
+            Delivered software, embedded hardware, and AI systems across client engagements.
           </motion.p>
         </div>
 
         {/* Client Logos Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-px bg-border">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-px bg-border">
           {clients.map((client, i) => (
             <motion.div
               key={client.name}

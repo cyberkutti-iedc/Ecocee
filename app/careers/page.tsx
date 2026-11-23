@@ -23,8 +23,8 @@ const jsonLd = {
 	"logo": "https://ecocee.in/icon.jpg",
 	"contactPoint": {
 		"@type": "ContactPoint",
-		"telephone": "+91-9446715884",
-		"contactType": "Customer Support"
+		"email": "careers@ecocee.in",
+		"contactType": "Recruitment & Careers"
 	},
 	"address": {
 		"@type": "PostalAddress",

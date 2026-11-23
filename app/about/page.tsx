@@ -25,6 +25,9 @@ export const metadata: Metadata = {
   title: "About Ecocee — Technology & Product Engineering Company",
   description:
     "Discover Ecocee, an Indian technology company engineering AI software, developer technology, embedded systems and intelligent hardware.",
+  alternates: {
+    canonical: "https://ecocee.in/about",
+  },
 };
 
 const capabilities = [
@@ -187,13 +190,21 @@ export default function AboutPage() {
                   </Link>
 
                   <Link
-                    href="/#products"
+                    href="/#capabilities"
                     className="inline-flex items-center gap-2 text-[13px] font-semibold text-[#555] transition-colors hover:text-[#25845A]"
                   >
                     Explore our work
                     <ArrowRight size={15} />
                   </Link>
                 </div>
+
+                <p className="mt-3 text-[12px] text-[#777]">
+                  By submitting an inquiry, you agree to our{" "}
+                  <Link href="/privacy" className="underline hover:text-[#25845A]">
+                    Privacy Policy
+                  </Link>
+                  .
+                </p>
               </div>
             </div>
 

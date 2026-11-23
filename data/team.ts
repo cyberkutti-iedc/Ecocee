@@ -34,7 +34,7 @@ export const teamData: TeamMember[] = [
     avatar: "SV",
     linkedin: "https://linkedin.com/in/sreerajvrajesh",
     github: "https://github.com/cyberkutti-iedc",
-    email: "cyberkutti@gmail.com",
+    email: "sreeraj@ecocee.in",
     joinedDate: "2023"
   },
   {

@@ -7,6 +7,7 @@ import { cn } from "@/lib/utils";
 import { ThemeProvider } from "@/components/layout/theme-provider";
 import { Toaster } from "react-hot-toast";
 import { NavbarWrapper } from "@/components/layout/NavbarWrapper";
+import { CookieBanner } from "@/components/ui/cookie-banner";
 import Script from "next/script";
 
 const inter = Inter({
@@ -139,6 +140,12 @@ export default function RootLayout({
           inter.className
         )}
       >
+        <a
+          href="#main-content"
+          className="sr-only focus:not-sr-only focus:fixed focus:top-4 focus:left-4 focus:z-50 focus:px-4 focus:py-2 focus:bg-foreground focus:text-background focus:rounded-md focus:shadow-lg focus:outline-none focus:ring-2 focus:ring-primary"
+        >
+          Skip to content
+        </a>
         <Script
           src="https://www.googletagmanager.com/gtag/js?id=G-MYLZ8LF7ZM"
           strategy="afterInteractive"
@@ -149,8 +156,11 @@ export default function RootLayout({
             window.dataLayer = window.dataLayer || [];
             function gtag(){window.dataLayer.push(arguments);}
             window.gtag = gtag;
-            window.gtag('js', new Date());
-            window.gtag('config', 'G-MYLZ8LF7ZM');
+            gtag('consent', 'default', {
+              'analytics_storage': 'denied'
+            });
+            gtag('js', new Date());
+            gtag('config', 'G-MYLZ8LF7ZM');
           `}
         </Script>
 
@@ -169,6 +179,8 @@ export default function RootLayout({
           >
             {children}
           </main>
+
+          <CookieBanner />
 
           <Toaster
             position="top-right"

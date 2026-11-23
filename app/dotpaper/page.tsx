@@ -1,8 +1,25 @@
+import type { Metadata } from "next";
 import { Hanken_Grotesk } from "next/font/google";
 
 import { GOOGLE_FORM_URL } from "@/lib/config";
 import { applications } from "./shared";
 import { Workspace } from "./workspace";
+
+export const metadata: Metadata = {
+  title: "Dotpaper — Connected Business Workspace | Ecocee",
+  description:
+    "Customizable business software connecting customers, services, inventory, and financials in one workspace. Built by Ecocee.",
+  alternates: {
+    canonical: "https://ecocee.in/dotpaper",
+  },
+  openGraph: {
+    title: "Dotpaper — Connected Business Workspace",
+    description:
+      "Customizable business software connecting customers, services, inventory, and financials in one workspace.",
+    url: "https://ecocee.in/dotpaper",
+    images: [{ url: "https://ecocee.in/og-banner.webp", width: 1200, height: 630 }],
+  },
+};
 
 /**
  * Dotpaper landing page.
@@ -176,6 +193,13 @@ function Hero() {
               Explore applications
             </a>
           </div>
+          <p className="mt-3 text-xs text-[var(--muted)]">
+            By contacting us, you agree to our{" "}
+            <a href="/privacy" className="underline hover:text-[var(--ink)]">
+              Privacy Policy
+            </a>
+            .
+          </p>
         </div>
       </div>
 

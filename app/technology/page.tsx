@@ -6,6 +6,9 @@ import { FooterSection } from "@/components/layout/sections/footer";
 export const metadata: Metadata = {
   title: "Technology — Ecocee | AI, Software & Product Engineering",
   description: "Explore Ecocee's technology stack and engineering approach. AI, software, embedded systems, cloud infrastructure and IoT.",
+  alternates: {
+    canonical: "https://ecocee.in/technology",
+  },
 };
 
 const stacks = [

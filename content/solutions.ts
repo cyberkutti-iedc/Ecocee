@@ -70,7 +70,7 @@ export const solutionsData: Record<string, SolutionData> = {
   
   'ai-automation-business': {
     slug: 'ai-automation-business',
-    title: 'AI Business Automation in Kerala | Custom AI Agents | Ecocee',
+    title: 'AI Business Automation & Custom Agents | Ecocee',
     description: 'Automate business workflows with custom AI agents. Reduce manual work, improve accuracy, scale faster. AI automation for Kerala businesses. Free consultation.',
     h1: 'AI Business Automation: Custom AI Agents for Kerala Enterprises',
     keywords: ['ai automation kerala', 'business automation ai', 'custom ai agents', 'workflow automation'],
@@ -115,7 +115,7 @@ export const solutionsData: Record<string, SolutionData> = {
   
   'private-ai-infrastructure': {
     slug: 'private-ai-infrastructure',
-    title: 'Private AI Infrastructure in India | On-Premise AI Deployment | Ecocee',
+    title: 'Private AI Infrastructure | On-Premise AI | Ecocee',
     description: 'Deploy AI privately and securely. On-premise AI infrastructure for confidential business operations. No vendor lock-in. India-based. Free consultation.',
     h1: 'Private AI Infrastructure: On-Premise AI Deployment for Enterprise',
     keywords: ['private ai infrastructure', 'on-premise ai', 'secure ai deployment', 'private ai server'],
@@ -156,7 +156,7 @@ export const solutionsData: Record<string, SolutionData> = {
   
   'embedded-systems-kerala': {
     slug: 'embedded-systems-kerala',
-    title: 'Embedded Systems Companies in Kerala | Custom Firmware | Ecocee',
+    title: 'Embedded Systems & Firmware in Kerala | Ecocee',
     description: 'Custom embedded systems, firmware development, IoT hardware integration. Serving Kochi, Ernakulam, Kerala. Microcontroller expertise. Free consultation.',
     h1: 'Embedded Systems & Custom Firmware Development in Kerala',
     keywords: ['embedded systems kochi', 'embedded systems companies kerala', 'firmware development', 'embedded systems thrissur'],
@@ -197,7 +197,7 @@ export const solutionsData: Record<string, SolutionData> = {
   
   'edge-computing-solutions': {
     slug: 'edge-computing-solutions',
-    title: 'Edge Computing Solutions in Kerala | Real-Time AI Processing | Ecocee',
+    title: 'Edge Computing Solutions & On-Device AI | Ecocee',
     description: 'Edge computing brings AI processing to IoT devices for real-time decisions. Lower latency, better privacy. Serving Kerala businesses.',
     h1: 'Edge Computing Solutions: Real-Time AI Processing at the Edge',
     keywords: ['edge computing', 'edge ai', 'edge processing', 'local ai processing'],

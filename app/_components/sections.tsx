@@ -532,7 +532,7 @@ export function Start() {
               <div className="absolute inset-0 rounded-full bg-[#F5A623]" />
               <Image
                 src="/kode/logo.png"
-                alt=""
+                alt="Kode owl mascot"
                 width={300}
                 height={300}
                 className="relative h-[300px] w-[300px] scale-125"
@@ -546,10 +546,71 @@ export function Start() {
 }
 
 /* ------------------------------------------------------------------ */
-/* Footer                                                              */
+/* FAQ                                                                 */
 /* ------------------------------------------------------------------ */
 
+export function KodeFAQ() {
+  const faqs = [
+    {
+      q: "What is Kode?",
+      a: "Kode is an open source compiled programming language with clean syntax, native performance, and small binaries, built for cloud software, backends, and AI-assisted development.",
+    },
+    {
+      q: "What license is Kode released under?",
+      a: "Kode is released under the Apache-2.0 open source license.",
+    },
+    {
+      q: "How do I build Kode from source?",
+      a: "Clone https://github.com/ecocee/Kode, then run cargo build --workspace to compile, and cargo test --workspace to run tests.",
+    },
+    {
+      q: "What are the requirements to build Kode?",
+      a: "Building Kode requires Rust 1.91 or newer and a C compiler. On macOS, run xcode-select --install first.",
+    },
+    {
+      q: "Which operating systems are supported, and is Windows supported?",
+      a: "Kode supports Linux and macOS. Windows support is currently available as a preview.",
+    },
+    {
+      q: "How can I contribute to Kode?",
+      a: "Contributions are welcome on GitHub at https://github.com/ecocee/Kode through bug reports, feature discussions, and pull requests following CONTRIBUTING.md.",
+    },
+  ];
 
+  return (
+    <Sec id="faq" label="faq-heading">
+      <div className={wrap}>
+        <div className="max-w-2xl">
+          <h2 id="faq-heading" className={h2}>
+            Frequently asked questions
+          </h2>
+          <p className={lead}>
+            Key facts about the Kode language, toolchain, and platform support.
+          </p>
+        </div>
+        <div className="mt-12 grid gap-6 md:grid-cols-2">
+          {faqs.map((f) => (
+            <div
+              key={f.q}
+              className="rounded-2xl border border-[#1E0A33]/15 p-7 dark:border-[#F4ECFC]/15 bg-white/50 dark:bg-white/[0.03]"
+            >
+              <h3 className="text-xl font-medium tracking-tight text-[#1E0A33] dark:text-[#F4ECFC]">
+                {f.q}
+              </h3>
+              <p className="mt-3 text-base leading-relaxed text-[#5B4378] dark:text-[#BBA6D4]">
+                {f.a}
+              </p>
+            </div>
+          ))}
+        </div>
+      </div>
+    </Sec>
+  );
+}
+
+/* ------------------------------------------------------------------ */
+/* Footer                                                              */
+/* ------------------------------------------------------------------ */
 
 export function Footer() {
   const columns: [string, [string, string][]][] = [
@@ -603,7 +664,7 @@ export function Footer() {
             >
               <Image
                 src="/kode/logo.png"
-                alt=""
+                alt="Kode logo"
                 width={42}
                 height={42}
                 className="h-[42px] w-[42px] object-contain"

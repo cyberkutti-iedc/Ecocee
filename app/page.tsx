@@ -18,15 +18,10 @@ import { CTASection } from "@/components/layout/sections/cta";
 import { FooterSection } from "@/components/layout/sections/footer";
 
 import { AnimatedSection } from "@/components/ui/animated-section";
-import Seo from "@/components/seo/Seo";
 
 import {
   organizationSchema,
-  localBusinessSchema,
   websiteSchema,
-  serviceSchema,
-  aiAgentSchemas,
-  speakableSchema,
 } from "@/lib/seo/schemas";
 
 export const metadata: Metadata = {
@@ -81,25 +76,13 @@ export const metadata: Metadata = {
 };
 
 export default function Home() {
-  const structuredData = [
-    organizationSchema,
-    localBusinessSchema,
-    websiteSchema,
-    serviceSchema,
-    ...aiAgentSchemas,
-    speakableSchema,
-  ];
-
   return (
     <>
-      <Seo
-        title="Ecocee — Technology That Moves Ideas Forward"
-        description="AI, software and product engineering for ideas that need to become real. Custom AI agents, private infrastructure, embedded systems. Built in Kerala."
-        canonical="https://ecocee.in"
-        image="https://ecocee.in/og-banner.webp"
-        twitterHandle="@Ecocee"
-        siteName="Ecocee"
-        structuredData={structuredData}
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify([organizationSchema, websiteSchema]),
+        }}
       />
 
       <main className="min-h-screen bg-[#f7f8f4] text-[#17251b]">

@@ -121,13 +121,24 @@ export default function NotFound() {
             <div className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start">
               <Link
                 href="/"
-                className="group relative px-6 sm:px-8 py-3 sm:py-4 bg-gradient-to-r from-green-500 to-emerald-600 rounded-xl font-semibold text-lg overflow-hidden transition-all duration-300 hover:scale-105 hover:shadow-2xl hover:shadow-emerald-500/30"
+                className="group relative px-6 sm:px-8 py-3 sm:py-4 bg-gradient-to-r from-green-500 to-emerald-600 rounded-xl font-semibold text-lg overflow-hidden transition-all duration-300 hover:scale-105 hover:shadow-2xl hover:shadow-emerald-500/30 text-center focus:outline-none focus:ring-2 focus:ring-emerald-400"
               >
                 <span className="relative z-10 text-black group-hover:text-white">
                   Return Home
                 </span>
               </Link>
-              <Link href="mailto:info@ecocee.in" className="group px-6 sm:px-8 py-3 sm:py-4 border-2 border-emerald-400/30 rounded-xl font-semibold text-lg hover:border-emerald-400/70 hover:bg-emerald-400/10 transition-all duration-300 hover:scale-105 flex items-center justify-center">
+              <Link
+                href="/kode"
+                className="group px-6 sm:px-8 py-3 sm:py-4 border-2 border-emerald-400/50 rounded-xl font-semibold text-lg hover:border-emerald-400 hover:bg-emerald-400/10 transition-all duration-300 hover:scale-105 flex items-center justify-center text-center focus:outline-none focus:ring-2 focus:ring-emerald-400"
+              >
+                <span className="bg-gradient-to-r from-emerald-300 to-green-400 bg-clip-text text-transparent group-hover:from-green-400 group-hover:to-white">
+                  Explore Kode
+                </span>
+              </Link>
+              <Link
+                href="mailto:info@ecocee.in"
+                className="group px-6 sm:px-8 py-3 sm:py-4 border-2 border-emerald-400/30 rounded-xl font-semibold text-lg hover:border-emerald-400/70 hover:bg-emerald-400/10 transition-all duration-300 hover:scale-105 flex items-center justify-center text-center focus:outline-none focus:ring-2 focus:ring-emerald-400"
+              >
                 <span className="bg-gradient-to-r from-emerald-300 to-green-400 bg-clip-text text-transparent group-hover:from-green-400 group-hover:to-white">
                   Contact Support
                 </span>

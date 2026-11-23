@@ -13,26 +13,26 @@ export const organizationSchema = {
   name: "Ecocee",
   url: SITE_URL,
   logo: `${SITE_URL}/logo.png`,
+  email: "info@ecocee.in",
   description:
-    "Ecocee builds custom AI agents, private AI infrastructure, and embedded IoT systems for businesses in Kerala and across India.",
-  foundingDate: "2023",
-  foundingLocation: {
-    "@type": "Place",
-    name: "Kodungallur, Thrissur, Kerala, India",
+    "Ecocee builds custom AI agents, private AI infrastructure, and embedded IoT systems, and develops the open source Kode programming language. Based in Ernakulam, Kerala.",
+  sameAs: [
+    "https://github.com/ecocee",
+    "https://www.instagram.com/ecocee.official",
+    "https://www.linkedin.com/company/ecocee",
+  ],
+  founder: {
+    "@type": "Person",
+    name: "Sreeraj V Rajesh",
+    email: "sreeraj@ecocee.in",
+    jobTitle: "Founder & CEO",
+    url: `${SITE_URL}/about#team`,
+    sameAs: "https://linkedin.com/in/sreerajvrajesh",
   },
-  sameAs: ["https://www.linkedin.com/company/ecocee"],
   contactPoint: {
     "@type": "ContactPoint",
     email: "info@ecocee.in",
     contactType: "customer service",
-  },
-  address: {
-    "@type": "PostalAddress",
-    streetAddress: "Kodungallur",
-    addressLocality: "Thrissur",
-    addressRegion: "Kerala",
-    postalCode: "680664",
-    addressCountry: "IN",
   },
 };
 
@@ -44,8 +44,7 @@ export const localBusinessSchema = {
   image: `${SITE_URL}/og-banner.webp`,
   "@id": `${SITE_URL}/#local`,
   url: SITE_URL,
-  telephone: "+919446715884",
-  priceRange: "$$$$",
+  email: "info@ecocee.in",
   description:
     "Ecocee builds custom AI agents and edge computing solutions for businesses in Kerala. AI for offices, warehouses, and customer support.",
   address: {
@@ -80,16 +79,11 @@ export const websiteSchema = {
   name: "Ecocee",
   url: SITE_URL,
   description:
-    "Ecocee builds AI agents and edge computing devices for businesses in Kerala, India.",
+    "Ecocee builds custom AI agents, private AI infrastructure, and embedded IoT systems, and develops open source developer technology. Based in Ernakulam, Kerala, India.",
   publisher: {
     "@type": "Organization",
     name: "Ecocee",
     logo: `${SITE_URL}/logo.png`,
-  },
-  potentialAction: {
-    "@type": "SearchAction",
-    target: `${SITE_URL}/search?q={search_term_string}`,
-    "query-input": "required name=search_term_string",
   },
 };
 

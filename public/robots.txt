@@ -1,9 +1,26 @@
-# *
+# Allow normal search engines and AI crawlers to discover and cite Ecocee documentation and Kode open source facts.
 User-agent: *
 Allow: /
+Disallow: /api/
+Disallow: /admin/
+Disallow: /dashboard/
 
-# Host
-Host: https://ecocee.in
+# Explicitly allow AI search agents and LLM indexers to index factual knowledge
+User-agent: GPTBot
+Allow: /
 
-# Sitemaps
+User-agent: ClaudeBot
+Allow: /
+
+User-agent: PerplexityBot
+Allow: /
+
+User-agent: Google-Extended
+Allow: /
+
+User-agent: CCBot
+Allow: /
+
+# Sitemap
 Sitemap: https://ecocee.in/sitemap.xml
+Sitemap: https://ecocee.in/sitemap-0.xml

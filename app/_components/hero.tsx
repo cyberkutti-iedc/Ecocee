@@ -215,7 +215,7 @@ export function Hero() {
 
         <header className={`${wrap} relative z-10 grid h-20 grid-cols-[1fr_auto] items-center lg:grid-cols-[1fr_auto_1fr]`}>
           <Link href="/" className={`flex w-fit items-center gap-2.5 rounded-md ${focus}`}>
-            <Image src="/kode/logo.png" alt="" width={44} height={44} className="h-11 w-11 scale-125" priority />
+            <Image src="/kode/logo.png" alt="Kode logo" width={44} height={44} className="h-11 w-11 scale-125" priority />
             <span className="text-[26px] font-semibold tracking-tight">Kode</span>
             <span className="mt-1 text-xs font-medium text-[#5B4378] dark:text-[#BBA6D4]">v0.3</span>
           </Link>
@@ -270,7 +270,7 @@ export function Hero() {
             </div>
 
             <p className="mt-5 text-sm text-[#5B4378] dark:text-[#BBA6D4]">
-              Free and open source (Apache-2.0). Needs Rust 1.91+ to build. Windows support is a preview.
+              Free and open source (Apache-2.0). Needs Rust 1.91+ and a C compiler. Windows support is a preview.
             </p>
           </div>
 

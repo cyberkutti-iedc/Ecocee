@@ -93,9 +93,7 @@ export default function HeroSection() {
             className="max-w-[390px] pb-2 lg:col-span-4 lg:justify-self-end"
           >
             <p className="text-[15px] leading-[1.9] text-black/60 sm:text-base">
-              We build intelligent software, connected hardware
-              and engineered systems that turn ambitious ideas
-              into real-world solutions.
+              Ecocee is an engineering and technology company based in Ernakulam, Kerala. We build custom AI agents, private infrastructure, embedded systems, and the open source Kode programming language.
             </p>
 
             <div className="mt-8 flex flex-wrap items-center gap-x-7 gap-y-4">
@@ -188,7 +186,7 @@ export default function HeroSection() {
         {/* Bottom information */}
         <div className="mt-7 flex flex-col justify-between gap-3 sm:flex-row sm:items-center">
           <p className="text-[10px] uppercase tracking-[0.17em] text-black/40">
-            Built in Kerala. Engineering for the world.
+            Built in Ernakulam, Kerala. Engineering for the world.
           </p>
 
           <a

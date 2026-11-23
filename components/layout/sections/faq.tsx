@@ -56,7 +56,7 @@ export const FAQList: FAQProps[] = [
   },
   {
     question: "Do you provide post-deployment support?",
-    answer: "Yes. After deployment, we offer ongoing SLA-driven support, system monitoring, and continuous evolution. We act as your long-term technology partner to ensure the system adapts as your business grows.",
+    answer: "Yes. After deployment, we offer ongoing engineering support, system monitoring, and continuous maintenance agreements. We act as your long-term technology partner to ensure the system adapts as your business grows.",
     value: "item-9",
   },
   {

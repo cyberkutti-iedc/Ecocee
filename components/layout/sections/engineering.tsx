@@ -284,10 +284,10 @@ export const EngineeringSection = () => {
           </p>
 
           <a
-            href="/#work"
+            href="/#capabilities"
             className="group inline-flex items-center gap-3 text-xs font-medium text-black transition-colors hover:text-black/50"
           >
-            Explore selected work
+            Explore capabilities
 
             <ArrowUpRight
               size={16}

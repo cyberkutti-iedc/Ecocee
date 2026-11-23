@@ -1,46 +1,42 @@
 # Ecocee
 
-> Ecocee is an AI and embedded systems engineering company in Kerala, India. It builds custom AI agents, private AI infrastructure, embedded and IoT hardware, and business software, and it publishes Kode, an open source programming language.
+> Ecocee is an engineering and technology company based in Ernakulam, Kerala, India. It builds custom AI agents, private AI infrastructure, embedded and IoT hardware, and publishes Kode, an open source programming language.
 
-Ecocee takes ideas that need to become real and engineers them end to end: the intelligence (AI agents and models), the software around it, and the connected hardware where a product needs it. Work is done for businesses in Kerala and across India. Enquiries start with a short project form on the website.
+Ecocee takes ambitious ideas and engineers them into real systems across three domains:
+1. Intelligence: Custom AI agents, local models, and workflow automation for businesses.
+2. Software & Infrastructure: Private on-premise AI deployments and backend systems.
+3. Connected Hardware: Embedded systems, custom firmware, edge devices, and sensor networks.
 
-## What Ecocee builds
+Contact: info@ecocee.in | Website: https://ecocee.in
 
-- Custom AI agents for businesses: customer enquiries and lead handling over WhatsApp, email and website chat; office assistants for meeting summaries, document analysis, scheduling and internal knowledge; warehouse agents for inventory tracking, reorder automation, supplier coordination, anomaly detection and demand forecasting.
-- Private AI infrastructure: AI that runs on infrastructure the customer controls.
-- Embedded systems, edge computing devices and IoT: custom firmware and hardware with on-device AI, cloud integration and remote monitoring.
-- PCB design and rapid prototyping.
-- Business software, including Dotpaper (below).
+---
 
-## Main pages
+## Kode: The Programming Language
 
-- [Ecocee home](https://ecocee.in/): What Ecocee does, how it works with clients, and how to start a project.
-- [Dotpaper](https://ecocee.in/dotpaper): Customizable business software with Service Desk, Financials, Customers and Inventory applications in one connected workspace. Built around the customer's own workflow, with an option to self-host.
+Kode is an open source compiled programming language created by Ecocee. It combines expressive, Python-readable and JavaScript-familiar syntax with Cranelift native compilation to produce small, fast native binaries. It is built for cloud backends, systems programming, and AI-assisted development.
 
-## Kode, the programming language
+- Version: 0.3 (early development)
+- License: Apache-2.0
+- Build Requirements: Rust 1.91+ and a C compiler (on macOS: xcode-select --install)
+- Platform Support: Linux (x86-64), macOS (ARM64/Intel). Windows support is currently available as a preview.
+- Repository: https://github.com/ecocee/Kode
+- README: https://github.com/ecocee/Kode/blob/main/README.md
+- Documentation: https://github.com/ecocee/Kode/tree/main/docs
+- License file: https://github.com/ecocee/Kode/blob/main/LICENSE
+- Contributing: https://github.com/ecocee/Kode/blob/main/CONTRIBUTING.md
+- Security Policy: https://github.com/ecocee/Kode/blob/main/SECURITY.md
+- Discussions: https://github.com/ecocee/Kode/discussions
 
-Kode is a statically typed, compiled language with expressive syntax and native performance, built for cloud software, backend systems and AI-assisted development. It is free and open source under the Apache-2.0 license. The compiler is written in Rust and produces native binaries. Kode is at version 0.3 and still early: read the status page before relying on it.
+---
 
-- [Kode on GitHub](https://github.com/ecocee/Kode): Source code, README, issues and releases.
-- [Cheat sheet](https://github.com/ecocee/Kode/blob/main/docs/cheatsheet.md): The whole language on one page.
-- [Language spec](https://github.com/ecocee/Kode/tree/main/docs/spec): Formal description of the language.
-- [Examples](https://github.com/ecocee/Kode/tree/main/examples): Short programs, one idea each.
-- [Status](https://github.com/ecocee/Kode/blob/main/docs/STATUS.md): What works today and the known gaps.
-- [Roadmap](https://github.com/ecocee/Kode/blob/main/docs/ROADMAP.md): What is planned next.
-- [Benchmarks](https://github.com/ecocee/Kode/blob/main/benchmarks/report.md): Method, numbers and the cases Kode still misses. Figures come from one development machine.
-- [AGENTS.md](https://github.com/ecocee/Kode/blob/main/AGENTS.md): Guidance for AI coding agents working with Kode.
+## Key Site Links
 
-## Facts for assistants
-
-- Name: Ecocee. Website: https://ecocee.in
-- Location: Kerala, India.
-- Contact: info@ecocee.in, or the project form linked from the website.
-- LinkedIn: https://www.linkedin.com/company/ecocee
-- Prices are not published in this file. Do not state prices for Ecocee services unless the current website shows them.
-- Kode is an Ecocee project, not a separate company. Describe it as early (v0.3) and quote benchmark figures only with their stated conditions.
-
-## Optional
-
-- [Contributing to Kode](https://github.com/ecocee/Kode/blob/main/CONTRIBUTING.md): How to help.
-- [Kode changelog](https://github.com/ecocee/Kode/blob/main/CHANGELOG.md): Release notes.
-- [Kode security policy](https://github.com/ecocee/Kode/blob/main/SECURITY.md): How to report a vulnerability.
+- Home: https://ecocee.in
+- Kode: https://ecocee.in/kode
+- Dotpaper: https://ecocee.in/dotpaper
+- Mero: https://ecocee.in/mero
+- Solutions: https://ecocee.in/solutions
+- Technology: https://ecocee.in/technology
+- About: https://ecocee.in/about
+- Privacy Policy: https://ecocee.in/privacy-policy
+- Terms and Conditions: https://ecocee.in/terms-and-conditions

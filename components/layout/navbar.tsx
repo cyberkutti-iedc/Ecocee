@@ -21,11 +21,11 @@ interface NavItem {
 }
 
 const navItems: NavItem[] = [
-  { href: "/#products", label: "Products" },
+  { href: "/kode", label: "Kode" },
   { href: "/#capabilities", label: "Capabilities" },
-  { href: "/#work", label: "Work" },
+  { href: "/solutions", label: "Solutions" },
   { href: "/about", label: "About" },
-  { href: "/#insights", label: "Insights" },
+  { href: "/#contact", label: "Contact" },
 ];
 
 export const Navbar = () => {

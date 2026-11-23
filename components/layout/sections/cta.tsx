@@ -93,6 +93,14 @@ export const CTASection = () => {
           </Link>
         </motion.div>
 
+        <p className="mt-3 text-xs text-black/50">
+          By submitting project details, you agree to our{" "}
+          <Link href="/privacy" className="underline hover:text-black">
+            Privacy Policy
+          </Link>
+          .
+        </p>
+
         <div className="mt-24 flex flex-col gap-3 border-t border-black/10 pt-6 sm:flex-row sm:items-center sm:justify-between">
           <p className="text-xs text-black/45">
             Every meaningful product starts somewhere.

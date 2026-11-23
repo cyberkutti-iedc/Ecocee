@@ -17,8 +17,8 @@ import LoadingAnimation from '@/components/kuttai/LoadingAnimation';
 
 // SEO Data
 const kuttaiSEO = {
-  title: "KuttAI - Offline CLI AI Chatbot | 100% Private & Free Forever",
-  description: "KuttAI is a completely offline AI chatbot that runs on your device. No internet required, 100% private, free forever. Experience true AI freedom with no subscriptions or data collection.",
+  title: "KuttAI — Offline Private AI Assistant | Ecocee",
+  description: "KuttAI is an offline, private AI assistant that runs locally on your device without an internet connection. Open source and free forever.",
   keywords: [
     "offline AI chatbot",
     "private AI assistant",
