@@ -95,16 +95,6 @@ function Code() {
   );
 }
 
-function Chip({ className, children }: { className: string; children: ReactNode }) {
-  return (
-    <span
-      className={`absolute whitespace-nowrap rounded-full px-5 py-2.5 text-lg font-medium sm:text-xl ${className}`}
-    >
-      {children}
-    </span>
-  );
-}
-
 /* Hero cards: white frame, colored panel inside, copy underneath (Google Labs). */
 function HeroCard({
   title,
@@ -132,39 +122,6 @@ function HeroCard({
           <h3 className="text-2xl font-medium tracking-tight">{title}</h3>
           <p className="mt-1.5 text-base leading-relaxed text-[#5B4378] dark:text-[#BBA6D4]">{body}</p>
         </div>
-      </Link>
-    </li>
-  );
-}
-
-/* Feature cards: flat panel + big title + body (Android Developers). */
-function FeatureCard({
-  title,
-  body,
-  href,
-  bg,
-  blob,
-  children,
-}: {
-  title: string;
-  body: string;
-  href: string;
-  bg: string;
-  blob: string;
-  children: ReactNode;
-}) {
-  return (
-    <li>
-      <Link href={href} className={`group block rounded-[2rem] ${focus}`}>
-        <div className={`relative aspect-[4/3] overflow-hidden rounded-[2rem] ${bg}`}>
-          <div className={`absolute -bottom-[38%] -right-[14%] aspect-square w-[78%] rounded-full ${blob}`} />
-          <div className={`absolute -left-[10%] -top-[30%] aspect-square w-[46%] rounded-full ${blob} opacity-60`} />
-          {children}
-        </div>
-        <h3 className="mt-6 text-3xl font-medium tracking-tight group-hover:underline group-hover:decoration-2 group-hover:underline-offset-8">
-          {title}
-        </h3>
-        <p className="mt-3 max-w-md text-lg leading-relaxed text-[#5B4378] dark:text-[#BBA6D4]">{body}</p>
       </Link>
     </li>
   );
@@ -333,92 +290,6 @@ export function Hero() {
               </HeroCard>
             </ul>
           </div>
-        </div>
-      </section>
-
-      {/* ======================= FEATURE SECTION ======================= */}
-      <section id="why" aria-labelledby="build-heading" className="pb-28 pt-4 lg:pb-36">
-        <div className={`${wrap} grid gap-14 lg:grid-cols-[0.72fr_1.6fr] lg:gap-20`}>
-          <div className="lg:sticky lg:top-12 lg:self-start">
-            <h2
-              id="build-heading"
-              className="text-[clamp(2.5rem,5vw,4.25rem)] font-medium leading-[1.04] tracking-[-0.035em]"
-            >
-              Build it with Kode
-            </h2>
-            <p className="mt-6 max-w-sm text-xl leading-relaxed text-[#3B2459] dark:text-[#D9C8EE]">
-              Backend services, cloud hosting, concurrency and AI tooling, in one small language.
-            </p>
-            <a
-              href="https://github.com/ecocee/Kode/tree/main/docs"
-              onClick={() => trackGithubClick("kode")}
-              className={`mt-9 inline-block px-8 py-4 text-lg font-medium ${pillDark} ${focus}`}
-            >
-              Go to the docs
-            </a>
-          </div>
-
-          <ul className="grid gap-x-8 gap-y-16 sm:grid-cols-2">
-            <FeatureCard
-              title="Backend"
-              body="Typed services with a built-in web server, JSON and PostgreSQL client."
-              href="#why"
-              bg="bg-[#2B0F47]"
-              blob="bg-[#7B2FBE]"
-            >
-              <Chip className={`${mono.className} left-[7%] top-[16%] -rotate-6 bg-[#F5A623] text-[#1E0A33]`}>
-                web server
-              </Chip>
-              <Chip className={`${mono.className} right-[9%] top-[40%] rotate-3 bg-[#FBF8FF] text-[#1E0A33]`}>
-                JSON
-              </Chip>
-              <Chip className={`${mono.className} bottom-[14%] left-[12%] -rotate-2 bg-[#C58BF2] text-[#1E0A33]`}>
-                PostgreSQL
-              </Chip>
-            </FeatureCard>
-
-            <FeatureCard
-              title="Cloud"
-              body="Small native binaries and a leak-checked runtime keep hosting cheap."
-              href="#footprint"
-              bg="bg-[#B8B0F7]"
-              blob="bg-[#8F84FF]"
-            >
-              <Chip className="left-[8%] top-[14%] rotate-3 bg-[#1E0A33] text-white">small binaries</Chip>
-              <Chip className="right-[7%] top-[42%] -rotate-3 bg-[#FBF8FF] text-[#1E0A33]">leak-checked runtime</Chip>
-              <Chip className="bottom-[13%] left-[10%] rotate-2 bg-[#F5A623] text-[#1E0A33]">cheap hosting</Chip>
-            </FeatureCard>
-
-            <FeatureCard
-              title="Concurrency"
-              body="Tasks with spawn and await, plus typed channels."
-              href="#code"
-              bg="bg-[#F5A623]"
-              blob="bg-[#FFC857]"
-            >
-              <Chip className={`${mono.className} left-[9%] top-[15%] -rotate-3 bg-[#1E0A33] text-[#F5A623]`}>
-                spawn
-              </Chip>
-              <Chip className={`${mono.className} right-[10%] top-[40%] rotate-4 bg-[#FBF8FF] text-[#1E0A33]`}>
-                await
-              </Chip>
-              <Chip className={`${mono.className} bottom-[14%] left-[14%] -rotate-2 bg-[#7B2FBE] text-white`}>
-                channel&lt;T&gt;
-              </Chip>
-            </FeatureCard>
-
-            <FeatureCard
-              title="AI agents"
-              body="JSON diagnostics and error codes with hints, made for agents."
-              href="#agents"
-              bg="bg-[#1B0B2E]"
-              blob="bg-[#5A22A0]"
-            >
-              <Chip className="left-[7%] top-[15%] rotate-2 bg-[#C58BF2] text-[#1E0A33]">JSON diagnostics</Chip>
-              <Chip className="right-[8%] top-[40%] -rotate-3 bg-[#FBF8FF] text-[#1E0A33]">error codes</Chip>
-              <Chip className="bottom-[14%] left-[12%] rotate-2 bg-[#F5A623] text-[#1E0A33]">hints</Chip>
-            </FeatureCard>
-          </ul>
         </div>
       </section>
     </div>

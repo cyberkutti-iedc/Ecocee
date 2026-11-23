@@ -96,22 +96,42 @@ const TYP = /^(Channel|Router|Response|pg|serve)$/;
 
 export function CodeTabs() {
   const [i, setI] = useState(0);
+  const [copied, setCopied] = useState(false);
   const t = TABS[i];
+
+  const handleCopyCode = () => {
+    navigator.clipboard.writeText(t.code).then(() => {
+      setCopied(true);
+      setTimeout(() => setCopied(false), 1500);
+    });
+    trackInstallCopy();
+  };
+
   return (
     <div className="grid gap-6 lg:grid-cols-[200px_1fr]">
-      <div role="tablist" aria-label="Code samples" className="flex gap-2 lg:flex-col">
+      <div role="tablist" aria-label="Code samples" className="flex gap-2 overflow-x-auto pb-2 scrollbar-none lg:overflow-visible lg:flex-col">
         {TABS.map((x, n) => (
-          <button key={x.id} role="tab" aria-selected={i === n} onClick={() => setI(n)}
-            className="rounded-xl px-4 py-3 text-left font-semibold transition-colors"
+          <button key={x.id} role="tab" aria-selected={i === n} onClick={() => { setI(n); setCopied(false); }}
+            className="shrink-0 rounded-xl px-4 py-3 text-left font-semibold transition-colors"
             style={i === n ? { background: "var(--brand)", color: "var(--onb)" } : { border: "1px solid var(--line)", color: "var(--brand)" }}>
             {x.id}
           </button>
         ))}
       </div>
       <div className="overflow-hidden rounded-2xl text-[#F4ECFC] shadow-[0_30px_60px_-30px_rgba(60,20,110,.55)]" style={{ background: "var(--code)" }}>
-        <div className="flex items-center gap-2 border-b border-white/10 px-5 py-3 text-sm text-[#BBA6D4]">
-          <i className="h-2.5 w-2.5 rounded-full bg-[#FFAE2B]" /><i className="h-2.5 w-2.5 rounded-full bg-[#2FCB9F]" /><i className="h-2.5 w-2.5 rounded-full bg-[#4DA8FF]" />
-          <span className="mono ml-2">{t.file}</span>
+        <div className="flex items-center justify-between border-b border-white/10 px-5 py-3 text-sm text-[#BBA6D4]">
+          <div className="flex items-center gap-2">
+            <i className="h-2.5 w-2.5 rounded-full bg-[#FFAE2B]" /><i className="h-2.5 w-2.5 rounded-full bg-[#2FCB9F]" /><i className="h-2.5 w-2.5 rounded-full bg-[#4DA8FF]" />
+            <span className="mono ml-2">{t.file}</span>
+          </div>
+          <button
+            type="button"
+            onClick={handleCopyCode}
+            aria-label={`Copy ${t.file} code`}
+            className="text-xs font-mono rounded px-2.5 py-1 text-[#BBA6D4] hover:text-white transition-colors hover:bg-white/10 border border-white/10"
+          >
+            {copied ? "Copied" : "Copy"}
+          </button>
         </div>
         <pre role="tabpanel" className="mono min-h-[230px] overflow-x-auto p-5 text-[15px] leading-7"><code>
           {t.code.split("\n").map((ln, n) => (
